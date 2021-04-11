@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void HasExpired_WhenTimeSpanExpired_ReturnTrue()
+        public void HasExpired_TimeSpanHasExpired_ReturnTrue()
         {
             //Arrange  
             var elapsed = TimeSpan.FromMinutes(15);
@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void January_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void January_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.January(year);
@@ -35,7 +35,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void January_WhenCalled_ReturnNovemberDate()
+        public void January_WhenCalled_ReturnJanuaryDate()
         {
             //Arrange 
             int year = 2021;
@@ -53,7 +53,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(30, 2021)]
-        public void February_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void February_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.February(year);
@@ -63,7 +63,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void February_WhenCalled_ReturnNovemberDate()
+        public void February_WhenCalled_ReturnFebruaryDate()
         {
             //Arrange 
             int year = 2021;
@@ -81,7 +81,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void March_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void March_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.March(year);
@@ -91,7 +91,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void March_WhenCalled_ReturnNovemberDate()
+        public void March_WhenCalled_ReturnMarchDate()
         {
             //Arrange 
             int year = 2021;
@@ -109,7 +109,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(31, 2021)]
-        public void April_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void April_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.April(year);
@@ -119,7 +119,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void April_WhenCalled_ReturnNovemberDate()
+        public void April_WhenCalled_ReturnAprilDate()
         {
             //Arrange 
             int year = 2021;
@@ -137,7 +137,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void May_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void May_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.May(year);
@@ -147,7 +147,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void May_WhenCalled_ReturnNovemberDate()
+        public void May_WhenCalled_ReturnMayDate()
         {
             //Arrange 
             int year = 2021;
@@ -165,7 +165,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(31, 2021)]
-        public void June_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void June_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.June(year);
@@ -175,7 +175,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void June_WhenCalled_ReturnNovemberDate()
+        public void June_WhenCalled_ReturnJuneDate()
         {
             //Arrange 
             int year = 2021;
@@ -193,7 +193,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void July_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void July_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.July(year);
@@ -203,7 +203,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void July_WhenCalled_ReturnNovemberDate()
+        public void July_WhenCalled_ReturnJulyDate()
         {
             //Arrange 
             int year = 2021;
@@ -221,7 +221,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void August_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void August_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.August(year);
@@ -231,7 +231,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void August_WhenCalled_ReturnNovemberDate()
+        public void August_WhenCalled_ReturnAugustDate()
         {
             //Arrange 
             int year = 2021;
@@ -249,7 +249,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(31, 2021)]
-        public void September_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void September_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.September(year);
@@ -259,7 +259,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void September_WhenCalled_ReturnNovemberDate()
+        public void September_WhenCalled_ReturnSeptemberDate()
         {
             //Arrange 
             int year = 2021;
@@ -277,7 +277,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void October_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void October_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.October(year);
@@ -287,7 +287,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void October_WhenCalled_ReturnNovemberDate()
+        public void October_WhenCalled_ReturnOctoberDate()
         {
             //Arrange 
             int year = 2021;
@@ -305,7 +305,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(31, 2021)]
-        public void November_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void November_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.November(year);
@@ -333,7 +333,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(-1, 2021)]
         [TestCase(32, 2021)]
-        public void December_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        public void December_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
             Action action = () => day.December(year);

@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void GetColumnNames_WhenDataRowIsNull_ThrowArgumentNullException()
+        public void GetColumnNames_DataRowIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             DataRow row = null;
@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetColumnValues_WhenDataRowIsNull_ThrowArgumentNullException()
+        public void GetColumnValues_DataRowIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             DataRow row = null;

@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void FlattenMessages_WhenExceptionNull_ThrowArgumentNullException()
+        public void FlattenMessages_ExceptionIsNull_ThrowArgumentNullException()
         {
             //Arrange
             Exception exception = null;
@@ -44,7 +44,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetExceptions_WhenExceptionNull_ReturnEmptyEnumerable()
+        public void GetExceptions_ExceptionUsNull_ReturnEmptyEnumerable()
         {
             //Arrange
             Exception exception = null;

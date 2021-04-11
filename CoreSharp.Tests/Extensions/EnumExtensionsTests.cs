@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests
     public class EnumExtensionsTests
     {
         [Test]
-        public void GetValues_WhenTypeNotEnum_ThrowArgumentException()
+        public void GetValues_TypeIsNotEnum_ThrowArgumentException()
         {
             //Act 
             Action action = () => EnumExtensions.GetValues<NotAnEnum>();
@@ -32,7 +32,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetDictionary_WhenTypeNotEnum_ThrowArgumentException()
+        public void GetDictionary_TypeIsNotEnum_ThrowArgumentException()
         {
             //Act 
             Action action = () => EnumExtensions.GetDictionary<NotAnEnum>();
@@ -42,7 +42,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetDictionary_WhenTypeNotEnum_ReturnEnumTextValueDictionary()
+        public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
         {
             //Arrange
             var dictionary = new Dictionary<string, DummyEnum>();

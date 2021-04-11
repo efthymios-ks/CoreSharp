@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void GetColumnNames_WhenDataTableIsNull_ThrowArgumentNullException()
+        public void GetColumnNames_DataTableIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             DataTable table = null;
