@@ -265,6 +265,28 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
+        /// Append items to given source. 
+        /// </summary> 
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items)
+        {
+            return source.Append(items?.ToArray());
+        }
+
+        /// <summary>
+        /// Append items to given source. 
+        /// </summary> 
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, params T[] items)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+            items = items ?? throw new ArgumentNullException(nameof(items));
+
+            foreach (var item in items)
+                source = Enumerable.Append(source, item);
+
+            return source;
+        }
+
+        /// <summary>
         /// Perform an action to all elements.
         /// </summary>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
@@ -290,16 +312,6 @@ namespace CoreSharp.Extensions
                 action(item, index);
                 index++;
             }
-        }
-
-        /// <summary>
-        /// Enumerate the sequence before continuing.
-        /// </summary> 
-        public static IEnumerable<T> Enumerate<T>(this IEnumerable<T> source)
-        {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-
-            return source.ToArray();
         }
 
         /// <summary>
@@ -331,12 +343,13 @@ namespace CoreSharp.Extensions
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
+
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException($"{pageSize} cannot be equal to or less than zero.");
 
             int totalPages = (int)Math.Ceiling((double)source.Count() / pageSize);
             if (pageIndex < 0 || pageIndex >= totalPages)
-                throw new ArgumentOutOfRangeException($"{pageIndex} out of range ({0}-{totalPages})");
+                throw new ArgumentOutOfRangeException($"{pageIndex} out of range ({0} > {totalPages})");
 
             return source.Skip(pageIndex * pageSize).Take(pageSize);
         }
@@ -346,13 +359,17 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<IGrouping<int, T>> GetPages<T>(this IEnumerable<T> source, int pageSize)
         {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+            if (pageSize <= 0)
+                throw new ArgumentOutOfRangeException($"{pageSize} cannot be equal to or less than zero.");
+
             //ToList so we can get item index 
-            var arraySource = source.NullToEmpty().ToList();
+            var sourceList = source.ToList();
 
             //Group by item index 
-            var groups = arraySource.GroupBy(i =>
+            var groups = sourceList.GroupBy(i =>
             {
-                int itemIndex = arraySource.IndexOf(i);
+                int itemIndex = sourceList.IndexOf(i);
                 var itemGroupKey = itemIndex / pageSize;
                 return itemGroupKey;
             });
