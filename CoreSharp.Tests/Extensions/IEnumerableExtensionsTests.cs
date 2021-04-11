@@ -420,7 +420,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void Flatten_WhenCalled_ReturnSourceFlattenedInOneDimension()
+        public void Flatten_WhenCalled_ReturnSourceFlattenedToOneDimension()
         {
             //Arrange
             var inner1 = new[] { 1, 2, 3 };
@@ -429,10 +429,10 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { 1, 2, 3, 4, 5, 6 };
 
             //Act  
-            Action action = () => outer.Flatten();
+            var result = outer.Flatten();
 
             //Assert 
-            action.Should().Equals(expected);
+            result.Should().Equals(expected);
         }
 
         [Test]
