@@ -7,8 +7,6 @@ namespace CoreSharp.Extensions.Tests
     [TestFixture]
     public class DateTimeExtensionsTests
     {
-        //TODO: Add mock test to GetElapsedTime(). 
-
         [Test]
         public void HasExpired_WhenTimeSpanExpired_ReturnTrue()
         {

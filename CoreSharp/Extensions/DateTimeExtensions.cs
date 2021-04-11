@@ -7,6 +7,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class DateTimeExtensions
     {
+        //TODO: Add mock test to `DateTime.GetElapsedTime()`. 
         /// <summary>
         /// Get the elapsed time since the input value. 
         /// </summary>
