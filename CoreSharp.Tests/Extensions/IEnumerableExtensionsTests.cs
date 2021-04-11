@@ -11,8 +11,8 @@ namespace CoreSharp.Extensions.Tests
     public class IEnumerableExtensionsTests
     {
         //Fields
-        private readonly IEnumerable<DummyClass> sourceNull = null;
-        private readonly IEnumerable<DummyClass> sourceEmpty = Enumerable.Empty<DummyClass>();
+        private readonly IEnumerable<Dummy> sourceNull = null;
+        private readonly IEnumerable<Dummy> sourceEmpty = Enumerable.Empty<Dummy>();
 
         //Methods 
         [Test]
@@ -113,7 +113,7 @@ namespace CoreSharp.Extensions.Tests
         public void Exclude_FilterIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Predicate<DummyClass> filter = null;
+            Predicate<Dummy> filter = null;
             Action action = () => sourceEmpty.Exclude(filter);
 
             //Assert 
@@ -124,9 +124,9 @@ namespace CoreSharp.Extensions.Tests
         public void Exclude_WhenCalled_ReturnSourceExceptFilteredItems()
         {
             //Arrange
-            var item1 = new DummyClass(1);
-            var item2 = new DummyClass(2);
-            var item3 = new DummyClass(3);
+            var item1 = new Dummy(1);
+            var item2 = new Dummy(2);
+            var item3 = new Dummy(3);
             var source = new[] { item1, item2, item3 };
             var expected = new[] { item2, item3 };
 
@@ -141,7 +141,7 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_SourceIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.DistinctBy<DummyClass, int>(null);
+            Action action = () => sourceNull.DistinctBy<Dummy, int>(null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -151,7 +151,7 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_FilterIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.DistinctBy<DummyClass, int>(null);
+            Action action = () => sourceEmpty.DistinctBy<Dummy, int>(null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -161,9 +161,9 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_WhenCalled_ReturnDistinceByGivenKey()
         {
             //Arrange
-            var item1 = new DummyClass(1);
-            var item2 = new DummyClass(1);
-            var item3 = new DummyClass(2);
+            var item1 = new Dummy(1);
+            var item2 = new Dummy(1);
+            var item3 = new Dummy(2);
             var source = new[] { item1, item2, item3 };
             var expected = new[] { item1, item3 };
 
@@ -177,9 +177,9 @@ namespace CoreSharp.Extensions.Tests
         public void ExceptTest()
         {
             //Arrange
-            var item1 = new DummyClass(1);
-            var item2 = new DummyClass(2);
-            var item3 = new DummyClass(3);
+            var item1 = new Dummy(1);
+            var item2 = new Dummy(2);
+            var item3 = new Dummy(3);
             var left = new[] { item1, item2, item3 };
             var right = new[] { item1, item2 };
             var expected = new[] { item3 };
@@ -192,10 +192,10 @@ namespace CoreSharp.Extensions.Tests
         }
 
         //Nested
-        private class DummyClass
+        private class Dummy
         {
             //Constructors 
-            public DummyClass(int id)
+            public Dummy(int id)
             {
                 Id = id;
             }

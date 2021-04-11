@@ -22,10 +22,10 @@ namespace CoreSharp.Extensions.Tests
         public void GetValues_WhenCalled_ReturnEnumValues()
         {
             //Arrange
-            var values = new[] { DummyEnum.Option1, DummyEnum.Option2, DummyEnum.Option3 };
+            var values = new[] { Dummy.Option1, Dummy.Option2, Dummy.Option3 };
 
             //Act 
-            var result = EnumExtensions.GetValues<DummyEnum>();
+            var result = EnumExtensions.GetValues<Dummy>();
 
             //Assert
             result.Should().Equal(values);
@@ -45,20 +45,20 @@ namespace CoreSharp.Extensions.Tests
         public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
         {
             //Arrange
-            var dictionary = new Dictionary<string, DummyEnum>();
-            dictionary.Add($"{DummyEnum.Option1}", DummyEnum.Option1);
-            dictionary.Add($"{DummyEnum.Option2}", DummyEnum.Option2);
-            dictionary.Add($"{DummyEnum.Option3}", DummyEnum.Option3);
+            var dictionary = new Dictionary<string, Dummy>();
+            dictionary.Add($"{Dummy.Option1}", Dummy.Option1);
+            dictionary.Add($"{Dummy.Option2}", Dummy.Option2);
+            dictionary.Add($"{Dummy.Option3}", Dummy.Option3);
 
             //Act 
-            var result = EnumExtensions.GetDictionary<DummyEnum>();
+            var result = EnumExtensions.GetDictionary<Dummy>();
 
             //Assert
             result.Should().Equal(dictionary);
         }
 
         //Nested
-        private enum DummyEnum
+        private enum Dummy
         {
             Option1 = 1,
             Option2 = 2,
