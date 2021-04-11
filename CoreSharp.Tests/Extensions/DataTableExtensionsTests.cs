@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions.Tests
             DataTable table = null;
 
             //Act 
-            Action action = () => DataTableExtensions.GetColumnNames(table);
+            Action action = () => table.GetColumnNames();
 
             //Assert
             action.Should().Throw<ArgumentNullException>();

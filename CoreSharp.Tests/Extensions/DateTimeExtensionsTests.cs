@@ -28,7 +28,7 @@ namespace CoreSharp.Extensions.Tests
         public void January_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.January(day, year);
+            Action action = () => day.January(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -56,7 +56,7 @@ namespace CoreSharp.Extensions.Tests
         public void February_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.February(day, year);
+            Action action = () => day.February(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -84,7 +84,7 @@ namespace CoreSharp.Extensions.Tests
         public void March_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.March(day, year);
+            Action action = () => day.March(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -112,7 +112,7 @@ namespace CoreSharp.Extensions.Tests
         public void April_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.April(day, year);
+            Action action = () => day.April(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -140,7 +140,7 @@ namespace CoreSharp.Extensions.Tests
         public void May_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.May(day, year);
+            Action action = () => day.May(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -168,7 +168,7 @@ namespace CoreSharp.Extensions.Tests
         public void June_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.June(day, year);
+            Action action = () => day.June(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -196,7 +196,7 @@ namespace CoreSharp.Extensions.Tests
         public void July_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.July(day, year);
+            Action action = () => day.July(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -224,7 +224,7 @@ namespace CoreSharp.Extensions.Tests
         public void August_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.August(day, year);
+            Action action = () => day.August(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -252,7 +252,7 @@ namespace CoreSharp.Extensions.Tests
         public void September_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.September(day, year);
+            Action action = () => day.September(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -280,7 +280,7 @@ namespace CoreSharp.Extensions.Tests
         public void October_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.October(day, year);
+            Action action = () => day.October(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -308,7 +308,7 @@ namespace CoreSharp.Extensions.Tests
         public void November_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.November(day, year);
+            Action action = () => day.November(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();
@@ -336,7 +336,7 @@ namespace CoreSharp.Extensions.Tests
         public void December_WhenDayOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
         {
             //Act
-            Action action = () => DateTimeExtensions.December(day, year);
+            Action action = () => day.December(year);
 
             //Assert 
             action.Should().Throw<ArgumentOutOfRangeException>();

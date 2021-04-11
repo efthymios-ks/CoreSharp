@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions.Tests
             DataRow row = null;
 
             //Act 
-            Action action = () => DataRowExtensions.GetColumnNames(row);
+            Action action = () => row.GetColumnNames();
 
             //Assert
             action.Should().Throw<ArgumentNullException>();
@@ -47,7 +47,7 @@ namespace CoreSharp.Extensions.Tests
             DataRow row = null;
 
             //Act 
-            Action action = () => DataRowExtensions.GetColumnValues(row);
+            Action action = () => row.GetColumnValues();
 
             //Assert
             action.Should().Throw<ArgumentNullException>();
