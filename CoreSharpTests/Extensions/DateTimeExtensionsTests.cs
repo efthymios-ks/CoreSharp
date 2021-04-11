@@ -7,6 +7,7 @@ namespace CoreSharp.Extensions.Tests
     [TestFixture]
     public class DateTimeExtensionsTests
     {
+        //Methods
         [Test]
         public void HasExpired_WhenTimeSpanExpired_ReturnTrue()
         {

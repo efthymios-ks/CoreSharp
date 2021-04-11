@@ -8,6 +8,7 @@ namespace CoreSharp.Extensions.Tests
     [TestFixture]
     public class DataRowExtensionsTests
     {
+        //Methods
         [Test]
         public void GetColumnNames_WhenDataRowIsNull_ThrowArgumentNullException()
         {

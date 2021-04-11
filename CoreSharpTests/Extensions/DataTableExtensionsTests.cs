@@ -8,6 +8,7 @@ namespace CoreSharp.Extensions.Tests
     [TestFixture]
     public class DataTableExtensionsTests
     {
+        //Methods
         [Test]
         public void GetColumnNames_WhenDataTableIsNull_ThrowArgumentNullException()
         {
