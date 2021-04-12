@@ -69,17 +69,17 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ConvertTo_SourceIsNull_ThrowArgumentNullException()
+        public void ConvertAll_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => sourceNull.ConvertTo<string>();
+            Action action = () => sourceNull.ConvertAll<string>();
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void ConvertTo_WhenCalled_ReturnConvertedValues()
+        public void ConvertAll_WhenCalled_ReturnConvertedValues()
         {
             //Arrange
             var source = new int[]
@@ -88,15 +88,15 @@ namespace CoreSharp.Extensions.Tests
                 2,
                 3
             };
-            var expected = new double[]
+            var expected = new[]
             {
-                1,
-                2,
-                3
+                "1",
+                "2",
+                "3"
             };
 
             //Act 
-            var result = source.ConvertTo<double>();
+            var result = source.ConvertAll<string>();
 
             //Assert 
             result.Should().Equal(expected);
