@@ -35,7 +35,7 @@ namespace CoreSharp.Extensions
             return exception.GetExceptionsInternal();
         }
 
-        public static IEnumerable<Exception> GetExceptionsInternal(this Exception exception)
+        private static IEnumerable<Exception> GetExceptionsInternal(this Exception exception)
         {
             yield return exception;
 
