@@ -44,7 +44,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert items to given type.
         /// </summary>
-        public static IEnumerable<T> ConvertTo<T>(this IEnumerable source)
+        public static IEnumerable<T> ConvertAll<T>(this IEnumerable source)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
 
