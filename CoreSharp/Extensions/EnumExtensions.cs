@@ -21,12 +21,12 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get enum dictionary Text-Value. 
+        /// Get enum dictionary (Text-Value). 
         /// </summary>
         public static IDictionary<string, TEnum> GetDictionary<TEnum>() where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enumerated type.");
+                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.");
             else
             {
                 var dictionary = new Dictionary<string, TEnum>();
