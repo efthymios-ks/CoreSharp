@@ -7,6 +7,7 @@ using FluentAssertions;
 using System.Globalization;
 using System.Collections.ObjectModel;
 using Moq;
+using CoreSharp.Tests.Dummies;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -14,8 +15,8 @@ namespace CoreSharp.Extensions.Tests
     public class IEnumerableExtensionsTests
     {
         //Fields
-        private readonly IEnumerable<Dummy> sourceNull = null;
-        private readonly IEnumerable<Dummy> sourceEmpty = Enumerable.Empty<Dummy>();
+        private readonly IEnumerable<DummyClass> sourceNull = null;
+        private readonly IEnumerable<DummyClass> sourceEmpty = Enumerable.Empty<DummyClass>();
 
         //Methods 
         [Test]
@@ -116,7 +117,7 @@ namespace CoreSharp.Extensions.Tests
         public void Exclude_FilterIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Predicate<Dummy> filter = null;
+            Predicate<DummyClass> filter = null;
             Action action = () => sourceEmpty.Exclude(filter);
 
             //Assert 
@@ -127,9 +128,9 @@ namespace CoreSharp.Extensions.Tests
         public void Exclude_WhenCalled_ReturnSourceExceptFilteredItems()
         {
             //Arrange
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(2);
-            var item3 = new Dummy(3);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(2);
+            var item3 = new DummyClass(3);
             var source = new[] { item1, item2, item3 };
             var expected = new[] { item2, item3 };
 
@@ -144,7 +145,7 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_SourceIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.DistinctBy<Dummy, int>(null);
+            Action action = () => sourceNull.DistinctBy<DummyClass, int>(null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -154,7 +155,7 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_FilterIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.DistinctBy<Dummy, int>(null);
+            Action action = () => sourceEmpty.DistinctBy<DummyClass, int>(null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -164,9 +165,9 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_WhenCalled_ReturnDistinctItemsByGivenKey()
         {
             //Arrange
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(1);
-            var item3 = new Dummy(2);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(1);
+            var item3 = new DummyClass(2);
             var source = new[] { item1, item2, item3 };
             var expected = new[] { item1, item3 };
 
@@ -333,7 +334,7 @@ namespace CoreSharp.Extensions.Tests
         public void ExceptBy_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.ExceptBy<Dummy, int>(sourceEmpty, null);
+            Action action = () => sourceEmpty.ExceptBy<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -343,9 +344,9 @@ namespace CoreSharp.Extensions.Tests
         public void ExceptBy_WhenCalled_ReturnLeftItemsNotInRight()
         {
             //Arrange
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(2);
-            var item3 = new Dummy(3);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(2);
+            var item3 = new DummyClass(3);
             var left = new[] { item1, item2, item3 };
             var right = new[] { item1, item2 };
             var expected = new[] { item3 };
@@ -381,7 +382,7 @@ namespace CoreSharp.Extensions.Tests
         public void IntersectBy_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.IntersectBy<Dummy, int>(sourceEmpty, null);
+            Action action = () => sourceEmpty.IntersectBy<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
             action.Should().Throw<ArgumentNullException>();
@@ -391,10 +392,10 @@ namespace CoreSharp.Extensions.Tests
         public void IntersectBy_WhenCalled_ReturnCommonItems()
         {
             //Arrange
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(2);
-            var item3 = new Dummy(3);
-            var item4 = new Dummy(4);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(2);
+            var item3 = new DummyClass(3);
+            var item4 = new DummyClass(4);
             var left = new[] { item1, item2, item3, item4 };
             var right = new[] { item1, item4 };
             var expected = new[] { item1, item4 };
@@ -474,7 +475,7 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action<Dummy> itemAction = null;
+            Action<DummyClass> itemAction = null;
             Action action = () => sourceNull.ForEach(itemAction);
 
             //Assert 
@@ -485,7 +486,7 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_ActionIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action<Dummy> itemAction = null;
+            Action<DummyClass> itemAction = null;
             Action action = () => sourceEmpty.ForEach(itemAction);
 
             //Assert 
@@ -496,9 +497,9 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_WhenCalled_PerformActionOnEachItem()
         {
             //Arrange 
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(2);
-            var item3 = new Dummy(3);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(2);
+            var item3 = new DummyClass(3);
             var source = new[] { item1, item2, item3 };
 
             //Act   
@@ -537,7 +538,7 @@ namespace CoreSharp.Extensions.Tests
         public void Contains_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            Func<Dummy, int> keySelector = null;
+            Func<DummyClass, int> keySelector = null;
 
             //Act 
             Action action = () => sourceNull.Contains(null, keySelector);
@@ -550,7 +551,7 @@ namespace CoreSharp.Extensions.Tests
         public void Contains_ItemIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            Func<Dummy, int> keySelector = null;
+            Func<DummyClass, int> keySelector = null;
 
             //Act 
             Action action = () => sourceEmpty.Contains(null, keySelector);
@@ -563,8 +564,8 @@ namespace CoreSharp.Extensions.Tests
         public void Contains_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            var item = new Dummy(1);
-            Func<Dummy, int> keySelector = null;
+            var item = new DummyClass(1);
+            Func<DummyClass, int> keySelector = null;
 
             //Act 
             Action action = () => sourceEmpty.Contains(item, keySelector);
@@ -577,10 +578,10 @@ namespace CoreSharp.Extensions.Tests
         public void Contains_ContainsItemByKey_ReturnTrue()
         {
             //Arrange 
-            var item1 = new Dummy(1);
-            var item2 = new Dummy(2);
+            var item1 = new DummyClass(1);
+            var item2 = new DummyClass(2);
             var source = new[] { item1, item2 };
-            var checkItem = new Dummy(1);
+            var checkItem = new DummyClass(1);
 
             //Act 
             var result = source.Contains(checkItem, d => d.Id);
@@ -679,24 +680,6 @@ namespace CoreSharp.Extensions.Tests
             result1.Should().Equal(group1);
             result2.Should().Equal(group2);
             result3.Should().Equal(group3);
-        }
-
-        //Nested
-        private class Dummy
-        {
-            //Constructors 
-            public Dummy(int id)
-            {
-                Id = id;
-            }
-
-            //Properties 
-            public int Id { get; set; }
-
-            public override string ToString()
-            {
-                return $"{Id}";
-            }
         }
     }
 }
