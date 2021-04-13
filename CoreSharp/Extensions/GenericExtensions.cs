@@ -60,5 +60,22 @@ namespace CoreSharp.Extensions
             var json = JsonSerializer.Serialize(item, options);
             return JsonSerializer.Deserialize<TEntity>(json, options);
         }
+
+        /// <summary>
+        /// Check if class is null. 
+        /// </summary>
+        public static bool IsNull<T>(this T input) where T : class
+        {
+            return input == null;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current nullable 
+        /// object has a valid value of its underlying type. 
+        /// </summary>
+        public static bool IsNull<T>(this T? input) where T : struct
+        {
+            return !input.HasValue;
+        }
     }
 }

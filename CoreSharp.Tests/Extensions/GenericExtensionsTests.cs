@@ -87,5 +87,43 @@ namespace CoreSharp.Extensions.Tests
             result.Id.Should().Be(item.Id);
             result.Name.Should().Be(item.Name);
         }
+
+        [Test]
+        public void IsNull_ClassIsNull_ReturnTrue()
+        {
+            //Arrange 
+            DummyClass input = null;
+
+            //Act 
+            var result = input.IsNull();
+
+            //Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsNull_ClassHasValue_ReturnFalse()
+        {
+            //Arrange 
+            var input = new DummyClass();
+
+            //Act 
+            var result = input.IsNull();
+
+            //Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        [TestCase(null, true)]
+        [TestCase(0, false)]
+        public void IsNull_StructIsNull_ReturnTrue(int? input, bool expected)
+        {
+            //Act 
+            var result = input.IsNull();
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }
