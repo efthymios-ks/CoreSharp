@@ -670,10 +670,9 @@ namespace CoreSharp.Extensions.Tests
 
             //Act 
             var result = source.GetPages(pageSize);
-            var resultArray = result.ToArray();
-            var result1 = resultArray[0];
-            var result2 = resultArray[1];
-            var result3 = resultArray[2];
+            var result1 = result.ElementAt(0);
+            var result2 = result.ElementAt(1);
+            var result3 = result.ElementAt(2);
 
             //Assert 
             result.Should().HaveCount(expectedCount);
