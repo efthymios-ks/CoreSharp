@@ -92,14 +92,14 @@ namespace CoreSharp.Extensions.Tests
             var table = new DataTable();
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("name", typeof(string));
-            var row = table.Rows.Add(1, "Efthymios");
+            var row = table.Rows.Add(1, "Red");
 
             //Act 
             var result = row.MapTo<DummyClass>(false);
 
             //Assert
             result.Id.Should().Be(1);
-            result.Name.Should().NotBe("Efthymios");
+            result.Name.Should().NotBe("Red");
         }
 
         [Test]
@@ -109,14 +109,14 @@ namespace CoreSharp.Extensions.Tests
             var table = new DataTable();
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("name", typeof(string));
-            var row = table.Rows.Add(1, "Efthymios");
+            var row = table.Rows.Add(1, "Red");
 
             //Act 
             var result = row.MapTo<DummyClass>(true);
 
             //Assert
             result.Id.Should().Be(1);
-            result.Name.Should().Be("Efthymios");
+            result.Name.Should().Be("Red");
         }
     }
 }

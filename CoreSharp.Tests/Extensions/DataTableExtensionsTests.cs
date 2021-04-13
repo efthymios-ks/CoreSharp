@@ -61,8 +61,8 @@ namespace CoreSharp.Extensions.Tests
             var table = new DataTable();
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("name", typeof(string));
-            table.Rows.Add(1, "Efthymios");
-            table.Rows.Add(2, "Thanasis");
+            table.Rows.Add(1, "Red");
+            table.Rows.Add(2, "Black");
 
             //Act 
             var result = table.MapTo<DummyClass>(false);
@@ -72,9 +72,9 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().HaveCount(2);
             item1.Id.Should().Be(1);
-            item1.Name.Should().NotBe("Efthymios");
+            item1.Name.Should().NotBe("Red");
             item2.Id.Should().Be(2);
-            item2.Name.Should().NotBe("Thanasis");
+            item2.Name.Should().NotBe("Black");
         }
 
         [Test]
@@ -84,8 +84,8 @@ namespace CoreSharp.Extensions.Tests
             var table = new DataTable();
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("name", typeof(string));
-            table.Rows.Add(1, "Efthymios");
-            table.Rows.Add(2, "Thanasis");
+            table.Rows.Add(1, "Red");
+            table.Rows.Add(2, "Black");
 
             //Act 
             var result = table.MapTo<DummyClass>(true);
@@ -95,9 +95,9 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().HaveCount(2);
             item1.Id.Should().Be(1);
-            item1.Name.Should().Be("Efthymios");
+            item1.Name.Should().Be("Red");
             item2.Id.Should().Be(2);
-            item2.Name.Should().Be("Thanasis");
+            item2.Name.Should().Be("Black");
         }
     }
 }
