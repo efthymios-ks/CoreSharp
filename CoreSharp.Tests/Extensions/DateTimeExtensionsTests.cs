@@ -23,9 +23,43 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void January_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, 4, 10, true)]
+        [TestCase(2021, 4, 11, true)]
+        [TestCase(2021, 4, 12, false)]
+        [TestCase(2021, 4, 13, false)]
+        public void IsWeekend_DateIsWeekend_ReturnTrue(int year, int month, int day, bool expected)
+        {
+            //Arrange
+            var date = new DateTime(year, month, day);
+
+            //Act
+            var result = date.IsWeekend();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(2020, 1, 1, true)]
+        [TestCase(2022, 1, 1, false)]
+        [TestCase(2024, 1, 1, true)]
+        [TestCase(2026, 1, 1, false)]
+        public void IsInLeapYear_DateIsLeapYear_ReturnTrue(int year, int month, int day, bool expected)
+        {
+            //Arrange
+            var date = new DateTime(year, month, day);
+
+            //Act
+            var result = date.IsInLeapYear();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void January_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.January(year);
@@ -51,9 +85,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(30, 2021)]
-        public void February_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 30)]
+        public void February_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.February(year);
@@ -79,9 +113,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void March_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void March_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.March(year);
@@ -107,9 +141,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(31, 2021)]
-        public void April_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 31)]
+        public void April_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.April(year);
@@ -135,9 +169,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void May_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void May_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.May(year);
@@ -163,9 +197,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(31, 2021)]
-        public void June_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 31)]
+        public void June_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.June(year);
@@ -191,9 +225,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void July_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void July_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.July(year);
@@ -219,9 +253,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void August_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void August_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.August(year);
@@ -247,9 +281,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(31, 2021)]
-        public void September_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 31)]
+        public void September_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.September(year);
@@ -275,9 +309,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void October_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void October_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.October(year);
@@ -303,9 +337,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(31, 2021)]
-        public void November_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 31)]
+        public void November_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.November(year);
@@ -331,9 +365,9 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(-1, 2021)]
-        [TestCase(32, 2021)]
-        public void December_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int day, int year)
+        [TestCase(2021, -1)]
+        [TestCase(2021, 32)]
+        public void December_DayIsOutOfRange_ThrowArgumentOutOfRangeException(int year, int day)
         {
             //Act
             Action action = () => day.December(year);

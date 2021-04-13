@@ -26,6 +26,27 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
+        /// Check if date is in a weekend. 
+        /// </summary> 
+        public static bool IsWeekend(this DateTime date)
+        {
+            if (date.DayOfWeek == DayOfWeek.Saturday)
+                return true;
+            else if (date.DayOfWeek == DayOfWeek.Sunday)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Check if date is in a leap year. 
+        /// </summary> 
+        public static bool IsInLeapYear(this DateTime date)
+        {
+            return DateTime.IsLeapYear(date.Year);
+        }
+
+        /// <summary>
         /// Returns a DateTime representing the specified day 
         /// in January in the specified year.
         /// </summary>
