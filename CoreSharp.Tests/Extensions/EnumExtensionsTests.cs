@@ -17,7 +17,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => EnumExtensions.GetValues<DummyNotAnEnum>();
 
             //Assert
-            action.Should().Throw<ArgumentException>();
+            action.Should().ThrowExactly<ArgumentException>();
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => EnumExtensions.GetDictionary<DummyNotAnEnum>();
 
             //Assert
-            action.Should().Throw<ArgumentException>();
+            action.Should().ThrowExactly<ArgumentException>();
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => item.GetDescription();
 
             //Assert
-            action.Should().Throw<ArgumentException>();
+            action.Should().ThrowExactly<ArgumentException>();
         }
 
         [Test]

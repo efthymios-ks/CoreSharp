@@ -19,7 +19,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => row.GetColumnNames();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => row.GetColumnValues();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

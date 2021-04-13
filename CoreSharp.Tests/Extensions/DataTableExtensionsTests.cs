@@ -19,7 +19,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => table.GetColumnNames();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

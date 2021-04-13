@@ -21,7 +21,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => source.AddRange();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => source.AddRange(items);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

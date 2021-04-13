@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.IsEmpty();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ConvertAll<string>();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.Exclude(null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.Exclude(filter);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.DistinctBy<DummyClass, int>(null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.DistinctBy<DummyClass, int>(null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -185,7 +185,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.StringJoin(" ", "{0}", CultureInfo.InvariantCulture);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -209,7 +209,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ToHashSet();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ToCollection();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -258,7 +258,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ToObservableCollection();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -282,7 +282,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.TakeSkip();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.TakeSkip(null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ExceptBy(sourceEmpty, d => d.Id);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -327,7 +327,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.ExceptBy(sourceNull, d => d.Id);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -337,7 +337,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.ExceptBy<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -365,7 +365,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.IntersectBy(sourceEmpty, d => d.Id);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -375,7 +375,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.IntersectBy(sourceNull, d => d.Id);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -385,7 +385,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.IntersectBy<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -417,7 +417,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.Flatten();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -443,7 +443,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.Append();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -453,7 +453,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.Append(null);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -479,7 +479,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.ForEach(itemAction);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -490,7 +490,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.ForEach(itemAction);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -518,7 +518,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.Mutate();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -544,7 +544,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.Contains(null, keySelector);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -557,7 +557,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.Contains(null, keySelector);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -571,7 +571,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.Contains(item, keySelector);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -601,7 +601,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.GetPage(pageIndex, pageSize);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -617,7 +617,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => source.GetPage(pageIndex, pageSize);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -643,7 +643,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceNull.GetPages(2);
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -655,7 +655,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => sourceEmpty.GetPages(pageSize);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]

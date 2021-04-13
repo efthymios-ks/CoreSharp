@@ -23,7 +23,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => exception.FlattenMessages();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => exception.FlattenMessages();
 
             //Assert 
-            action.Should().Throw<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

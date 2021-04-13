@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.January(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.February(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.March(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.April(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.May(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.June(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -233,7 +233,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.July(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.August(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.September(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.October(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -345,7 +345,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.November(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => day.December(year);
 
             //Assert 
-            action.Should().Throw<ArgumentOutOfRangeException>();
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
