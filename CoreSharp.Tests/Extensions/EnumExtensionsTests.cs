@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace CoreSharp.Extensions.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class EnumExtensionsTests
     {
         [Test]
@@ -57,11 +58,42 @@ namespace CoreSharp.Extensions.Tests
             result.Should().Equal(dictionary);
         }
 
+        [Test]
+        public void GetDescription_TypeIsNotEnum_ThrowArgumentException()
+        {
+            //Arrange 
+            var item = new NotAnEnum();
+
+            //Act 
+            Action action = () => item.GetDescription();
+
+            //Assert
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public void GetDescription_WhenCalled_ReturnEnumDescriptionAttribute()
+        {
+            //Arrange 
+            var item = Dummy.Option1;
+            string expected = "Description 1";
+
+            //Act 
+            var result = item.GetDescription();
+
+            result.Should().Be(expected);
+        }
+
         //Nested
         private enum Dummy
         {
+            [System.ComponentModel.Description("Description 1")]
             Option1 = 1,
+
+            [System.ComponentModel.Description("Description 2")]
             Option2 = 2,
+
+            [System.ComponentModel.Description("Description 3")]
             Option3 = 3
         }
 

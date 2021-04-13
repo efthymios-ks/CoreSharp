@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CoreSharp.Extensions
@@ -14,10 +15,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<TEnum> GetValues<TEnum>() where TEnum : struct, IConvertible
         {
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.");
-            else
-                return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
+            var dictionary = GetDictionary<TEnum>();
+            return dictionary.Select(i => i.Value);
         }
 
         /// <summary>
@@ -30,11 +29,31 @@ namespace CoreSharp.Extensions
             else
             {
                 var dictionary = new Dictionary<string, TEnum>();
-                var values = GetValues<TEnum>();
+                var values = Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
                 foreach (var value in values)
                     dictionary.Add($"{value}", value);
                 return dictionary;
             }
+        }
+
+        /// <summary>
+        /// Get Description attribute from an enum. 
+        /// </summary> 
+        public static string GetDescription<TEnum>(this TEnum value) where TEnum : struct, IConvertible
+        {
+            if (!typeof(TEnum).IsEnum)
+                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.");
+
+            string valueString = $"{value}";
+
+            //Get first attribute of type 'DescriptionAttribute'
+            var fieldInfo = value.GetType().GetField(valueString);
+            var descriptionAttributes = fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), true)?.Cast<DescriptionAttribute>();
+            var descriptionAttribute = descriptionAttributes?.FirstOrDefault();
+
+            //Return attribute or enum itself as description 
+            string description = descriptionAttribute?.Description ?? valueString;
+            return description;
         }
     }
 }
