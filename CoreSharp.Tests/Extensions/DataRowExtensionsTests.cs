@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Data;
 using FluentAssertions;

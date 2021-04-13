@@ -199,18 +199,18 @@ namespace CoreSharp.Extensions
         /// <example>
         /// In this sample we Take(2), then Skip(3), then Take(1).
         /// <code>
-        ///var source = GetSource();
-        ///var sequence = source.TakeSkip(2, -3, 1);
+        /// var source = GetSource();
+        /// var sequence = source.TakeSkip(2, -3, 1);
         /// </code>
         /// </example>
-        public static IEnumerable<T> TakeSkip<T>(this IEnumerable<T> source, params int[] chunks)
+        public static IEnumerable<T> TakeSkip<T>(this IEnumerable<T> source, params int[] sequence)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
-            chunks = chunks ?? throw new ArgumentNullException(nameof(chunks));
+            sequence = sequence ?? throw new ArgumentNullException(nameof(sequence));
 
             var result = new List<T>();
             int enumeratedItems = 0;
-            foreach (var chunk in chunks)
+            foreach (var chunk in sequence)
             {
                 bool isTaking = (chunk > 0);
                 //bool isSkipping = !isTaking;

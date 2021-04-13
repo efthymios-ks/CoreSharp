@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace CoreSharp.Extensions.Tests

@@ -1,12 +1,10 @@
-﻿using CoreSharp.Extensions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using System.Globalization;
 using System.Collections.ObjectModel;
-using Moq;
 using CoreSharp.Tests.Dummies;
 
 namespace CoreSharp.Extensions.Tests
@@ -107,7 +105,7 @@ namespace CoreSharp.Extensions.Tests
         public void Exclude_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => sourceNull.Exclude(null);
+            Action action = () => sourceNull.Exclude(d => d.Id == 0);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -116,9 +114,8 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void Exclude_FilterIsNull_ThrowArgumentNullException()
         {
-            //Act  
-            Predicate<DummyClass> filter = null;
-            Action action = () => sourceEmpty.Exclude(filter);
+            //Act 
+            Action action = () => sourceEmpty.Exclude(null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -135,7 +132,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item2, item3 };
 
             //Act  
-            var result = source.Exclude(i => i.Id == 1);
+            var result = source.Exclude(d => d.Id == 1);
 
             //Assert
             result.Should().Equal(expected);
@@ -145,7 +142,7 @@ namespace CoreSharp.Extensions.Tests
         public void DistinctBy_SourceIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.DistinctBy<DummyClass, int>(null);
+            Action action = () => sourceNull.DistinctBy(d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -172,7 +169,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item1, item3 };
 
             //Act 
-            var result = source.DistinctBy(i => i.Id);
+            var result = source.DistinctBy(d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
@@ -189,7 +186,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void StringJoin_WhenCalled_JoinItemsToStringWithGivenSettings()
+        public void StringJoin_WhenCalled_JoinItemsToStringWithGivenOptions()
         {
             //Arrange 
             var source = new[] { 1.111, 2.222, 3.333 };
@@ -278,15 +275,15 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void TakeSkip_SourceIsNull_ThrowArgumentNullException()
         {
-            //Act  
-            Action action = () => sourceNull.TakeSkip();
+            //Act 
+            Action action = () => sourceNull.TakeSkip(1, -1);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void TakeSkip_ChunksIsNull_ThrowArgumentNullException()
+        public void TakeSkip_SequenceIsNull_ThrowArgumentNullException()
         {
             //Act  
             Action action = () => sourceEmpty.TakeSkip(null);
@@ -352,7 +349,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item3 };
 
             //Act 
-            var result = left.ExceptBy(right, i => i.Id);
+            var result = left.ExceptBy(right, d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
@@ -401,7 +398,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item1, item4 };
 
             //Act 
-            var result = left.IntersectBy(right, i => i.Id);
+            var result = left.IntersectBy(right, d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
@@ -439,8 +436,11 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void Append_SourceIsNull_ThrowArgumentNullException()
         {
+            //Arrange 
+            var item = new DummyClass();
+
             //Act  
-            Action action = () => sourceNull.Append();
+            Action action = () => sourceNull.Append(item);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -475,8 +475,7 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action<DummyClass> itemAction = null;
-            Action action = () => sourceNull.ForEach(itemAction);
+            Action action = () => sourceNull.ForEach(d => d.Id.ToString());
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -485,8 +484,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void ForEach_ActionIsNull_ThrowArgumentNullException()
         {
-            //Act  
+            //Arrange
             Action<DummyClass> itemAction = null;
+
+            //Act 
             Action action = () => sourceEmpty.ForEach(itemAction);
 
             //Assert 
@@ -537,11 +538,8 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void Contains_SourceIsNull_ThrowArgumentNullException()
         {
-            //Arrange 
-            Func<DummyClass, int> keySelector = null;
-
             //Act 
-            Action action = () => sourceNull.Contains(null, keySelector);
+            Action action = () => sourceNull.Contains(null, d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -550,11 +548,11 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void Contains_ItemIsNull_ThrowArgumentNullException()
         {
-            //Arrange 
-            Func<DummyClass, int> keySelector = null;
+            //Arrange
+            var item = new DummyClass();
 
             //Act 
-            Action action = () => sourceEmpty.Contains(null, keySelector);
+            Action action = () => sourceEmpty.Contains<DummyClass, int>(item, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -564,11 +562,10 @@ namespace CoreSharp.Extensions.Tests
         public void Contains_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            var item = new DummyClass(1);
-            Func<DummyClass, int> keySelector = null;
+            var item = new DummyClass();
 
             //Act 
-            Action action = () => sourceEmpty.Contains(item, keySelector);
+            Action action = () => sourceEmpty.Contains<DummyClass, int>(item, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
