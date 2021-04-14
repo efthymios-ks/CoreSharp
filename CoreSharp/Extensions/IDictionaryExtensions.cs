@@ -42,8 +42,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryRemove<T>(this IDictionary<string, T> source, string key)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-
             return source.TryRemove(key, out _);
         }
 
@@ -72,9 +70,17 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryUpdate<T>(this IDictionary<string, T> source, string key, T value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            return source.TryUpdate(key, v => value);
+        }
 
-            return source.TryUpdate<T>(key, (k, v) => value);
+        /// <summary>
+        /// Attempts to update the specifed key in dictionary, if exists. 
+        /// </summary> 
+        public static bool TryUpdate<T>(this IDictionary<string, T> source, string key, Func<T, T> updateAction)
+        {
+            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+
+            return source.TryUpdate(key, (k, v) => updateAction(v));
         }
 
         /// <summary>
@@ -101,8 +107,6 @@ namespace CoreSharp.Extensions
         /// <returns>True if added, false if updated</returns>
         public static T AddOrUpdate<T>(this IDictionary<string, T> source, string key, T value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-
             return source.AddOrUpdate(key, value, (k, v) => value);
         }
 
@@ -112,9 +116,17 @@ namespace CoreSharp.Extensions
         /// <returns>True if added, false if updated</returns>
         public static T AddOrUpdate<T>(this IDictionary<string, T> source, string key, T addValue, T updateValue)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-
             return source.AddOrUpdate(key, addValue, (k, v) => updateValue);
+        }
+
+        /// <summary> 
+        /// Attempts to add or update an item with the specified key. 
+        /// </summary> 
+        public static T AddOrUpdate<T>(this IDictionary<string, T> source, string key, T addValue, Func<T, T> updateAction)
+        {
+            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+
+            return source.AddOrUpdate(key, addValue, (k, v) => updateAction(v));
         }
 
         /// <summary> 
@@ -152,7 +164,7 @@ namespace CoreSharp.Extensions
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
 
-            return source.Select(i => new KeyValuePair<string, T>(i.Key, i.Value));
+            return source;
         }
 
         /// <summary>
@@ -162,7 +174,7 @@ namespace CoreSharp.Extensions
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
 
-            return source.Count(i => i.Value.Equals(value));
+            return source.Values.Count(v => v.Equals(value));
         }
     }
 }

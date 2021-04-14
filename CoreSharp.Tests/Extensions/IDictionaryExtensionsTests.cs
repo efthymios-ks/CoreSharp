@@ -203,8 +203,8 @@ namespace CoreSharp.Extensions.Tests
             var expected = new Dictionary<string, int>();
             foreach (var entry in dictionary)
                 expected.Add(entry.Key, entry.Value);
-            static int updateAction(string key, int value) => value = value * 2;
-            expected["1"] = updateAction("1", 1);
+            static int updateAction(string key, int value) => value = 2;
+            expected["1"] = 2;
 
             //Act 
             var result = dictionary.TryUpdate("1", updateAction);
@@ -212,6 +212,174 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().BeTrue();
             dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void AddOrUpdate_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => dictionaryNull.AddOrUpdate("-1", 100);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void AddOrUpdate_UpdateActionIsNull_ThrowArgumentNullException()
+        {
+            //Arrange 
+            Func<string, int, int> updateAction = null;
+
+            //Act 
+            Action action = () => dictionary.AddOrUpdate("1", 100, updateAction);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void AddOrUpdate_KeyNotFound_AddAndReturnValue()
+        {
+            //Arrange
+            var expected = new Dictionary<string, int>();
+            foreach (var entry in dictionary)
+                expected.Add(entry.Key, entry.Value);
+            expected.Add("4", 4);
+
+            //Act 
+            var result = dictionary.AddOrUpdate("4", 4, -4);
+
+            //Assert
+            result.Should().Be(4);
+            dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void AddOrUpdate_KeyFoundAndUpdateIsValue_UpdateAndReturnValue()
+        {
+            //Arrange
+            var expected = new Dictionary<string, int>();
+            foreach (var entry in dictionary)
+                expected.Add(entry.Key, entry.Value);
+            expected["3"] = 300;
+
+            //Act 
+            var result = dictionary.AddOrUpdate("3", -3, 300);
+
+            //Assert
+            result.Should().Be(300);
+            dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void AddOrUpdate_KeyFoundAndUpdateIsFunction_UpdateAndReturnValue()
+        {
+            //Arrange
+            var expected = new Dictionary<string, int>();
+            foreach (var entry in dictionary)
+                expected.Add(entry.Key, entry.Value);
+            expected["3"] = 300;
+
+            //Act 
+            var result = dictionary.AddOrUpdate("3", -3, v => 300);
+
+            //Assert
+            result.Should().Be(300);
+            dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void GetOrAdd_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => dictionaryNull.GetOrAdd("1", 100);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetOrAdd_KeyFound_ReturnValueWithoutAdding()
+        {
+            //Arrange
+            var expected = new Dictionary<string, int>();
+            foreach (var entry in dictionary)
+                expected.Add(entry.Key, entry.Value);
+
+            //Act 
+            var result = dictionary.GetOrAdd("1", 100);
+
+            //Assert
+            result.Should().Be(1);
+            dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void GetOrAdd_KeyNotFound_AddAndReturnValue()
+        {
+            //Arrange
+            var expected = new Dictionary<string, int>();
+            foreach (var entry in dictionary)
+                expected.Add(entry.Key, entry.Value);
+            expected.Add("4", 4);
+
+            //Act 
+            var result = dictionary.GetOrAdd("4", 4);
+
+            //Assert
+            result.Should().Be(4);
+            dictionary.Should().Equal(expected);
+        }
+
+        [Test]
+        public void ToEnumerable_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => dictionaryNull.ToEnumerable();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToEnumerable_WhenCalled_ReturnKeyValuePairsEnumerable()
+        {
+            //Arrange
+            var expected = new[]
+            {
+                new KeyValuePair<string, int>("1", 1),
+                new KeyValuePair<string, int>("2", 2),
+                new KeyValuePair<string, int>("3", 3)
+            };
+
+            //Act 
+            var result = dictionary.ToEnumerable();
+
+            //Assert
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void ContainsValue_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => dictionaryNull.ContainsValue(1);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(0, 0)]
+        [TestCase(2, 1)]
+        [TestCase(4, 0)]
+        public void ContainsValue_WhenCalled_ReturnValueOccurencesCount(int value, int count)
+        {
+            //Act 
+            var result = dictionary.ContainsValue(value);
+
+            //Assert
+            result.Should().Be(count);
         }
     }
 }
