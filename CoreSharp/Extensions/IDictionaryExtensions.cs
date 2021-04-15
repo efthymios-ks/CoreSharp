@@ -76,6 +76,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Attempts to update the specifed key in dictionary, if exists. 
         /// </summary> 
+        /// <param name="updateAction">(value) => ...</param> 
         public static bool TryUpdate<T>(this IDictionary<string, T> source, string key, Func<T, T> updateAction)
         {
             updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
@@ -83,9 +84,10 @@ namespace CoreSharp.Extensions
             return source.TryUpdate(key, (k, v) => updateAction(v));
         }
 
-        /// <summary>
-        /// Attempts to update the specifed key in dictionary, if exists. 
+        /// <summary> 
+        /// Attempts to update the specifed key in dictionary, if exists.
         /// </summary> 
+        /// <param name="updateAction">(key, value) => ...</param> 
         public static bool TryUpdate<T>(this IDictionary<string, T> source, string key, Func<string, T, T> updateAction)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
@@ -122,6 +124,7 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
+        /// <param name="updateAction">(value) => ...</param> 
         public static T AddOrUpdate<T>(this IDictionary<string, T> source, string key, T addValue, Func<T, T> updateAction)
         {
             updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
@@ -132,6 +135,7 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
+        /// <param name="updateAction">(key, value) => ...</param> 
         public static T AddOrUpdate<T>(this IDictionary<string, T> source, string key, T addValue, Func<string, T, T> updateAction)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
