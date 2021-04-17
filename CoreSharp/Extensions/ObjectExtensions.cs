@@ -49,10 +49,10 @@ namespace CoreSharp.Extensions
                 return defaultValue;
             else if (input.GetType() != typeof(T))
                 return defaultValue;
-            else if (!(input is T))
+            else if (!(input is T t))
                 return defaultValue;
             else
-                return (T)input;
+                return t;
         }
     }
 }
