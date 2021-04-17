@@ -20,7 +20,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetService_ServiceTypeNotFound_ReturnNull()
+        public void GetService_ServiceFound_ReturnNull()
         {
             //Arrange 
             //var service = new DummyService();
@@ -37,7 +37,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetService_ServiceNotFound_ReturnService()
+        public void GetService_ServiceFound_ReturnService()
         {
             //Arrange 
             var service = new DummyService();
