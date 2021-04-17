@@ -23,7 +23,6 @@ namespace CoreSharp.Extensions.Tests
         public void GetService_ServiceNotFound_ReturnNull()
         {
             //Arrange 
-            var service = new DummyService();
             serviceProviderMock
                 .Setup(sp => sp.GetService(typeof(IDummyService)))
                 .Returns(null);
