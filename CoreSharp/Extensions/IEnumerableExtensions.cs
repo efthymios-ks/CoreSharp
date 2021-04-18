@@ -78,8 +78,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source)
         {
@@ -87,8 +86,15 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
+        /// </summary>
+        public static string StringJoinCI<T>(this IEnumerable<T> source)
+        {
+            return source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator)
         {
@@ -96,8 +102,15 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
+        /// </summary>
+        public static string StringJoinCI<T>(this IEnumerable<T> source, string separator)
+        {
+            return source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`CurrentCulture`.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat)
         {
@@ -105,8 +118,15 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`InvariantCulture`.
+        /// </summary>
+        public static string StringJoinCI<T>(this IEnumerable<T> source, string separator, string stringFormat)
+        {
+            return source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// String.Join collection of items using custom separator, String.Format=`{0}` and custom FormatProvider.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, IFormatProvider formatProvider)
         {
@@ -114,8 +134,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using separator=` `, String.Format=`{0}` and custom FormatProvider.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
         {
@@ -123,8 +142,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// String.Join collection of items using custom Separator, String.Format and
-        /// FormatProvider.
+        /// String.Join collection of items using custom separator, String.Format and FormatProvider.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
         {

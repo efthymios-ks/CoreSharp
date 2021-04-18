@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -183,6 +184,22 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void StringJoinCI_WhenCalled_ReturnStringFormatWithInvariantCultureArgument()
+        {
+            //Arrange
+            string separator = " ";
+            string format = "{0}";
+            var values = new[] { 1000, 2000 };
+            string expected = "1000 2000";
+
+            //Act
+            var result = values.StringJoinCI(separator, format);
+
+            //Assert
+            result.Should().Be(expected);
         }
 
         [Test]
