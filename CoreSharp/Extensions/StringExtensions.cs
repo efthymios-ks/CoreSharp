@@ -91,14 +91,14 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Removes the first occurence of a given value. 
         /// </summary>
-        public static string RemoveFirst(this string input, string remove)
+        public static string RemoveFirst(this string input, string value)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
-            remove = remove ?? throw new ArgumentNullException(nameof(remove));
+            value = value ?? throw new ArgumentNullException(nameof(value));
 
-            int index = input.IndexOf(remove);
+            int index = input.IndexOf(value);
             if (index >= 0)
-                input = input.Remove(index, remove.Length);
+                input = input.Remove(index, value.Length);
 
             return input;
         }
@@ -106,12 +106,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Remove all the occurences of a given value. 
         /// </summary>
-        public static string RemoveAll(this string input, string remove)
+        public static string RemoveAll(this string input, string value)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
-            remove = remove ?? throw new ArgumentNullException(nameof(remove));
+            value = value ?? throw new ArgumentNullException(nameof(value));
 
-            return input.Replace(remove, string.Empty);
+            return input.Replace(value, string.Empty);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace CoreSharp.Extensions
         public static string Left(this string input, int length)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
-            if (length <= 0)
+            if (length < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
@@ -135,7 +135,7 @@ namespace CoreSharp.Extensions
         public static string Right(this string input, int length)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
-            if (length <= 0)
+            if (length < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
@@ -152,7 +152,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Mid(this string input, int start)
         {
-            return input.Substring(start, input.Length);
+            return input.Mid(start, input?.Length ?? 0);
         }
 
         /// <summary>
@@ -161,25 +161,17 @@ namespace CoreSharp.Extensions
         public static string Mid(this string input, int start, int length)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
-            if (start <= 0)
+            if (start < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(start)} has to be greater than 0.");
             else if (start > input.Length)
                 throw new ArgumentOutOfRangeException($"{nameof(start)} cannot be greater than {nameof(input)}.Length ({input.Length}).");
-            else if (length <= 0)
+            else if (length < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
 
             if ((start + length) > input.Length)
                 return input.Substring(start);
             else
                 return input.Substring(start, length);
-        }
-
-        /// <summary>
-        /// String.Format with InvariantCulture.
-        /// </summary>
-        public static string FormatWithCI(this string format, params object[] parameters)
-        {
-            return format.FormatWith(CultureInfo.InvariantCulture, parameters);
         }
 
         /// <summary>
@@ -200,6 +192,14 @@ namespace CoreSharp.Extensions
             parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             return string.Format(formatProvider, format, parameters);
+        }
+
+        /// <summary>
+        /// String.Format with InvariantCulture.
+        /// </summary>
+        public static string FormatWithCI(this string format, params object[] parameters)
+        {
+            return format.FormatWith(CultureInfo.InvariantCulture, parameters);
         }
 
         /// <summary>
