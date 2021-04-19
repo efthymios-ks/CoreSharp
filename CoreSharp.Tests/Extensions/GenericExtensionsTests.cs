@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
@@ -121,6 +122,20 @@ namespace CoreSharp.Extensions.Tests
         {
             //Act 
             var result = input.IsNull();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(-1, false)]
+        [TestCase(0, true)]
+        [TestCase(1, false)]
+        [TestCase(default(int), true)]
+        public void IsDefault_WhenCalled_ReturnTrueIfInptHasDefaultTypeValue(int input, bool expected)
+        {
+            //Act
+            var result = input.IsDefault();
 
             //Assert
             result.Should().Be(expected);

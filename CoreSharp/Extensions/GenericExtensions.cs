@@ -77,5 +77,14 @@ namespace CoreSharp.Extensions
         {
             return !input.HasValue;
         }
+
+        /// <summary>
+        /// Check if struct has default value. 
+        /// </summary>
+        public static bool IsDefault<T>(this T input) where T : struct
+        {
+            var obj = default(T);
+            return input.Equals(obj);
+        }
     }
 }
