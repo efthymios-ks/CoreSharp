@@ -205,12 +205,28 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
+        public static bool EqualsAnyCI(this string input, IEnumerable<string> values)
+        {
+            return input.EqualsAnyCI(values?.ToArray());
+        }
+
+        /// <summary>
+        /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// </summary>
         public static bool EqualsAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(i => input.Equals(i, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// </summary>
+        public static bool StartsWithAnyCI(this string input, IEnumerable<string> values)
+        {
+            return input.StartsWithAnyCI(values?.ToArray());
         }
 
         /// <summary>
@@ -227,12 +243,28 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
+        public static bool EndsWithAnyCI(this string input, IEnumerable<string> values)
+        {
+            return input.EndsWithAnyCI(values?.ToArray());
+        }
+
+        /// <summary>
+        /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// </summary>
         public static bool EndsWithAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(i => input.EndsWith(i, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
+        /// </summary>
+        public static bool ContainsAnyCI(this string input, IEnumerable<string> values)
+        {
+            return input.ContainsAnyCI(values?.ToArray());
         }
 
         /// <summary>

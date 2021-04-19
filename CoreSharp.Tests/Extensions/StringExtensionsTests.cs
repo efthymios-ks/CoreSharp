@@ -1,8 +1,8 @@
 ﻿using CoreSharp.Extensions;
-using FluentAssertions;
-using NUnit.Framework;
 using System;
 using System.Globalization;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -10,15 +10,15 @@ namespace CoreSharp.Extensions.Tests
     public class StringExtensionsTests
     {
         //Fields
-        private readonly string stringNull = null;
-        private readonly string stringEmpty = string.Empty;
+        private const string StringNull = null;
+        private const string StringEmpty = "";
 
         //Methods 
         [Test]
         public void Truncate_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.Truncate(3);
+            Action action = () => StringNull.Truncate(3);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -28,7 +28,7 @@ namespace CoreSharp.Extensions.Tests
         public void Truncate_LengthIsNegative_ThrowArgumentOutOfRangeException()
         {
             //Act
-            Action action = () => stringEmpty.Truncate(-1);
+            Action action = () => StringEmpty.Truncate(-1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -52,7 +52,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatAsciiControls_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.FormatAsciiControls();
+            Action action = () => StringNull.FormatAsciiControls();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -78,7 +78,7 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.SplitChunks(2);
+            Action action = () => StringNull.SplitChunks(2);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -90,7 +90,7 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_ChunckSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
         {
             //Act
-            Action action = () => stringEmpty.SplitChunks(chunkSize);
+            Action action = () => StringEmpty.SplitChunks(chunkSize);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -114,7 +114,7 @@ namespace CoreSharp.Extensions.Tests
         public void PadCenter_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.PadCenter(2);
+            Action action = () => StringNull.PadCenter(2);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -124,7 +124,7 @@ namespace CoreSharp.Extensions.Tests
         public void PadCenter_TotalWidthIsNegative_ThrowArgumentOutOfRangeException()
         {
             //Act
-            Action action = () => stringEmpty.PadCenter(-1);
+            Action action = () => StringEmpty.PadCenter(-1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -151,7 +151,7 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveFirst_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.RemoveFirst("1");
+            Action action = () => StringNull.RemoveFirst("1");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -161,7 +161,7 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveFirst_ValueIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringEmpty.RemoveFirst(null);
+            Action action = () => StringEmpty.RemoveFirst(null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -186,7 +186,7 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveAll_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.RemoveAll("1");
+            Action action = () => StringNull.RemoveAll("1");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -196,7 +196,7 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveAll_ValueIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringEmpty.RemoveAll(null);
+            Action action = () => StringEmpty.RemoveAll(null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -221,7 +221,7 @@ namespace CoreSharp.Extensions.Tests
         public void Left_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.Left(3);
+            Action action = () => StringNull.Left(3);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -231,7 +231,7 @@ namespace CoreSharp.Extensions.Tests
         public void Left_LengthIsNegative_ThrowArgumentOutOfRangeException()
         {
             //Act
-            Action action = () => stringEmpty.Left(-1);
+            Action action = () => StringEmpty.Left(-1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -255,7 +255,7 @@ namespace CoreSharp.Extensions.Tests
         public void Right_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.Right(3);
+            Action action = () => StringNull.Right(3);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -265,7 +265,7 @@ namespace CoreSharp.Extensions.Tests
         public void Right_LengthIsNegative_ThrowArgumentOutOfRangeException()
         {
             //Act
-            Action action = () => stringEmpty.Right(-1);
+            Action action = () => StringEmpty.Right(-1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -289,7 +289,7 @@ namespace CoreSharp.Extensions.Tests
         public void Mid_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.Mid(2);
+            Action action = () => StringNull.Mid(2);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -311,7 +311,7 @@ namespace CoreSharp.Extensions.Tests
         public void Mid_LengthIsNegative_ThrowArgumentOutOfRangeException()
         {
             //Act
-            Action action = () => stringEmpty.Mid(0, -1);
+            Action action = () => StringEmpty.Mid(0, -1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -335,7 +335,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringNull.FormatWith(1);
+            Action action = () => StringNull.FormatWith(1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -345,7 +345,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_FormatProviderIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringEmpty.FormatWith(formatProvider: null, parameters: 1);
+            Action action = () => StringEmpty.FormatWith(formatProvider: null, parameters: 1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -355,7 +355,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_ParametersIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => stringEmpty.FormatWith(CultureInfo.InvariantCulture, parameters: null);
+            Action action = () => StringEmpty.FormatWith(CultureInfo.InvariantCulture, parameters: null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -388,6 +388,193 @@ namespace CoreSharp.Extensions.Tests
 
             //Act
             var result = format.FormatWith(culture, value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void EqualsAnyCI_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.EqualsAnyCI("a");
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void EqualsAnyCI_ValuesIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.EqualsAnyCI(values: null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("Ab", "Ac", false)]
+        [TestCase("Ab", "ab", true)]
+        [TestCase("Ab", "AB", true)]
+        public void EqualsAnyCI_WhenCalled_ReturnTrueIfEqualsAnyIgnoringCase(string input, string value, bool expected)
+        {
+            //Act
+            var result = input.EqualsAnyCI(value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void StartsWithAnyCI_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.StartsWithAnyCI("a");
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void StartsWithAnyCI_ValuesIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.StartsWithAnyCI(values: null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("Ab", "b", false)]
+        [TestCase("Ab", "a", true)]
+        [TestCase("Ab", "A", true)]
+        public void StartsWithAnyCI_WhenCalled_ReturnTrueIfStartsWithAnyIgnoringCase(string input, string value, bool expected)
+        {
+            //Act
+            var result = input.StartsWithAnyCI(value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void EndsWithAnyCI_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.EndsWithAnyCI("a");
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void EndsWithAnyCI_ValuesIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.EndsWithAnyCI(values: null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("Ab", "a", false)]
+        [TestCase("Ab", "b", true)]
+        [TestCase("Ab", "B", true)]
+        public void EndsWithAnyCI_WhenCalled_ReturnTrueIfStartsWithAnyIgnoringCase(string input, string value, bool expected)
+        {
+            //Act
+            var result = input.EndsWithAnyCI(value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, true)]
+        [TestCase(StringEmpty, true)]
+        [TestCase(" ", false)]
+        [TestCase("1", false)]
+        public void IsNullOrEmpty_WhenCalled_ReturnTrueIfNullOrEmpty(string value, bool expected)
+        {
+            //Act 
+            var result = value.IsNullOrEmpty();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, true)]
+        [TestCase(StringEmpty, true)]
+        [TestCase(" ", true)]
+        [TestCase("1", false)]
+        public void IsNullOrWhiteSpace_WhenCalled_ReturnTrueIfNullOrWhiteSpace(string value, bool expected)
+        {
+            //Act 
+            var result = value.IsNullOrWhiteSpace();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void Reverse_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.Reverse();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("12", "21")]
+        [TestCase("123", "321")]
+        public void Reverse_WhenCalled_ReturnReversedInput(string input, string expected)
+        {
+            //Act
+            var result = input.Reverse();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, StringEmpty)]
+        [TestCase(StringEmpty, null)]
+        public void Erase_AnyArgumentIsNull_ThrowArgumentNullException(string input, string value)
+        {
+            //Act 
+            Action action = () => input.Erase(value);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("1-2-3", "-", "123")]
+        public void Erase_WhenCalled_EraseAllOccurencesOfGivenValue(string input, string value, string expected)
+        {
+            //Act 
+            var result = input.Erase(value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, StringEmpty)]
+        [TestCase(StringEmpty, StringEmpty)]
+        [TestCase(StringEmpty, StringEmpty)]
+        [TestCase(" ", StringEmpty)]
+        [TestCase(" a ", "a")]
+        public void SafeTrim_WhenCalled_ReplaceNullWithStringEmptyThenTrimAndReturn(string input, string expected)
+        {
+            //Act
+            var result = input.SafeTrim();
 
             //Assert
             result.Should().Be(expected);
