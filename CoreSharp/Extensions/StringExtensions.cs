@@ -203,32 +203,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if string contains substring with StringComparison settings.
-        /// </summary>
-        public static bool Contains(this string input, string value, StringComparison comparison = StringComparison.InvariantCultureIgnoreCase)
-        {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            value = value ?? throw new ArgumentNullException(nameof(value));
-
-            int index = input.IndexOf(value, comparison);
-            return index >= 0;
-        }
-
-        /// <summary>
-        /// Check if two Strings match with StringComparison setting.
-        /// </summary>
-        public static bool Matches(this string input, string compareWith, StringComparison comparison = StringComparison.InvariantCultureIgnoreCase)
-        {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            compareWith = compareWith ?? throw new ArgumentNullException(nameof(compareWith));
-
-            return string.Equals(input, compareWith, comparison);
-        }
-
-        /// <summary>
         /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool EqualsAny(this string input, params string[] values)
+        public static bool EqualsAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
@@ -239,7 +216,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool StartsWithAny(this string input, params string[] values)
+        public static bool StartsWithAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
@@ -250,7 +227,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool EndsWithAny(this string input, params string[] values)
+        public static bool EndsWithAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
@@ -261,22 +238,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool ContainsAny(this string input, params string[] values)
+        public static bool ContainsAnyCI(this string input, params string[] values)
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(i => input.Contains(i, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        /// <summary>
-        /// Check if Input string contains specific character.
-        /// </summary>
-        public static bool Contains(this string input, char value)
-        {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-
-            return input.IndexOf(value) >= 0;
         }
 
         /// <summary>
