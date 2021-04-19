@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace CoreSharp.Extensions
 {
@@ -29,17 +31,6 @@ namespace CoreSharp.Extensions
             source = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.Contains(item);
-        }
-
-        /// <summary>
-        /// Get property name. 
-        /// </summary>
-        public static string GetPropertyName<TItem, TProperty>(this TItem item, Expression<Func<TItem, TProperty>> propertySelector)
-        {
-            propertySelector = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
-
-            var body = (MemberExpression)propertySelector.Body;
-            return body.Member.Name;
         }
 
         /// <summary> 
@@ -85,6 +76,22 @@ namespace CoreSharp.Extensions
         {
             var obj = default(T);
             return input.Equals(obj);
+        }
+
+        /// <summary>
+        /// Serialize to XDocument.
+        /// </summary> 
+        public static XDocument ToXDocument<T>(T input) where T : class
+        {
+            input = input ?? throw new ArgumentNullException(nameof(input));
+
+            var serializer = new XmlSerializer(typeof(T));
+
+            var document = new XDocument();
+            using (var writer = document.CreateWriter())
+                serializer.Serialize(writer, input);
+
+            return document;
         }
     }
 }
