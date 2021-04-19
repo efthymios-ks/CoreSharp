@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace CoreSharp.Extensions
 {
@@ -179,6 +180,34 @@ namespace CoreSharp.Extensions
             source = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.Values.Count(v => v.Equals(value));
+        }
+
+        /// <summary>
+        /// Build url query string from parameters dictionary. 
+        /// Converts both key and value to string with default converter. 
+        /// </summary> 
+        public static string ToUrlQueryString<TKey, TValue>(this IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
+        {
+            parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+
+            var pairs = parameters.Select(p =>
+            {
+                string key = $"{p.Key}";
+                string value = $"{p.Value}";
+
+                if (encodeParameters)
+                {
+                    key = HttpUtility.UrlEncode(key);
+                    value = HttpUtility.UrlEncode(value);
+                }
+
+                key = key.Trim();
+
+                return $"{key}={value}";
+            });
+
+            string query = string.Join("&", pairs);
+            return query;
         }
     }
 }
