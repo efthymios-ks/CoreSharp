@@ -3,9 +3,10 @@ using NUnit.Framework;
 
 namespace CoreSharp.Extensions.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class DecimalExtensionsTests
     {
+        //Methods
         [Test]
         [TestCase(1, 1, 3, 1, 10, 1)]
         [TestCase(2, 1, 3, 1, 10, 5.5)]

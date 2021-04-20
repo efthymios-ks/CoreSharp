@@ -1,9 +1,8 @@
-﻿using CoreSharp.Sources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
+using CoreSharp.Sources;
 
 namespace CoreSharp.Extensions
 {
@@ -51,7 +50,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (chunkSize < 1)
-                throw new ArgumentOutOfRangeException($"{nameof(chunkSize)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(chunkSize), $"{nameof(chunkSize)} has to be greater than 0.");
 
             return input.SplitChunksInternal(chunkSize);
         }
@@ -66,7 +65,7 @@ namespace CoreSharp.Extensions
                 index += chuckSize;
             }
 
-            yield return input.Substring(index);
+            yield return input[index..];
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (totalWidth < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(totalWidth)} has to be zero or greater.");
+                throw new ArgumentOutOfRangeException(nameof(totalWidth), $"{nameof(totalWidth)} has to be zero or greater.");
 
             int padding = totalWidth - input.Length;
             int padLeft = padding / 2 + input.Length;
@@ -121,7 +120,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
                 return input.Substring(0, length);
@@ -136,7 +135,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException("", $"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
             {
@@ -162,14 +161,14 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (start < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(start)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} has to be greater than 0.");
             else if (start > input.Length)
-                throw new ArgumentOutOfRangeException($"{nameof(start)} cannot be greater than {nameof(input)}.Length ({input.Length}).");
+                throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} cannot be greater than {nameof(input)}.Length ({input.Length}).");
             else if (length < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(length)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
             if ((start + length) > input.Length)
-                return input.Substring(start);
+                return input[start..];
             else
                 return input.Substring(start, length);
         }

@@ -1,6 +1,6 @@
-﻿using CoreSharp.Models;
-using System;
+﻿using System;
 using System.IO.Ports;
+using CoreSharp.Models;
 
 namespace CoreSharp.Extensions
 {
@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static SerialPortSettings GetSettings(this SerialPort port)
         {
-            port = port ?? throw new ArgumentNullException();
+            port = port ?? throw new ArgumentNullException(nameof(port));
 
 
             return new SerialPortSettings()

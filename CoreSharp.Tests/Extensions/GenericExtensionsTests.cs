@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using System;
+﻿using System;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
@@ -34,32 +33,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void GetPropertyName_PropertySelectorIsNull_ThrowArgumentNullException()
-        {
-            //Arrange 
-            var item = new DummyClass();
-
-            //Act
-            Action action = () => item.GetPropertyName<DummyClass, int>(null);
-
-            //Assert 
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void GetPropertyName_WhenCalled_ReturnPropertyName()
-        {
-            //Arrange 
-            var item = new DummyClass();
-
-            //Act
-            var result = item.GetPropertyName(i => i.Id);
-
-            //Assert 
-            result.Should().Be(nameof(item.Id));
         }
 
         [Test]
