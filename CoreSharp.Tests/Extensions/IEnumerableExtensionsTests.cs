@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -692,6 +693,39 @@ namespace CoreSharp.Extensions.Tests
             result1.Should().Equal(group1);
             result2.Should().Equal(group2);
             result3.Should().Equal(group3);
+        }
+
+        [Test]
+        public void ContainsAll_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.ContainsAll();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ContainsAll_ItemsIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceEmpty.ContainsAll(items: null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ContainsAll_AllItemsInSource_ReturnTrue()
+        {
+            var source = new[] { 1, 2, 3, 4, 5 };
+            var items = new[] { 1, 3, 5 };
+
+            //Act 
+            var result = source.ContainsAll(items);
+
+            //Assert 
+            result.Should().BeTrue();
         }
     }
 }

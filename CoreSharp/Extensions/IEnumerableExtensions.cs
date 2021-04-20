@@ -394,5 +394,24 @@ namespace CoreSharp.Extensions
 
             return groups;
         }
+
+        /// <summary>
+        /// Check if source contails all given items. 
+        /// </summary> 
+        public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items)
+        {
+            return source.ContainsAll(items?.ToArray());
+        }
+
+        /// <summary>
+        /// Check if source contails all given items. 
+        /// </summary> 
+        public static bool ContainsAll<T>(this IEnumerable<T> source, params T[] items)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+            items = items ?? throw new ArgumentNullException(nameof(items));
+
+            return items.All(i => source.Contains(i));
+        }
     }
 }
