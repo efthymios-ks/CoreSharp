@@ -151,12 +151,22 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary> 
+        /// If value exists, get, else add default and get.  
+        /// </summary> 
+        /// <returns>Value found or added.</returns>
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
+        {
+            return source.GetOrAdd(key, default);
+        }
+
+        /// <summary> 
         /// If value exists, get, else add and get.  
         /// </summary> 
         /// <returns>Value found or added.</returns>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
+            addValue = addValue ?? throw new ArgumentNullException(nameof(addValue));
 
             source.TryAdd(key, addValue);
             return source[key];
