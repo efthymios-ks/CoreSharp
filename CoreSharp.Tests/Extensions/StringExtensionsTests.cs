@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Globalization;
 using FluentAssertions;
 using NUnit.Framework;
+using CoreSharp.Tests.Dummies;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -577,6 +579,46 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void TryParseJson_JsonIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.TryParseJson(out DummyClass item);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TryParseJson_OptionsIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.TryParseJson(null, out DummyClass item);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TryParseJson_WhenCalled_MapItemPropertiesAndReturnTrue()
+        {
+            //Arrange
+            int id = 1;
+            string name = "Efthymios";
+            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
+            json = json
+                .Replace("{id}", $"{id}")
+                .Replace("{name}", name);
+
+            //Act
+            var result = json.TryParseJson(out DummyClass item);
+
+            //Assert 
+            result.Should().BeTrue();
+            item.Id.Should().Be(id);
+            item.Name.Should().Be(name);
         }
     }
 }

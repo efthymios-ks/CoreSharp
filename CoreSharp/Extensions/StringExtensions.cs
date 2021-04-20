@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using CoreSharp.Models.Newtonsoft;
 using CoreSharp.Sources;
+using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -333,6 +335,36 @@ namespace CoreSharp.Extensions
         public static string SafeTrim(this string input)
         {
             return (input ?? string.Empty).Trim();
+        }
+
+        /// <summary>
+        /// Try parse json to entity. 
+        /// </summary> 
+        public static bool TryParseJson<TEntity>(this string json, out TEntity item) where TEntity : class
+        {
+            var settings = new JsonSerializerDefaultSettings();
+
+            return json.TryParseJson(settings, out item);
+        }
+
+        /// <summary>
+        /// Try parse json to entity. 
+        /// </summary> 
+        public static bool TryParseJson<TEntity>(this string json, JsonSerializerSettings settings, out TEntity item) where TEntity : class
+        {
+            json = json ?? throw new ArgumentNullException(nameof(json));
+            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            item = default;
+
+            try
+            {
+                item = JsonConvert.DeserializeObject<TEntity>(json, settings);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

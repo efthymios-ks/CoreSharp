@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using CoreSharp.Models.Newtonsoft;
+using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -37,27 +37,21 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
         {
-            var options = new JsonSerializerOptions()
-            {
-                IgnoreReadOnlyFields = true,
-                IgnoreReadOnlyProperties = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                ReferenceHandler = ReferenceHandler.Preserve
-            };
+            var settings = new JsonSerializerDefaultSettings();
 
-            return item.JsonClone(options);
+            return item.JsonClone(settings);
         }
 
         /// <summary> 
         /// Perform a deep copy using Json serialization. 
         /// </summary> 
-        public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerOptions options) where TEntity : class
+        public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
         {
             item = item ?? throw new ArgumentNullException(nameof(item));
-            options = options ?? throw new ArgumentNullException(nameof(options));
+            settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            var json = JsonSerializer.Serialize(item, options);
-            return JsonSerializer.Deserialize<TEntity>(json, options);
+            var json = JsonConvert.SerializeObject(item, settings);
+            return JsonConvert.DeserializeObject<TEntity>(json, settings);
         }
 
         /// <summary>
