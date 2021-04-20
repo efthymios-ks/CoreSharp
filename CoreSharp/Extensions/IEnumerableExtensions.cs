@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace CoreSharp.Extensions
 {
@@ -412,6 +413,35 @@ namespace CoreSharp.Extensions
             items = items ?? throw new ArgumentNullException(nameof(items));
 
             return items.All(i => source.Contains(i));
+        }
+
+        /// <summary>
+        /// Converts collection to csv. 
+        /// </summary> 
+        public static string ToCsv<T>(this IEnumerable<T> source, char separator = ',', bool includeHeader = true)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+
+            var builder = new StringBuilder();
+            var properties = typeof(T).GetProperties();
+
+            //Add property names to header 
+            if (includeHeader)
+            {
+                var names = properties?.Select(p => p.Name);
+                var row = string.Join(separator, names);
+                builder.AppendLine(row);
+            }
+
+            //Add values 
+            foreach (var item in source)
+            {
+                var values = properties?.Select(p => p.GetValue(item));
+                var row = string.Join(separator, values);
+                builder.AppendLine(row);
+            }
+
+            return builder.ToString();
         }
     }
 }
