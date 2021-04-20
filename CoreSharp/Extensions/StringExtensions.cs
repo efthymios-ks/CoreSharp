@@ -332,9 +332,14 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Trim with null check. 
         /// </summary> 
-        public static string SafeTrim(this string input)
+        public static string SafeTrim(this string input, params char[] trimChars)
         {
-            return (input ?? string.Empty).Trim();
+            trimChars = trimChars ?? throw new ArgumentNullException(nameof(trimChars));
+
+            input ??= string.Empty;
+            input = input.Trim();
+            input = input.Trim(trimChars);
+            return input;
         }
 
         /// <summary>

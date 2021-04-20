@@ -567,6 +567,16 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void SafeTrim_TrimCharsIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.SafeTrim(trimChars: null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
         [TestCase(null, StringEmpty)]
         [TestCase(StringEmpty, StringEmpty)]
         [TestCase(StringEmpty, StringEmpty)]
@@ -580,6 +590,7 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
 
         [Test]
         public void TryParseJson_JsonIsNull_ThrowArgumentNullException()
