@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
@@ -33,6 +34,44 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void IsIn_KeySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Arrange 
+            string item = "1";
+            var source = new[] { "1", "2" };
+
+            //Act 
+            Action action = () => item.IsIn<string, string>(source, null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(false, "-1", "1", "2")]
+        [TestCase(true, "1", "1", "2")]
+        public void IsIn_WhenCalled_ReturnTrueIfItemInSource(bool expected, string item, params string[] source)
+        {
+            //Act 
+            var result = item.IsIn(source);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(false, "-1", "1", "2")]
+        [TestCase(true, "1", "1", "2")]
+        public void IsIn_WhenCalledWithKeySelector_ReturnTrue(bool expected, string item, params string[] source)
+        {
+            //Act 
+            var result = item.IsIn(source, i => i);
+
+            //Assert
+            result.Should().Be(expected);
         }
 
         [Test]
