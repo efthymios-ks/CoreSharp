@@ -49,6 +49,19 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void JsonClone_OptionsIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            var item = new DummyClass();
+
+            //Act
+            Action action = () => item.JsonClone(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
         public void JsonClone_WhenCalled_ReturnNewReferenceWithSameValues()
         {
             //Arrange

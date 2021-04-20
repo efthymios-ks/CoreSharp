@@ -35,17 +35,26 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Perform a deep copy using Json serialization. 
         /// </summary> 
-        public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerOptions options = null) where TEntity : class
+        public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
         {
-            item = item ?? throw new ArgumentNullException(nameof(item));
-
-            options ??= new JsonSerializerOptions()
+            var options = new JsonSerializerOptions()
             {
                 IgnoreReadOnlyFields = true,
                 IgnoreReadOnlyProperties = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 ReferenceHandler = ReferenceHandler.Preserve
             };
+
+            return item.JsonClone(options);
+        }
+
+        /// <summary> 
+        /// Perform a deep copy using Json serialization. 
+        /// </summary> 
+        public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerOptions options) where TEntity : class
+        {
+            item = item ?? throw new ArgumentNullException(nameof(item));
+            options = options ?? throw new ArgumentNullException(nameof(options));
 
             var json = JsonSerializer.Serialize(item, options);
             return JsonSerializer.Deserialize<TEntity>(json, options);
