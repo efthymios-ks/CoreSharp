@@ -107,7 +107,6 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
-        /// <returns>True if added, false if updated</returns>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
         {
             return source.AddOrUpdate(key, value, (k, v) => value);
@@ -116,7 +115,6 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
-        /// <returns>True if added, false if updated</returns>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, TValue updateValue)
         {
             return source.AddOrUpdate(key, addValue, (k, v) => updateValue);
