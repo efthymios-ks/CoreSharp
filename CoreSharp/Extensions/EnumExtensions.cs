@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions
         public static IDictionary<string, TEnum> GetDictionary<TEnum>() where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.");
+                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
             else
             {
                 var dictionary = new Dictionary<string, TEnum>();
@@ -42,7 +42,7 @@ namespace CoreSharp.Extensions
         public static string GetDescription<TEnum>(this TEnum value) where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.");
+                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
             string valueString = $"{value}";
 
