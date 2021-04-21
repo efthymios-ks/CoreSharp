@@ -1,9 +1,8 @@
-﻿using CoreSharp.Extensions;
-using System;
+﻿using System;
 using System.Globalization;
+using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
-using CoreSharp.Tests.Dummies;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -589,17 +588,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-
-        [Test]
-        public void TryParseJson_JsonIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.TryParseJson(out DummyClass item);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

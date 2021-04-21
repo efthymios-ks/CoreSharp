@@ -357,7 +357,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryParseJson<TEntity>(this string json, JsonSerializerSettings settings, out TEntity item) where TEntity : class
         {
-            json = json ?? throw new ArgumentNullException(nameof(json));
             settings = settings ?? throw new ArgumentNullException(nameof(settings));
             item = default;
 
