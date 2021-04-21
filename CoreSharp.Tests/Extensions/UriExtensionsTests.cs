@@ -41,6 +41,35 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void GetFragmentParameters_UriIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => uriNull.GetFragmentParameters();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetFragmentParameters_WhenCalled_ReturnDictionaryWithFragmentParameters()
+        {
+            //Arrange
+            string url = @"https://example.com/route#name=efthymios&color=black";
+            var uri = new Uri(url);
+            var expected = new Dictionary<string, string>()
+            {
+                { "name", "efthymios" },
+                { "color", "black" }
+            };
+
+            //Act
+            var result = uri.GetFragmentParameters();
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
         public void BuildUri_BaseUrlIsNullOrWhiteSpace_ThrowArgumentxception()
         {
             //Arrange

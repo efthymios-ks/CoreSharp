@@ -10,6 +10,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class UriExtensions
     {
+
         /// <summary>
         /// Get url query parameters to dictionary. 
         /// </summary> 
@@ -17,8 +18,26 @@ namespace CoreSharp.Extensions
         {
             uri = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            var collection = HttpUtility.ParseQueryString(uri.Query);
-            var dictionary = collection.AllKeys.ToDictionary(k => k, k => collection[k]);
+            return GetUriParametersInternal(uri.Query);
+        }
+
+        /// <summary>
+        /// Get url fragment parameters to dictionary. 
+        /// </summary> 
+        public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
+        {
+            uri = uri ?? throw new ArgumentNullException(nameof(uri));
+
+            return GetUriParametersInternal(uri.Fragment.TrimStart('#'));
+        }
+
+        private static IDictionary<string, string> GetUriParametersInternal(string uri)
+        {
+            if (string.IsNullOrWhiteSpace(uri))
+                throw new ArgumentNullException(nameof(uri));
+
+            var parameters = HttpUtility.ParseQueryString(uri);
+            var dictionary = parameters.AllKeys.ToDictionary(k => k, k => parameters[k]);
             return dictionary;
         }
 
