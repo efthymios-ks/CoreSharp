@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void BuildUri_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
+        public void BuildUri_BaseUrlIsNullOrWhiteSpace_ThrowArgumentxception()
         {
             //Arrange
             string baseUrl = null;
@@ -55,7 +55,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => UriExtensions.BuildUri(baseUrl, parameters);
 
             //Assert 
-            action.Should().ThrowExactly<ArgumentNullException>();
+            action.Should().ThrowExactly<ArgumentException>();
         }
 
         [Test]

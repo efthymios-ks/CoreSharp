@@ -27,9 +27,9 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static Uri BuildUri<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
         {
-            if (string.IsNullOrWhiteSpace(baseUrl))
-                throw new ArgumentNullException(nameof(baseUrl));
             parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            if (string.IsNullOrWhiteSpace(baseUrl))
+                throw new ArgumentException(nameof(baseUrl));
 
             string query = parameters.ToUrlQueryString(encodeParameters);
 
