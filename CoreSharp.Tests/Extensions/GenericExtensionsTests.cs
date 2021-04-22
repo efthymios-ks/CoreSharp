@@ -3,6 +3,7 @@ using System;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
+using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -71,6 +72,50 @@ namespace CoreSharp.Extensions.Tests
             var result = item.IsIn(source, i => i);
 
             //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToJson_InputIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            DummyClass item = null;
+
+            //Act
+            Action action = () => item.ToJson();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToJson_OptionsIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            var item = new DummyClass();
+
+            //Act
+            Action action = () => item.ToJson(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToJson_WhenCalled_ReturnNewReferenceWithSameValues()
+        {
+            //Arrange 
+            var item = new DummyClass(1, "Red");
+            string expected = @"{""Id"":1,""Name"":""Red""}";
+            var settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.None
+            };
+
+            //Act
+            var result = item.ToJson(settings);
+
+            //Assert  
             result.Should().Be(expected);
         }
 

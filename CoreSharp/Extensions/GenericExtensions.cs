@@ -45,6 +45,27 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary> 
+        /// Serialize object to json.
+        /// </summary> 
+        public static string ToJson<TEntity>(this TEntity item) where TEntity : class
+        {
+            var settings = new JsonSerializerDefaultSettings();
+
+            return item.ToJson(settings);
+        }
+
+        /// <summary> 
+        /// Serialize object to json.
+        /// </summary> 
+        public static string ToJson<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
+        {
+            item = item ?? throw new ArgumentNullException(nameof(item));
+            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+
+            return JsonConvert.SerializeObject(item, settings);
+        }
+
+        /// <summary> 
         /// Perform a deep copy using Json serialization. 
         /// </summary> 
         public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
