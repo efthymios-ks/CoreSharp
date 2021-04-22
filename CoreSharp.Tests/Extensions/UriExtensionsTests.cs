@@ -84,7 +84,7 @@ namespace CoreSharp.Extensions.Tests
             Action action = () => UriExtensions.BuildUri(baseUrl, parameters);
 
             //Assert 
-            action.Should().ThrowExactly<ArgumentException>();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

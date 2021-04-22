@@ -33,9 +33,6 @@ namespace CoreSharp.Extensions
 
         private static IDictionary<string, string> GetUriParametersInternal(string uri)
         {
-            if (string.IsNullOrWhiteSpace(uri))
-                throw new ArgumentNullException(nameof(uri));
-
             var parameters = HttpUtility.ParseQueryString(uri);
             var dictionary = parameters.AllKeys.ToDictionary(k => k, k => parameters[k]);
             return dictionary;
@@ -48,7 +45,7 @@ namespace CoreSharp.Extensions
         {
             parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
-                throw new ArgumentException(nameof(baseUrl));
+                throw new ArgumentNullException(nameof(baseUrl));
 
             string query = parameters.ToUrlQueryString(encodeParameters);
 
