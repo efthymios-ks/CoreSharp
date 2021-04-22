@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Build url from base url and parameters.
         /// </summary> 
-        public static Uri BuildUri<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
+        public static string BuildUri<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
         {
             parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
@@ -54,7 +54,7 @@ namespace CoreSharp.Extensions
             query = query.Trim(trimChars);
 
             string url = $"{baseUrl}/?{query}";
-            return new Uri(url);
+            return url;
         }
     }
 }
