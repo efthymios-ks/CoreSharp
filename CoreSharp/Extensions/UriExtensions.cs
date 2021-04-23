@@ -10,7 +10,6 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class UriExtensions
     {
-
         /// <summary>
         /// Get url query parameters to dictionary. 
         /// </summary> 
@@ -49,7 +48,7 @@ namespace CoreSharp.Extensions
 
             string query = parameters.ToUrlQueryString(encodeParameters);
 
-            var trimChars = new char[] { ' ', '?', '&', '/' };
+            var trimChars = new[] { ' ', '?', '&', '/' };
             baseUrl = baseUrl.Trim(trimChars);
             query = query.Trim(trimChars);
 

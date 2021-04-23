@@ -125,13 +125,13 @@ namespace CoreSharp.Extensions
             RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
             source = source ?? throw new ArgumentNullException(nameof(source));
 
-            for (int i = 0; i < (source.Count - 1); i++)
+            for (int currentIndex = 0; currentIndex < (source.Count - 1); currentIndex++)
             {
-                var r = RNG.Next(i, source.Count);
+                var randomIndex = RNG.Next(currentIndex, source.Count);
 
-                var tmp = source[i];
-                source[i] = source[r];
-                source[r] = tmp;
+                var tmp = source[currentIndex];
+                source[currentIndex] = source[randomIndex];
+                source[randomIndex] = tmp;
             }
         }
     }
