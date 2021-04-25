@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Threading.Tasks;
+using CoreSharp.Interfaces.Repositories;
+
+namespace CoreSharp.Implementations.Repositories
+{
+    public abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    {
+        //Properties 
+        protected DbConnection Connection => Transaction?.Connection;
+        protected DbTransaction Transaction { get; }
+
+        //Constructors 
+        public DapperRepository(DbTransaction transaction)
+        {
+            Transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
+        }
+
+        //Methods 
+        public abstract Task<TEntity> GetAsync(params object[] key);
+
+        public abstract Task<IEnumerable<TEntity>> GetAsync();
+
+        public async virtual Task<IEnumerable<TEntity>> GetAsync(Predicate<TEntity> predicate)
+        {
+            predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
+
+            return (await GetAsync()).Where(i => predicate(i));
+        }
+
+        /// <example>
+        /// --Use OUTPUT to get auto-identity newly added Id 
+        /// INSERT INTO Table 
+        /// (Columns)
+        /// OUTPUT INSERTED.ColumnId
+        /// VALUES
+        /// (@ColumnValues)
+        /// </example>
+        public abstract Task AddAsync(params TEntity[] entities);
+
+        public abstract Task UpdateAsync(params TEntity[] entities);
+
+        public abstract Task RemoveAsync(params TEntity[] entities);
+    }
+}
