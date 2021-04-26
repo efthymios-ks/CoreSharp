@@ -57,7 +57,7 @@ namespace CoreSharp.Extensions
             return input.SplitChunksInternal(chunkSize);
         }
 
-        private static IEnumerable<string> SplitChunksInternal(this string input, int chuckSize)
+        private static IEnumerable<string> SplitChunksInternal(this string input, int chunkSize)
         {
             int index = 0;
 
