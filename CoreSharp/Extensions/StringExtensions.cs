@@ -61,10 +61,10 @@ namespace CoreSharp.Extensions
         {
             int index = 0;
 
-            while ((index + chuckSize) < input.Length)
+            while ((index + chunkSize) < input.Length)
             {
-                yield return input.Substring(index, chuckSize);
-                index += chuckSize;
+                yield return input.Substring(index, chunkSize);
+                index += chunkSize;
             }
 
             yield return input[index..];
@@ -219,7 +219,7 @@ namespace CoreSharp.Extensions
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
-            return values.Any(i => input.Equals(i, StringComparison.InvariantCultureIgnoreCase));
+            return values.Any(v => input.Equals(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace CoreSharp.Extensions
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
-            return values.Any(i => input.StartsWith(i, StringComparison.InvariantCultureIgnoreCase));
+            return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace CoreSharp.Extensions
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
-            return values.Any(i => input.EndsWith(i, StringComparison.InvariantCultureIgnoreCase));
+            return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace CoreSharp.Extensions
             input = input ?? throw new ArgumentNullException(nameof(input));
             values = values ?? throw new ArgumentNullException(nameof(values));
 
-            return values.Any(i => input.Contains(i, StringComparison.InvariantCultureIgnoreCase));
+            return values.Any(v => input.Contains(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -314,8 +314,6 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Erase(this string input, char value)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-
             return input.Erase($"{value}");
         }
 
@@ -363,7 +361,7 @@ namespace CoreSharp.Extensions
             try
             {
                 item = JsonConvert.DeserializeObject<TEntity>(json, settings);
-                return true;
+                return item != null;
             }
             catch
             {
