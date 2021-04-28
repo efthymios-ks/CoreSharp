@@ -369,6 +369,11 @@
             Get Description attribute from an enum. 
             </summary> 
         </member>
+        <member name="M:CoreSharp.Extensions.EnumExtensions.GetDisplayName``1(``0)">
+            <summary>
+            Get Display.Name attribute from an enum. 
+            </summary> 
+        </member>
         <member name="T:CoreSharp.Extensions.ExceptionExtensions">
             <summary>
             Exception extensions.

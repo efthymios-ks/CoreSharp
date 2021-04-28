@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
@@ -80,6 +81,33 @@ namespace CoreSharp.Extensions.Tests
 
             //Act 
             var result = item.GetDescription();
+
+            result.Should().Be(expected);
+        }
+
+
+        [Test]
+        public void GetDisplayName_TypeIsNotEnum_ThrowArgumentException()
+        {
+            //Arrange 
+            var item = new DummyNotAnEnum();
+
+            //Act 
+            Action action = () => item.GetDisplayName();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [Test]
+        public void GetDisplayName_WhenCalled_ReturnEnumDisplayAttribute()
+        {
+            //Arrange 
+            var item = DummyEnum.Option1;
+            string expected = "Option 1";
+
+            //Act 
+            var result = item.GetDisplayName();
 
             result.Should().Be(expected);
         }

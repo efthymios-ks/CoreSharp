@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace CoreSharp.Extensions
@@ -53,6 +54,25 @@ namespace CoreSharp.Extensions
 
             //Return attribute or enum itself as description 
             return descriptionAttribute?.Description ?? valueString;
+        }
+
+        /// <summary>
+        /// Get Display.Name attribute from an enum. 
+        /// </summary> 
+        public static string GetDisplayName<TEnum>(this TEnum value) where TEnum : struct, IConvertible
+        {
+            if (!typeof(TEnum).IsEnum)
+                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
+
+            string valueString = $"{value}";
+
+            //Get first attribute of type 'DescriptionAttribute'
+            var fieldInfo = value.GetType().GetField(valueString);
+            var displayAttributes = fieldInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)?.Cast<DisplayAttribute>();
+            var displayAttribute = displayAttributes?.FirstOrDefault();
+
+            //Return attribute or enum itself as description 
+            return displayAttribute?.Name ?? valueString;
         }
     }
 }
