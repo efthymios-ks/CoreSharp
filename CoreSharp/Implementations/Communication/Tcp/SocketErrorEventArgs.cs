@@ -3,10 +3,10 @@ using System.Net.Sockets;
 
 namespace CoreSharp.Implementations.Communication.Tcp
 {
-    public class ErrorOccuredEventArgs : EventArgs
+    public class SocketErrorEventArgs : EventArgs
     {
         //Constructors 
-        public ErrorOccuredEventArgs(SocketError error)
+        public SocketErrorEventArgs(SocketError error)
         {
             Error = error;
         }

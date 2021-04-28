@@ -25,7 +25,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => $"Local='{LocalEndPoint}', Remote='{RemoteEndPoint}'";
-        public IPEndPoint LocalEndPoint => socket?.LocalEndPoint as IPEndPoint;
+        public IPEndPoint LocalEndPoint { get; private set; }
         public IPEndPoint RemoteEndPoint { get; private set; }
         public int BufferSize { get; set; } = 8 * 1024;
         public TimeSpan Timeout
@@ -60,6 +60,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 if (isConnected)
                 {
                     isTerminated = false;
+                    LocalEndPoint = socket?.LocalEndPoint as IPEndPoint;
                     BeginReceiving();
                 }
 
@@ -97,14 +98,12 @@ namespace CoreSharp.Implementations.Communication.Tcp
         public EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
         public EventHandler<DataTransferedEventArgs> DataSent;
         public EventHandler<DataTransferedEventArgs> DataReceived;
-        public EventHandler<ErrorOccuredEventArgs> ErrorOccured;
+        public EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
         public void Connect()
         {
-            if (isConnecting)
-                return;
-            else if (IsConnected)
+            if (isConnecting || IsConnected)
                 return;
 
             try
@@ -122,13 +121,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             }
             catch (SocketException ex)
             {
-                OnError(ex.SocketErrorCode);
-                throw;
-            }
-            finally
-            {
-                Terminate();
                 IsConnected = false;
+                Terminate();
+                OnError(ex.SocketErrorCode);
             }
         }
 
@@ -354,7 +349,6 @@ namespace CoreSharp.Implementations.Communication.Tcp
             socket?.Dispose();
         }
 
-
         private void OnConnectionStatusChanged(bool isConnected)
         {
             var args = new ConnectionStatusChangedEventArgs(isConnected);
@@ -394,7 +388,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.Shutdown))
                 return;
 
-            var args = new ErrorOccuredEventArgs(error);
+            var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);
         }
 

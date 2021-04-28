@@ -6,14 +6,14 @@ namespace CoreSharp.Implementations.Communication.Tcp
     public class SessionEventArgs : EventArgs
     {
         //Constructor
-        public SessionEventArgs(IPEndPoint serverEndPoint, IPEndPoint remoteEndPoint)
+        public SessionEventArgs(IPEndPoint serverEndPoint, IPEndPoint sessionEndPoint)
         {
             ServerEndPoint = serverEndPoint;
-            RemoteEndPoint = remoteEndPoint;
+            SessionEndPoint = sessionEndPoint;
         }
 
         //Properties 
         public IPEndPoint ServerEndPoint { get; }
-        public IPEndPoint RemoteEndPoint { get; }
+        public IPEndPoint SessionEndPoint { get; }
     }
 }

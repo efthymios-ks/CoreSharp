@@ -3,10 +3,10 @@ using System.Net;
 
 namespace CoreSharp.Implementations.Communication.Tcp
 {
-    public class SessionDataTransferred : DataTransferedEventArgs
+    public class SessionDataTransferredEventArgs : DataTransferedEventArgs
     {
         //Constructors 
-        public SessionDataTransferred(TcpSession session, byte[] buffer) : base(buffer)
+        public SessionDataTransferredEventArgs(TcpSession session, byte[] data) : base(data)
         {
             Session = session ?? throw new ArgumentNullException(nameof(session));
         }
@@ -14,6 +14,6 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Properties 
         public TcpSession Session { get; }
         public IPEndPoint ServerEndPoint => Session?.ServerEndPoint;
-        public IPEndPoint RemoteEndPoint => Session?.RemoteEndPoint;
+        public IPEndPoint SessionEndPoint => Session?.SessionEndPoint;
     }
 }

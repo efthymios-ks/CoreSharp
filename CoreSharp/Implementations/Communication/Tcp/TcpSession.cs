@@ -13,15 +13,15 @@ namespace CoreSharp.Implementations.Communication.Tcp
     public sealed class TcpSession : Disposable
     {
         //Fields 
+        private readonly TcpServer server;
+        private Socket socket;
         private bool isConnected;
         private bool isTerminated;
 
         //Properties 
-        private string DebuggerDisplay => $"Server='{ServerEndPoint}', Remote='{RemoteEndPoint}'";
-        public TcpServer Server { get; private set; }
-        public Socket InternalSocket { get; private set; }
-        public IPEndPoint ServerEndPoint => Server?.LocalEndPoint;
-        public IPEndPoint RemoteEndPoint { get; private set; }
+        private string DebuggerDisplay => $"Server='{ServerEndPoint}', Session='{SessionEndPoint}'";
+        public IPEndPoint ServerEndPoint => socket?.LocalEndPoint as IPEndPoint;
+        public IPEndPoint SessionEndPoint { get; private set; }
         public bool IsConnected
         {
             get { return isConnected; }
@@ -45,7 +45,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Constructors 
         public TcpSession(TcpServer server)
         {
-            Server = server ?? throw new ArgumentNullException(nameof(server));
+            this.server = server ?? throw new ArgumentNullException(nameof(server));
         }
 
         ~TcpSession()
@@ -57,16 +57,16 @@ namespace CoreSharp.Implementations.Communication.Tcp
         public EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
         public EventHandler<DataTransferedEventArgs> DataSent;
         public EventHandler<DataTransferedEventArgs> DataReceived;
-        public EventHandler<ErrorOccuredEventArgs> ErrorOccured;
+        public EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
         public void Connect(Socket socket)
         {
             socket = socket ?? throw new ArgumentNullException(nameof(socket));
 
-            socket.NoDelay = Server.NoDelay;
-            InternalSocket = socket;
-            RemoteEndPoint = InternalSocket?.LocalEndPoint as IPEndPoint;
+            socket.NoDelay = server.NoDelay;
+            this.socket = socket;
+            SessionEndPoint = this.socket?.RemoteEndPoint as IPEndPoint;
 
             IsConnected = true;
         }
@@ -78,7 +78,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             IsConnected = false;
 
             Terminate();
-            Server?.UnregisterSession(this);
+            server?.UnregisterSession(this);
         }
 
         public int Send(string data)
@@ -107,7 +107,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             if (!IsConnected)
                 throw new InvalidOperationException($"Cannot send data while disconnected.");
 
-            int count = InternalSocket.Send(data, 0, data.Length, SocketFlags.None, out var error);
+            int count = socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
             if (count > 0)
                 OnDataSent(data.Take(count));
 
@@ -149,7 +149,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             var args = new SocketAsyncEventArgs();
             args.SetBuffer(data, 0, data.Length);
             args.Completed += AsyncOperationCompleted;
-            if (!InternalSocket.SendAsync(args))
+            if (!socket.SendAsync(args))
                 HandleSend(args);
         }
 
@@ -158,11 +158,11 @@ namespace CoreSharp.Implementations.Communication.Tcp
             if (!IsConnected)
                 throw new InvalidOperationException($"Cannot receive data while disconnected");
 
-            var buffer = new byte[InternalSocket.ReceiveBufferSize];
+            var buffer = new byte[socket.ReceiveBufferSize];
             var args = new SocketAsyncEventArgs();
             args.SetBuffer(buffer, 0, buffer.Length);
             args.Completed += AsyncOperationCompleted;
-            if (!InternalSocket.ReceiveAsync(args))
+            if (!socket.ReceiveAsync(args))
                 HandleReceive(args);
         }
 
@@ -223,11 +223,11 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
             try
             {
-                InternalSocket?.Shutdown(SocketShutdown.Both);
+                socket?.Shutdown(SocketShutdown.Both);
             }
             catch { }
-            InternalSocket?.Close();
-            InternalSocket?.Dispose();
+            socket?.Close();
+            socket?.Dispose();
         }
 
         private void OnConnectionStatusChanged(bool isConnected)
@@ -269,7 +269,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.Shutdown))
                 return;
 
-            var args = new ErrorOccuredEventArgs(error);
+            var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);
         }
 

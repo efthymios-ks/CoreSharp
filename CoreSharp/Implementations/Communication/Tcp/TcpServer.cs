@@ -14,14 +14,14 @@ namespace CoreSharp.Implementations.Communication.Tcp
     {
         //Fields 
         private Socket socket;
+        private SocketAsyncEventArgs socketOperationArgs;
         private bool isListening;
         private bool isTerminated;
-        private SocketAsyncEventArgs socketOperationArgs;
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => $"'{LocalEndPoint}', Sessions={ActiveSessions.Count}";
-        public IPEndPoint LocalEndPoint { get; private set; }
+        private string DebuggerDisplay => $"'{EndPoint}', Sessions={ActiveSessions?.Count}";
+        public IPEndPoint EndPoint { get; private set; }
         public int BufferSize { get; set; } = 8 * 1024;
         public IList<TcpSession> ActiveSessions { get; private set; } = new List<TcpSession>();
         public bool IsListening
@@ -54,7 +54,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Constructors 
         public TcpServer(int port)
         {
-            LocalEndPoint = new IPEndPoint(IPAddress.Any, port);
+            EndPoint = new IPEndPoint(IPAddress.Any, port);
         }
 
         ~TcpServer()
@@ -65,9 +65,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Events  
         public EventHandler<SessionStartedEventArgs> SessionStarted;
         public EventHandler<SessionEventArgs> SessionDropped;
-        public EventHandler<SessionDataTransferred> DataSent;
-        public EventHandler<SessionDataTransferred> DataReceive;
-        public EventHandler<ErrorOccuredEventArgs> ErrorOccured;
+        public EventHandler<SessionDataTransferredEventArgs> DataSent;
+        public EventHandler<SessionDataTransferredEventArgs> DataReceived;
+        public EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
         public void Start()
@@ -78,7 +78,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
             socketOperationArgs = new SocketAsyncEventArgs();
             socketOperationArgs.Completed += AsyncOperationComplete;
-            socket = new Socket(LocalEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+            socket = new Socket(EndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
             {
                 NoDelay = NoDelay,
                 ReceiveBufferSize = BufferSize,
@@ -86,10 +86,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
             };
             if (socket.AddressFamily == AddressFamily.InterNetworkV6)
                 socket.DualMode = DualMode;
-            socket.Bind(LocalEndPoint);
+            socket.Bind(EndPoint);
 
             //Refresh EndPoint 
-            LocalEndPoint = (IPEndPoint)socket.LocalEndPoint;
+            EndPoint = (IPEndPoint)socket.LocalEndPoint;
 
             //Start listening and accepting sockets
             socket.Listen(Backlog);
@@ -109,7 +109,6 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
         internal void RegisterSession(Socket socket)
         {
-            //TODO: Disallow duplicate IP 
             socket = socket ?? throw new ArgumentNullException(nameof(socket));
 
             var session = new TcpSession(this);
@@ -160,8 +159,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             data = data ?? throw new ArgumentNullException(nameof(data));
 
-            foreach (var client in ActiveSessions)
-                client.BeginSending(data);
+            foreach (var session in ActiveSessions)
+                session.BeginSending(data);
         }
 
         private void BeginAccepting(SocketAsyncEventArgs args)
@@ -171,6 +170,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             if (!IsListening)
                 throw new InvalidOperationException($"Cannot accept sessions while not listening.");
 
+            args.AcceptSocket = null;
             if (!socket.AcceptAsync(args))
                 HandleAccept(args);
         }
@@ -219,22 +219,22 @@ namespace CoreSharp.Implementations.Communication.Tcp
             SessionDropped?.Invoke(this, args);
         }
 
-        private void OnDataSent(TcpSession session, byte[] buffer)
+        private void OnDataSent(TcpSession session, byte[] data)
         {
             session = session ?? throw new ArgumentNullException(nameof(session));
-            buffer = buffer ?? throw new ArgumentNullException(nameof(buffer));
+            data = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new SessionDataTransferred(session, buffer);
+            var args = new SessionDataTransferredEventArgs(session, data);
             DataSent?.Invoke(this, args);
         }
 
-        private void OnDataReceived(TcpSession session, byte[] buffer)
+        private void OnDataReceived(TcpSession session, byte[] data)
         {
             session = session ?? throw new ArgumentNullException(nameof(session));
-            buffer = buffer ?? throw new ArgumentNullException(nameof(buffer));
+            data = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new SessionDataTransferred(session, buffer);
-            DataReceive?.Invoke(this, args);
+            var args = new SessionDataTransferredEventArgs(session, data);
+            DataReceived?.Invoke(this, args);
         }
 
         private void OnError(SocketError error)
@@ -248,7 +248,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.Shutdown))
                 return;
 
-            var args = new ErrorOccuredEventArgs(error);
+            var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);
         }
 
@@ -266,8 +266,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
             var session = sender as TcpSession;
             if (!args.IsConnected)
             {
+                var serverEndPoint = session.ServerEndPoint;
+                var sessionEndPoint = session.SessionEndPoint;
                 UnregisterSession(session);
-                OnSessionDropped(session.ServerEndPoint, session.RemoteEndPoint);
+                OnSessionDropped(serverEndPoint, sessionEndPoint);
             }
         }
 
@@ -276,7 +278,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             args = args ?? throw new ArgumentNullException(nameof(args));
 
             var session = sender as TcpSession;
-            OnDataReceived(session, args.Buffer);
+            OnDataReceived(session, args.Data);
         }
 
         private void Session_DataSent(object sender, DataTransferedEventArgs args)
@@ -284,7 +286,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             args = args ?? throw new ArgumentNullException(nameof(args));
 
             var session = sender as TcpSession;
-            OnDataSent(session, args.Buffer);
+            OnDataSent(session, args.Data);
         }
 
         #region Dispose 

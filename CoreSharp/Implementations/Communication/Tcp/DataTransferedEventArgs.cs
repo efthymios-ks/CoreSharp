@@ -5,12 +5,12 @@ namespace CoreSharp.Implementations.Communication.Tcp
     public class DataTransferedEventArgs : EventArgs
     {
         //Constructors 
-        public DataTransferedEventArgs(byte[] buffer)
+        public DataTransferedEventArgs(byte[] data)
         {
-            Buffer = buffer ?? throw new ArgumentNullException(nameof(buffer));
+            Data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         //Properties 
-        public byte[] Buffer { get; private set; } = Array.Empty<byte>();
+        public byte[] Data { get; private set; } = Array.Empty<byte>();
     }
 }
