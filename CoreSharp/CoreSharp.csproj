@@ -15,7 +15,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>C:\Users\Efthymios Koktsidis\Desktop\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
+    <WarningsAsErrors>NU1605;</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
