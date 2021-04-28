@@ -1,0 +1,1526 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CoreSharp</name>
+    </assembly>
+    <members>
+        <member name="T:CoreSharp.Console.ConsoleX">
+            <summary>
+            Extended console functions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.ClearLine">
+            <summary>
+            Clear current line. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.ClearLine(System.Int32)">
+            <summary>
+            Clear line. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.ClearLines(System.Int32[])">
+            <summary>
+            Clear list of lines. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WaitForEnter">
+            <summary>
+            Wait for enter. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.NewLine">
+            <summary>
+            New line. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Write(System.Object)">
+            <summary>
+            Write input. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Write(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Write with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Write(System.String,System.Object[])">
+            <summary>
+            Write with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Write(System.String)">
+            <summary>
+            Write with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WriteLine(System.Object)">
+            <summary>
+            Write input. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WriteLine(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Write line with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write line with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WriteLine(System.String)">
+            <summary>
+            Write line with String.Format. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.WriteLine">
+            <summary>
+            Write new line. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Log(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Log formatted message with timestamp. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.LogCI(System.String,System.Object[])">
+            <summary>
+            Log CultureInvariant formatted message with timestamp. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Console.ConsoleX.Log(System.String)">
+            <summary>
+            Log message with timestamp. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Enums.Month">
+            <summary>
+            Month enum. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.January">
+            <summary>
+            January. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.February">
+            <summary>
+            February. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.March">
+            <summary>
+            March. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.April">
+            <summary>
+            April. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.May">
+            <summary>
+            May. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.June">
+            <summary>
+            June. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.July">
+            <summary>
+            July. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.August">
+            <summary>
+            August. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.September">
+            <summary>
+            September. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.October">
+            <summary>
+            October. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.November">
+            <summary>
+            November. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Enums.Month.December">
+            <summary>
+            December. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.ByteExtensions">
+            <summary>
+            Byte extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ByteExtensions.Map(System.Byte,System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Re-maps a number from one range to another. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DataRowExtensions">
+            <summary>
+            DataRow extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnNames(System.Data.DataRow)">
+            <summary>
+            Get DataRow column names.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnValues(System.Data.DataRow)">
+            <summary>
+            Get column values.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.DataRowExtensions.MapTo``1(System.Data.DataRow,System.Boolean)">
+            <summary>
+            Map DataRow values to TEntity.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DataTableExtensions">
+            <summary>
+            DataTable extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DataTableExtensions.GetColumnNames(System.Data.DataTable)">
+            <summary>
+            Get DataTable column names.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DataTableExtensions.MapTo``1(System.Data.DataTable,System.Boolean)">
+            <summary>
+            Map DataTable values TEntity collection. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DateTimeExtensions">
+            <summary>
+            DateTime extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.GetElapsedTime(System.DateTime)">
+            <summary>
+            Get the elapsed time since the input value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.HasExpired(System.DateTime,System.TimeSpan)">
+            <summary>
+            Check if specific TimeSpan has passed since a DateTime.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.IsWeekend(System.DateTime)">
+            <summary>
+            Check if date is in a weekend. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.IsInLeapYear(System.DateTime)">
+            <summary>
+            Check if date is in a leap year. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.DbCommandExtensions">
+            <summary>
+            DbCommand extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbCommandExtensions.CreateParameter(System.Data.Common.DbCommand,System.String,System.Object)">
+            <summary>
+            Return a new instance of the provider's class that implements the DbParameter class. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbCommandExtensions.AddParameterWithValue(System.Data.Common.DbCommand,System.String,System.Object)">
+            <summary>
+            Adds the specified DbParameter object to the DbParameterCollection. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DbConnectionExtensions">
+            <summary>
+            DbConnection extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.CreateDataAdapter(System.Data.Common.DbConnection)">
+            <summary>
+            Return a new instance of the provider's class that implements the DbDataAdapter class.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.CreateParameter(System.Data.Common.DbConnection,System.String,System.Object)">
+            <summary>
+            Return a new instance of the provider's class that implements the DbParameter class. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransaction(System.Data.Common.DbConnection)">
+            <summary>
+            Try to open the connection and begin a new transaction on it. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransaction(System.Data.Common.DbConnection,System.Data.IsolationLevel)">
+            <summary>
+            Try to open the connection and begin a new transaction on it. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection)">
+            <summary>
+            Try to open the connection and begin a new transaction on it. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection,System.Data.IsolationLevel)">
+            <summary>
+            Try to open the connection and begin a new transaction on it. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.IsOpen(System.Data.Common.DbConnection)">
+            <summary>
+            Check if connection is open. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.IsAvailable(System.Data.Common.DbConnection)">
+            <summary>
+            Check if connection is available. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.IsAvailableAsync(System.Data.Common.DbConnection)">
+            <summary>
+            Check if connection is available. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DbProviderFactoryExtenions">
+            <summary>
+            DbProviderFactory extenions
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DbProviderFactoryExtenions.CreateParameter(System.Data.Common.DbProviderFactory,System.String,System.Object)">
+            <summary>
+            Return a new instance of the provider's class that implements the DbParameter class. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DecimalExtensions">
+            <summary>
+            Decimal extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DecimalExtensions.Map(System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal)">
+            <summary>
+            Re-maps a number from one range to another. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DirectoryExtensions">
+            <summary>
+            Directory extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DirectoryExtensions.Open(System.String)">
+            <summary>
+            Open directory with explorer.exe. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.DirectoryExtensions.Clear(System.IO.DirectoryInfo,System.Boolean)">
+            <summary>
+            Deletes all files from directory. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.DoubleExtensions">
+            <summary>
+            Double extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.DoubleExtensions.Map(System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Re-maps a number from one range to another. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.EntityTypeBuilderExtensions">
+            <summary>
+            EntityTypeBuilder extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.EntityTypeBuilderExtensions.HasOneEnum``2(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            One-to-many relation with an enum. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.EnumExtensions">
+            <summary>
+            Enum extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.EnumExtensions.GetValues``1">
+            <summary>
+            Get enum values. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.EnumExtensions.GetDictionary``1">
+            <summary>
+            Get enum dictionary (Text-Value). 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.EnumExtensions.GetDescription``1(``0)">
+            <summary>
+            Get Description attribute from an enum. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.ExceptionExtensions">
+            <summary>
+            Exception extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ExceptionExtensions.FlattenMessages(System.Exception)">
+            <summary>
+            Get all messages including nested exceptions. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.ExceptionExtensions.GetExceptions(System.Exception)">
+            <summary>
+            Return list of exceptions including nested ones. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.FloatExtensions">
+            <summary>
+            Float extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.FloatExtensions.Map(System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Re-maps a number from one range to another. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.GenericExtensions">
+            <summary>
+            Generic extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Check if value is contained in list. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Check if value is contained in list. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])">
+            <summary>
+            Check if value is contained in list. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0)">
+            <summary> 
+            Serialize object to json.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary> 
+            Serialize object to json.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0)">
+            <summary> 
+            Perform a deep copy using Json serialization. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary> 
+            Perform a deep copy using Json serialization. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsNull``1(``0)">
+            <summary>
+            Check if class is null. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsNull``1(System.Nullable{``0})">
+            <summary>
+            Gets a value indicating whether the current nullable 
+            object has a valid value of its underlying type. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsDefault``1(``0)">
+            <summary>
+            Check if struct has default value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToXDocument``1(``0)">
+            <summary>
+            Serialize to XDocument.
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.ICollectionExtensions">
+            <summary>
+            ICollection extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ICollectionExtensions.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary> 
+            Adds multiple items to ICollection.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ICollectionExtensions.AddRange``1(System.Collections.Generic.ICollection{``0},``0[])">
+            <summary> 
+            Adds multiple items to ICollection.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IComparableExtensions">
+            <summary>
+            IComparable extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IComparableExtensions.Between``1(``0,``0,``0,System.Boolean)">
+            <summary>
+            Check if an IComparable object is between two values. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IDictionaryExtensions">
+            <summary>
+            IDictionary extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryGet``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1@)">
+            <summary>
+            Attempts to get the item with the specifed key. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Attempts to add the item with the specifed key. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryRemove``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+            <summary>
+            Attempts to remove the item the specified key in dictionary. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryRemove``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1@)">
+            <summary>
+            Attempts to remove the item the specified key in dictionary and return the value removed. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Attempts to update the specifed key in dictionary, if exists. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1,``1})">
+            <summary>
+            Attempts to update the specifed key in dictionary, if exists. 
+            </summary> 
+            <param name="updateAction">(value) => ...</param> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``0,``1,``1})">
+            <summary> 
+            Attempts to update the specifed key in dictionary, if exists.
+            </summary> 
+            <param name="updateAction">(key, value) => ...</param> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary> 
+            Attempts to add or update an item with the specified key. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1,``1)">
+            <summary> 
+            Attempts to add or update an item with the specified key. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1,System.Func{``1,``1})">
+            <summary> 
+            Attempts to add or update an item with the specified key. 
+            </summary> 
+            <param name="updateAction">(value) => ...</param> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1,System.Func{``0,``1,``1})">
+            <summary> 
+            Attempts to add or update an item with the specified key. 
+            </summary> 
+            <param name="updateAction">(key, value) => ...</param> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+            <summary> 
+            If value exists, get, else add default and get.  
+            </summary> 
+            <returns>Value found or added.</returns>
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary> 
+            If value exists, get, else add and get.  
+            </summary> 
+            <returns>Value found or added.</returns>
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToEnumerable``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            Converts dictionary to KeyValuePair enumerable. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ContainsValue``2(System.Collections.Generic.IDictionary{``0,``1},``1)">
+            <summary>
+            Returns given value occurences in dictionary.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``2(System.Collections.Generic.IDictionary{``0,``1},System.Boolean)">
+            <summary>
+            Build url query string from parameters dictionary. 
+            Converts both key and value to string with default converter. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.IEnumerableExtensions">
+            <summary>
+            IEnumerable extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.IsEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Check if collection is empty. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.IsNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Check if collection is null empty.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.NullToEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return empty collection if source is null. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ConvertAll``1(System.Collections.IEnumerable)">
+            <summary>
+            Convert items to given type.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Exclude``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            Exclude items from collection satisfying a condition.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.DistinctBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Return all distinct elements of the given source, 
+            where "distinctness" is determined via a specified key.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoinCI``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoinCI``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.String,System.String)">
+            <summary>
+            String.Join collection of items using custom separator, custom String.Format and FormatProvider=`CurrentCulture`.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoinCI``1(System.Collections.Generic.IEnumerable{``0},System.String,System.String)">
+            <summary>
+            String.Join collection of items using custom separator, custom String.Format and FormatProvider=`InvariantCulture`.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.String,System.IFormatProvider)">
+            <summary>
+            String.Join collection of items using custom separator, String.Format=`{0}` and custom FormatProvider.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.IFormatProvider)">
+            <summary>
+            String.Join collection of items using separator=` `, String.Format=`{0}` and custom FormatProvider.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.String,System.String,System.IFormatProvider)">
+            <summary>
+            String.Join collection of items using custom separator, String.Format and FormatProvider.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Convert IEnumerable Source to HashSet.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Create a HashSet from an IEnumerable. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToCollection``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create a Collection from an IEnumerable. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToObservableCollection``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create a ObservableCollection from an IEnumerable. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.TakeSkip``1(System.Collections.Generic.IEnumerable{``0},System.Int32[])">
+            <summary>
+            Take/Skip items in a given order. 
+            Positive Chunk value means take. 
+            Negative Chunk value means skips.
+            </summary>
+            <example>
+            In this sample we Take(2), then Skip(3), then Take(1).
+            <code>
+            var source = GetSource();
+            var sequence = source.TakeSkip(2, -3, 1);
+            </code>
+            </example>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ExceptBy``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            LINQ Except(), using a key for equality comparison.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.IntersectBy``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            LINQ Intersect(), using a key for equality comparison.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Flatten``1(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Flatten the nested sequence. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Append``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Append items to given source. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Append``1(System.Collections.Generic.IEnumerable{``0},``0[])">
+            <summary>
+            Append items to given source. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Perform an action to all elements.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})">
+            <summary>
+            Perform an action to all elements. Each element's index is used in the logic of the action.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Mutate``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Mutate sequence reference. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Contains``2(System.Collections.Generic.IEnumerable{``0},``0,System.Func{``0,``1})">
+            <summary>
+            Check if source contains a specific item, using a key for equality comparison. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPage``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
+            <summary>
+            Paginate collection on given size and return page of given index. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPages``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Paginate collection on given size and group them by Item.Index with Group.Key = Page.Index. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ContainsAll``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Check if source contails all given items. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ContainsAll``1(System.Collections.Generic.IEnumerable{``0},``0[])">
+            <summary>
+            Check if source contails all given items. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToCsv``1(System.Collections.Generic.IEnumerable{``0},System.Char,System.Boolean)">
+            <summary>
+            Converts collection to csv. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetDuplicates``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Get key-count combination for duplicate entries. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetDuplicates``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Get key-count combination for duplicate entries based on given key. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.HasDuplicates``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Check if there are any duplicate entries.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.HasDuplicates``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Check if there are any duplicate entries based on given key. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.IListExtensions">
+            <summary>
+            IList extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IListExtensions.Remove``1(System.Collections.Generic.IList{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            Remove all occurences of items that match given expression. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.IntExtensions">
+            <summary>
+            Int extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.Map(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Re-maps a number from one range to another. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.January(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in January in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.February(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in February in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.March(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in March in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.April(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in April in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.May(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in May in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.June(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in June in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.July(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in July in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.August(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in August in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.September(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in September in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.October(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in October in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.November(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day 
+            in November in the specified year.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IntExtensions.December(System.Int32,System.Int32)">
+            <summary>
+            Returns a DateTime representing the specified day in 
+            December in the specified year.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IPAddressExtensions">
+            <summary>
+            IPAddress extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IPAddressExtensions.Ping(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Ping host. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IPAddressExtensions.GetCurrentIpCollection">
+            <summary>
+            Get current machines ip collection.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IPEndPointExtensions">
+            <summary>
+            IPEndPoint extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IPEndPointExtensions.Ping(System.Net.IPEndPoint,System.Int32)">
+            <summary>
+            Ping host. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IServiceProviderExtensions">
+            <summary>
+            IServiceProvider extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceProviderExtensions.GetService``1(System.IServiceProvider)">
+            <summary>
+            Get service using generic casting directly. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.LambaExpressionExtensions">
+            <summary>
+            LambaExpression extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.LambaExpressionExtensions.GetMemberName(System.Linq.Expressions.LambdaExpression)">
+            <summary>
+            Get expression member name. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.ModelBuilderExtensions">
+            <summary>
+            ModelBuilder extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ModelBuilderExtensions.HasEnum``1(Microsoft.EntityFrameworkCore.ModelBuilder,System.String)">
+            <summary>
+            Configure and seed enum to database table. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.NameValueCollectionExtensions">
+            <summary>
+            NameValueCollection extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.NameValueCollectionExtensions.ToUrlQueryString(System.Collections.Specialized.NameValueCollection,System.Boolean)">
+            <summary>
+            Build url query string from dictionary parameters. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.ObjectExtensions">
+            <summary>
+            Object extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.Is``1(System.Object)">
+            <summary>
+            Check if the runtime type of an expression is 
+            compatible with a given type. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.As``1(System.Object)">
+            <summary>
+            Explicitly convert an expression to a given type 
+            if its runtime type is compatible with that type. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.TryCast``1(System.Object)">
+            <summary>
+            Try casting input to given type and 
+            return default if null or of different type. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.TryCast``1(System.Object,``0)">
+            <summary>
+            Try casting input to given type and 
+            return default if null or of different type. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.RandomExtensions">
+            <summary>
+            Random extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.CoinToss(System.Random)">
+            <summary>
+            Return true or false. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.OneOf``1(System.Random,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return random value from list of values. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.OneOf``1(System.Random,``0[])">
+            <summary>
+            Return random value from list of values. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double,System.Double)">
+            <summary>
+            Get random double between two numbers. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double)">
+            <summary>
+            Get random double. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.ChanceGreaterThan(System.Random,System.Double,System.Boolean)">
+            <summary>
+            Check is percentage chance is greater than a given value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.ChanceLowerThan(System.Random,System.Double,System.Boolean)">
+            <summary>
+            Check is percentage chance is lower than a given value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.ChanceBetween(System.Random,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Check is percentage chance is between two limits (including limits). 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.Shuffle``1(System.Random,System.Collections.Generic.IList{``0})">
+            <summary>
+            Shuffle IList. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.SerialPortExtensions">
+            <summary>
+            SerialPort extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SerialPortExtensions.GetSettings(System.IO.Ports.SerialPort)">
+            <summary>
+            Extract SerialPortSettings from SerialPort. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.SizeExtensions">
+            <summary>
+            Size extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SizeExtensions.ToSizeF(System.Drawing.Size)">
+            <summary>
+            Convert Size to SizeF. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SizeExtensions.Scale(System.Drawing.Size,System.Drawing.Size)">
+            <summary>
+            Scale Size proportionally. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.SizeFExtensions">
+            <summary>
+            SizeF extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SizeFExtensions.ToSize(System.Drawing.SizeF)">
+            <summary>
+            Convert SizeF to Size. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SizeFExtensions.Scale(System.Drawing.SizeF,System.Drawing.SizeF)">
+            <summary>
+            Scale SizeF proportionally. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.SocketExtensions">
+            <summary>
+            Socket extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.SocketExtensions.IsConnected(System.Net.Sockets.Socket,System.Int32)">
+            <summary>
+            Check if socket is Connected using simple flag polling and pinging. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.StringBuilderExtensions">
+            <summary>
+            StringBuilder extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.String,System.Object[])">
+            <summary>
+            Append String.Format + NewLine.  
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringBuilderExtensions.AppendFormatLineCI(System.Text.StringBuilder,System.String,System.Object[])">
+            <summary>
+            Append InvariantCulture String.Format + NewLine.  
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Append StringFormat with custom formatProvider + NewLine. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.StringExtensions">
+            <summary>
+            String extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Truncate(System.String,System.Int32)">
+            <summary>
+            Truncates string.
+            </summary>
+            <param name="input">String to truncate.</param>
+            <param name="length">Maximum string length.</param>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FormatAsciiControls(System.String,System.Char,System.Char)">
+            <summary>
+            Replace each ASCII control character with its corresponding abbreviation.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.SplitChunks(System.String,System.Int32)">
+            <summary>
+            Split text into fixed-length chuncks.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.PadCenter(System.String,System.Int32,System.Char)">
+            <summary>
+            Center align text.
+            </summary>
+            <param name="input"></param>
+            <param name="totalWidth"></param>
+            <param name="paddingChar"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.RemoveFirst(System.String,System.String)">
+            <summary>
+            Removes the first occurence of a given value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.RemoveAll(System.String,System.String)">
+            <summary>
+            Remove all the occurences of a given value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Left(System.String,System.Int32)">
+            <summary>
+            Take left N characters. Similar to Sql.Functions.Left.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Right(System.String,System.Int32)">
+            <summary>
+            Take right N characters. Similar to Sql.Functions.Right.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Mid(System.String,System.Int32)">
+            <summary>
+            Take substring from given index. Similar to Sql.Functions.Mid.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Mid(System.String,System.Int32,System.Int32)">
+            <summary>
+            Take N characters from given index. Similar to Sql.Functions.Mid.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FormatWith(System.String,System.Object[])">
+            <summary>
+            String.Format with custom IFormatProvider setting.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FormatWith(System.String,System.IFormatProvider,System.Object[])">
+            <summary>
+            String.Format with custom IFormatProvider setting.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FormatWithCI(System.String,System.Object[])">
+            <summary>
+            String.Format with InvariantCulture.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.EqualsAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.EqualsAnyCI(System.String,System.String[])">
+            <summary>
+            Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.StartsWithAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.StartsWithAnyCI(System.String,System.String[])">
+            <summary>
+            Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.EndsWithAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.EndsWithAnyCI(System.String,System.String[])">
+            <summary>
+            Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.ContainsAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.ContainsAnyCI(System.String,System.String[])">
+            <summary>
+            Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.IsNullOrEmpty(System.String)">
+            <summary>
+            Check if input is null or empty. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            Check if input is null or whitespace. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Reverse(System.String)">
+            <summary>
+            Reverse a string.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Erase(System.String,System.Char)">
+            <summary>
+            Erase given value from String.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Erase(System.String,System.String)">
+            <summary>
+            Erase given value from string.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.SafeTrim(System.String,System.Char[])">
+            <summary>
+            Trim with null check. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.TryParseJson``1(System.String,``0@)">
+            <summary>
+            Try parse json to entity. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.TryParseJson``1(System.String,Newtonsoft.Json.JsonSerializerSettings,``0@)">
+            <summary>
+            Try parse json to entity. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.TcpClientExtensions">
+            <summary>
+            TcpClient extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TcpClientExtensions.IsConnected(System.Net.Sockets.TcpClient,System.Int32)">
+            <summary>
+            Check if TcpClient is Connected. 
+            Performs Flag checking, Polling and Pinging. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.TimeSpanExtensions">
+            <summary>
+            TimeSpan extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TimeSpanExtensions.ToHumanReadableString(System.TimeSpan)">
+            <summary>
+            Convert TimeSpan to readable string. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.UriExtensions">
+            <summary>
+            Uri extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.UriExtensions.GetQueryParameters(System.Uri)">
+            <summary>
+            Get url query parameters to dictionary. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.UriExtensions.GetFragmentParameters(System.Uri)">
+            <summary>
+            Get url fragment parameters to dictionary. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.UriExtensions.BuildUri``2(System.String,System.Collections.Generic.IDictionary{``0,``1},System.Boolean)">
+            <summary>
+            Build url from base url and parameters.
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Extensions.XDocumentExtensions">
+            <summary>
+            XDocument extensions. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.Deserialize``1(System.Xml.Linq.XDocument)">
+            <summary>
+            Deserialize XDocument to T item. 
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.GetElements(System.Xml.Linq.XDocument,System.String[])">
+            <summary>
+            Get all XElements on given path. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.WhereAttribute(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.String,System.String)">
+            <summary>
+            Filter XElement collection on AttributeValue. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.WhereAttribute(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.String,System.Predicate{System.String})">
+            <summary>
+            Filter XElement collection on attribute value predicate. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.WhereChild(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.String,System.String)">
+            <summary>
+            Filter XElement collection on children value. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.WhereChild(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.String,System.Predicate{System.String})">
+            <summary>
+            Filter XElement collection on children predicate. 
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.Communication.Tcp.TcpServer.NoDelay">
+            <summary>
+            Specify whether the Socket is using the Nagle algorithm.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.Communication.Tcp.TcpServer.DualMode">
+            <summary>
+            Allow both IPv4 and IPv6. 
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.Communication.Tcp.TcpServer.Backlog">
+            <summary>
+            The maximum length of the pending connections queue.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Implementations.DbHelper">
+            <summary>
+            An extension to DbConnection to run quick actions on a DbConnection.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.DbHelper.TimeoutSeconds">
+            <summary>
+            Gets or sets the wait time (in seconds) before terminating 
+            the attempt to execute a command and generating an error.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.DbHelper.QueryType">
+            <summary>
+            Gets or sets a value indicating how the CommandText property is to be interpreted.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Implementations.DbHelper.Parameters">
+            <summary>
+            Represents a collection of parameters associated with a SqlCommand 
+            and their respective mappings to columns in a DataSet. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.Dispose">
+            <summary>
+            Performs application-defined tasks associated with 
+            freeing, releasing, or resetting unmanaged resources. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.AddParameter(System.String,System.Object)">
+            <summary>
+            Adds a SqlParameter to the SqlParameterCollection.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.ExecuteNonQuery(System.String)">
+            <summary>
+            Executes a Transact-SQL statement against the connection and 
+            returns the number of rows affected.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.ExecuteNonQueryAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Executes a Transact-SQL statement against the connection and 
+            returns the number of rows affected.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.ExecuteScalar``1(System.String)">
+            <summary>
+            Executes the query, and returns the first column of the first 
+            row in the result set returned by the query. 
+            Additional columns or rows are ignored.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.ExecuteScalarAsync``1(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Executes the query, and returns the first column of the first 
+            row in the result set returned by the query. 
+            Additional columns or rows are ignored.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.Fill(System.String,System.Data.DataTable)">
+            <summary>
+            Adds or refreshes rows in the DataTable to match those in the data source.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.FillAsync(System.String,System.Data.DataTable,System.Threading.CancellationToken)">
+            <summary>
+            Adds or refreshes rows in the DataTable to match those in the data source.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.Fill(System.String,System.Data.DataSet)">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.Fill(System.String,System.Data.DataSet,System.Collections.Generic.IEnumerable{System.Data.Common.DataTableMapping})">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.Fill(System.String,System.Data.DataSet,System.Data.Common.DataTableMapping[])">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.FillAsync(System.String,System.Data.DataSet)">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.FillAsync(System.String,System.Data.DataSet,System.Data.Common.DataTableMapping[])">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.DbHelper.FillAsync(System.String,System.Data.DataSet,System.Collections.Generic.IEnumerable{System.Data.Common.DataTableMapping},System.Threading.CancellationToken)">
+            <summary>
+            Adds or refreshes rows in the DataSet 
+            to match those in the data source. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Implementations.Disposable">
+            <summary>
+            Automatic and safe Disposing. 
+            Just override the two CleanUp methods.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Disposable.Finalize">
+            <summary>
+            Deconstructor.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Disposable.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, 
+            releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Disposable.DisposeNativeResources(System.Boolean)">
+            <summary>
+            Helper method to call from two locations. 
+            The actually Disposal is performed here.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Disposable.CleanUpManagedResources">
+            <summary>
+            Clean up managed resources. 
+            Handles, Streams and other IDisposables. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Disposable.CleanUpNativeResources">
+            <summary>
+            Clean up native resources, lists and set large fields to null. 
+            Usually fields and properties set in Constructor. 
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Implementations.EnumShadowEntity`1">
+            <summary>
+            Enum shadow entity used for one-to-many relationship.
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Implementations.EnumShadowEntity`2">
+            <summary>
+            Enum shadow entity used for many-to-many relationship.
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Implementations.ObservableObject">
+            <summary>
+            Base class implementing INotifyPropertyChanged. 
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Implementations.Repositories.DapperRepository`1.AddAsync(`0)">
+            <example>
+            --Use OUTPUT to get auto-identity newly added Id 
+            INSERT INTO Table 
+            (Columns) 
+            OUTPUT INSERTED.ColumnId 
+            VALUES 
+            (@ColumnValues) 
+            </example> 
+        </member>
+        <member name="T:CoreSharp.Models.Grouping`2">
+            <summary>
+            Simple IGrouping implementation. 
+            </summary> 
+        </member>
+        <member name="T:CoreSharp.Models.SerialPortSettings">
+            <summary>
+            Short SerialPort settings class. 
+            </summary>
+        </member>
+        <member name="F:CoreSharp.Sources.AsciiControls.Dictionary">
+            <summary>
+            List with ASCII control characters and their abbreviations. 
+            </summary>
+        </member>
+        <member name="T:EFCoreDemo.Extensions.PropertyBuilderExtensions">
+            <summary>
+            PropertyBuilder extensions. 
+            </summary>
+        </member>
+        <member name="M:EFCoreDemo.Extensions.PropertyBuilderExtensions.HasJsonConversion``1(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder{``0})">
+            <summary>
+            Convert a property from and to json for database storage. 
+            </summary>
+        </member>
+    </members>
+</doc>
