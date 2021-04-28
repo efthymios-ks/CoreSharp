@@ -729,7 +729,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToCsv_SourceIsNull_SourceIsNull_ThrowArgumentNullException()
+        public void ToCsv_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
             Action action = () => sourceNull.ToCsv();
@@ -754,6 +754,128 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert 
             result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void GetDuplicates_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.GetDuplicates();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetDuplicates_KeySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceEmpty.GetDuplicates<DummyClass, int>(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetDuplicates_KeySelectorGiven_ReturnDictionaryWithDuplicateKeysAndCount()
+        {
+            //Arrange 
+            var source = new[]
+            {
+                new DummyClass(1),
+                new DummyClass(1),
+                new DummyClass(2),
+                new DummyClass(2),
+                new DummyClass(3),
+            };
+            var expected = new Dictionary<int, int>
+            {
+                { 1, 2 },
+                { 2, 2 }
+            };
+
+            //Act 
+            var result = source.GetDuplicates(i => i.Id);
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void GetDuplicates_NoKeySelector_ReturnDictionaryWithDuplicateKeysAndCount()
+        {
+            //Arrange 
+            var source = new[]
+            {
+                1, 1, 2, 2, 3
+            };
+            var expected = new Dictionary<int, int>
+            {
+                { 1, 2 },
+                { 2, 2 }
+            };
+
+            //Act 
+            var result = source.GetDuplicates();
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void HasDuplicates_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.HasDuplicates();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void HasDuplicates_KeySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceEmpty.HasDuplicates<DummyClass, int>(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void HasDuplicates_KeySelectorGiven_ReturnTrueIsHasDuplicates()
+        {
+            //Arrange 
+            var source = new[]
+            {
+                new DummyClass(1),
+                new DummyClass(1),
+                new DummyClass(2),
+                new DummyClass(2),
+                new DummyClass(3),
+            };
+
+            //Act 
+            var result = source.HasDuplicates(i => i.Id);
+
+            //Assert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void HasDuplicates_NoKeySelector_ReturnTrueIsHasDuplicates()
+        {
+            //Arrange 
+            var source = new[]
+            {
+                1, 1, 2, 2, 3
+            };
+
+            //Act 
+            var result = source.HasDuplicates();
+
+            //Assert 
+            result.Should().BeTrue();
         }
     }
 }

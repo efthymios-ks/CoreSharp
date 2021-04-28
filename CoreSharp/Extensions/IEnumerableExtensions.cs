@@ -443,5 +443,47 @@ namespace CoreSharp.Extensions
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Get key-count combination for duplicate entries. 
+        /// </summary> 
+        public static IDictionary<TElement, int> GetDuplicates<TElement>(this IEnumerable<TElement> source)
+        {
+            return source.GetDuplicates(i => i);
+        }
+
+        /// <summary>
+        /// Get key-count combination for duplicate entries based on given key. 
+        /// </summary> 
+        public static IDictionary<TKey, int> GetDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
+            //Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
+            var duplicates = source
+                .GroupBy(keySelector)
+                .Where(g => g.Skip(1).Any());
+
+            return duplicates.ToDictionary(d => d.Key, d => d.Count());
+        }
+
+        /// <summary>
+        /// Check if there are any duplicate entries.
+        /// </summary> 
+        public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source)
+        {
+            return source.HasDuplicates(i => i);
+        }
+
+        /// <summary>
+        /// Check if there are any duplicate entries based on given key. 
+        /// </summary> 
+        public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
+        {
+            return source
+                .GetDuplicates(keySelector)
+                .Any();
+        }
     }
 }
