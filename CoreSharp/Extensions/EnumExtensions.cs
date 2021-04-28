@@ -52,8 +52,7 @@ namespace CoreSharp.Extensions
             var descriptionAttribute = descriptionAttributes?.FirstOrDefault();
 
             //Return attribute or enum itself as description 
-            string description = descriptionAttribute?.Description ?? valueString;
-            return description;
+            return descriptionAttribute?.Description ?? valueString;
         }
     }
 }
