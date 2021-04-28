@@ -40,37 +40,30 @@ namespace CoreSharp.Implementations.Repositories
             return await Query.Where(i => predicate(i)).ToArrayAsync();
         }
 
-        public virtual Task AddAsync(params TEntity[] entities)
+        public virtual Task AddAsync(TEntity entity)
         {
-            entities = entities ?? throw new ArgumentNullException(nameof(entities));
+            entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            if (entities.Length == 1)
-                Context.Set<TEntity>().Add(entities[0]);
-            else
-                Context.Set<TEntity>().AddRange(entities);
+            Context.Set<TEntity>().Add(entity);
 
             return Task.CompletedTask;
         }
 
-        public virtual Task UpdateAsync(params TEntity[] entities)
+        public virtual Task UpdateAsync(TEntity entity)
         {
-            entities = entities ?? throw new ArgumentNullException(nameof(entities));
+            entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            foreach (var entity in entities)
-            {
-                Context.Set<TEntity>().Attach(entity);
-                Context.Entry(entity).State = EntityState.Modified;
-            }
+            Context.Set<TEntity>().Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
 
             return Task.CompletedTask;
         }
 
-        public virtual Task RemoveAsync(params TEntity[] entities)
+        public virtual Task RemoveAsync(TEntity entity)
         {
-            entities = entities ?? throw new ArgumentNullException(nameof(entities));
+            entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            foreach (var entity in entities)
-                Context.Set<TEntity>().Remove(entity);
+            Context.Set<TEntity>().Remove(entity);
 
             return Task.CompletedTask;
         }

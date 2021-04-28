@@ -34,15 +34,15 @@ namespace CoreSharp.Implementations.Repositories
         /// <example>
         /// --Use OUTPUT to get auto-identity newly added Id 
         /// INSERT INTO Table 
-        /// (Columns)
-        /// OUTPUT INSERTED.ColumnId
-        /// VALUES
-        /// (@ColumnValues)
-        /// </example>
-        public abstract Task AddAsync(params TEntity[] entities);
+        /// (Columns) 
+        /// OUTPUT INSERTED.ColumnId 
+        /// VALUES 
+        /// (@ColumnValues) 
+        /// </example> 
+        public abstract Task AddAsync(TEntity entity);
 
-        public abstract Task UpdateAsync(params TEntity[] entities);
+        public abstract Task UpdateAsync(TEntity entity);
 
-        public abstract Task RemoveAsync(params TEntity[] entities);
+        public abstract Task RemoveAsync(TEntity entity);
     }
 }

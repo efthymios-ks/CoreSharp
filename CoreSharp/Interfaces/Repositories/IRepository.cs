@@ -13,10 +13,10 @@ namespace CoreSharp.Interfaces.Repositories
 
         Task<IEnumerable<TEntity>> GetAsync(Predicate<TEntity> predicate);
 
-        Task AddAsync(params TEntity[] entities);
+        Task AddAsync(TEntity entity);
 
-        Task UpdateAsync(params TEntity[] entities);
+        Task UpdateAsync(TEntity entity);
 
-        Task RemoveAsync(params TEntity[] entities);
+        Task RemoveAsync(TEntity entity);
     }
 }
