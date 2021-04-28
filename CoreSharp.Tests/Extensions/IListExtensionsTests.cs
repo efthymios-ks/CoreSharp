@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
@@ -10,6 +11,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Fields
         private readonly IList<int> sourceNull = null;
+        private readonly IList<int> sourceEmpty = new List<int>();
 
         //Methods 
         [Test]
@@ -34,6 +36,45 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             source.Should().Equal(expected);
+        }
+
+        [Test]
+        public void Remove_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => sourceNull.Remove(i => i > 0);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Remove_ExpressionIsNull_ThrowArgumentNullException()
+        {
+            //Arrange 
+            Func<int, bool> expression = null;
+
+            //Act
+            Action action = () => sourceEmpty.Remove(expression);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Remove_WhenCalled_RemoveMatchingItemsAndReturnCount()
+        {
+            //Arrange  
+            var source = new List<int> { 0, 1, 0, 2, 0, 3 };
+            var expectedSource = new List<int> { 1, 2, 3 };
+            int expectedCount = 3;
+
+            //Act
+            var removedCount = source.Remove(i => i == 0);
+
+            //Assert
+            removedCount.Should().Be(expectedCount);
+            source.Should().Equal(expectedSource);
         }
     }
 }
