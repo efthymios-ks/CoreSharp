@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreSharp.Implementations.Communication.Tcp
+namespace CoreSharp.Implementations.Communication
 {
     public class DataTransferedEventArgs : EventArgs
     {

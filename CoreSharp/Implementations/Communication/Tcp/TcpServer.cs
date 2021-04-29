@@ -93,7 +93,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
             //Start listening and accepting sockets
             socket.Listen(Backlog);
-            BeginAccepting(socketOperationArgs);
+            BeginAccept(socketOperationArgs);
         }
 
         public void Stop()
@@ -136,18 +136,18 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 UnregisterSession(session);
         }
 
-        public void Multicast(string data)
+        public void Multicast(string text)
         {
-            Multicast(data, Encoding.UTF8);
+            Multicast(text, Encoding.UTF8);
         }
 
-        public void Multicast(string data, Encoding encoding)
+        public void Multicast(string text, Encoding encoding)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            text = text ?? throw new ArgumentNullException(nameof(text));
             encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
-            var buffer = encoding.GetBytes(data);
-            Multicast(buffer);
+            var data = encoding.GetBytes(text);
+            Multicast(data);
         }
 
         public void Multicast(IEnumerable<byte> data)
@@ -160,10 +160,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
             data = data ?? throw new ArgumentNullException(nameof(data));
 
             foreach (var session in ActiveSessions)
-                session.BeginSending(data);
+                session.BeginSend(data);
         }
 
-        private void BeginAccepting(SocketAsyncEventArgs args)
+        private void BeginAccept(SocketAsyncEventArgs args)
         {
             args = args ?? throw new ArgumentNullException(nameof(args));
 
@@ -184,7 +184,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             else
                 OnError(args.SocketError);
 
-            BeginAccepting(args);
+            BeginAccept(args);
         }
 
         private void Terminate()

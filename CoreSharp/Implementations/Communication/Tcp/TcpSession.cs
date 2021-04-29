@@ -35,7 +35,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 if (isConnected)
                 {
                     isTerminated = false;
-                    BeginReceiving();
+                    BeginReceive();
                 }
 
                 OnConnectionStatusChanged(isConnected);
@@ -81,18 +81,18 @@ namespace CoreSharp.Implementations.Communication.Tcp
             server?.UnregisterSession(this);
         }
 
-        public int Send(string data)
+        public int Send(string text)
         {
-            return Send(data, Encoding.UTF8);
+            return Send(text, Encoding.UTF8);
         }
 
-        public int Send(string data, Encoding encoding)
+        public int Send(string text, Encoding encoding)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            text = text ?? throw new ArgumentNullException(nameof(text));
             encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
-            var buffer = encoding.GetBytes(data);
-            return Send(buffer);
+            var data = encoding.GetBytes(text);
+            return Send(data);
         }
 
         public int Send(IEnumerable<byte> data)
@@ -120,26 +120,26 @@ namespace CoreSharp.Implementations.Communication.Tcp
             return count;
         }
 
-        public void BeginSending(string data)
+        public void BeginSend(string text)
         {
-            BeginSending(data, Encoding.UTF8);
+            BeginSend(text, Encoding.UTF8);
         }
 
-        public void BeginSending(string data, Encoding encoding)
+        public void BeginSend(string text, Encoding encoding)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            text = text ?? throw new ArgumentNullException(nameof(text));
             encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
-            var buffer = encoding.GetBytes(data);
-            BeginSending(buffer);
+            var buffer = encoding.GetBytes(text);
+            BeginSend(buffer);
         }
 
-        public void BeginSending(IEnumerable<byte> data)
+        public void BeginSend(IEnumerable<byte> data)
         {
-            BeginSending(data?.ToArray());
+            BeginSend(data?.ToArray());
         }
 
-        public void BeginSending(params byte[] data)
+        public void BeginSend(params byte[] data)
         {
             data = data ?? throw new ArgumentNullException(nameof(data));
 
@@ -153,7 +153,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 HandleSend(args);
         }
 
-        private void BeginReceiving()
+        private void BeginReceive()
         {
             if (!IsConnected)
                 throw new InvalidOperationException($"Cannot receive data while disconnected");
@@ -200,7 +200,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                     var bytesReceived = new byte[args.BytesTransferred];
                     Array.Copy(args.Buffer, bytesReceived, args.BytesTransferred);
                     OnDataReceived(bytesReceived);
-                    BeginReceiving();
+                    BeginReceive();
                 }
                 else
                 {
