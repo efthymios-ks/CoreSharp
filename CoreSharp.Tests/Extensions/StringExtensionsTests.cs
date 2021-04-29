@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Globalization;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
@@ -588,6 +589,35 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ParseJson_OptionsIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ParseJson<DummyClass>(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ParseJson_WhenCalled_MapItemPropertiesAndReturnTrue()
+        {
+            //Arrange
+            int id = 1;
+            string name = "Efthymios";
+            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
+            json = json
+                .Replace("{id}", $"{id}")
+                .Replace("{name}", name);
+
+            //Act
+            var result = json.ParseJson<DummyClass>();
+
+            //Assert  
+            result.Id.Should().Be(id);
+            result.Name.Should().Be(name);
         }
 
         [Test]
