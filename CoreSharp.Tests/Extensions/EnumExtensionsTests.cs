@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
@@ -84,7 +83,6 @@ namespace CoreSharp.Extensions.Tests
 
             result.Should().Be(expected);
         }
-
 
         [Test]
         public void GetDisplayName_TypeIsNotEnum_ThrowArgumentException()
