@@ -9,16 +9,17 @@ namespace CoreSharp.Implementations.Repositories
 {
     public abstract class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        //Properties
-        protected abstract IQueryable<TEntity> Query { get; }
-
-        protected DbContext Context { get; }
+        //Fields 
+        private readonly DbContext Context;
 
         //Constructors
         public EntityFrameworkRepository(DbContext context)
         {
-            Context = context;
+            Context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
+        //Properties
+        protected abstract IQueryable<TEntity> Query { get; }
 
         //Methods 
         public virtual async Task<TEntity> GetAsync(params object[] key)

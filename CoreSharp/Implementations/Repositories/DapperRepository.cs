@@ -9,15 +9,15 @@ namespace CoreSharp.Implementations.Repositories
 {
     public abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        //Properties 
-        protected DbConnection Connection => Transaction?.Connection;
-        protected DbTransaction Transaction { get; }
-
         //Constructors 
         public DapperRepository(DbTransaction transaction)
         {
             Transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
         }
+
+        //Properties 
+        protected DbConnection Connection => Transaction?.Connection;
+        protected DbTransaction Transaction { get; }
 
         //Methods 
         public abstract Task<TEntity> GetAsync(params object[] key);
