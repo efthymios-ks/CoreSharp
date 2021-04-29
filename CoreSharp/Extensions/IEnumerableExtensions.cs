@@ -361,36 +361,33 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            var pages = source.GetPages(pageSize);
 
-            if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException($"{pageSize} cannot be equal to or less than zero.");
-
-            int totalPages = (int)Math.Ceiling((double)source.Count() / pageSize);
+            int totalPages = pages.Count();
             if (pageIndex < 0 || pageIndex >= totalPages)
-                throw new ArgumentOutOfRangeException($"{pageIndex} out of range ({0} > {totalPages})");
+                throw new ArgumentOutOfRangeException($"{pageIndex} out of range ({0} to {totalPages - 1}).");
 
-            return source.Skip(pageIndex * pageSize).Take(pageSize);
+            return pages.FirstOrDefault(p => p.Key == pageIndex);
         }
 
         /// <summary>
-        /// Paginate collection on given size and group them by Item.Index with Group.Key = Page.Index. 
+        /// Paginate collection on given size and group them by Group.Key = Page.Index. 
         /// </summary> 
         public static IEnumerable<IGrouping<int, T>> GetPages<T>(this IEnumerable<T> source, int pageSize)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
             if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException($"{pageSize} cannot be equal to or less than zero.");
+                throw new ArgumentOutOfRangeException($"{pageSize} has to be positive and non-zero.");
 
-            //ToList so we can get item index 
-            var sourceList = source.ToList();
+            //ToArray() so we can get item index 
+            var sourceArray = source.ToArray();
 
-            //Group by item index 
-            var groups = sourceList.GroupBy(i =>
+            //Group by page index 
+            var groups = sourceArray.GroupBy(i =>
             {
-                int itemIndex = sourceList.IndexOf(i);
-                var itemGroupKey = itemIndex / pageSize;
-                return itemGroupKey;
+                int itemIndex = Array.IndexOf(sourceArray, i);
+                var pageIndex = itemIndex / pageSize;
+                return pageIndex;
             });
 
             return groups;

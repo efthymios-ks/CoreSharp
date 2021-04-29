@@ -638,10 +638,10 @@ namespace CoreSharp.Extensions.Tests
         public void GetPage_WhenCalled_ReturnItemPage()
         {
             //Arrange
-            var source = new int[] { 1, 2, 3, 4, 5 };
-            var pageIndex = 0;
+            var source = new[] { 1, 2, 3, 4, 5 };
+            var pageIndex = 1;
             var pageSize = 2;
-            var expected = new[] { 1, 2 };
+            var expected = new[] { 3, 4 };
 
             //Act 
             var result = source.GetPage(pageIndex, pageSize);
