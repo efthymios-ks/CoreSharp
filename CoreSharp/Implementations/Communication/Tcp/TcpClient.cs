@@ -11,7 +11,7 @@ using CoreSharp.Extensions;
 namespace CoreSharp.Implementations.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class TcpClient : Disposable
+    public sealed class TcpClient : Disposable
     {
         //Fields 
         private Socket socket;
@@ -95,10 +95,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
         }
 
         //Events 
-        public EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
-        public EventHandler<DataTransferedEventArgs> DataSent;
-        public EventHandler<DataTransferedEventArgs> DataReceived;
-        public EventHandler<SocketErrorEventArgs> ErrorOccured;
+        public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
+        public event EventHandler<DataTransferedEventArgs> DataSent;
+        public event EventHandler<DataTransferedEventArgs> DataReceived;
+        public event EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
         public void Connect()

@@ -10,7 +10,7 @@ using CoreSharp.Extensions;
 namespace CoreSharp.Implementations.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class TcpServer : Disposable
+    public sealed class TcpServer : Disposable
     {
         //Fields 
         private Socket socket;
