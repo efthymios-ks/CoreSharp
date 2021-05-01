@@ -385,5 +385,15 @@ namespace CoreSharp.Extensions
                 return false;
             }
         }
+
+        /// <summary>
+        /// Split string to array of lines on new line indication. 
+        /// </summary> 
+        public static IEnumerable<string> GetLines(this string input, StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
+        {
+            input = input ?? throw new ArgumentNullException(nameof(input));
+
+            return input.Split(new[] { "\r\n", "\r", "\n" }, stringSplitOptions);
+        }
     }
 }

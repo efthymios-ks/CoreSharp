@@ -649,5 +649,34 @@ namespace CoreSharp.Extensions.Tests
             item.Id.Should().Be(id);
             item.Name.Should().Be(name);
         }
+
+        [Test]
+        public void GetLines_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.GetLines();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetLines_WhenCalled_SplitAndReturnLines()
+        {
+            //Arrange
+            var lines = new[]
+            {
+                "Line 1",
+                "Line 2",
+                "Line 3"
+            };
+            string joined = string.Join(Environment.NewLine, lines);
+
+            //Act
+            var result = joined.GetLines();
+
+            //Assert
+            result.Should().Equal(lines);
+        }
     }
 }
