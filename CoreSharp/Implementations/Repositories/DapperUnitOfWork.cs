@@ -20,29 +20,25 @@ namespace CoreSharp.Implementations.Repositories
         }
 
         //Methods 
-        private void ResetTransaction()
+        private async Task ResetTransactionAsync()
         {
-            Transaction?.Dispose();
-            Transaction = Connection?.BeginTransaction();
+            await Transaction?.DisposeAsync().AsTask();
+            Transaction = await Connection?.OpenTransactionAsync();
         }
 
-        public Task CommitAsync()
+        public virtual async Task CommitAsync()
         {
-            Transaction?.Commit();
-            ResetTransaction();
-
-            return Task.CompletedTask;
+            await Transaction?.CommitAsync();
+            await ResetTransactionAsync();
         }
 
-        public Task RollbackAsync()
+        public virtual async Task RollbackAsync()
         {
-            Transaction?.Rollback();
-            ResetTransaction();
-
-            return Task.CompletedTask;
+            await Transaction?.RollbackAsync();
+            await ResetTransactionAsync();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Transaction?.Dispose();
             Connection?.Dispose();

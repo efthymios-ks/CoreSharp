@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public class EntityFrameworkUnitOfWork : IUnitOfWork
+    public abstract class EntityFrameworkUnitOfWork : IUnitOfWork
     {
         //Properties
         protected DbContext Context { get; }
