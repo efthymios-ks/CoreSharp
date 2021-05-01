@@ -4,6 +4,7 @@ using System.Globalization;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -677,6 +678,52 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Equal(lines);
+        }
+
+        [Test]
+        public void Replace_InputIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            var dictionary = new Dictionary<string, string>();
+
+            //Act
+            Action action = () => StringNull.Replace(dictionary);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Replace_DictionaryIsNull_ThrowArgumentNulLException()
+        {
+            //Arrange
+            Dictionary<string, string> dictionary = null;
+
+            //Act
+            Action action = () => StringEmpty.Replace(dictionary);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
+        {
+            //Arrange
+            string input = "Key1, Key2, Key3";
+            var dictionary = new Dictionary<string, int>
+            {
+                { "Key1", 1 },
+                { "Key2", 2 },
+                { "Key3", 3 }
+            };
+            var expected = "1, 2, 3";
+
+            //Act
+            var result = input.Replace(dictionary);
+
+            //Assert
+            result.Should().Be(expected);
         }
     }
 }

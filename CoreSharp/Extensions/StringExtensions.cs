@@ -395,5 +395,19 @@ namespace CoreSharp.Extensions
 
             return input.Split(new[] { "\r\n", "\r", "\n" }, stringSplitOptions);
         }
+
+        /// <summary>
+        /// Replace dictionary entries in string. 
+        /// </summary> 
+        public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
+        {
+            input = input ?? throw new ArgumentNullException(nameof(input));
+            dictionary = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+
+            foreach (var pair in dictionary)
+                input = input.Replace(pair.Key, $"{pair.Value}");
+
+            return input; ;
+        }
     }
 }
