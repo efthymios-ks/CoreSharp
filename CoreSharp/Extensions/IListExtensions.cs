@@ -9,6 +9,9 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class IListExtensions
     {
+        /// <summary>
+        /// Fill list with given value. 
+        /// </summary> 
         public static void Fill<T>(this IList<T> source, T value)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
