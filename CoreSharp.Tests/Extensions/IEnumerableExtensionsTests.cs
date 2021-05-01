@@ -7,6 +7,7 @@ using System.Linq;
 using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
+using System.Data;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -521,7 +522,7 @@ namespace CoreSharp.Extensions.Tests
             var source = new[] { item1, item2, item3 };
 
             //Act   
-            source.ForEach(d => d.Id = d.Id * 2);
+            source.ForEach(d => d.Id *= 2);
 
             //Assert 
             item1.Id.Should().Be(2);
@@ -876,6 +877,50 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert 
             result.Should().BeTrue();
+        }
+
+        [Test]
+        public void ToDataTable_SourceIsNull_ThrowNewArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.ToDataTable();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDataTable_WhenCalled_ReturnDataTableWithEntries()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "Black"),
+                new DummyClass(2, "White")
+            };
+            var expected = new DataTable(typeof(DummyClass).Name);
+            expected.Columns.Add(nameof(DummyClass.Id), typeof(int));
+            expected.Columns.Add(nameof(DummyClass.Name), typeof(string));
+            expected.Rows.Add(1, "Black");
+            expected.Rows.Add(2, "White");
+
+            //Act 
+            var result = source.ToDataTable();
+
+            //Assert 
+            result.Rows.Count.Should().Be(expected.Rows.Count);
+            result.Columns.Count.Should().Be(expected.Columns.Count);
+            for (int i = 0; i < result.Columns.Count; i++)
+            {
+                result.Columns[i].ColumnName.Should().Be(expected.Columns[i].ColumnName);
+                result.Columns[i].DataType.Should().Be(expected.Columns[i].DataType);
+            }
+            for (int rowindex = 0; rowindex < result.Rows.Count; rowindex++)
+            {
+                var resultRow = result.Rows[rowindex].ItemArray;
+                var expectedRow = expected.Rows[rowindex].ItemArray;
+                resultRow.Should().Equal(expectedRow);
+            }
         }
     }
 }

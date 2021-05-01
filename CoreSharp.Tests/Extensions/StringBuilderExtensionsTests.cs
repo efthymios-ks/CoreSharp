@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Fields
         private readonly StringBuilder builderNull = null;
-        private readonly StringBuilder builder = new StringBuilder();
+        private readonly StringBuilder builder = new();
 
         //Methods
         [SetUp]

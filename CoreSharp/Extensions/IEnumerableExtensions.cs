@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace CoreSharp.Extensions
@@ -420,7 +422,7 @@ namespace CoreSharp.Extensions
             source = source ?? throw new ArgumentNullException(nameof(source));
 
             var builder = new StringBuilder();
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             //Add property names to header 
             if (includeHeader)
@@ -481,6 +483,31 @@ namespace CoreSharp.Extensions
             return source
                 .GetDuplicates(keySelector)
                 .Any();
+        }
+
+        /// <summary>
+        /// Convert collection of entities to DataTable. 
+        /// </summary> 
+        public static DataTable ToDataTable<T>(this IEnumerable<T> source)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source));
+
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            var table = new DataTable(typeof(T).Name);
+
+            //Create columns 
+            foreach (var property in properties)
+                table.Columns.Add(property.Name, property.PropertyType);
+
+            //Create rows 
+            foreach (var item in source)
+            {
+                var values = properties.Select(p => p.GetValue(item)).ToArray();
+                table.Rows.Add(values);
+            }
+
+            return table;
         }
     }
 }
