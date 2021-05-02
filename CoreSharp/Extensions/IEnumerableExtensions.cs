@@ -72,7 +72,7 @@ namespace CoreSharp.Extensions
         /// Return all distinct elements of the given source, 
         /// where "distinctness" is determined via a specified key.
         /// </summary>
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
             keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));

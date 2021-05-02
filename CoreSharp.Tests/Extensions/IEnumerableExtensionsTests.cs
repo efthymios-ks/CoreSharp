@@ -141,27 +141,27 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void DistinctBy_SourceIsNull_ThrowArgumentNullException()
+        public void Distinct_SourceIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.DistinctBy(d => d.Id);
+            Action action = () => sourceNull.Distinct(d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void DistinctBy_FilterIsNull_ThrowArgumentNullException()
+        public void Distinct_FilterIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.DistinctBy<DummyClass, int>(null);
+            Action action = () => sourceEmpty.Distinct<DummyClass, int>(null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void DistinctBy_WhenCalled_ReturnDistinctItemsByGivenKey()
+        public void Distinct_WhenCalled_ReturnDistinctItemsByGivenKey()
         {
             //Arrange
             var item1 = new DummyClass(1);
@@ -171,7 +171,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item1, item3 };
 
             //Act 
-            var result = source.DistinctBy(d => d.Id);
+            var result = source.Distinct(d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
