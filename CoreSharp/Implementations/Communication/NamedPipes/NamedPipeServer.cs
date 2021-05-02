@@ -14,7 +14,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
     /// Server for NamedPipe communication.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed partial class NamedPipeServer : Disposable
+    public sealed class NamedPipeServer : Disposable
     {
         //Fields 
         private bool isStarted;
@@ -68,9 +68,9 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         public int BufferSize { get; set; } = 8 * 1024;
 
         //Events 
-        public EventHandler<ClientConnectedEventArgs> ClientConnected;
-        public EventHandler<DataTransceivedEventArgs> DataReceived;
-        public EventHandler<DataTransceivedEventArgs> DataSent;
+        public EventHandler<PipeConnectedEventArgs> ClientConnected;
+        public EventHandler<PipeDataTransfered> DataReceived;
+        public EventHandler<PipeDataTransfered> DataSent;
 
         //Methods 
         public void Start()
@@ -233,8 +233,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             try
             {
                 //Dummy for ending last BeginWaitForConnection call
-                using (var dummy = new NamedPipeClientStream(PipeName))
-                    dummy.Connect(100);
+                using var dummy = new NamedPipeClientStream(PipeName);
+                dummy?.Connect(100);
             }
             catch { }
         }
@@ -260,7 +260,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         {
             clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
 
-            var args = new ClientConnectedEventArgs(clientPipe);
+            var args = new PipeConnectedEventArgs(clientPipe);
             ClientConnected?.Invoke(this, args);
         }
 
@@ -269,7 +269,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
             data = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransceivedEventArgs(clientPipe, data);
+            var args = new PipeDataTransfered(clientPipe, data);
             DataSent?.Invoke(this, args);
         }
 
@@ -278,7 +278,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
             data = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransceivedEventArgs(clientPipe, data);
+            var args = new PipeDataTransfered(clientPipe, data);
             DataReceived?.Invoke(this, args);
         }
 
@@ -295,30 +295,5 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         }
         #endregion
-    }
-
-    public partial class NamedPipeServer
-    {
-        public class ClientConnectedEventArgs : EventArgs
-        {
-            public NamedPipeServerStream ClientPipe { get; private set; }
-
-            public ClientConnectedEventArgs(NamedPipeServerStream clientPipe)
-            {
-                ClientPipe = clientPipe;
-            }
-        }
-
-        public class DataTransceivedEventArgs : EventArgs
-        {
-            public NamedPipeServerStream ClientPipe { get; private set; }
-            public byte[] Buffer { get; private set; } = Array.Empty<byte>();
-
-            public DataTransceivedEventArgs(NamedPipeServerStream clientPipe, byte[] buffer)
-            {
-                ClientPipe = clientPipe;
-                Buffer = buffer;
-            }
-        }
     }
 }

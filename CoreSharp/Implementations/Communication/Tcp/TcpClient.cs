@@ -19,8 +19,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
         private bool isConnecting;
         private bool isTerminated;
         private TimeSpan timeout = TimeSpan.FromSeconds(10);
-        private readonly object timerLock = new object();
-        private readonly Timer timeoutTimer = new Timer() { AutoReset = true };
+        private readonly object timerLock = new();
+        private readonly Timer timeoutTimer = new() { AutoReset = true };
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
