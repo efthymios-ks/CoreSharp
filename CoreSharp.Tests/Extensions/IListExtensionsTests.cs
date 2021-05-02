@@ -75,5 +75,54 @@ namespace CoreSharp.Extensions.Tests
             removedCount.Should().Be(expectedCount);
             source.Should().Equal(expectedSource);
         }
+
+        [Test]
+        public void InsertRange_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => sourceNull.InsertRange(0, 0, 1, 2);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void InsertRange_ValuesIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => sourceEmpty.InsertRange(0, values: null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void InsertRange_IndexInvalid_ThrowArgumentOutOfRangeException(int index)
+        {
+            //Arrange
+            var source = new List<int>();
+
+            //Act
+            Action action = () => source.InsertRange(index, 0, 1, 2);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        }
+
+        [Test]
+        public void InsertRange_WhenCalled_InsertValuesToGivenPosition()
+        {
+            //Arrange
+            var source = new List<int> { 0, 1, 4, 5 };
+            var expected = new List<int> { 0, 1, 2, 3, 4, 5 };
+
+            //Act
+            source.InsertRange(2, 2, 3);
+
+            //Assert
+            source.Should().Equal(expected);
+        }
     }
 }
