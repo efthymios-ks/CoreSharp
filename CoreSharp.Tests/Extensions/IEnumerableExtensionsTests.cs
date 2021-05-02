@@ -228,10 +228,20 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void ToHashSet_ComparerIsNull_ThrowArgumentNullException()
+        {
+            //Act  
+            Action action = () => sourceEmpty.ToHashSet(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
         public void ToHashSet_WhenCalled_ReturnHashSetWithUniqueItems()
         {
             //Arrange 
-            var source = new[] { 1, 1, 2, 3, 4 };
+            var source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
             var expected = new HashSet<int> { 1, 2, 3, 4 };
 
             //Act 

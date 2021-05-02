@@ -174,7 +174,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
         {
-            return source.ToHashSet(null);
+            var comparer = EqualityComparer<T>.Default;
+            return source.ToHashSet(comparer);
         }
 
         /// <summary>
@@ -183,11 +184,9 @@ namespace CoreSharp.Extensions
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
+            comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
 
-            if (comparer == null)
-                return new HashSet<T>(source);
-            else
-                return new HashSet<T>(source, comparer);
+            return new HashSet<T>(source, comparer);
         }
 
         /// <summary>
