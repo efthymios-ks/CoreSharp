@@ -253,7 +253,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// LINQ Except(), using a key for equality comparison.
         /// </summary> 
-        public static IEnumerable<TEntity> ExceptBy<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
+        public static IEnumerable<TEntity> Except<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
             left = left ?? throw new ArgumentNullException(nameof(left));
             right = right ?? throw new ArgumentNullException(nameof(right));
@@ -265,7 +265,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// LINQ Intersect(), using a key for equality comparison.
         /// </summary> 
-        public static IEnumerable<TEntity> IntersectBy<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
+        public static IEnumerable<TEntity> Intersect<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
             left = left ?? throw new ArgumentNullException(nameof(left));
             right = right ?? throw new ArgumentNullException(nameof(right));
@@ -492,7 +492,6 @@ namespace CoreSharp.Extensions
             source = source ?? throw new ArgumentNullException(nameof(source));
 
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
             var table = new DataTable(typeof(T).Name);
 
             //Create columns 

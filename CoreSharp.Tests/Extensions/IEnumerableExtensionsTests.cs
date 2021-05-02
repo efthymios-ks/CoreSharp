@@ -336,20 +336,20 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ExceptBy_LeftIsNull_ThrowArgumentNullException()
+        public void Except_LeftIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.ExceptBy(sourceEmpty, d => d.Id);
+            Action action = () => sourceNull.Except(sourceEmpty, d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void ExceptBy_RightIsNull_ThrowArgumentNullException()
+        public void Except_RightIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.ExceptBy(sourceNull, d => d.Id);
+            Action action = () => sourceEmpty.Except(sourceNull, d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -359,14 +359,14 @@ namespace CoreSharp.Extensions.Tests
         public void ExceptBy_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.ExceptBy<DummyClass, int>(sourceEmpty, null);
+            Action action = () => sourceEmpty.Except<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void ExceptBy_WhenCalled_ReturnLeftItemsNotInRight()
+        public void Except_WhenCalled_ReturnLeftItemsNotInRight()
         {
             //Arrange
             var item1 = new DummyClass(1);
@@ -377,44 +377,44 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item3 };
 
             //Act 
-            var result = left.ExceptBy(right, d => d.Id);
+            var result = left.Except(right, d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
         }
 
         [Test]
-        public void IntersectBy_LeftIsNull_ThrowArgumentNullException()
+        public void Intersect_LeftIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceNull.IntersectBy(sourceEmpty, d => d.Id);
+            Action action = () => sourceNull.Intersect(sourceEmpty, d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void IntersectBy_RightIsNull_ThrowArgumentNullException()
+        public void Intersect_RightIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.IntersectBy(sourceNull, d => d.Id);
+            Action action = () => sourceEmpty.Intersect(sourceNull, d => d.Id);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void IntersectBy_KeySelectorIsNull_ThrowArgumentNullException()
+        public void Intersect_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Act  
-            Action action = () => sourceEmpty.IntersectBy<DummyClass, int>(sourceEmpty, null);
+            Action action = () => sourceEmpty.Intersect<DummyClass, int>(sourceEmpty, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void IntersectBy_WhenCalled_ReturnCommonItems()
+        public void Intersect_WhenCalled_ReturnCommonItems()
         {
             //Arrange
             var item1 = new DummyClass(1);
@@ -426,7 +426,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item1, item4 };
 
             //Act 
-            var result = left.IntersectBy(right, d => d.Id);
+            var result = left.Intersect(right, d => d.Id);
 
             //Assert
             result.Should().Equal(expected);
