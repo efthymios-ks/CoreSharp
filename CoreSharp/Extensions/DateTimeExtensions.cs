@@ -1,4 +1,5 @@
 ﻿using System;
+using CoreSharp.Enums;
 
 namespace CoreSharp.Extensions
 {
@@ -44,6 +45,32 @@ namespace CoreSharp.Extensions
         public static bool IsInLeapYear(this DateTime date)
         {
             return DateTime.IsLeapYear(date.Year);
+        }
+
+        /// <summary>
+        /// Trim part of DateTime. 
+        /// </summary>
+        /// <example>
+        /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds); 
+        /// </example>
+        public static DateTime Trim(this DateTime date, DateTimePrecision precision)
+        {
+            if (precision.HasFlag(DateTimePrecision.Milliseconds))
+                date = date.AddMilliseconds(-date.Millisecond);
+            if (precision.HasFlag(DateTimePrecision.Seconds))
+                date = date.AddSeconds(-date.Second);
+            if (precision.HasFlag(DateTimePrecision.Minutes))
+                date = date.AddMinutes(-date.Minute);
+            if (precision.HasFlag(DateTimePrecision.Hours))
+                date = date.AddHours(-date.Hour);
+            if (precision.HasFlag(DateTimePrecision.Days))
+                date = date.AddDays(-date.Day + 1);
+            if (precision.HasFlag(DateTimePrecision.Months))
+                date = date.AddMonths(-date.Month + 1);
+            if (precision.HasFlag(DateTimePrecision.Years))
+                date = date.AddYears(-date.Year + 1);
+
+            return date;
         }
     }
 }

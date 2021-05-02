@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using FluentAssertions;
 using NUnit.Framework;
+using CoreSharp.Enums;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -53,6 +55,20 @@ namespace CoreSharp.Extensions.Tests
             var result = date.IsInLeapYear();
 
             //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void Trim_WhenCalled_TrimToGivenPrecisionAndReturn()
+        {
+            //Arrange 
+            var date = new DateTime(2021, 5, 2, 21, 34, 55, 500);
+            var precision = DateTimePrecision.Date | DateTimePrecision.Milliseconds;
+            var expected = new DateTime(1, 1, 1, 21, 34, 55, 0);
+
+            //Act
+            var result = date.Trim(precision);
+
             result.Should().Be(expected);
         }
     }

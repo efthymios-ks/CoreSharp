@@ -46,10 +46,12 @@ namespace CoreSharp.Extensions.Tests
         public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
         {
             //Arrange
-            var dictionary = new Dictionary<string, DummyEnum>();
-            dictionary.Add($"{DummyEnum.Option1}", DummyEnum.Option1);
-            dictionary.Add($"{DummyEnum.Option2}", DummyEnum.Option2);
-            dictionary.Add($"{DummyEnum.Option3}", DummyEnum.Option3);
+            var dictionary = new Dictionary<string, DummyEnum>
+            {
+                { $"{DummyEnum.Option1}", DummyEnum.Option1 },
+                { $"{DummyEnum.Option2}", DummyEnum.Option2 },
+                { $"{DummyEnum.Option3}", DummyEnum.Option3 }
+            };
 
             //Act 
             var result = EnumExtensions.GetDictionary<DummyEnum>();
