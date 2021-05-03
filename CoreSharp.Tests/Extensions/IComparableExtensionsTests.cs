@@ -14,10 +14,10 @@ namespace CoreSharp.Extensions.Tests
         [TestCase(1, 1, 3, true, true)]
         [TestCase(1, 3, 3, false, false)]
         [TestCase(1, 3, 3, true, true)]
-        public void Between_ValueIsInRange_ReturnTrue(int left, int value, int right, bool includeEnds, bool expected)
+        public void IsBetween_ValueIsInRange_ReturnTrue(int left, int value, int right, bool includeEnds, bool expected)
         {
             //Act 
-            var result = value.Between(left, right, includeEnds);
+            var result = value.IsBetween(left, right, includeEnds);
 
             //Assert
             result.Should().Be(expected);
