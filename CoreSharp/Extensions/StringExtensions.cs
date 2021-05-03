@@ -436,6 +436,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
         public static int? ToIntCI(this string value)
         {
@@ -482,6 +483,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
         public static long? ToLongCI(this string value)
         {
@@ -528,6 +530,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
         public static short? ToShortCI(this string value)
         {
@@ -574,6 +577,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
         public static float? ToFloatCI(this string value)
         {
@@ -589,6 +593,53 @@ namespace CoreSharp.Extensions
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (float.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// User-friendly double.TryParse resulting to double?.
+        /// </summary> 
+        public static double? ToDouble(this string value)
+        {
+            return value.ToDouble(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly double.TryParse resulting to double?.
+        /// </summary> 
+        public static double? ToDouble(this string value, NumberStyles numberStyle)
+        {
+            return value.ToDouble(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly double.TryParse resulting to double?.
+        /// </summary> 
+        public static double? ToDouble(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToDouble(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly double.TryParse resulting to double?. 
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
+        /// </summary> 
+        public static double? ToDoubleCI(this string value)
+        {
+            return value.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly double.TryParse resulting to double?.
+        /// </summary> 
+        public static double? ToDouble(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (double.TryParse(value, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;

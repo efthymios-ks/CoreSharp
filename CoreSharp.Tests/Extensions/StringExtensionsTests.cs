@@ -861,5 +861,39 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void ToDouble_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToDouble();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDouble_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToDouble(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("-1", -1)]
+        [TestCase("1", 1)]
+        [TestCase("1.1", 1.1)]
+        public void ToDouble_IfValueValid_ReturnDouble(string value, double? expected)
+        {
+            //Act
+            var result = value.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }
