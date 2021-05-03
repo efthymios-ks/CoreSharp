@@ -727,7 +727,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToInt_ValueIsNull_ThrowArgumentNullException()
+        public void ToInt_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToInt();
@@ -751,17 +751,17 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("1", 1)]
         [TestCase("-1", -1)]
         [TestCase("1.1", null)]
-        public void ToInt_IfValueValid_ReturnInt(string value, int? expected)
+        public void ToInt_InputValid_ReturnInt(string input, int? expected)
         {
             //Act
-            var result = value.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);
         }
 
         [Test]
-        public void ToLong_ValueIsNull_ThrowArgumentNullException()
+        public void ToLong_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToLong();
@@ -785,17 +785,17 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("-1", -1)]
         [TestCase("1", 1)]
         [TestCase("1.1", null)]
-        public void ToLong_IfValueValid_ReturnLong(string value, long? expected)
+        public void ToLong_InputValid_ReturnLong(string input, long? expected)
         {
             //Act
-            var result = value.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);
         }
 
         [Test]
-        public void ToShort_ValueIsNull_ThrowArgumentNullException()
+        public void ToShort_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToShort();
@@ -819,17 +819,17 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("-1", -1)]
         [TestCase("1", 1)]
         [TestCase("1.1", null)]
-        public void ToShort_IfValueValid_ReturnShort(string value, short? expected)
+        public void ToShort_InputValid_ReturnShort(string input, short? expected)
         {
             //Act
-            var result = value.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);
         }
 
         [Test]
-        public void ToFloat_ValueIsNull_ThrowArgumentNullException()
+        public void ToFloat_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToFloat();
@@ -853,17 +853,17 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("-1", -1f)]
         [TestCase("1", 1f)]
         [TestCase("1.1", 1.1f)]
-        public void ToFloat_IfValueValid_ReturnFloat(string value, float? expected)
+        public void ToFloat_InputValid_ReturnFloat(string input, float? expected)
         {
             //Act
-            var result = value.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);
         }
 
         [Test]
-        public void ToDouble_ValueIsNull_ThrowArgumentNullException()
+        public void ToDouble_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToDouble();
@@ -887,17 +887,17 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("-1", -1)]
         [TestCase("1", 1)]
         [TestCase("1.1", 1.1)]
-        public void ToDouble_IfValueValid_ReturnDouble(string value, double? expected)
+        public void ToDouble_InputValid_ReturnDouble(string input, double? expected)
         {
             //Act
-            var result = value.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);
         }
 
         [Test]
-        public void ToDecimal_ValueIsNull_ThrowArgumentNullException()
+        public void ToDecimal_InputIsNull_ThrowArgumentNullException()
         {
             //Act
             Action action = () => StringNull.ToDecimal();
@@ -921,15 +921,43 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("-1", -1)]
         [TestCase("1", 1)]
         [TestCase("1.1", 1.1)]
-        public void ToDecimal_IfValueValid_ReturnDecimal(string value, double? expected)
+        public void ToDecimal_InputValid_ReturnDecimal(string input, double? expected)
         {
             var expectedDecimal = (decimal?)expected;
 
             //Act
-            var result = value.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
+            var result = input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expectedDecimal);
+        }
+
+        [Test]
+        public void ToBool_InputIsNull_ThrowArgumentNullException()
+        {
+            //Assert
+            Action action = () => StringNull.ToBool();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("false", false)]
+        [TestCase("true", true)]
+        [TestCase("-1", null)]
+        [TestCase("0", false)]
+        [TestCase("1", true)]
+        [TestCase("no", false)]
+        [TestCase("yes", true)]
+        public void ToBool_InputIsValid_ReturnBool(string input, bool? expected)
+        {
+            //Assert
+            var result = input.ToBool();
+
+            //Assert
+            result.Should().Be(expected);
         }
     }
 }

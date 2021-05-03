@@ -413,45 +413,45 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string value)
+        public static int? ToInt(this string input)
         {
-            return value.ToInt(NumberStyles.None);
+            return input.ToInt(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string value, NumberStyles numberStyle)
+        public static int? ToInt(this string input, NumberStyles numberStyle)
         {
-            return value.ToInt(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToInt(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string value, IFormatProvider formatProvider)
+        public static int? ToInt(this string input, IFormatProvider formatProvider)
         {
-            return value.ToInt(NumberStyles.None, formatProvider);
+            return input.ToInt(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static int? ToIntCI(this string value)
+        public static int? ToIntCI(this string input)
         {
-            return value.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static int? ToInt(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (int.TryParse(value, numberStyle, formatProvider, out var result))
+            if (int.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -460,45 +460,45 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string value)
+        public static long? ToLong(this string input)
         {
-            return value.ToLong(NumberStyles.None);
+            return input.ToLong(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string value, NumberStyles numberStyle)
+        public static long? ToLong(this string input, NumberStyles numberStyle)
         {
-            return value.ToLong(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToLong(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string value, IFormatProvider formatProvider)
+        public static long? ToLong(this string input, IFormatProvider formatProvider)
         {
-            return value.ToLong(NumberStyles.None, formatProvider);
+            return input.ToLong(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static long? ToLongCI(this string value)
+        public static long? ToLongCI(this string input)
         {
-            return value.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static long? ToLong(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (long.TryParse(value, numberStyle, formatProvider, out var result))
+            if (long.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -507,45 +507,45 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string value)
+        public static short? ToShort(this string input)
         {
-            return value.ToShort(NumberStyles.None);
+            return input.ToShort(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string value, NumberStyles numberStyle)
+        public static short? ToShort(this string input, NumberStyles numberStyle)
         {
-            return value.ToShort(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToShort(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string value, IFormatProvider formatProvider)
+        public static short? ToShort(this string input, IFormatProvider formatProvider)
         {
-            return value.ToShort(NumberStyles.None, formatProvider);
+            return input.ToShort(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static short? ToShortCI(this string value)
+        public static short? ToShortCI(this string input)
         {
-            return value.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static short? ToShort(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (short.TryParse(value, numberStyle, formatProvider, out var result))
+            if (short.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -554,45 +554,45 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string value)
+        public static float? ToFloat(this string input)
         {
-            return value.ToFloat(NumberStyles.None);
+            return input.ToFloat(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string value, NumberStyles numberStyle)
+        public static float? ToFloat(this string input, NumberStyles numberStyle)
         {
-            return value.ToFloat(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToFloat(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string value, IFormatProvider formatProvider)
+        public static float? ToFloat(this string input, IFormatProvider formatProvider)
         {
-            return value.ToFloat(NumberStyles.None, formatProvider);
+            return input.ToFloat(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static float? ToFloatCI(this string value)
+        public static float? ToFloatCI(this string input)
         {
-            return value.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static float? ToFloat(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (float.TryParse(value, numberStyle, formatProvider, out var result))
+            if (float.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -601,45 +601,45 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string value)
+        public static double? ToDouble(this string input)
         {
-            return value.ToDouble(NumberStyles.None);
+            return input.ToDouble(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string value, NumberStyles numberStyle)
+        public static double? ToDouble(this string input, NumberStyles numberStyle)
         {
-            return value.ToDouble(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToDouble(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string value, IFormatProvider formatProvider)
+        public static double? ToDouble(this string input, IFormatProvider formatProvider)
         {
-            return value.ToDouble(NumberStyles.None, formatProvider);
+            return input.ToDouble(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?. 
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static double? ToDoubleCI(this string value)
+        public static double? ToDoubleCI(this string input)
         {
-            return value.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static double? ToDouble(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (double.TryParse(value, numberStyle, formatProvider, out var result))
+            if (double.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -648,46 +648,83 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string value)
+        public static decimal? ToDecimal(this string input)
         {
-            return value.ToDecimal(NumberStyles.None);
+            return input.ToDecimal(NumberStyles.None);
         }
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string value, NumberStyles numberStyle)
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyle)
         {
-            return value.ToDecimal(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToDecimal(numberStyle, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string value, IFormatProvider formatProvider)
+        public static decimal? ToDecimal(this string input, IFormatProvider formatProvider)
         {
-            return value.ToDecimal(NumberStyles.None, formatProvider);
+            return input.ToDecimal(NumberStyles.None, formatProvider);
         }
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static decimal? ToDecimalCI(this string value)
+        public static decimal? ToDecimalCI(this string input)
         {
-            return value.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
+            return input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (decimal.TryParse(value, numberStyle, formatProvider, out var result))
+            if (decimal.TryParse(input, numberStyle, formatProvider, out var result))
                 return result;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Convert string to bool. 
+        /// Can convert "true/false", "1/0" and "yes/no" strings. 
+        /// </summary> 
+        public static bool? ToBool(this string input)
+        {
+            input = input ?? throw new ArgumentNullException(nameof(input));
+            input = input.ToLowerInvariant().Trim();
+
+            var intInput = input.ToIntCI();
+
+            if (bool.TryParse(input, out var result))
+                return result;
+
+            //1 or 0 
+            else if (intInput.HasValue && intInput == 1)
+                return true;
+            else if (intInput.HasValue && intInput == 0)
+                return false;
+
+            //true or false 
+            else if (input == "true")
+                return true;
+            else if (input == "false")
+                return false;
+
+            //Yes or no 
+            else if (input == "yes")
+                return true;
+            else if (input == "no")
+                return false;
+
+            //Not valid 
             else
                 return null;
         }
