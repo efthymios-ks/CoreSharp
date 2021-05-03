@@ -53,21 +53,21 @@ namespace CoreSharp.Extensions
         /// <example>
         /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds); 
         /// </example>
-        public static DateTime Trim(this DateTime date, DateTimePrecision precision)
+        public static DateTime Trim(this DateTime date, DateTimePrecision trimFlags)
         {
-            if (precision.HasFlag(DateTimePrecision.Milliseconds))
+            if (trimFlags.HasFlag(DateTimePrecision.Milliseconds))
                 date = date.AddMilliseconds(-date.Millisecond);
-            if (precision.HasFlag(DateTimePrecision.Seconds))
+            if (trimFlags.HasFlag(DateTimePrecision.Seconds))
                 date = date.AddSeconds(-date.Second);
-            if (precision.HasFlag(DateTimePrecision.Minutes))
+            if (trimFlags.HasFlag(DateTimePrecision.Minutes))
                 date = date.AddMinutes(-date.Minute);
-            if (precision.HasFlag(DateTimePrecision.Hours))
+            if (trimFlags.HasFlag(DateTimePrecision.Hours))
                 date = date.AddHours(-date.Hour);
-            if (precision.HasFlag(DateTimePrecision.Days))
+            if (trimFlags.HasFlag(DateTimePrecision.Days))
                 date = date.AddDays(-date.Day + 1);
-            if (precision.HasFlag(DateTimePrecision.Months))
+            if (trimFlags.HasFlag(DateTimePrecision.Months))
                 date = date.AddMonths(-date.Month + 1);
-            if (precision.HasFlag(DateTimePrecision.Years))
+            if (trimFlags.HasFlag(DateTimePrecision.Years))
                 date = date.AddYears(-date.Year + 1);
 
             return date;
