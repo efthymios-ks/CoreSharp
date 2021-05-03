@@ -793,5 +793,39 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void ToShort_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToShort();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToShort_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToShort(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("1.2", null)]
+        [TestCase("1", 1)]
+        [TestCase("-1", -1)]
+        public void ToShort_IfValueValid_ReturnLong(string value, short? expected)
+        {
+            //Act
+            var result = value.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }

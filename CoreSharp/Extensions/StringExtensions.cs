@@ -501,5 +501,51 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <summary>
+        /// User-friendly short.TryParse resulting to short?.
+        /// </summary> 
+        public static long? ToShort(this string value)
+        {
+            return value.ToLong(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly short.TryParse resulting to short?.
+        /// </summary> 
+        public static short? ToShort(this string value, NumberStyles numberStyle)
+        {
+            return value.ToShort(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly short.TryParse resulting to short?.
+        /// </summary> 
+        public static short? ToShort(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToShort(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly short.TryParse resulting to short?.
+        /// </summary> 
+        public static short? ToShortCI(this string value)
+        {
+            return value.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly short.TryParse resulting to short?.
+        /// </summary> 
+        public static short? ToShort(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (short.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }
