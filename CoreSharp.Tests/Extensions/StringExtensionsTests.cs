@@ -895,5 +895,41 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void ToDecimal_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToDecimal();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDecimal_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToDecimal(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("-1", -1)]
+        [TestCase("1", 1)]
+        [TestCase("1.1", 1.1)]
+        public void ToDecimal_IfValueValid_ReturnDecimal(string value, double? expected)
+        {
+            var expectedDecimal = (decimal?)expected;
+
+            //Act
+            var result = value.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            //Assert
+            result.Should().Be(expectedDecimal);
+        }
     }
 }

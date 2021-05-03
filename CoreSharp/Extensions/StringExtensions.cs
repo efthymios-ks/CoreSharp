@@ -644,5 +644,52 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <summary>
+        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// </summary> 
+        public static decimal? ToDecimal(this string value)
+        {
+            return value.ToDecimal(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// </summary> 
+        public static decimal? ToDecimal(this string value, NumberStyles numberStyle)
+        {
+            return value.ToDecimal(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// </summary> 
+        public static decimal? ToDecimal(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToDecimal(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
+        /// </summary> 
+        public static decimal? ToDecimalCI(this string value)
+        {
+            return value.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// </summary> 
+        public static decimal? ToDecimal(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (decimal.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }
