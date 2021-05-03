@@ -370,16 +370,16 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(0, 0)]
-        [TestCase(2, 1)]
-        [TestCase(4, 0)]
-        public void ContainsValue_WhenCalled_ReturnValueOccurencesCount(int value, int count)
+        [TestCase(0, false)]
+        [TestCase(2, true)]
+        [TestCase(4, false)]
+        public void ContainsValue_ContainsValue_ReturnTrue(int value, bool expected)
         {
             //Act 
             var result = dictionary.ContainsValue(value);
 
             //Assert
-            result.Should().Be(count);
+            result.Should().Be(expected);
         }
 
         [Test]

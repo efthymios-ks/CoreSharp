@@ -183,11 +183,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Returns given value occurences in dictionary.
         /// </summary>
-        public static int ContainsValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
+        public static bool ContainsValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
 
-            return source.Values.Count(v => v.Equals(value));
+            return source.Values.Any(v => v.Equals(value));
         }
 
         /// <summary>
