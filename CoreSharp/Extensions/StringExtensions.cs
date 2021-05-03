@@ -409,5 +409,51 @@ namespace CoreSharp.Extensions
 
             return input; ;
         }
+
+        /// <summary>
+        /// User-friendly int.TryParse resulting to int?.
+        /// </summary> 
+        public static int? ToInt(this string value)
+        {
+            return value.ToInt(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly int.TryParse resulting to int?.
+        /// </summary> 
+        public static int? ToInt(this string value, NumberStyles numberStyle)
+        {
+            return value.ToInt(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly int.TryParse resulting to int?.
+        /// </summary> 
+        public static int? ToInt(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToInt(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly int.TryParse resulting to int?.
+        /// </summary> 
+        public static int? ToIntCI(this string value)
+        {
+            return value.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly int.TryParse resulting to int?.
+        /// </summary> 
+        public static int? ToInt(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (int.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }

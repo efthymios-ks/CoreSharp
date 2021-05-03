@@ -725,5 +725,39 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void ToInt_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToInt();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToInt_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToInt(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("1.2", null)]
+        [TestCase("1", 1)]
+        [TestCase("-1", -1)]
+        public void ToInt_IfValueValid_ReturnInt(string value, int? expected)
+        {
+            //Act
+            var result = value.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }
