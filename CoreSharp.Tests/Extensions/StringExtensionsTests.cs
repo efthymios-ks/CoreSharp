@@ -748,9 +748,9 @@ namespace CoreSharp.Extensions.Tests
 
         [Test]
         [TestCase("A", null)]
-        [TestCase("1.2", null)]
         [TestCase("1", 1)]
         [TestCase("-1", -1)]
+        [TestCase("1.1", null)]
         public void ToInt_IfValueValid_ReturnInt(string value, int? expected)
         {
             //Act
@@ -782,9 +782,9 @@ namespace CoreSharp.Extensions.Tests
 
         [Test]
         [TestCase("A", null)]
-        [TestCase("1.2", null)]
-        [TestCase("1", 1)]
         [TestCase("-1", -1)]
+        [TestCase("1", 1)]
+        [TestCase("1.1", null)]
         public void ToLong_IfValueValid_ReturnLong(string value, long? expected)
         {
             //Act
@@ -816,13 +816,47 @@ namespace CoreSharp.Extensions.Tests
 
         [Test]
         [TestCase("A", null)]
-        [TestCase("1.2", null)]
-        [TestCase("1", 1)]
         [TestCase("-1", -1)]
-        public void ToShort_IfValueValid_ReturnLong(string value, short? expected)
+        [TestCase("1", 1)]
+        [TestCase("1.1", null)]
+        public void ToShort_IfValueValid_ReturnShort(string value, short? expected)
         {
             //Act
             var result = value.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToFloat_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToFloat();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToFloat_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToFloat(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("A", null)]
+        [TestCase("-1", -1f)]
+        [TestCase("1", 1f)]
+        [TestCase("1.1", 1.1f)]
+        public void ToFloat_IfValueValid_ReturnFloat(string value, float? expected)
+        {
+            //Act
+            var result = value.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
             //Assert
             result.Should().Be(expected);

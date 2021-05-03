@@ -505,9 +505,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static long? ToShort(this string value)
+        public static short? ToShort(this string value)
         {
-            return value.ToLong(NumberStyles.None);
+            return value.ToShort(NumberStyles.None);
         }
 
         /// <summary>
@@ -543,6 +543,52 @@ namespace CoreSharp.Extensions
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (short.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// User-friendly float.TryParse resulting to float?.
+        /// </summary> 
+        public static float? ToFloat(this string value)
+        {
+            return value.ToFloat(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly float.TryParse resulting to float?.
+        /// </summary> 
+        public static float? ToFloat(this string value, NumberStyles numberStyle)
+        {
+            return value.ToFloat(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly float.TryParse resulting to float?.
+        /// </summary> 
+        public static float? ToFloat(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToFloat(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly float.TryParse resulting to float?.
+        /// </summary> 
+        public static float? ToFloatCI(this string value)
+        {
+            return value.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly float.TryParse resulting to float?.
+        /// </summary> 
+        public static float? ToFloat(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (float.TryParse(value, numberStyle, formatProvider, out var result))
                 return result;
             else
                 return null;
