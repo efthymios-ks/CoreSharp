@@ -455,5 +455,51 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <summary>
+        /// User-friendly long.TryParse resulting to long?.
+        /// </summary> 
+        public static long? ToLong(this string value)
+        {
+            return value.ToLong(NumberStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly long.TryParse resulting to long?.
+        /// </summary> 
+        public static long? ToLong(this string value, NumberStyles numberStyle)
+        {
+            return value.ToLong(numberStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly long.TryParse resulting to long?.
+        /// </summary> 
+        public static long? ToLong(this string value, IFormatProvider formatProvider)
+        {
+            return value.ToLong(NumberStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly long.TryParse resulting to long?.
+        /// </summary> 
+        public static long? ToLongCI(this string value)
+        {
+            return value.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly long.TryParse resulting to long?.
+        /// </summary> 
+        public static long? ToLong(this string value, NumberStyles numberStyle, IFormatProvider formatProvider)
+        {
+            value = value ?? throw new ArgumentNullException(nameof(value));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (long.TryParse(value, numberStyle, formatProvider, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }
