@@ -1,4 +1,7 @@
-﻿namespace CoreSharp.Extensions
+﻿using System;
+using System.Globalization;
+
+namespace CoreSharp.Extensions
 {
     /// <summary>
     /// Double extensions. 
@@ -17,6 +20,81 @@
             var dToHigh = (decimal)toHigh;
             var dResult = dValue.Map(dFromLow, dFromHigh, dToLow, dToHigh);
             return (double)dResult;
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// </summary> 
+        public static string ToMetricSize(this double value)
+        {
+            return value.ToMetricSize("{0}");
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// </summary> 
+        public static string ToMetricSize(this double value, string format)
+        {
+            return value.ToMetricSize(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// </summary> 
+        public static string ToMetricSize(this double value, IFormatProvider formatProvider)
+        {
+            return value.ToMetricSize("{0}", formatProvider);
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// </summary> 
+        public static string ToMetricSize(this double value, string format, IFormatProvider formatProvider)
+        {
+            format = format ?? throw new ArgumentNullException(nameof(format));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            return value.ToMetricSize(v => v.ToString(format, formatProvider));
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// Uses `0.###` and `CultureInfo.InvariantCulture`.
+        /// </summary> 
+        public static string ToMetricSizeCI(this double value)
+        {
+            return value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// </summary> 
+        public static string ToMetricSize(this double value, Func<double, string> formatExpression)
+        {
+            formatExpression = formatExpression ?? throw new ArgumentNullException(nameof(formatExpression));
+
+            var incPrefixes = new[] { 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
+            var decPrefixes = new[] { 'm', 'u', 'n', 'p', 'f', 'a', 'z', 'y' };
+
+            int degree = 0;
+            if (value != 0)
+                degree = (int)Math.Floor(Math.Log10(Math.Abs(value)) / 3);
+            double scaled = value * Math.Pow(1000, -degree);
+
+            //Get prefix 
+            char? prefix = null;
+            int degreeSign = Math.Sign(degree);
+            switch (degreeSign)
+            {
+                case 1:
+                    prefix = incPrefixes[degree - 1];
+                    break;
+                case -1:
+                    prefix = decPrefixes[-degree - 1];
+                    break;
+            }
+
+            return formatExpression(scaled) + prefix;
         }
     }
 }
