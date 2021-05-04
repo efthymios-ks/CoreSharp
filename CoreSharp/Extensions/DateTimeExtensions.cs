@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using CoreSharp.Enums;
 
 namespace CoreSharp.Extensions
@@ -71,6 +72,22 @@ namespace CoreSharp.Extensions
                 date = date.AddYears(-date.Year + 1);
 
             return date;
+        }
+
+        /// <summary>
+        /// Convert DateTime to sortable format using "u" specifier. 
+        /// </summary> 
+        public static string ToStringSortable(this DateTime date)
+        {
+            return date.ToString("u", CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Convert DateTime to UTC sortable format using "u" specifier. 
+        /// </summary> 
+        public static string ToStringSortableUtc(this DateTime date)
+        {
+            return date.ToUniversalTime().ToStringSortable();
         }
     }
 }

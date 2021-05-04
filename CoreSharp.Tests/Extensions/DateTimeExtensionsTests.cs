@@ -1,8 +1,8 @@
-﻿using CoreSharp.Extensions;
-using System;
+﻿using System;
+using System.Globalization;
+using CoreSharp.Enums;
 using FluentAssertions;
 using NUnit.Framework;
-using CoreSharp.Enums;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -69,6 +69,34 @@ namespace CoreSharp.Extensions.Tests
             //Act
             var result = date.Trim(precision);
 
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToStringSortable_WhenCalled_ReturnSortableString()
+        {
+            //Arrange 
+            var date = DateTime.Now;
+            var expected = date.ToString("u", CultureInfo.InvariantCulture);
+
+            //Act
+            var result = date.ToStringSortable();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToStringSortable_WhenCalled_ReturnUtcSortableString()
+        {
+            //Arrange 
+            var date = DateTime.Now;
+            var expected = date.ToUniversalTime().ToString("u", CultureInfo.InvariantCulture);
+
+            //Act
+            var result = date.ToStringSortableUtc();
+
+            //Assert
             result.Should().Be(expected);
         }
     }

@@ -766,7 +766,7 @@ namespace CoreSharp.Extensions
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// Uses "u" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
         /// </summary> 
-        public static DateTime? ToDateTimeUtcSortable(this string input)
+        public static DateTime? ToDateTimeSortableUtc(this string input)
         {
             return input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
         }
