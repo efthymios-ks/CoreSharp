@@ -54,25 +54,6 @@ namespace CoreSharp.Extensions
             format = format ?? throw new ArgumentNullException(nameof(format));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            return value.ToMetricSize(v => v.ToString(format, formatProvider));
-        }
-
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// Uses `0.###` and `CultureInfo.InvariantCulture`.
-        /// </summary> 
-        public static string ToMetricSizeCI(this double value)
-        {
-            return value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// </summary> 
-        public static string ToMetricSize(this double value, Func<double, string> formatExpression)
-        {
-            formatExpression = formatExpression ?? throw new ArgumentNullException(nameof(formatExpression));
-
             var incPrefixes = new[] { 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
             var decPrefixes = new[] { 'm', 'u', 'n', 'p', 'f', 'a', 'z', 'y' };
 
@@ -94,7 +75,16 @@ namespace CoreSharp.Extensions
                     break;
             }
 
-            return formatExpression(scaled) + prefix;
+            return scaled.ToString(format, formatProvider) + prefix;
+        }
+
+        /// <summary>
+        /// Convert value to SI string with appropriate prefix. 
+        /// Uses `0.###` and `CultureInfo.InvariantCulture`.
+        /// </summary> 
+        public static string ToMetricSizeCI(this double value)
+        {
+            return value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
         }
     }
 }

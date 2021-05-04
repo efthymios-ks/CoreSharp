@@ -37,10 +37,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToComputerSize(this ulong byteSize, string format, IFormatProvider formatProvider)
         {
-            format = format ?? throw new ArgumentNullException(nameof(format));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-
-            return byteSize.ToComputerSize(v => v.ToString(format, formatProvider));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -50,14 +47,6 @@ namespace CoreSharp.Extensions
         public static string ToComputerSizeCI(this ulong byteSize)
         {
             return byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// </summary> 
-        public static string ToComputerSize(this ulong byteSize, Func<double, string> formatExpression)
-        {
-            throw new NotImplementedException();
         }
     }
 }
