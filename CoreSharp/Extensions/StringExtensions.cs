@@ -728,5 +728,62 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// </summary> 
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat)
+        {
+            return input.ToDateTime(dateTimeFormat, DateTimeStyles.None);
+        }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// </summary> 
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle)
+        {
+            return input.ToDateTime(dateTimeFormat, dateTimeStyle, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// </summary> 
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat, IFormatProvider formatProvider)
+        {
+            return input.ToDateTime(dateTimeFormat, DateTimeStyles.None, formatProvider);
+        }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// Uses "u" format and CultureInfo.InvariantCulture. 
+        /// </summary> 
+        public static DateTime? ToDateTimeSortable(this string input)
+        {
+            return input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// Uses "u" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
+        /// </summary> 
+        public static DateTime? ToDateTimeUtcSortable(this string input)
+        {
+            return input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
+        }
+
+        /// <summary>
+        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// </summary> 
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
+        {
+            input = input ?? throw new ArgumentNullException(nameof(input));
+            dateTimeFormat = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            if (DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyle, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }

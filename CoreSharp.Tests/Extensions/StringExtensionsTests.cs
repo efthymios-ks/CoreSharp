@@ -923,6 +923,7 @@ namespace CoreSharp.Extensions.Tests
         [TestCase("1.1", 1.1)]
         public void ToDecimal_InputValid_ReturnDecimal(string input, double? expected)
         {
+            //Arrange
             var expectedDecimal = (decimal?)expected;
 
             //Act
@@ -955,6 +956,52 @@ namespace CoreSharp.Extensions.Tests
         {
             //Assert
             var result = input.ToBool();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToDateTime_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.ToDateTime(StringEmpty);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDateTime_DateTimeFormatIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToDateTime(StringNull);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDateTime_FormatProviderIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToDateTime(StringEmpty, null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToDateTime_InputValid_ReturnDateTime()
+        {
+            //Arrange 
+            var expected = new DateTime(2021, 5, 4, 11, 17, 45);
+            var dateTimeFormat = "u";
+            var formatProvider = CultureInfo.InvariantCulture;
+            var input = expected.ToString(dateTimeFormat, formatProvider);
+
+            //Act
+            var result = input.ToDateTime(dateTimeFormat, formatProvider);
 
             //Assert
             result.Should().Be(expected);
