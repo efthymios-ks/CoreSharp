@@ -91,7 +91,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var date = DateTime.Now;
-            var expected = date.ToUniversalTime().ToString("u", CultureInfo.InvariantCulture);
+            var expected = date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
 
             //Act
             var result = date.ToStringSortableUtc();

@@ -727,16 +727,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToInt_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToInt();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
         public void ToInt_FormatProviderIsNull_ThrowArgumentNullException()
         {
             //Act
@@ -758,16 +748,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToLong_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToLong();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -795,16 +775,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToShort_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToShort();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
         public void ToShort_FormatProviderIsNull_ThrowArgumentNullException()
         {
             //Act
@@ -826,16 +796,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToFloat_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToFloat();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -863,16 +823,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToDouble_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToDouble();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
         public void ToDouble_FormatProviderIsNull_ThrowArgumentNullException()
         {
             //Act
@@ -894,16 +844,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToDecimal_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToDecimal();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
@@ -934,16 +874,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToBool_InputIsNull_ThrowArgumentNullException()
-        {
-            //Assert
-            Action action = () => StringNull.ToBool();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
         [TestCase("A", null)]
         [TestCase("false", false)]
         [TestCase("true", true)]
@@ -959,16 +889,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToDateTime_InputIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringNull.ToDateTime(StringEmpty);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

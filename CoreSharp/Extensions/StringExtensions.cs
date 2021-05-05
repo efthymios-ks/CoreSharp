@@ -449,7 +449,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static int? ToInt(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (int.TryParse(input, numberStyle, formatProvider, out var result))
@@ -496,7 +495,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static long? ToLong(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (long.TryParse(input, numberStyle, formatProvider, out var result))
@@ -543,7 +541,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static short? ToShort(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (short.TryParse(input, numberStyle, formatProvider, out var result))
@@ -590,7 +587,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static float? ToFloat(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (float.TryParse(input, numberStyle, formatProvider, out var result))
@@ -637,7 +633,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static double? ToDouble(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (double.TryParse(input, numberStyle, formatProvider, out var result))
@@ -684,7 +679,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static decimal? ToDecimal(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (decimal.TryParse(input, numberStyle, formatProvider, out var result))
@@ -699,7 +693,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool? ToBool(this string input)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            if (string.IsNullOrWhiteSpace(input))
+                input = string.Empty;
             input = input.ToLowerInvariant().Trim();
 
             var intInput = input.ToIntCI();
@@ -777,7 +772,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
             dateTimeFormat = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
