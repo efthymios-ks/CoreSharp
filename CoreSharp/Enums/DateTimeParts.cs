@@ -3,7 +3,7 @@
 namespace CoreSharp.Enums
 {
     [Flags]
-    public enum DateTimePrecision
+    public enum DateTimeParts
     {
         Milliseconds = 1,
         Seconds = 2,

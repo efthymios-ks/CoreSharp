@@ -54,21 +54,21 @@ namespace CoreSharp.Extensions
         /// <example>
         /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds); 
         /// </example>
-        public static DateTime Trim(this DateTime date, DateTimePrecision trimFlags)
+        public static DateTime Trim(this DateTime date, DateTimeParts trimFlags)
         {
-            if (trimFlags.HasFlag(DateTimePrecision.Milliseconds))
+            if (trimFlags.HasFlag(DateTimeParts.Milliseconds))
                 date = date.AddMilliseconds(-date.Millisecond);
-            if (trimFlags.HasFlag(DateTimePrecision.Seconds))
+            if (trimFlags.HasFlag(DateTimeParts.Seconds))
                 date = date.AddSeconds(-date.Second);
-            if (trimFlags.HasFlag(DateTimePrecision.Minutes))
+            if (trimFlags.HasFlag(DateTimeParts.Minutes))
                 date = date.AddMinutes(-date.Minute);
-            if (trimFlags.HasFlag(DateTimePrecision.Hours))
+            if (trimFlags.HasFlag(DateTimeParts.Hours))
                 date = date.AddHours(-date.Hour);
-            if (trimFlags.HasFlag(DateTimePrecision.Days))
+            if (trimFlags.HasFlag(DateTimeParts.Days))
                 date = date.AddDays(-date.Day + 1);
-            if (trimFlags.HasFlag(DateTimePrecision.Months))
+            if (trimFlags.HasFlag(DateTimeParts.Months))
                 date = date.AddMonths(-date.Month + 1);
-            if (trimFlags.HasFlag(DateTimePrecision.Years))
+            if (trimFlags.HasFlag(DateTimeParts.Years))
                 date = date.AddYears(-date.Year + 1);
 
             return date;
@@ -83,11 +83,11 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Convert DateTime to UTC sortable format using "u" specifier. 
+        /// Convert DateTime to UTC sortable format using "ο" specifier. 
         /// </summary> 
         public static string ToStringSortableUtc(this DateTime date)
         {
-            return date.ToUniversalTime().ToStringSortable();
+            return date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
         }
     }
 }

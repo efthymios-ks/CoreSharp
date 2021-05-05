@@ -63,7 +63,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var date = new DateTime(2021, 5, 2, 21, 34, 55, 500);
-            var precision = DateTimePrecision.Date | DateTimePrecision.Milliseconds;
+            var precision = DateTimeParts.Date | DateTimeParts.Milliseconds;
             var expected = new DateTime(1, 1, 1, 21, 34, 55, 0);
 
             //Act

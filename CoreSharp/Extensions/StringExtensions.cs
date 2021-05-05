@@ -407,7 +407,8 @@ namespace CoreSharp.Extensions
             foreach (var pair in dictionary)
                 input = input.Replace(pair.Key, $"{pair.Value}");
 
-            return input; ;
+            return input;
+            ;
         }
 
         /// <summary>
@@ -764,11 +765,11 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// Uses "u" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
+        /// Uses "o" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
         /// </summary> 
         public static DateTime? ToDateTimeSortableUtc(this string input)
         {
-            return input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
+            return input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
         }
 
         /// <summary>
