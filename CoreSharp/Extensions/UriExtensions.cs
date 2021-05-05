@@ -52,8 +52,7 @@ namespace CoreSharp.Extensions
             baseUrl = baseUrl.Trim(trimChars);
             query = query.Trim(trimChars);
 
-            string url = $"{baseUrl}/?{query}";
-            return url;
+            return $"{baseUrl}/?{query}";
         }
     }
 }

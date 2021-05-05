@@ -16,8 +16,7 @@ namespace CoreSharp.Extensions
         {
             port = port ?? throw new ArgumentNullException(nameof(port));
 
-
-            return new SerialPortSettings()
+            return new()
             {
                 PortName = port.PortName,
                 BaudRate = port.BaudRate,

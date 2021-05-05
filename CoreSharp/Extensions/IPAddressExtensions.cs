@@ -21,11 +21,9 @@ namespace CoreSharp.Extensions
 
             try
             {
-                using (var ping = new Ping())
-                {
-                    var reply = ping.Send($"{address}", timeoutMillis);
-                    return reply.Status == IPStatus.Success;
-                }
+                using var ping = new Ping();
+                var reply = ping.Send($"{address}", timeoutMillis);
+                return reply.Status == IPStatus.Success;
             }
             catch
             {

@@ -109,8 +109,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsDefault<T>(this T input) where T : struct
         {
-            var obj = default(T);
-            return input.Equals(obj);
+            return input.Equals(default(T));
         }
 
         /// <summary>

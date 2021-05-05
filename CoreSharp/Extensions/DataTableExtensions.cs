@@ -18,8 +18,7 @@ namespace CoreSharp.Extensions
             table = table ?? throw new ArgumentNullException(nameof(table));
 
             var columns = table.Columns.Cast<DataColumn>();
-            var names = columns.Select(x => x.ColumnName);
-            return names;
+            return columns.Select(x => x.ColumnName);
         }
 
         /// <summary>

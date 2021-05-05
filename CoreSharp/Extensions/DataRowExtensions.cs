@@ -15,8 +15,9 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<string> GetColumnNames(this DataRow row)
         {
-            var table = row?.Table;
-            return table.GetColumnNames();
+            row = row ?? throw new ArgumentNullException(nameof(row));
+
+            return row?.Table.GetColumnNames();
         }
 
         /// <summary>
@@ -26,8 +27,7 @@ namespace CoreSharp.Extensions
         {
             row = row ?? throw new ArgumentNullException(nameof(row));
 
-            var values = row.ItemArray;
-            return values;
+            return row.ItemArray;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace CoreSharp.Extensions
             row = row ?? throw new ArgumentNullException(nameof(row));
 
             //Object setup 
-            TEntity result = new TEntity();
+            var result = new TEntity();
             Type impliedType = typeof(TEntity);
             var properties = impliedType.GetProperties();
             var fields = impliedType.GetFields();

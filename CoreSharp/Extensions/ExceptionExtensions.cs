@@ -21,8 +21,7 @@ namespace CoreSharp.Extensions
                                 .Where(e => !string.IsNullOrWhiteSpace(e.Message))
                                 .Select(e => e.Message.Trim());
 
-            string flattened = string.Join(Environment.NewLine, messages);
-            return flattened;
+            return string.Join(Environment.NewLine, messages);
         }
 
         /// <summary>

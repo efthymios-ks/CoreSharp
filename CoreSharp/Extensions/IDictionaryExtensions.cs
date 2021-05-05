@@ -214,8 +214,7 @@ namespace CoreSharp.Extensions
                 return $"{key}={value}";
             });
 
-            string query = string.Join("&", pairs);
-            return query;
+            return string.Join("&", pairs);
         }
     }
 }
