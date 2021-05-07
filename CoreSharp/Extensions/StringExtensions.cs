@@ -377,7 +377,7 @@ namespace CoreSharp.Extensions
 
             try
             {
-                item = JsonConvert.DeserializeObject<TEntity>(json, settings);
+                item = json.ParseJson<TEntity>(settings);
                 return item != null;
             }
             catch
