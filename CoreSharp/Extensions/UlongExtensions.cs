@@ -37,7 +37,34 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToComputerSize(this ulong byteSize, string format, IFormatProvider formatProvider)
         {
-            throw new NotImplementedException();
+            format = format ?? throw new ArgumentNullException(nameof(format));
+            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+            //Scale down bytes  
+            const int thousand = 1024;
+            int thousandCounter = 0;
+
+            //Integral division 
+            var integralLimit = (ulong)Math.Pow(thousand, 2);
+            while (byteSize >= integralLimit)
+            {
+                thousandCounter++;
+                byteSize /= thousand;
+            }
+
+            //Double division 
+            double scaledValue = byteSize;
+            while (scaledValue >= thousand)
+            {
+                thousandCounter++;
+                scaledValue /= thousand;
+            }
+
+            //Get prefix
+            var prefices = new[] { string.Empty, "K", "M", "G", "T", "P", "E", "Z", "Y" };
+            var prefix = prefices[thousandCounter];
+
+            return scaledValue.ToString(format, formatProvider) + prefix + "B";
         }
 
         /// <summary>

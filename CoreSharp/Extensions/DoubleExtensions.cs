@@ -60,7 +60,7 @@ namespace CoreSharp.Extensions
             int degree = 0;
             if (value != 0)
                 degree = (int)Math.Floor(Math.Log10(Math.Abs(value)) / 3);
-            double scaled = value * Math.Pow(1000, -degree);
+            double scaledValue = value * Math.Pow(1000, -degree);
 
             //Get prefix 
             char? prefix = null;
@@ -75,7 +75,7 @@ namespace CoreSharp.Extensions
                     break;
             }
 
-            return scaled.ToString(format, formatProvider) + prefix;
+            return scaledValue.ToString(format, formatProvider) + prefix;
         }
 
         /// <summary>
