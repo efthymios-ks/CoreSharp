@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToComputerSize(this ulong byteSize)
         {
-            return byteSize.ToComputerSize("{0}");
+            return byteSize.ToComputerSize("G");
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToComputerSize(this ulong byteSize, IFormatProvider formatProvider)
         {
-            return byteSize.ToComputerSize("{0}", formatProvider);
+            return byteSize.ToComputerSize("G", formatProvider);
         }
 
         /// <summary>

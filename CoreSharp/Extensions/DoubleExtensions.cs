@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToMetricSize(this double value)
         {
-            return value.ToMetricSize("{0}");
+            return value.ToMetricSize("G");
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToMetricSize(this double value, IFormatProvider formatProvider)
         {
-            return value.ToMetricSize("{0}", formatProvider);
+            return value.ToMetricSize("G", formatProvider);
         }
 
         /// <summary>
