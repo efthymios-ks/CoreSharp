@@ -32,7 +32,7 @@ namespace CoreSharp.Implementations.Repositories
             return await Query.ToArrayAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync(Predicate<TEntity> predicate)
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate)
         {
             predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
 

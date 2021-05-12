@@ -11,7 +11,7 @@ namespace CoreSharp.Interfaces.Repositories
 
         Task<IEnumerable<TEntity>> GetAsync();
 
-        Task<IEnumerable<TEntity>> GetAsync(Predicate<TEntity> predicate);
+        Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate);
 
         Task AddAsync(TEntity entity);
 

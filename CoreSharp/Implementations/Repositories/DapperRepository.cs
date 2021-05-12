@@ -24,7 +24,7 @@ namespace CoreSharp.Implementations.Repositories
 
         public abstract Task<IEnumerable<TEntity>> GetAsync();
 
-        public async virtual Task<IEnumerable<TEntity>> GetAsync(Predicate<TEntity> predicate)
+        public async virtual Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate)
         {
             predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
