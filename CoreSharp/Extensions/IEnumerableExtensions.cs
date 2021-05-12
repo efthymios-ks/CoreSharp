@@ -362,13 +362,13 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
         {
-            var pages = source.GetPages(pageSize);
+            source = source ?? throw new ArgumentNullException(nameof(source));
+            if (pageIndex < 0)
+                throw new ArgumentOutOfRangeException($"{pageIndex} has to be positive and non-zero.");
+            if (pageSize <= 0)
+                throw new ArgumentOutOfRangeException($"{pageSize} has to be positive and non-zero.");
 
-            int totalPages = pages.Count();
-            if (pageIndex < 0 || pageIndex >= totalPages)
-                throw new ArgumentOutOfRangeException($"{pageIndex} out of range ({0} to {totalPages - 1}).");
-
-            return pages.FirstOrDefault(p => p.Key == pageIndex);
+            return source.Skip(pageIndex * pageSize).Take(pageSize);
         }
 
         /// <summary>

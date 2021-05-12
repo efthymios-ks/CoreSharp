@@ -630,9 +630,8 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(5, -1, 2)]
-        [TestCase(5, 10, 2)]
-        [TestCase(5, 10, -1)]
+        [TestCase(5, -1, 1)]
+        [TestCase(5, 1, -1)]
         public void GetPage_PageArgsIsOutOfRange_ThrowArgumentNullException(int itemCount, int pageIndex, int pageSize)
         {
             //Arrange
