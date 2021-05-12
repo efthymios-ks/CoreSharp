@@ -10,7 +10,7 @@ using CoreSharp.Extensions;
 namespace CoreSharp.Implementations
 {
     /// <summary>
-    /// An extension to DbConnection to run quick actions on a DbConnection.
+    /// An extension to DbConnection to run quick actions on it.
     /// </summary>
     public class DbHelper : IDisposable
     {
@@ -30,7 +30,7 @@ namespace CoreSharp.Implementations
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException(nameof(TimeoutSeconds), $"nameof(TimeoutSeconds) ({value}) cannot have negative value.");
+                    throw new ArgumentOutOfRangeException(nameof(TimeoutSeconds), $"{nameof(TimeoutSeconds)} ({value}) cannot have negative value.");
                 timeoutSeconds = value;
             }
         }
