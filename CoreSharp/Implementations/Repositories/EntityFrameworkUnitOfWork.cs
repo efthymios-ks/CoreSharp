@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CoreSharp.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace CoreSharp.Implementations.Repositories
 
         public virtual async Task RollbackAsync()
         {
-            var entries = Context?.ChangeTracker?.Entries();
+            var entries = Context?.ChangeTracker?.Entries()?.Where(e => e.State != EntityState.Unchanged);
             if (entries == null)
                 return;
 
