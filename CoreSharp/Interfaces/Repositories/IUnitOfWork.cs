@@ -7,6 +7,7 @@ namespace CoreSharp.Interfaces.Repositories
     {
         //Metods 
         Task CommitAsync();
+
         Task RollbackAsync();
     }
 }

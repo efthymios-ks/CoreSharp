@@ -8,14 +8,14 @@ namespace CoreSharp.Implementations.Repositories
 {
     public abstract class EntityFrameworkUnitOfWork : IUnitOfWork
     {
-        //Properties
-        protected DbContext Context { get; }
-
         //Constructors
         public EntityFrameworkUnitOfWork(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
+        //Properties
+        protected DbContext Context { get; }
 
         //Methods   
         public virtual async Task CommitAsync()

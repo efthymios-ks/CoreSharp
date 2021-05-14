@@ -17,6 +17,7 @@ namespace CoreSharp.Implementations.Repositories
 
         //Properties 
         protected DbConnection Connection => Transaction?.Connection;
+
         protected DbTransaction Transaction { get; }
 
         //Methods 

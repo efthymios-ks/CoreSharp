@@ -17,14 +17,15 @@ namespace CoreSharp.Implementations.Repositories
 
         //Properties 
         protected DbContext Context { get; }
-        protected abstract IQueryable<TEntity> Query { get; }
+
+        protected abstract DbSet<TEntity> Query { get; }
 
         //Methods 
         public virtual async Task<TEntity> GetAsync(params object[] key)
         {
             key = key ?? throw new ArgumentNullException(nameof(key));
 
-            return await Context.Set<TEntity>().FindAsync(key);
+            return await Query.FindAsync(key);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync()

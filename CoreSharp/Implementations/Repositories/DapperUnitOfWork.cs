@@ -10,6 +10,7 @@ namespace CoreSharp.Implementations.Repositories
     {
         //Properties
         protected DbConnection Connection { get; }
+
         protected DbTransaction Transaction { get; private set; }
 
         //Constructors
