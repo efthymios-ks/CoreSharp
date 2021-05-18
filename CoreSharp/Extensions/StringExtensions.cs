@@ -37,7 +37,7 @@ namespace CoreSharp.Extensions
 
             var formatedControls = new Dictionary<string, string>();
             foreach (var control in AsciiControls.Dictionary)
-                formatedControls.Add(control.Key, $"{openBracket}{control.Value}{closeBracked}");
+                formatedControls.Add(control.Value.ToString(), $"{openBracket}{control.Key}{closeBracked}");
 
             foreach (var control in formatedControls)
                 input = input.Replace(control.Key, control.Value);
@@ -402,9 +402,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string input, NumberStyles numberStyle)
+        public static int? ToInt(this string input, NumberStyles numberStyles)
         {
-            return input.ToInt(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToInt(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -427,11 +427,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (int.TryParse(input, numberStyle, formatProvider, out var result))
+            if (int.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -448,9 +448,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string input, NumberStyles numberStyle)
+        public static long? ToLong(this string input, NumberStyles numberStyles)
         {
-            return input.ToLong(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToLong(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -473,11 +473,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (long.TryParse(input, numberStyle, formatProvider, out var result))
+            if (long.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -494,9 +494,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string input, NumberStyles numberStyle)
+        public static short? ToShort(this string input, NumberStyles numberStyles)
         {
-            return input.ToShort(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToShort(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -519,11 +519,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (short.TryParse(input, numberStyle, formatProvider, out var result))
+            if (short.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -540,9 +540,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string input, NumberStyles numberStyle)
+        public static float? ToFloat(this string input, NumberStyles numberStyles)
         {
-            return input.ToFloat(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToFloat(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -565,11 +565,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (float.TryParse(input, numberStyle, formatProvider, out var result))
+            if (float.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -586,9 +586,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string input, NumberStyles numberStyle)
+        public static double? ToDouble(this string input, NumberStyles numberStyles)
         {
-            return input.ToDouble(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToDouble(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -611,11 +611,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (double.TryParse(input, numberStyle, formatProvider, out var result))
+            if (double.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;
@@ -632,9 +632,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string input, NumberStyles numberStyle)
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyles)
         {
-            return input.ToDecimal(numberStyle, CultureInfo.CurrentCulture);
+            return input.ToDecimal(numberStyles, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -657,11 +657,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string input, NumberStyles numberStyle, IFormatProvider formatProvider)
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (decimal.TryParse(input, numberStyle, formatProvider, out var result))
+            if (decimal.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
             else
                 return null;

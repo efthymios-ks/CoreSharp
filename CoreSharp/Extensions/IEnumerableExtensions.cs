@@ -316,7 +316,7 @@ namespace CoreSharp.Extensions
         {
             action = action ?? throw new ArgumentNullException(nameof(action));
 
-            Action<T, int> indexedAction = (item, index) => action(item);
+            void indexedAction(T item, int index) => action(item);
             source.ForEach(indexedAction);
         }
 

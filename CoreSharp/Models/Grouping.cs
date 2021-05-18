@@ -26,6 +26,7 @@ namespace CoreSharp.Models
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => ToString();
+
         public TKey Key { get; }
 
         //Methods 
@@ -41,7 +42,7 @@ namespace CoreSharp.Models
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return source.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

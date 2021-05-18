@@ -42,20 +42,20 @@ namespace CoreSharp.Extensions.Tests
 
 
         [Test]
-        public void MapTo_DataTableIsNull_ThrowArgumentNullException()
+        public void ToEntities_DataTableIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             DataTable table = null;
 
             //Act 
-            Action action = () => table.MapTo<DummyClass>();
+            Action action = () => table.ToEntities<DummyClass>();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MapTo_IgnoreCaseIsFalse_MapCaseSensitiveColumnsToEntities()
+        public void ToEntities_IgnoreCaseIsFalse_MapCaseSensitiveColumnsToEntities()
         {
             //Arrange  
             var table = new DataTable();
@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions.Tests
             table.Rows.Add(2, "Black");
 
             //Act 
-            var result = table.MapTo<DummyClass>(false);
+            var result = table.ToEntities<DummyClass>(false);
             var item1 = result.ElementAt(0);
             var item2 = result.ElementAt(1);
 
@@ -78,7 +78,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void MapTo_IgnoreCaseIsTrue_MapCaseInsensitiveColumnsToEntity()
+        public void ToEntities_IgnoreCaseIsTrue_MapCaseInsensitiveColumnsToEntity()
         {
             //Arrange  
             var table = new DataTable();
@@ -88,7 +88,7 @@ namespace CoreSharp.Extensions.Tests
             table.Rows.Add(2, "Black");
 
             //Act 
-            var result = table.MapTo<DummyClass>(true);
+            var result = table.ToEntities<DummyClass>(true);
             var item1 = result.ElementAt(0);
             var item2 = result.ElementAt(1);
 
