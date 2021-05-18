@@ -343,46 +343,26 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Parse json to entity. 
         /// </summary> 
-        public static TEntity ParseJson<TEntity>(this string json) where TEntity : class
+        public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
-            return json.ParseJson<TEntity>(settings);
+            return json.ToEntity<TEntity>(settings);
         }
 
         /// <summary>
         /// Parse json to entity. 
         /// </summary> 
-        public static TEntity ParseJson<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
+        public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
         {
             settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            return JsonConvert.DeserializeObject<TEntity>(json, settings);
-        }
-
-        /// <summary>
-        /// Try parse json to entity. 
-        /// </summary> 
-        public static bool TryParseJson<TEntity>(this string json, out TEntity item) where TEntity : class
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return json.TryParseJson(settings, out item);
-        }
-
-        /// <summary>
-        /// Try parse json to entity. 
-        /// </summary> 
-        public static bool TryParseJson<TEntity>(this string json, JsonSerializerSettings settings, out TEntity item) where TEntity : class
-        {
-            settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            item = default;
 
             try
             {
-                item = json.ParseJson<TEntity>(settings);
-                return item != null;
+                return JsonConvert.DeserializeObject<TEntity>(json, settings);
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 

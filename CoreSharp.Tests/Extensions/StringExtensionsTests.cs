@@ -593,17 +593,17 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ParseJson_OptionsIsNull_ThrowArgumentNullException()
+        public void ToEntity_OptionsIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StringEmpty.ParseJson<DummyClass>(null);
+            Action action = () => StringEmpty.ToEntity<DummyClass>(null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void ParseJson_WhenCalled_MapItemPropertiesAndReturnTrue()
+        public void ToEntity_WhenCalled_MapItemPropertiesAndReturnTrue()
         {
             //Arrange
             int id = 1;
@@ -614,41 +614,11 @@ namespace CoreSharp.Extensions.Tests
                 .Replace("{name}", name);
 
             //Act
-            var result = json.ParseJson<DummyClass>();
+            var result = json.ToEntity<DummyClass>();
 
             //Assert  
             result.Id.Should().Be(id);
             result.Name.Should().Be(name);
-        }
-
-        [Test]
-        public void TryParseJson_OptionsIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => StringEmpty.TryParseJson(null, out DummyClass item);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void TryParseJson_WhenCalled_MapItemPropertiesAndReturnTrue()
-        {
-            //Arrange
-            int id = 1;
-            string name = "Efthymios";
-            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
-            json = json
-                .Replace("{id}", $"{id}")
-                .Replace("{name}", name);
-
-            //Act
-            var result = json.TryParseJson(out DummyClass item);
-
-            //Assert 
-            result.Should().BeTrue();
-            item.Id.Should().Be(id);
-            item.Name.Should().Be(name);
         }
 
         [Test]
