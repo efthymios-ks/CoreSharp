@@ -32,7 +32,7 @@ namespace CoreSharp.Extensions
 
             var converter = new ValueConverter<TEntity, string>(
                 v => v.ToJson(settings),
-                v => v.ParseJson<TEntity>(settings));
+                v => v.ToEntity<TEntity>(settings));
 
             var comparer = new ValueComparer<TEntity>(
                 (l, r) => l.ToJson(settings) == r.ToJson(settings),
