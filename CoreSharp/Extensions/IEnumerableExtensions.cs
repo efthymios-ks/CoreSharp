@@ -353,8 +353,9 @@ namespace CoreSharp.Extensions
             item = item ?? throw new ArgumentNullException(nameof(item));
             keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            var itemProperty = keySelector(item);
-            return source.Any(i => keySelector(i).Equals(itemProperty));
+            var itemKey = keySelector(item);
+            var sourceKeys = source.Select(i => keySelector(i));
+            return sourceKeys.Contains(itemKey);
         }
 
         /// <summary>
