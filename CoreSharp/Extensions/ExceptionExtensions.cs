@@ -19,7 +19,7 @@ namespace CoreSharp.Extensions
             var exceptions = exception.GetExceptions();
             var messages = exceptions
                                 .Where(e => !string.IsNullOrWhiteSpace(e.Message))
-                                .Select(e => e.Message.Trim());
+                                .Select(e => e.Message);
 
             return string.Join(Environment.NewLine, messages);
         }
