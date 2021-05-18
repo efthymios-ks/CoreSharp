@@ -51,10 +51,13 @@ namespace CoreSharp.Extensions
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
 
-            var result = new List<T>();
+            return source.ConvertAllInternal<T>();
+        }
+
+        private static IEnumerable<T> ConvertAllInternal<T>(this IEnumerable source)
+        {
             foreach (var item in source)
-                result.Add((T)Convert.ChangeType(item, typeof(T)));
-            return result;
+                yield return (T)Convert.ChangeType(item, typeof(T));
         }
 
         /// <summary>
@@ -311,11 +314,10 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
             action = action ?? throw new ArgumentNullException(nameof(action));
 
-            foreach (var item in source)
-                action(item);
+            Action<T, int> indexedAction = (item, index) => action(item);
+            source.ForEach(indexedAction);
         }
 
         /// <summary>

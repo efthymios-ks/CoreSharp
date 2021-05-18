@@ -14,11 +14,13 @@ namespace CoreSharp.Extensions
         public static bool IsBetween<T>(this T value, T from, T to, bool includeEnds = true) where T : IComparable<T>
         {
             var comparer = Comparer<T>.Default;
+            var comparisonFrom = comparer.Compare(value, from);
+            var comparisonTo = comparer.Compare(value, to);
 
             if (includeEnds)
-                return (comparer.Compare(value, from) >= 0) && (comparer.Compare(value, to) <= 0);
+                return (comparisonFrom >= 0) && (comparisonTo <= 0);
             else
-                return (comparer.Compare(value, from) > 0) && (comparer.Compare(value, to) < 0);
+                return (comparisonFrom > 0) && (comparisonTo < 0);
         }
     }
 }
