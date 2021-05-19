@@ -673,8 +673,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool? ToBool(this string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                input = string.Empty;
+            input ??= string.Empty;
             input = input.ToLowerInvariant().Trim();
 
             var intInput = input.ToIntCI();
