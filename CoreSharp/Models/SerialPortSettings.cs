@@ -13,8 +13,7 @@ namespace CoreSharp.Models
     {
         // Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate:F0}, {nameof(Parity)}={Parity}";
-
+        private string DebuggerDisplay => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate}, {nameof(Parity)}={Parity}";
 
         public string PortName { get; set; } = string.Empty;
 

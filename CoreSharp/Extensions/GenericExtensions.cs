@@ -27,10 +27,10 @@ namespace CoreSharp.Extensions
         public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
             var itemKey = keySelector(item);
             var sourceKeys = source?.Select(keySelector);
-
-            return itemKey.IsIn(sourceKeys?.ToArray());
+            return itemKey.IsIn(sourceKeys);
         }
 
         /// <summary>
