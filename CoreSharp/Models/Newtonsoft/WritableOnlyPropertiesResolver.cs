@@ -8,6 +8,7 @@ namespace CoreSharp.Models.Newtonsoft
 {
     internal class WritableOnlyPropertiesResolver : DefaultContractResolver
     {
+        //Methods
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var properties = base.CreateProperties(type, memberSerialization);

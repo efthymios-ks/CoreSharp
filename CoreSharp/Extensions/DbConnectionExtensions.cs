@@ -19,8 +19,7 @@ namespace CoreSharp.Extensions
             connection = connection ?? throw new ArgumentNullException(nameof(connection));
 
             var factory = DbProviderFactories.GetFactory(connection);
-            var adapter = factory.CreateDataAdapter();
-            return adapter;
+            return factory.CreateDataAdapter();
         }
 
         /// <summary>
@@ -31,8 +30,7 @@ namespace CoreSharp.Extensions
             connection = connection ?? throw new ArgumentNullException(nameof(connection));
 
             var factory = DbProviderFactories.GetFactory(connection);
-            var parameter = factory.CreateParameter(parameterName, parameterValue);
-            return parameter;
+            return factory.CreateParameter(parameterName, parameterValue);
         }
 
         /// <summary>

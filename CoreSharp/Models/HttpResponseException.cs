@@ -5,7 +5,7 @@ namespace CoreSharp.Models
 {
     /// <summary>
     /// Simple HttpResponseMessage exception. 
-    /// Stores a HttpStatusCode and Content (string). 
+    /// Stores an HttpStatusCode and Content (Exception.Message). 
     /// </summary>
     public class HttpResponseException : Exception
     {
