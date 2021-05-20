@@ -24,17 +24,17 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Map DataTable values to TEntity collection. 
         /// </summary>
-        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
+        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = true) where TEntity : new()
         {
             table = table ?? throw new ArgumentNullException(nameof(table));
 
             return table.ToEntitiesInternal<TEntity>(ignoreCase);
         }
 
-        private static IEnumerable<TEntity> ToEntitiesInternal<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
+        private static IEnumerable<TEntity> ToEntitiesInternal<TEntity>(this DataTable table, bool ignoreCase) where TEntity : new()
         {
             foreach (DataRow row in table.Rows)
-                yield return row.MapTo<TEntity>(ignoreCase);
+                yield return row.ToEntity<TEntity>(ignoreCase);
         }
     }
 }

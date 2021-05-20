@@ -73,20 +73,20 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void MapTo_DataRowIsNull_ThrowArgumentNullException()
+        public void ToEntity_DataRowIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             DataRow row = null;
 
             //Act 
-            Action action = () => row.MapTo<DummyClass>();
+            Action action = () => row.ToEntity<DummyClass>();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MapTo_IgnoreCaseIsFalse_MapCaseSensitiveColumnsToEntity()
+        public void ToEntity_IgnoreCaseIsFalse_MapCaseSensitiveColumnsToEntity()
         {
             //Arrange  
             var table = new DataTable();
@@ -95,7 +95,7 @@ namespace CoreSharp.Extensions.Tests
             var row = table.Rows.Add(1, "Red");
 
             //Act 
-            var result = row.MapTo<DummyClass>(false);
+            var result = row.ToEntity<DummyClass>(false);
 
             //Assert
             result.Id.Should().Be(1);
@@ -103,7 +103,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void MapTo_IgnoreCaseIsTrue_MapCaseInsensitiveColumnsToEntity()
+        public void ToEntity_IgnoreCaseIsTrue_MapCaseInsensitiveColumnsToEntity()
         {
             //Arrange 
             var table = new DataTable();
@@ -112,7 +112,7 @@ namespace CoreSharp.Extensions.Tests
             var row = table.Rows.Add(1, "Red");
 
             //Act 
-            var result = row.MapTo<DummyClass>(true);
+            var result = row.ToEntity<DummyClass>(true);
 
             //Assert
             result.Id.Should().Be(1);

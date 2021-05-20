@@ -33,7 +33,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Map DataRow values to TEntity.
         /// </summary>
-        public static TEntity MapTo<TEntity>(this DataRow row, bool ignoreCase = false) where TEntity : new()
+        public static TEntity ToEntity<TEntity>(this DataRow row, bool ignoreCase = true) where TEntity : new()
         {
             row = row ?? throw new ArgumentNullException(nameof(row));
 
