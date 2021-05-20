@@ -6,87 +6,87 @@ namespace CoreSharp.Tests.Dummies
     {
         public TypeCode GetTypeCode()
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public bool ToBoolean(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public byte ToByte(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public char ToChar(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public DateTime ToDateTime(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public decimal ToDecimal(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public double ToDouble(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public short ToInt16(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public int ToInt32(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public long ToInt64(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public sbyte ToSByte(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public float ToSingle(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public string ToString(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public object ToType(Type conversionType, IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public ushort ToUInt16(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public uint ToUInt32(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public ulong ToUInt64(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return default;
         }
     }
 }
