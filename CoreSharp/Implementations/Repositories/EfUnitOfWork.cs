@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public abstract class EntityFrameworkUnitOfWork : IUnitOfWork
+    public abstract class EfUnitOfWork : IUnitOfWork
     {
         //Constructors
-        public EntityFrameworkUnitOfWork(DbContext context)
+        public EfUnitOfWork(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }

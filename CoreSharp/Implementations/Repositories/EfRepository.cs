@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public abstract class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         //Constructors
-        public EntityFrameworkRepository(DbContext context)
+        public EfRepository(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
