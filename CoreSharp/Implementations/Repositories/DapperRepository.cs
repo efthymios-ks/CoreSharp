@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CoreSharp.Interfaces.Repositories;
 
@@ -25,11 +26,11 @@ namespace CoreSharp.Implementations.Repositories
 
         public abstract Task<IEnumerable<TEntity>> GetAsync();
 
-        public async virtual Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate)
+        public async virtual Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
             predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
-            return (await GetAsync()).Where(i => predicate(i));
+            return (await GetAsync()).Where(predicate.Compile());
         }
 
         /// <example>

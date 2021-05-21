@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace CoreSharp.Interfaces.Repositories
@@ -11,7 +12,7 @@ namespace CoreSharp.Interfaces.Repositories
 
         Task<IEnumerable<TEntity>> GetAsync();
 
-        Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate);
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task AddAsync(TEntity entity);
 
