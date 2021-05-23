@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace CoreSharp.Interfaces.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    [Obsolete]
+    internal interface IRepository<TEntity> where TEntity : class
     {
         //Methods
         Task<TEntity> GetAsync(params object[] key);

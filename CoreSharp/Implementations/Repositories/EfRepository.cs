@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    [Obsolete]
+    internal abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         //Constructors
         public EfRepository(DbContext context)

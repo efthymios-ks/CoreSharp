@@ -6,7 +6,8 @@ using CoreSharp.Interfaces.Repositories;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public abstract class DapperUnitOfWork : IUnitOfWork
+    [Obsolete]
+    internal abstract class DapperUnitOfWork : IUnitOfWork
     {
         //Properties
         protected DbConnection Connection { get; }

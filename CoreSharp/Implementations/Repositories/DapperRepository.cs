@@ -8,7 +8,8 @@ using CoreSharp.Interfaces.Repositories;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    public abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    [Obsolete]
+    internal abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         //Constructors 
         public DapperRepository(DbTransaction transaction)
