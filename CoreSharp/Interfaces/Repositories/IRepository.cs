@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CoreSharp.Interfaces.EntityFramework;
 
 namespace CoreSharp.Interfaces.Repositories
 {
-    [Obsolete]
-    internal interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class, IEntity
     {
         //Methods
-        Task<TEntity> GetAsync(params object[] key);
+        Task<TEntity> GetAsync(object key, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null);
 
-        Task<IEnumerable<TEntity>> GetAsync();
-
-        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null);
 
         Task AddAsync(TEntity entity);
 

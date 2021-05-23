@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 
 namespace CoreSharp.Interfaces.Repositories
 {
-    [Obsolete]
-    internal interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         //Metods 
         Task CommitAsync();

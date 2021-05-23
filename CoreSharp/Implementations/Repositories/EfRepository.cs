@@ -3,58 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CoreSharp.Interfaces.EntityFramework;
 using CoreSharp.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    [Obsolete]
-    internal abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
+        //Fields
+        private readonly IQueryable<TEntity> table;
+
         //Constructors
         public EfRepository(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
+
+            table = Context.Set<TEntity>();
         }
 
         //Properties 
         protected DbContext Context { get; }
 
-        protected abstract IQueryable<TEntity> Query { get; }
-
         //Methods 
-        public virtual async Task<TEntity> GetAsync(params object[] key)
+        private IQueryable<TEntity> BuildQuery(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation)
+        {
+            var query = table;
+
+            if (navigation != null)
+                query = navigation(query);
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return query;
+        }
+
+        public async virtual Task<TEntity> GetAsync(object key, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
             key = key ?? throw new ArgumentNullException(nameof(key));
 
-            return await Context.Set<TEntity>().FindAsync(key);
+            var query = BuildQuery(null, navigation);
+            return await query.SingleOrDefaultAsync(i => i.Id.Equals(key));
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync()
+        public async virtual Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
-            return await Query.ToArrayAsync();
+            var query = BuildQuery(filter, navigation);
+            return await query.ToArrayAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
-
-            return await Query.Where(predicate).ToArrayAsync();
-        }
-
-        public virtual Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            Context.Set<TEntity>().Add(entity);
-
-            return Task.CompletedTask;
+            entity.CreatedDate = DateTime.UtcNow;
+            await Context.Set<TEntity>().AddAsync(entity);
         }
 
         public virtual Task UpdateAsync(TEntity entity)
         {
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
+            entity.ModifiedDate = DateTime.UtcNow;
             Context.Set<TEntity>().Attach(entity);
             Context.Entry(entity).State = EntityState.Modified;
 

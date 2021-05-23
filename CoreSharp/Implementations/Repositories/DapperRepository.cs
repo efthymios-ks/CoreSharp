@@ -4,12 +4,12 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CoreSharp.Interfaces.EntityFramework;
 using CoreSharp.Interfaces.Repositories;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    [Obsolete]
-    internal abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         //Constructors 
         public DapperRepository(DbTransaction transaction)
@@ -23,16 +23,9 @@ namespace CoreSharp.Implementations.Repositories
         protected DbTransaction Transaction { get; }
 
         //Methods 
-        public abstract Task<TEntity> GetAsync(params object[] key);
+        public abstract Task<TEntity> GetAsync(object key, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null);
 
-        public abstract Task<IEnumerable<TEntity>> GetAsync();
-
-        public async virtual Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
-
-            return (await GetAsync()).Where(predicate.Compile());
-        }
+        public abstract Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null);
 
         /// <example>
         /// --Use OUTPUT to get auto-identity newly added Id 
@@ -47,5 +40,6 @@ namespace CoreSharp.Implementations.Repositories
         public abstract Task UpdateAsync(TEntity entity);
 
         public abstract Task RemoveAsync(TEntity entity);
+
     }
 }

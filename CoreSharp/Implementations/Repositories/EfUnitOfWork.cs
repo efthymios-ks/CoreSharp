@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreSharp.Implementations.Repositories
 {
-    [Obsolete]
-    internal abstract class EfUnitOfWork : IUnitOfWork
+    public abstract class EfUnitOfWork : IUnitOfWork
     {
         //Constructors
         public EfUnitOfWork(DbContext context)
