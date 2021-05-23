@@ -12,7 +12,7 @@ namespace CoreSharp.Implementations.Repositories
     public abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         //Fields
-        private readonly IQueryable<TEntity> table;
+        private readonly DbSet<TEntity> table;
 
         //Constructors
         public EfRepository(DbContext context)
@@ -26,30 +26,22 @@ namespace CoreSharp.Implementations.Repositories
         protected DbContext Context { get; }
 
         //Methods 
-        private IQueryable<TEntity> BuildQuery(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation)
-        {
-            var query = table;
-
-            if (navigation != null)
-                query = navigation(query);
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return query;
-        }
-
         public async virtual Task<TEntity> GetAsync(object key, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
             key = key ?? throw new ArgumentNullException(nameof(key));
 
-            var query = BuildQuery(null, navigation);
-            return await query.SingleOrDefaultAsync(i => i.Id.Equals(key));
+            var entities = await GetAsync(i => i.Id.Equals(key), navigation);
+            return entities.SingleOrDefault();
         }
 
         public async virtual Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
-            var query = BuildQuery(filter, navigation);
+            var query = table.AsQueryable();
+            if (navigation != null)
+                query = navigation(query);
+            if (filter != null)
+                query = query.Where(filter);
+
             return await query.ToArrayAsync();
         }
 
@@ -58,7 +50,7 @@ namespace CoreSharp.Implementations.Repositories
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
             entity.DateCreated = DateTime.UtcNow;
-            await Context.Set<TEntity>().AddAsync(entity);
+            await table.AddAsync(entity);
         }
 
         public virtual Task UpdateAsync(TEntity entity)
@@ -66,7 +58,7 @@ namespace CoreSharp.Implementations.Repositories
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
             entity.DateModified = DateTime.UtcNow;
-            Context.Set<TEntity>().Attach(entity);
+            table.Attach(entity);
             Context.Entry(entity).State = EntityState.Modified;
 
             return Task.CompletedTask;
@@ -76,7 +68,7 @@ namespace CoreSharp.Implementations.Repositories
         {
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            Context.Set<TEntity>().Remove(entity);
+            table.Remove(entity);
 
             return Task.CompletedTask;
         }

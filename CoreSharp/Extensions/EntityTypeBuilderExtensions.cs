@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using CoreSharp.Implementations;
+using CoreSharp.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CoreSharp.Extensions

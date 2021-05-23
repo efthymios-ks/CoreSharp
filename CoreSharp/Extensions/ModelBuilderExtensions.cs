@@ -1,5 +1,6 @@
 ﻿using System;
 using CoreSharp.Implementations;
+using CoreSharp.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
