@@ -66,7 +66,7 @@ namespace CoreSharp.Extensions
 
             string valueString = $"{value}";
 
-            //Get first attribute of type 'DescriptionAttribute'
+            //Get first attribute of type 'DisplayAttribute'
             var fieldInfo = value.GetType().GetField(valueString);
             var displayAttributes = fieldInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)?.Cast<DisplayAttribute>();
             var displayAttribute = displayAttributes?.FirstOrDefault();

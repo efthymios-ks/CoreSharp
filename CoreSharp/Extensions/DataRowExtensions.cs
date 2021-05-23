@@ -17,7 +17,7 @@ namespace CoreSharp.Extensions
         {
             row = row ?? throw new ArgumentNullException(nameof(row));
 
-            return row?.Table.GetColumnNames();
+            return row.Table.GetColumnNames();
         }
 
         /// <summary>
