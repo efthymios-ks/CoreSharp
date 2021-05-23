@@ -137,7 +137,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
-                throw new ArgumentOutOfRangeException("", $"{nameof(length)} has to be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
             {

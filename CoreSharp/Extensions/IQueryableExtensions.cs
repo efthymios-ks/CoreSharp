@@ -16,9 +16,9 @@ namespace CoreSharp.Extensions
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
             if (pageIndex < 0)
-                throw new ArgumentOutOfRangeException($"{pageIndex} has to be positive and non-zero.");
+                throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive and non-zero.");
             if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException($"{pageSize} has to be positive and non-zero.");
+                throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
             return source.Skip(pageIndex * pageSize).Take(pageSize);
         }
