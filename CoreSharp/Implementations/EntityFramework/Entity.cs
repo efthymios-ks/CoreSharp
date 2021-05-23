@@ -28,14 +28,14 @@ namespace CoreSharp.Implementations.EntityFramework
         }
 
         [DataType(DataType.DateTime)]
-        public DateTime CreatedDate
+        public DateTime DateCreated
         {
             get { return createdDate ?? DateTime.UtcNow; }
             set { createdDate = value; }
         }
 
         [DataType(DataType.DateTime)]
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? DateModified { get; set; }
 
         //Methods
         public override string ToString()

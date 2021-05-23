@@ -6,7 +6,7 @@ namespace CoreSharp.Interfaces.EntityFramework
     {
         //Properties 
         object Id { get; set; }
-        DateTime CreatedDate { get; set; }
-        DateTime? ModifiedDate { get; set; }
+        DateTime DateCreated { get; set; }
+        DateTime? DateModified { get; set; }
     }
 }

@@ -57,7 +57,7 @@ namespace CoreSharp.Implementations.Repositories
         {
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            entity.CreatedDate = DateTime.UtcNow;
+            entity.DateCreated = DateTime.UtcNow;
             await Context.Set<TEntity>().AddAsync(entity);
         }
 
@@ -65,7 +65,7 @@ namespace CoreSharp.Implementations.Repositories
         {
             entity = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            entity.ModifiedDate = DateTime.UtcNow;
+            entity.DateModified = DateTime.UtcNow;
             Context.Set<TEntity>().Attach(entity);
             Context.Entry(entity).State = EntityState.Modified;
 
