@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreSharp.Implementations
+namespace CoreSharp.Implementations.EntityFramework
 {
     /// <summary>
     /// Enum shadow entity used for one-to-many relationship.

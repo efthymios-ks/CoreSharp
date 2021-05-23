@@ -10,7 +10,7 @@ namespace CoreSharp.Implementations.EntityFramework
     public abstract class Entity<TKey> : IEntity<TKey>
     {
         //Fields 
-        private DateTime? createdDate;
+        private DateTime? dateCreated;
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -30,8 +30,8 @@ namespace CoreSharp.Implementations.EntityFramework
         [DataType(DataType.DateTime)]
         public DateTime DateCreated
         {
-            get { return createdDate ?? DateTime.UtcNow; }
-            set { createdDate = value; }
+            get { return dateCreated ?? DateTime.UtcNow; }
+            set { dateCreated = value; }
         }
 
         [DataType(DataType.DateTime)]
