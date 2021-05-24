@@ -22,7 +22,7 @@ namespace CoreSharp.Extensions
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
-                throw new ArgumentOutOfRangeException(nameof(length));
+                throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be a positive and non-zero.");
 
             int maxLength = Math.Min(input.Length, length);
             return input.Substring(0, maxLength);

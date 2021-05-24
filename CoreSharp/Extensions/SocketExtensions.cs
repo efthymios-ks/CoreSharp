@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
         {
             socket = socket ?? throw new ArgumentNullException(nameof(socket));
             if (timeoutMillis <= 0)
-                throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
+                throw new ArgumentOutOfRangeException(nameof(timeoutMillis), $"{nameof(timeoutMillis)} has to be positive and non-zero.");
 
             if (!socket.Connected)
                 return false;

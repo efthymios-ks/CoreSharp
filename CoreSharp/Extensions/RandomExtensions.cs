@@ -35,7 +35,7 @@ namespace CoreSharp.Extensions
             RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
             source = source ?? throw new ArgumentNullException(nameof(source));
             if (source.Length == 0)
-                throw new ArgumentException($"{nameof(source)} cannot be empty.");
+                throw new ArgumentException($"{nameof(source)} cannot be empty.", nameof(source));
 
             int topExclusive = source.Length;
             int index = RNG.Next(topExclusive);
@@ -49,7 +49,7 @@ namespace CoreSharp.Extensions
         {
             RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
             if (minimum > maximum)
-                throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).");
+                throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).", nameof(minimum));
 
             double randomValue = RNG.NextDouble();
             return randomValue * (maximum - minimum) + minimum;
