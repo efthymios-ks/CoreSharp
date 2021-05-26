@@ -2,11 +2,8 @@
 
 namespace CoreSharp.Interfaces.EntityFramework
 {
-    public interface IEntity
+    public interface IEntity : IKeyedEntity, IModifiableEntity
     {
-        //Properties 
-        object Id { get; set; }
-        DateTime DateCreated { get; set; }
-        DateTime? DateModified { get; set; }
+
     }
 }

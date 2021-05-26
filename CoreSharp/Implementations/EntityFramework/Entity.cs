@@ -21,7 +21,9 @@ namespace CoreSharp.Implementations.EntityFramework
         public TKey Id { get; set; }
 
         [NotMapped]
-        object IEntity.Id
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        object IKeyedEntity.Id
         {
             get { return Id; }
             set { Id = (TKey)value; }
@@ -38,9 +40,6 @@ namespace CoreSharp.Implementations.EntityFramework
         public DateTime? DateModified { get; set; }
 
         //Methods
-        public override string ToString()
-        {
-            return $"{Id}";
-        }
+        public override string ToString() => $"{Id}";
     }
 }
