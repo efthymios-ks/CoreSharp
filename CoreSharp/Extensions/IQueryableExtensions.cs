@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CoreSharp.Extensions
@@ -12,7 +11,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Paginate collection on given size and return page of given index. 
         /// </summary> 
-        public static IEnumerable<T> QueryPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
+        public static IQueryable<T> QueryPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
         {
             source = source ?? throw new ArgumentNullException(nameof(source));
             if (pageIndex < 0)
