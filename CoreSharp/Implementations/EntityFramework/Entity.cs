@@ -10,6 +10,9 @@ namespace CoreSharp.Implementations.EntityFramework
     public abstract class Entity<TKey> : IEntity<TKey>
     {
         //Fields 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         private DateTime? dateCreated;
 
         //Properties 
@@ -20,6 +23,7 @@ namespace CoreSharp.Implementations.EntityFramework
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public TKey Id { get; set; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [NotMapped]
         [System.Text.Json.Serialization.JsonIgnore]
         [Newtonsoft.Json.JsonIgnore]
