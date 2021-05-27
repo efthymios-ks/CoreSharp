@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void GetRow_SourceIsNull_ThrowArgumentNullException()
         {
-            //Assert
+            //Act
             Action action = () => sourceNull.GetRow(0);
 
             //Assert
@@ -28,7 +28,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange
             var source = new int[rows, columns];
 
-            //Assert
+            //Act
             Action action = () => source.GetRow(row);
 
             //Assert
@@ -46,7 +46,7 @@ namespace CoreSharp.Extensions.Tests
             };
             var expected = new[] { 3, 4 };
 
-            //Assert
+            //Act
             var result = source.GetRow(1);
 
             //Assert
@@ -56,7 +56,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void GetColumn_SourceIsNull_ThrowArgumentNullException()
         {
-            //Assert
+            //Act
             Action action = () => sourceNull.GetColumn(0);
 
             //Assert
@@ -71,7 +71,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange
             var source = new int[rows, columns];
 
-            //Assert
+            //Act
             Action action = () => source.GetColumn(row);
 
             //Assert
@@ -89,7 +89,7 @@ namespace CoreSharp.Extensions.Tests
             };
             var expected = new[] { 2, 4 };
 
-            //Assert
+            //Act
             var result = source.GetColumn(1);
 
             //Assert
