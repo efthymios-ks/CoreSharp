@@ -388,7 +388,6 @@ namespace CoreSharp.Extensions
                 input = input.Replace(pair.Key, $"{pair.Value}");
 
             return input;
-            ;
         }
 
         /// <summary>

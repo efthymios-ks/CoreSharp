@@ -68,7 +68,7 @@ namespace CoreSharp.Extensions
 
                 var implementationsCount = implementations.Count();
 
-                //If single implementations, register it 
+                //If single implementation, register it 
                 if (implementationsCount == 1)
                     serviceCollection.AddScoped(contract, implementations.First());
 
