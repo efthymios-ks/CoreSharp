@@ -12,20 +12,20 @@ namespace CoreSharp.Extensions
     public static partial class IServiceCollectionExtensions
     {
         //Fields
-        private const string ContractPrefix = "I";
+        private const string ServiceContractPrefix = "I";
         private const string ServiceSuffix = "Service";
         private const string RepositorySuffix = "Repository";
-        private const string NameGroupRegex = "(?<Name>.+)";
+        private const string ServiceNameGroupRegex = "(?<Name>.+)";
 
         //Methods
-        private static string BuildContractRegex(string prefix, string suffix) => $"^{prefix}{NameGroupRegex}{suffix}$";
+        private static string BuildServiceContractRegex(string prefix, string suffix) => $"^{prefix}{ServiceNameGroupRegex}{suffix}$";
 
         private static IServiceCollection RegisterAllInternal(this IServiceCollection serviceCollection, Assembly assembly, string suffix, Type baseType)
         {
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
 
-            string contractRegex = BuildContractRegex(ContractPrefix, suffix);
+            string contractRegex = BuildServiceContractRegex(ServiceContractPrefix, suffix);
             var contracts = assembly.GetTypes().Where(t =>
                                     //Not registered already 
                                     !serviceCollection.Any(s => s.ServiceType == t)
