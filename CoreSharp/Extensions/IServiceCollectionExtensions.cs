@@ -20,26 +20,9 @@ namespace CoreSharp.Extensions
         //Methods
         private static string BuildContractRegex(string prefix, string suffix) => $"^{prefix}{NameGroupRegex}{suffix}$";
 
-        /// <summary>
-        /// Register all interface+implementation found in currently executing assembly.  
-        /// If single implementation is found, then it is registered regardless. 
-        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
-        /// If multiple implementations are found and none has a proper name, then none is registered. 
-        /// </summary> 
-        public static IServiceCollection RegisterAll(this IServiceCollection serviceCollection, string suffix)
+        private static IServiceCollection RegisterAllInternal(this IServiceCollection serviceCollection, Assembly assembly, string suffix, Type baseType)
         {
-            return serviceCollection.RegisterAll(Assembly.GetExecutingAssembly(), suffix);
-        }
-
-        /// <summary>
-        /// Register all interface+implementation found in given assembly.  
-        /// If single implementation is found, then it is registered regardless. 
-        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
-        /// If multiple implementations are found and none has a proper name, then none is registered. 
-        /// </summary> 
-        public static IServiceCollection RegisterAll(this IServiceCollection serviceCollection, Assembly assembly, string suffix)
-        {
-            //serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
 
             string contractRegex = BuildContractRegex(ContractPrefix, suffix);
@@ -52,6 +35,8 @@ namespace CoreSharp.Extensions
                                     && t.IsPublic
                                     //Interface
                                     && t.IsInterface);
+            if (baseType != null)
+                contracts = contracts.Where(t => t.IsSubclassOf(baseType));
 
             foreach (var contract in contracts)
             {
@@ -88,7 +73,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all interface+implementation found in currently executing assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly.  
         /// If single implementation is found, then it is registered regardless. 
         /// If multiple implementations are found, only the one with the `I{Name}` and `{Name}` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
@@ -99,9 +84,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all interface+implementation found in given assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.  
         /// If single implementation is found, then it is registered regardless. 
-        /// If multiple implementations are found, only the one with the `I{Name}Service` and `{Name}Service` convention is registered. 
+        /// If multiple implementations are found, only the one with the `I{Name}` and `{Name}` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
         /// </summary> 
         public static IServiceCollection RegisterAll(this IServiceCollection serviceCollection, Assembly assembly)
@@ -110,7 +95,29 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all service+implementation found in currently executing assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll(this IServiceCollection serviceCollection, string suffix)
+        {
+            return serviceCollection.RegisterAll(Assembly.GetExecutingAssembly(), suffix);
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll(this IServiceCollection serviceCollection, Assembly assembly, string suffix)
+        {
+            return serviceCollection.RegisterAllInternal(assembly, suffix, null);
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly.  
         /// If single implementation is found, then it is registered regardless. 
         /// If multiple implementations are found, only the one with the `I{Name}Service` and `{Name}Service` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
@@ -121,7 +128,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all service+implementation found in given assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.  
         /// If single implementation is found, then it is registered regardless. 
         /// If multiple implementations are found, only the one with the `I{Name}Service` and `{Name}Service` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
@@ -132,7 +139,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all repository+implementation found in currently executing assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly.  
         /// If single implementation is found, then it is registered regardless. 
         /// If multiple implementations are found, only the one with the `I{Name}Repository` and `{Name}Repository` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
@@ -143,7 +150,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Register all repository+implementation found in given assembly.  
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.  
         /// If single implementation is found, then it is registered regardless. 
         /// If multiple implementations are found, only the one with the `I{Name}Repository` and `{Name}Repository` convention is registered. 
         /// If multiple implementations are found and none has a proper name, then none is registered. 
@@ -151,6 +158,50 @@ namespace CoreSharp.Extensions
         public static IServiceCollection RegisterAllRepositories(this IServiceCollection serviceCollection, Assembly assembly)
         {
             return serviceCollection.RegisterAll(assembly, RepositorySuffix);
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly based on given class.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}` and `{Name}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll<TBase>(this IServiceCollection serviceCollection) where TBase : class
+        {
+            return serviceCollection.RegisterAll<TBase>(Assembly.GetExecutingAssembly());
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly based on given class.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}` and `{Name}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll<TBase>(this IServiceCollection serviceCollection, Assembly assembly) where TBase : class
+        {
+            return serviceCollection.RegisterAll<TBase>(assembly, string.Empty);
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in currently executing assembly based on given class.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll<TBase>(this IServiceCollection serviceCollection, string suffix) where TBase : class
+        {
+            return serviceCollection.RegisterAll<TBase>(Assembly.GetExecutingAssembly(), suffix);
+        }
+
+        /// <summary>
+        /// Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly based on given class.  
+        /// If single implementation is found, then it is registered regardless. 
+        /// If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered. 
+        /// If multiple implementations are found and none has a proper name, then none is registered. 
+        /// </summary> 
+        public static IServiceCollection RegisterAll<TBase>(this IServiceCollection serviceCollection, Assembly assembly, string suffix) where TBase : class
+        {
+            return serviceCollection.RegisterAllInternal(assembly, suffix, typeof(TBase));
         }
     }
 }
