@@ -22,9 +22,14 @@ namespace CoreSharp.Extensions
 
         private static IServiceCollection RegisterAllInternal(this IServiceCollection serviceCollection, Assembly assembly, string suffix, Type baseType)
         {
+            //Validate arguments 
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
+            if (baseType != null)
+                if (!baseType.IsInterface)
+                    throw new ArgumentException($"{nameof(baseType)} ({baseType.FullName}) must be an interface.", nameof(baseType));
 
+            //Get all contracts
             string contractRegex = BuildServiceContractRegex(ServiceContractPrefix, suffix);
             var contracts = assembly.GetTypes().Where(t =>
                                     //Not registered already 
@@ -36,8 +41,9 @@ namespace CoreSharp.Extensions
                                     //Interface
                                     && t.IsInterface);
             if (baseType != null)
-                contracts = contracts.Where(t => t.IsSubclassOf(baseType));
+                contracts = contracts.Where(t => t.GetInterface(baseType.FullName) != null);
 
+            //Find the proper implementation for each contract 
             foreach (var contract in contracts)
             {
                 //Get all implentations for given contract 
@@ -50,7 +56,6 @@ namespace CoreSharp.Extensions
                                         && t.IsClass
                                         //Not abstract
                                         && !t.IsAbstract);
-
                 var implementationsCount = implementations.Count();
 
                 //If single implementation, register it 
@@ -60,10 +65,24 @@ namespace CoreSharp.Extensions
                 //If multiple implementations
                 else if (implementationsCount > 1)
                 {
-                    //Register only if there is one with the same name convention
+                    static string GetGenericTypeBaseName(string genericName) => genericName.Substring(0, genericName.LastIndexOf('`'));
+
+                    //Get contract name 
                     var contractName = Regex.Match(contract.Name, contractRegex).Groups["Name"].Value;
-                    var implementationName = $"{contractName}{suffix}";
-                    var sameNameImplementation = implementations.FirstOrDefault(i => i.Name == implementationName);
+                    if (contract.IsGenericType)
+                        contractName = GetGenericTypeBaseName(contractName);
+
+                    //Build target name 
+                    var targetImplementationName = $"{contractName}{suffix}";
+
+                    //Register only if there is a single one with the correct name convention
+                    var sameNameImplementation = implementations.FirstOrDefault(i =>
+                    {
+                        var implementationName = i.Name;
+                        if (i.IsGenericType)
+                            implementationName = GetGenericTypeBaseName(implementationName);
+                        return implementationName == targetImplementationName;
+                    });
                     if (sameNameImplementation != null)
                         serviceCollection.AddScoped(contract, sameNameImplementation);
                 }
