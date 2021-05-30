@@ -32,30 +32,49 @@ namespace CoreSharp.Extensions
             //Get all contracts
             string contractRegex = BuildServiceContractRegex(ServiceContractPrefix, suffix);
             var contracts = assembly.GetTypes().Where(t =>
-                                    //Not registered already 
-                                    !serviceCollection.Any(s => s.ServiceType == t)
-                                    //Name convention matches
-                                    && Regex.IsMatch(t.Name, contractRegex)
-                                    //Public 
-                                    && t.IsPublic
-                                    //Interface
-                                    && t.IsInterface);
-            if (baseType != null)
-                contracts = contracts.Where(t => t.GetInterface(baseType.FullName) != null);
+            {
+                //Already registered, ignore 
+                if (serviceCollection.Any(s => s.ServiceType == t))
+                    return false;
+                //Name convention doesn match, ignore 
+                else if (!Regex.IsMatch(t.Name, contractRegex))
+                    return false;
+                //Not public, ignore 
+                else if (!t.IsPublic)
+                    return false;
+                //Not an interface, ignore 
+                else if (!t.IsInterface)
+                    return false;
+                //Doesn't implement base interface, ignore
+                else if (baseType != null && t.GetInterface(baseType.FullName) == null)
+                    return false;
+                //Else take 
+                else
+                    return true;
+            });
 
             //Find the proper implementation for each contract 
             foreach (var contract in contracts)
             {
                 //Get all implentations for given contract 
                 var implementations = assembly.GetTypes().Where(t =>
-                                        //Implements given interface 
-                                        t.GetInterface(contract.FullName) != null
-                                        //Public 
-                                        && t.IsPublic
-                                        //Class 
-                                        && t.IsClass
-                                        //Not abstract
-                                        && !t.IsAbstract);
+                {
+                    //Doesn't implement given interface, ignore 
+                    if (t.GetInterface(contract.FullName) == null)
+                        return false;
+                    //Not public, ignore  
+                    else if (!t.IsPublic)
+                        return false;
+                    //Not a class, ignore 
+                    else if (!t.IsClass)
+                        return false;
+                    //Not a concrete class, ignore 
+                    else if (t.IsAbstract)
+                        return false;
+                    //Else take
+                    else
+                        return true;
+                });
                 var implementationsCount = implementations.Count();
 
                 //If single implementation, register it 
