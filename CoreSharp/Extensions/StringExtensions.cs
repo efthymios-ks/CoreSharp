@@ -72,11 +72,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Center align text.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="totalWidth"></param>
-        /// <param name="paddingChar"></param>
-        /// <returns></returns>
+        /// </summary> 
         public static string PadCenter(this string input, int totalWidth, char paddingChar = ' ')
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
@@ -180,7 +176,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string FormatWith(this string format, params object[] parameters)
         {
-            return string.Format(CultureInfo.CurrentCulture, format, parameters);
+            return format.FormatWith(CultureInfo.DefaultThreadCurrentCulture, parameters);
         }
 
         /// <summary>

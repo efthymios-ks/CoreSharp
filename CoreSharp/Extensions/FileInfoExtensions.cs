@@ -11,11 +11,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Change extension to file. 
         /// </summary> 
-        public static string ChangeExtension(this FileInfo file, string extension)
+        public static FileInfo ChangeExtension(this FileInfo file, string extension)
         {
             file = file ?? throw new ArgumentNullException(nameof(file));
 
-            return Path.ChangeExtension(file.FullName, extension);
+            string newFileName = Path.ChangeExtension(file.FullName, extension);
+            return new FileInfo(newFileName);
         }
 
         /// <summary>
