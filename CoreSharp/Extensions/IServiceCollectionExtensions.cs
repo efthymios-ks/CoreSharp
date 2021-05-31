@@ -85,23 +85,26 @@ namespace CoreSharp.Extensions
                 else if (implementationsCount > 1)
                 {
                     static string GetGenericTypeBaseName(string genericName) => genericName.Substring(0, genericName.LastIndexOf('`'));
+                    static string TrimGenericTypeName(Type genericType, string name = null)
+                    {
+                        genericType = genericType ?? throw new ArgumentNullException(nameof(genericType));
+                        name ??= genericType.Name;
+
+                        if (genericType.IsGenericType)
+                            name = GetGenericTypeBaseName(name);
+
+                        return name;
+                    };
 
                     //Get contract name 
                     var contractName = Regex.Match(contract.Name, contractRegex).Groups["Name"].Value;
-                    if (contract.IsGenericType)
-                        contractName = GetGenericTypeBaseName(contractName);
+                    contractName = TrimGenericTypeName(contract, contractName);
 
                     //Build target name 
                     var targetImplementationName = $"{contractName}{suffix}";
 
                     //Register only if there is a single one with the correct name convention
-                    var sameNameImplementation = implementations.FirstOrDefault(i =>
-                    {
-                        var implementationName = i.Name;
-                        if (i.IsGenericType)
-                            implementationName = GetGenericTypeBaseName(implementationName);
-                        return implementationName == targetImplementationName;
-                    });
+                    var sameNameImplementation = implementations.FirstOrDefault(i => TrimGenericTypeName(i) == targetImplementationName);
                     if (sameNameImplementation != null)
                         serviceCollection.AddScoped(contract, sameNameImplementation);
                 }
