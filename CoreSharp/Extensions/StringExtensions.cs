@@ -161,7 +161,7 @@ namespace CoreSharp.Extensions
             if (start < 0)
                 throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} has to be greater than 0.");
             else if (start > input.Length)
-                throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} cannot be greater than {nameof(input)}.Length ({input.Length}).");
+                throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} cannot be greater than {nameof(input)}.{input.Length} ({input.Length}).");
             else if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 

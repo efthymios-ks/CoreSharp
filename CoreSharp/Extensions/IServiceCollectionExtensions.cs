@@ -36,7 +36,7 @@ namespace CoreSharp.Extensions
                 //Already registered, ignore 
                 if (serviceCollection.Any(s => s.ServiceType == t))
                     return false;
-                //Name convention doesn match, ignore 
+                //Name convention doesn't match, ignore 
                 else if (!Regex.IsMatch(t.Name, contractRegex))
                     return false;
                 //Not public, ignore 

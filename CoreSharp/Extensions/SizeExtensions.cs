@@ -23,8 +23,7 @@ namespace CoreSharp.Extensions
         {
             var sourceF = source.ToSizeF();
             var targetF = target.ToSizeF();
-            var result = sourceF.Scale(targetF).ToSize();
-            return result;
+            return sourceF.Scale(targetF).ToSize();
         }
     }
 }

@@ -9,9 +9,9 @@ namespace CoreSharp.Extensions
     public static partial class TimeSpanExtensions
     {
         /// <summary>
-        /// Convert TimeSpan to readable string. 
+        /// Convert TimeSpan to human readable string. 
         /// </summary>
-        public static string ToHumanReadableString(this TimeSpan time)
+        public static string ToStringReadable(this TimeSpan time)
         {
             var fields = new List<string>();
 
