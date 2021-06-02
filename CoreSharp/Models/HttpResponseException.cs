@@ -17,5 +17,7 @@ namespace CoreSharp.Models
 
         //Properties
         public HttpStatusCode StatusCode { get; }
+
+        public string Content => Message;
     }
 }
