@@ -16,9 +16,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.0.3</Version>
-        <PackageReleaseNotes>-Refactored IRepository implementation
--Added IQueryable.QueryPage extension</PackageReleaseNotes>
+        <Version>1.0.4</Version>
+        <PackageReleaseNotes>-Added IServiceCollection.RegisterAll extensions. 
+-Various tweaks.</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
