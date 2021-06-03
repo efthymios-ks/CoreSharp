@@ -10,7 +10,7 @@ using Microsoft.Extensions.FileProviders;
 
 namespace CoreSharp.Implementations.TextLocalizer
 {
-    public class JsonTextLocalizer : ITextLocalizer
+    public class EmbeddedJsonTextLocalizer : ITextLocalizer
     {
         //Fields
         private readonly CultureInfo culture;
@@ -20,7 +20,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         private readonly ConcurrentDictionary<string, string> source = new ConcurrentDictionary<string, string>();
 
         //Constructors
-        public JsonTextLocalizer(CultureInfo culture, IFileProvider fileProvider, string resourcesPath, string jsonName)
+        public EmbeddedJsonTextLocalizer(CultureInfo culture, IFileProvider fileProvider, string resourcesPath, string jsonName)
         {
             this.culture = culture ?? throw new ArgumentNullException(nameof(culture));
             this.fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));

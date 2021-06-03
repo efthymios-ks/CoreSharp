@@ -6,14 +6,14 @@ using Microsoft.Extensions.FileProviders;
 
 namespace CoreSharp.Implementations.TextLocalizer
 {
-    public class JsonTextLocalizerFactory : ITextLocalizerFactory
+    public class EmbeddedJsonTextLocalizerFactory : ITextLocalizerFactory
     {
         //Properties
         private readonly string resourcesPath;
         private readonly ConcurrentDictionary<string, ITextLocalizer> localizers = new ConcurrentDictionary<string, ITextLocalizer>();
 
         //Constructors
-        public JsonTextLocalizerFactory(string resourcesPath)
+        public EmbeddedJsonTextLocalizerFactory(string resourcesPath)
         {
             this.resourcesPath = resourcesPath ?? string.Empty;
         }
@@ -42,7 +42,7 @@ namespace CoreSharp.Implementations.TextLocalizer
 
             //Cache and return 
             var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
-            var localizer = new JsonTextLocalizer(culture, resourceProvider, resourcesPath, typeName);
+            var localizer = new EmbeddedJsonTextLocalizer(culture, resourceProvider, resourcesPath, typeName);
             return localizers.GetOrAdd(localizerKey, localizer);
         }
     }
