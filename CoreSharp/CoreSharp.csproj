@@ -17,8 +17,10 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
         <Version>1.0.4</Version>
-        <PackageReleaseNotes>-Added IServiceCollection.RegisterAll extensions. 
--Various tweaks.</PackageReleaseNotes>
+        <PackageReleaseNotes>
+            -Added IServiceCollection.RegisterAll extensions.
+            -Various tweaks.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,6 +32,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.6" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.6" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
         <PackageReference Include="System.IO.Ports" Version="5.0.1" />
