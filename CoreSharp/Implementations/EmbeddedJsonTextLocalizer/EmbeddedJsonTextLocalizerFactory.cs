@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -13,7 +14,9 @@ namespace CoreSharp.Implementations.TextLocalizer
     {
         //Properties
         private const string DefaultResourcesPath = "Resources";
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string resourcesPath;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ConcurrentDictionary<string, ITextLocalizer> localizers = new ConcurrentDictionary<string, ITextLocalizer>();
 
         //Constructors

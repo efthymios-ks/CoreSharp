@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using CoreSharp.Interfaces.Localize;
@@ -11,8 +12,11 @@ namespace CoreSharp.Implementations.TextLocalizer
     public class EmbeddedJsonTextLocalizer : ITextLocalizer
     {
         //Fields 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IFileProvider fileProvider;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IEnumerable<string> lookupPaths;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ConcurrentDictionary<string, string> source = new ConcurrentDictionary<string, string>();
 
         //Constructors
@@ -26,6 +30,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         public string this[string key] => GetValue(key);
 
         //Properties
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool ShouldCache => source.IsEmpty;
 
         //Methods 

@@ -9,7 +9,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         /// <summary>
         /// Register ITextLocalizerFactory/EmbeddedJsonTextLocalizerFactory. 
         /// Will look for files right next to each TResource requester. 
-        /// If not found, will look under `Resources'.  
+        /// If not found, will look under `Resources`.  
         public static IServiceCollection AddEmbeddedJsonTextLocalizer(this IServiceCollection serviceCollection)
         {
             return serviceCollection.AddEmbeddedJsonTextLocalizer(string.Empty);
@@ -18,8 +18,8 @@ namespace CoreSharp.Implementations.TextLocalizer
         /// <summary>
         /// Register ITextLocalizerFactory/EmbeddedJsonTextLocalizerFactory. 
         /// Will look for files right next to each TResource requester. 
-        /// If not found, will look under given  `resourcesPath'.   
-        /// If not found, will look under `Resources'.   
+        /// If not found, will look under given `resourcesPath`.   
+        /// If not found, will look under `Resources`.   
         public static IServiceCollection AddEmbeddedJsonTextLocalizer(this IServiceCollection serviceCollection, string resourcesPath)
         {
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
