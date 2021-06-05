@@ -42,7 +42,11 @@ namespace CoreSharp.Implementations.TextLocalizer
 
             //Deserialize file into dictionary
             using var stream = resourceFile.CreateReadStream();
-            var dictionary = JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream).AsTask().Result;
+            var dictionary = JsonSerializer
+                                .DeserializeAsync<Dictionary<string, string>>(stream)
+                                .AsTask()
+                                .GetAwaiter()
+                                .GetResult();
             foreach (var pair in dictionary)
                 source.AddOrUpdate(pair.Key, pair.Value, (key, value) => pair.Value);
         }

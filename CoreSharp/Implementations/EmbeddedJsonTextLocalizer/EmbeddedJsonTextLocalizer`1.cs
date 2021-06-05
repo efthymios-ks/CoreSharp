@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using CoreSharp.Interfaces.Localize;
 
 namespace CoreSharp.Implementations.TextLocalizer
@@ -6,6 +7,7 @@ namespace CoreSharp.Implementations.TextLocalizer
     public class EmbeddedJsonTextLocalizer<TResource> : ITextLocalizer<TResource>
     {
         //Fields
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ITextLocalizer localizer;
 
         //Constructors

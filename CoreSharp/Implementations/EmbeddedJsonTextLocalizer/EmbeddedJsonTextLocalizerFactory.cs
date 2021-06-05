@@ -99,10 +99,10 @@ namespace CoreSharp.Implementations.TextLocalizer
             if (resourceName.StartsWith(assemblyName))
                 resourceName = resourceName[(assemblyName.Length + 1)..];
 
-            //Build localizer key for caching  
+            //Build localizer key for caching 
             string localizerKey = GetLocalizerKey(culture, resourceName);
 
-            //Cache
+            //Cache 
             if (!localizers.ContainsKey(localizerKey))
             {
                 var lookupPaths = BuildLookupPaths(resourceName, resourcesPath, culture);
