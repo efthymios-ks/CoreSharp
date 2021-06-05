@@ -17,7 +17,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string resourcesPath;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ConcurrentDictionary<string, ITextLocalizer> localizers = new ConcurrentDictionary<string, ITextLocalizer>();
+        private readonly ConcurrentDictionary<string, ITextLocalizer> localizers = new();
 
         //Constructors
         public EmbeddedJsonTextLocalizerFactory(string resourcesPath)
@@ -40,7 +40,7 @@ namespace CoreSharp.Implementations.TextLocalizer
             if (culture != null)
                 builder.Append($"-{culture.TwoLetterISOLanguageName}");
 
-            //Extensions
+            //Extension 
             builder.Append(".json");
 
             return builder.ToString();
@@ -95,20 +95,24 @@ namespace CoreSharp.Implementations.TextLocalizer
             //Get type name 
             var resourceType = typeof(TResource);
             var assemblyName = resourceType.Assembly.GetName().Name;
-            var typeName = resourceType.FullName;
-            if (typeName.StartsWith(assemblyName))
-                typeName = typeName[(assemblyName.Length + 1)..];
-
-            //Build look-up paths 
-            var lookupPaths = BuildLookupPaths(typeName, resourcesPath, culture);
+            var resourceName = resourceType.FullName;
+            if (resourceName.StartsWith(assemblyName))
+                resourceName = resourceName[(assemblyName.Length + 1)..];
 
             //Build localizer key for caching  
-            string localizerKey = GetLocalizerKey(culture, typeName);
+            string localizerKey = GetLocalizerKey(culture, resourceName);
 
-            //Cache and return 
-            var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
-            var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, lookupPaths);
-            return localizers.GetOrAdd(localizerKey, localizer);
+            //Cache
+            if (!localizers.ContainsKey(localizerKey))
+            {
+                var lookupPaths = BuildLookupPaths(resourceName, resourcesPath, culture);
+                var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
+                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, lookupPaths);
+                localizers.AddOrUpdate(localizerKey, localizer, (key, value) => localizer);
+            }
+
+            //Return 
+            return localizers[localizerKey];
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IEnumerable<string> lookupPaths;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ConcurrentDictionary<string, string> source = new ConcurrentDictionary<string, string>();
+        private readonly ConcurrentDictionary<string, string> source = new();
 
         //Constructors
         public EmbeddedJsonTextLocalizer(IFileProvider fileProvider, IEnumerable<string> lookupPaths)
@@ -49,6 +49,8 @@ namespace CoreSharp.Implementations.TextLocalizer
 
         private string GetValue(string key)
         {
+            key = key ?? throw new ArgumentNullException(nameof(key));
+
             if (ShouldCache)
                 CacheDictionary();
 

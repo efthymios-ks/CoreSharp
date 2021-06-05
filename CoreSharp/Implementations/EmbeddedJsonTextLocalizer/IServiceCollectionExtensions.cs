@@ -1,6 +1,7 @@
 ﻿using System;
 using CoreSharp.Interfaces.Localize;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CoreSharp.Implementations.TextLocalizer
 {
@@ -23,9 +24,12 @@ namespace CoreSharp.Implementations.TextLocalizer
         public static IServiceCollection AddEmbeddedJsonTextLocalizer(this IServiceCollection serviceCollection, string resourcesPath)
         {
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
+            resourcesPath ??= string.Empty;
 
             var factory = new EmbeddedJsonTextLocalizerFactory(resourcesPath);
-            return serviceCollection.AddSingleton<ITextLocalizerFactory>(factory);
+            serviceCollection.TryAddSingleton<ITextLocalizerFactory>(factory);
+            serviceCollection.TryAddTransient(typeof(ITextLocalizer<>), typeof(EmbeddedJsonTextLocalizer<>));
+            return serviceCollection;
         }
     }
 }
