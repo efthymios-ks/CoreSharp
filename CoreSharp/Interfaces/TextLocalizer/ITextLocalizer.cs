@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CoreSharp.Interfaces.Localize
 {
@@ -6,14 +7,9 @@ namespace CoreSharp.Interfaces.Localize
     {
         //Indexers
         string this[string key] { get; }
-        string this[string key, params object[] arguments]
-        {
-            get
-            {
-                arguments = arguments ?? throw new ArgumentNullException(nameof(arguments));
+        string this[string key, params object[] arguments] => string.Format(this[key], arguments);
 
-                return string.Format(this[key], arguments);
-            }
-        }
+        //Properties
+        CultureInfo Culture { get; }
     }
 }

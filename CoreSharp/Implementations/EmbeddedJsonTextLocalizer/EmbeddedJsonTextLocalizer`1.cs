@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using CoreSharp.Interfaces.Localize;
 
 namespace CoreSharp.Implementations.TextLocalizer
@@ -20,5 +21,8 @@ namespace CoreSharp.Implementations.TextLocalizer
 
         //Indexers
         public string this[string key] => localizer[key];
+
+        //Properties
+        public CultureInfo Culture => localizer.Culture;
     }
 }

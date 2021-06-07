@@ -13,7 +13,6 @@ namespace CoreSharp.Implementations.TextLocalizer
     public class EmbeddedJsonTextLocalizerFactory : ITextLocalizerFactory
     {
         //Properties
-        private const string DefaultResourcesPath = "Resources";
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string resourcesPath;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -26,59 +25,16 @@ namespace CoreSharp.Implementations.TextLocalizer
         }
 
         //Methods 
-        private static string BuildLookupPath(string resourceName, string resourcesPath = null, CultureInfo culture = null)
+        private static string GetResourceName(Type resourceType)
         {
-            var builder = new StringBuilder();
+            resourceType = resourceType ?? throw new ArgumentNullException(nameof(resourceType));
 
-            //Relative path 
-            if (string.IsNullOrWhiteSpace(resourcesPath))
-                builder.Append(resourceName);
-            else
-                builder.Append(Path.Combine(resourcesPath, $"{resourceName}"));
-
-            //Culture 
-            if (culture != null)
-                builder.Append($"-{culture.TwoLetterISOLanguageName}");
-
-            //Extension 
-            builder.Append(".json");
-
-            return builder.ToString();
-        }
-
-        private static IEnumerable<string> BuildLookupPaths(string typeName, string resourcesPath, CultureInfo culture)
-        {
-            var lookupPaths = new List<string>();
-
-            //With culture
-            {
-                //Requester directory 
-                lookupPaths.Add(BuildLookupPath(typeName, null, culture));
-
-                //Custom resources directory 
-                if (!string.IsNullOrWhiteSpace(resourcesPath))
-                    lookupPaths.Add(BuildLookupPath(typeName, resourcesPath, culture));
-
-                //Default resources directory
-                if (!resourcesPath.Equals(DefaultResourcesPath, StringComparison.InvariantCultureIgnoreCase))
-                    lookupPaths.Add(BuildLookupPath(typeName, DefaultResourcesPath, culture));
-            }
-
-            //Without culture
-            {
-                //Requester directory
-                lookupPaths.Add(BuildLookupPath(typeName, null, null));
-
-                //Custom resources directory 
-                if (!string.IsNullOrWhiteSpace(resourcesPath))
-                    lookupPaths.Add(BuildLookupPath(typeName, resourcesPath, null));
-
-                //Default resources directory
-                if (!resourcesPath.Equals(DefaultResourcesPath, StringComparison.InvariantCultureIgnoreCase))
-                    lookupPaths.Add(BuildLookupPath(typeName, DefaultResourcesPath, null));
-            }
-
-            return lookupPaths;
+            //Get type name  
+            var assemblyName = resourceType.Assembly.GetName().Name;
+            var resourceName = resourceType.FullName;
+            if (resourceName.StartsWith(assemblyName))
+                resourceName = resourceName[(assemblyName.Length + 1)..];
+            return resourceName;
         }
 
         private static string GetLocalizerKey(CultureInfo culture, string name)
@@ -94,10 +50,7 @@ namespace CoreSharp.Implementations.TextLocalizer
 
             //Get type name 
             var resourceType = typeof(TResource);
-            var assemblyName = resourceType.Assembly.GetName().Name;
-            var resourceName = resourceType.FullName;
-            if (resourceName.StartsWith(assemblyName))
-                resourceName = resourceName[(assemblyName.Length + 1)..];
+            var resourceName = GetResourceName(resourceType);
 
             //Build localizer key for caching 
             string localizerKey = GetLocalizerKey(culture, resourceName);
@@ -105,9 +58,8 @@ namespace CoreSharp.Implementations.TextLocalizer
             //Cache 
             if (!localizers.ContainsKey(localizerKey))
             {
-                var lookupPaths = BuildLookupPaths(resourceName, resourcesPath, culture);
                 var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
-                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, lookupPaths);
+                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, culture, resourcesPath, resourceName);
                 localizers.AddOrUpdate(localizerKey, localizer, (key, value) => localizer);
             }
 
