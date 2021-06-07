@@ -10,6 +10,7 @@ namespace CoreSharp.Interfaces.Localize
         string this[string key, params object[] arguments] => string.Format(this[key], arguments);
 
         //Properties
+        Type ResourceType { get; }
         CultureInfo Culture { get; }
     }
 }

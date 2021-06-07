@@ -24,14 +24,14 @@ namespace CoreSharp.Implementations.TextLocalizer
         private readonly ConcurrentDictionary<string, string> source = new();
 
         //Constructors
-        public EmbeddedJsonTextLocalizer(IFileProvider fileProvider, CultureInfo culture, string resourcesPath, string resourceName)
+        public EmbeddedJsonTextLocalizer(IFileProvider fileProvider, string resourcesPath, Type resourceType, CultureInfo culture)
         {
             this.fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));
+            ResourceType = resourceType ?? throw new ArgumentNullException(nameof(resourceType));
             Culture = culture ?? throw new ArgumentNullException(nameof(culture));
             resourcesPath ??= string.Empty;
-            if (string.IsNullOrWhiteSpace(resourceName))
-                throw new ArgumentException($"{nameof(resourceName)} cannot be empty.", nameof(resourceName));
 
+            var resourceName = EmbeddedJsonTextLocalizerFactory.GetResourceName(ResourceType);
             lookupPaths = BuildLookupPaths(resourceName, resourcesPath, culture);
         }
 
@@ -39,13 +39,15 @@ namespace CoreSharp.Implementations.TextLocalizer
         public string this[string key] => GetValue(key);
 
         //Properties
+        public Type ResourceType { get; }
+
         public CultureInfo Culture { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool ShouldCache => source.IsEmpty;
 
         //Methods 
-        private static string BuildLookupPath(string resourceName, string resourcesPath = null, CultureInfo culture = null)
+        private static string BuildLookupPath(string resourceName, string resourcesPath, string language)
         {
             var builder = new StringBuilder();
 
@@ -55,15 +57,9 @@ namespace CoreSharp.Implementations.TextLocalizer
             else
                 builder.Append(Path.Combine(resourcesPath, $"{resourceName}"));
 
-            //Culture 
-            if (culture != null)
-            {
-                var language = culture.TwoLetterISOLanguageName;
-                int dashIndex = language.IndexOf('-');
-                if (dashIndex >= 0)
-                    language = language.Substring(0, dashIndex);
+            //Language 
+            if (!string.IsNullOrWhiteSpace(language))
                 builder.Append($"-{language}");
-            }
 
             //Extension 
             builder.Append(".json");
@@ -71,37 +67,35 @@ namespace CoreSharp.Implementations.TextLocalizer
             return builder.ToString();
         }
 
-        private static IEnumerable<string> BuildLookupPaths(string typeName, string resourcesPath, CultureInfo culture)
+        private static IEnumerable<string> BuildLookupPaths(string resourceName, string resourcesPath, CultureInfo culture)
         {
-            var lookupPaths = new List<string>();
-
-            //With culture 
+            //Setup languages 
+            var languages = new HashSet<string>
             {
-                //Requester directory 
-                lookupPaths.Add(BuildLookupPath(typeName, null, culture));
+                //en-US 
+                culture.Name,
+                //en (fallback) 
+                culture.TwoLetterISOLanguageName,
+                //No language (fallback) 
+                string.Empty
+            };
 
-                //Custom resources directory 
-                if (!string.IsNullOrWhiteSpace(resourcesPath))
-                    lookupPaths.Add(BuildLookupPath(typeName, resourcesPath, culture));
-
-                //Default resources directory 
-                if (!resourcesPath.Equals(DefaultResourcesPath, StringComparison.InvariantCultureIgnoreCase))
-                    lookupPaths.Add(BuildLookupPath(typeName, DefaultResourcesPath, culture));
-            }
-
-            //Without culture 
+            //Setup paths
+            var paths = new HashSet<string>
             {
-                //Requester directory 
-                lookupPaths.Add(BuildLookupPath(typeName, null, null));
+                //Next to requester 
+                string.Empty,
+                //Custom path 
+                resourcesPath ?? string.Empty,
+                //Resources 
+                DefaultResourcesPath?? string.Empty
+            };
 
-                //Custom resources directory 
-                if (!string.IsNullOrWhiteSpace(resourcesPath))
-                    lookupPaths.Add(BuildLookupPath(typeName, resourcesPath, null));
-
-                //Default resources directory 
-                if (!resourcesPath.Equals(DefaultResourcesPath, StringComparison.InvariantCultureIgnoreCase))
-                    lookupPaths.Add(BuildLookupPath(typeName, DefaultResourcesPath, null));
-            }
+            //Build paths 
+            var lookupPaths = new HashSet<string>();
+            foreach (var language in languages)
+                foreach (var path in paths)
+                    lookupPaths.Add(BuildLookupPath(resourceName, path, language));
 
             return lookupPaths;
         }

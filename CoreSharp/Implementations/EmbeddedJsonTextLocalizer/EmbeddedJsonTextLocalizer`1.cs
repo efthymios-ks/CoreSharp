@@ -23,6 +23,8 @@ namespace CoreSharp.Implementations.TextLocalizer
         public string this[string key] => localizer[key];
 
         //Properties
+        public Type ResourceType => localizer.ResourceType;
+
         public CultureInfo Culture => localizer.Culture;
     }
 }

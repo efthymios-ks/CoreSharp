@@ -25,7 +25,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         }
 
         //Methods 
-        private static string GetResourceName(Type resourceType)
+        internal static string GetResourceName(Type resourceType)
         {
             resourceType = resourceType ?? throw new ArgumentNullException(nameof(resourceType));
 
@@ -59,7 +59,7 @@ namespace CoreSharp.Implementations.TextLocalizer
             if (!localizers.ContainsKey(localizerKey))
             {
                 var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
-                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, culture, resourcesPath, resourceName);
+                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, resourcesPath, resourceType, culture);
                 localizers.AddOrUpdate(localizerKey, localizer, (key, value) => localizer);
             }
 
