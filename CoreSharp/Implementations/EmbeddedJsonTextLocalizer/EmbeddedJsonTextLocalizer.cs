@@ -57,7 +57,13 @@ namespace CoreSharp.Implementations.TextLocalizer
 
             //Culture 
             if (culture != null)
-                builder.Append($"-{culture.TwoLetterISOLanguageName}");
+            {
+                var language = culture.TwoLetterISOLanguageName;
+                int dashIndex = language.IndexOf('-');
+                if (dashIndex >= 0)
+                    language = language.Substring(0, dashIndex);
+                builder.Append($"-{language}");
+            }
 
             //Extension 
             builder.Append(".json");
