@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Text;
-using CoreSharp.Interfaces.Localize;
+using CoreSharp.Interfaces.CultureLocalizer;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Localization;
 
-namespace CoreSharp.Implementations.TextLocalizer
+namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
 {
-    public class EmbeddedJsonTextLocalizerFactory : ITextLocalizerFactory
+
+    public class EmbeddedJsonCultureLocalizerFactory : ICultureLocalizerFactory
     {
         //Properties
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string resourcesPath;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ConcurrentDictionary<string, ITextLocalizer> localizers = new();
+        private readonly ConcurrentDictionary<string, ICultureLocalizer> localizers = new();
 
         //Constructors
-        public EmbeddedJsonTextLocalizerFactory(string resourcesPath)
+        public EmbeddedJsonCultureLocalizerFactory(string resourcesPath)
         {
             this.resourcesPath = resourcesPath ?? string.Empty;
         }
@@ -44,13 +43,15 @@ namespace CoreSharp.Implementations.TextLocalizer
             return $"Culture={culture.TwoLetterISOLanguageName}, Name={name}";
         }
 
-        public ITextLocalizer GetOrCreate<TResource>(CultureInfo culture)
+        public IStringLocalizer Create(Type resourceSource) => Create(resourceSource, CultureInfo.CurrentUICulture);
+
+        public ICultureLocalizer Create(Type resourceSource, CultureInfo culture)
         {
+            resourceSource = resourceSource ?? throw new ArgumentNullException(nameof(resourceSource));
             culture = culture ?? throw new ArgumentNullException(nameof(culture));
 
-            //Get type name 
-            var resourceType = typeof(TResource);
-            var resourceName = GetResourceName(resourceType);
+            //Get type name  
+            var resourceName = GetResourceName(resourceSource);
 
             //Build localizer key for caching 
             string localizerKey = GetLocalizerKey(culture, resourceName);
@@ -58,13 +59,15 @@ namespace CoreSharp.Implementations.TextLocalizer
             //Cache 
             if (!localizers.ContainsKey(localizerKey))
             {
-                var resourceProvider = new EmbeddedFileProvider(resourceType.Assembly);
-                var localizer = new EmbeddedJsonTextLocalizer(resourceProvider, resourcesPath, resourceType, culture);
+                var resourceProvider = new EmbeddedFileProvider(resourceSource.Assembly);
+                var localizer = new EmbeddedJsonCultureLocalizer(resourceProvider, resourcesPath, resourceSource, culture);
                 localizers.AddOrUpdate(localizerKey, localizer, (key, value) => localizer);
             }
 
             //Return 
             return localizers[localizerKey];
         }
+
+        public IStringLocalizer Create(string baseName, string location) => throw new NotImplementedException();
     }
 }

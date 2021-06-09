@@ -1,14 +1,14 @@
 ﻿using System;
-using CoreSharp.Interfaces.Localize;
+using CoreSharp.Interfaces.CultureLocalizer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CoreSharp.Implementations.TextLocalizer
+namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
 {
     public static partial class IServiceCollectionExtensions
     {
         /// <summary>
-        /// Register ITextLocalizerFactory/EmbeddedJsonTextLocalizerFactory. 
+        /// Register ICultureLocalizerFactory/EmbeddedJsonCultureLocalizerFactory. 
         /// If culture not found, fallback file name has no culture tag. 
         /// Will look for files right next to `TResource` requester. 
         /// If not found, will look under `Resources`. 
@@ -18,7 +18,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         }
 
         /// <summary>
-        /// Register ITextLocalizerFactory/EmbeddedJsonTextLocalizerFactory. 
+        /// Register ICultureLocalizerFactory/EmbeddedJsonCultureLocalizerFactory. 
         /// If culture not found, fallback file name has no culture tag. 
         /// Will look for files right next to `TResource` requester. 
         /// If not found, will look under given `resourcesPath`. 
@@ -28,9 +28,9 @@ namespace CoreSharp.Implementations.TextLocalizer
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             resourcesPath ??= string.Empty;
 
-            var factory = new EmbeddedJsonTextLocalizerFactory(resourcesPath);
-            serviceCollection.TryAddSingleton<ITextLocalizerFactory>(factory);
-            serviceCollection.TryAddTransient(typeof(ITextLocalizer<>), typeof(EmbeddedJsonTextLocalizer<>));
+            var factory = new EmbeddedJsonCultureLocalizerFactory(resourcesPath);
+            serviceCollection.TryAddSingleton<ICultureLocalizerFactory>(factory);
+            serviceCollection.TryAddTransient(typeof(ICultureLocalizer<>), typeof(EmbeddedJsonCultureLocalizer<>));
             return serviceCollection;
         }
     }

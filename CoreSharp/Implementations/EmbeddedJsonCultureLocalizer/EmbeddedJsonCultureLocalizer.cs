@@ -7,12 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using CoreSharp.Interfaces.Localize;
+using CoreSharp.Interfaces.CultureLocalizer;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Localization;
 
-namespace CoreSharp.Implementations.TextLocalizer
+namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
 {
-    public class EmbeddedJsonTextLocalizer : ITextLocalizer
+    public class EmbeddedJsonCultureLocalizer : ICultureLocalizer
     {
         //Fields 
         private const string DefaultResourcesPath = "Resources";
@@ -24,19 +25,29 @@ namespace CoreSharp.Implementations.TextLocalizer
         private readonly ConcurrentDictionary<string, string> source = new();
 
         //Constructors
-        public EmbeddedJsonTextLocalizer(IFileProvider fileProvider, string resourcesPath, Type resourceType, CultureInfo culture)
+        public EmbeddedJsonCultureLocalizer(IFileProvider fileProvider, string resourcesPath, Type resourceType, CultureInfo culture)
         {
             this.fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));
             ResourceType = resourceType ?? throw new ArgumentNullException(nameof(resourceType));
             Culture = culture ?? throw new ArgumentNullException(nameof(culture));
             resourcesPath ??= string.Empty;
 
-            var resourceName = EmbeddedJsonTextLocalizerFactory.GetResourceName(ResourceType);
+            var resourceName = EmbeddedJsonCultureLocalizerFactory.GetResourceName(ResourceType);
             lookupPaths = BuildLookupPaths(resourceName, resourcesPath, culture);
         }
 
-        //Indexers  
-        public string this[string key] => GetValue(key);
+        //Indexers 
+        LocalizedString IStringLocalizer.this[string name] => GetValue(name);
+
+        public LocalizedString this[string name, params object[] arguments]
+        {
+            get
+            {
+                var pair = GetValue(name);
+                var value = string.Format(pair.Value, arguments);
+                return new LocalizedString(name, value);
+            }
+        }
 
         //Properties
         public Type ResourceType { get; }
@@ -119,17 +130,22 @@ namespace CoreSharp.Implementations.TextLocalizer
                 source.AddOrUpdate(pair.Key, pair.Value, (key, value) => pair.Value);
         }
 
-        private string GetValue(string key)
+        private LocalizedString GetValue(string name)
         {
-            key = key ?? throw new ArgumentNullException(nameof(key));
+            name = name ?? throw new ArgumentNullException(nameof(name));
 
             if (ShouldCache)
                 CacheDictionary();
 
-            if (source.TryGetValue(key, out string value))
-                return value;
+            if (source.TryGetValue(name, out string value))
+                return new LocalizedString(name, value);
             else
-                return key;
+                return new LocalizedString(name, name);
+        }
+
+        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+        {
+            return source.Select(i => new LocalizedString(i.Key, i.Value));
         }
     }
 }
