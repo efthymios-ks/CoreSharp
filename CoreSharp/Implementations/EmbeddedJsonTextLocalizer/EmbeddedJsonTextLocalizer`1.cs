@@ -16,7 +16,7 @@ namespace CoreSharp.Implementations.TextLocalizer
         {
             localizerFactory = localizerFactory ?? throw new ArgumentNullException(nameof(localizerFactory));
 
-            localizer = localizerFactory.Create<TResource>();
+            localizer = localizerFactory.GetOrCreate<TResource>();
         }
 
         //Indexers

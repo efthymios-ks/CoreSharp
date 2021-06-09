@@ -44,7 +44,7 @@ namespace CoreSharp.Implementations.TextLocalizer
             return $"Culture={culture.TwoLetterISOLanguageName}, Name={name}";
         }
 
-        public ITextLocalizer Create<TResource>(CultureInfo culture)
+        public ITextLocalizer GetOrCreate<TResource>(CultureInfo culture)
         {
             culture = culture ?? throw new ArgumentNullException(nameof(culture));
 
