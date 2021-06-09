@@ -2,13 +2,14 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using CoreSharp.Interfaces.CultureLocalizer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Localization;
 
 namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
 {
-
     public class EmbeddedJsonCultureLocalizerFactory : ICultureLocalizerFactory
     {
         //Properties
@@ -36,11 +37,38 @@ namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
             return resourceName;
         }
 
+        private static string BuildResourcePath(string location, string baseName)
+        {
+            location ??= location;
+            if (string.IsNullOrWhiteSpace(baseName))
+                throw new ArgumentNullException(nameof(baseName));
+
+            location = location.Replace('\\', '.').Replace('/', '.').Trim('.');
+            baseName = baseName.Replace('\\', '.').Replace('/', '.').Trim('.');
+
+            return $"{location}.{baseName}";
+        }
+
         private static string GetLocalizerKey(CultureInfo culture, string name)
         {
             culture = culture ?? throw new ArgumentNullException(nameof(culture));
 
             return $"Culture={culture.TwoLetterISOLanguageName}, Name={name}";
+        }
+
+        public IStringLocalizer Create(string baseName, string location)
+        {
+            if (string.IsNullOrWhiteSpace(nameof(baseName)))
+                throw new ArgumentNullException(nameof(baseName));
+            location ??= string.Empty;
+
+            var givenResourceName = BuildResourcePath(location, baseName);
+            var resourceType = Assembly
+                                .GetEntryAssembly()?
+                                .GetTypes()
+                                .FirstOrDefault(t => GetResourceName(t) == givenResourceName);
+
+            return Create(resourceType);
         }
 
         public IStringLocalizer Create(Type resourceSource) => Create(resourceSource, CultureInfo.CurrentUICulture);
@@ -67,7 +95,5 @@ namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
             //Return 
             return localizers[localizerKey];
         }
-
-        public IStringLocalizer Create(string baseName, string location) => throw new NotImplementedException();
     }
 }

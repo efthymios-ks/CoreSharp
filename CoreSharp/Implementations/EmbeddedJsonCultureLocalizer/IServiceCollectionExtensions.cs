@@ -12,9 +12,9 @@ namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
         /// If culture not found, fallback file name has no culture tag. 
         /// Will look for files right next to `TResource` requester. 
         /// If not found, will look under `Resources`. 
-        public static IServiceCollection AddEmbeddedJsonTextLocalizer(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddEmbeddedJsonCultureLocalizer(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddEmbeddedJsonTextLocalizer(string.Empty);
+            return serviceCollection.AddEmbeddedJsonCultureLocalizer(string.Empty);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace CoreSharp.Implementations.EmbeddedJsonCultureLocalizer
         /// Will look for files right next to `TResource` requester. 
         /// If not found, will look under given `resourcesPath`. 
         /// If not found, will look under `Resources`. 
-        public static IServiceCollection AddEmbeddedJsonTextLocalizer(this IServiceCollection serviceCollection, string resourcesPath)
+        public static IServiceCollection AddEmbeddedJsonCultureLocalizer(this IServiceCollection serviceCollection, string resourcesPath)
         {
             serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             resourcesPath ??= string.Empty;
