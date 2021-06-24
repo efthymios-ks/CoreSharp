@@ -10,7 +10,12 @@ namespace CoreSharp.Models
     public class HttpResponseException : Exception
     {
         //Constructors
-        public HttpResponseException(HttpStatusCode statusCode, string content) : base(content)
+        public HttpResponseException(HttpStatusCode statusCode, string content) : this(statusCode, content, null)
+        {
+
+        }
+
+        public HttpResponseException(HttpStatusCode statusCode, string content, Exception innerException) : base(content, innerException)
         {
             StatusCode = statusCode;
         }
