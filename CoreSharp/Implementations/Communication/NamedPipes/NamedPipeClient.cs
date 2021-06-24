@@ -17,9 +17,9 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
     public sealed class NamedPipeClient : Disposable
     {
         //Fields 
-        private readonly NamedPipeClientStream pipe;
-        private bool isConnected;
-        private bool isTerminated;
+        private readonly NamedPipeClientStream _pipe;
+        private bool _isConnected;
+        private bool _isTerminated;
 
         //Constructor 
         public NamedPipeClient(string serverName, string pipeName)
@@ -37,7 +37,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             ServerName = serverName;
             PipeName = pipeName;
 
-            pipe = new NamedPipeClientStream(serverName, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+            _pipe = new NamedPipeClientStream(serverName, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         }
 
         //Properties 
@@ -47,21 +47,21 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         public string PipeName { get; }
         public bool IsConnected
         {
-            get { return isConnected; }
+            get { return _isConnected; }
             set
             {
-                if (value == isConnected)
+                if (value == _isConnected)
                     return;
 
-                isConnected = value;
+                _isConnected = value;
 
-                if (isConnected)
+                if (_isConnected)
                 {
-                    isTerminated = false;
+                    _isTerminated = false;
                     BeginRead();
                 }
 
-                OnConnectionStatusChanged(isConnected);
+                OnConnectionStatusChanged(_isConnected);
             }
         }
         public int BufferSize { get; set; } = 8 * 1024;
@@ -83,8 +83,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             if (IsConnected)
                 return;
 
-            pipe.Connect(millis);
-            pipe.ReadMode = PipeTransmissionMode.Message;
+            _pipe.Connect(millis);
+            _pipe.ReadMode = PipeTransmissionMode.Message;
             IsConnected = true;
         }
 
@@ -124,8 +124,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         public async Task<int> SendAsync(string text, Encoding encoding)
         {
-            text = text ?? throw new ArgumentNullException(nameof(text));
-            encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            _ = text ?? throw new ArgumentNullException(nameof(text));
+            _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
             var data = encoding.GetBytes(text);
             return await SendAsync(data);
@@ -138,14 +138,14 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         public async Task<int> SendAsync(params byte[] data)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
             if (!IsConnected)
                 throw new InvalidOperationException($"Cannot send data while disconnected.");
-            else if (!pipe.CanWrite)
+            else if (!_pipe.CanWrite)
                 throw new NotSupportedException($"Current pipe does not support write operations.");
 
-            await pipe.WriteAsync(data.AsMemory(0, data.Length));
-            await pipe.FlushAsync();
+            await _pipe.WriteAsync(data.AsMemory(0, data.Length));
+            await _pipe.FlushAsync();
             OnDataSent(data);
             return data.Length;
         }
@@ -154,21 +154,21 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         {
             if (!IsConnected)
                 throw new InvalidOperationException($"Cannot read data while disconnected.");
-            else if (!pipe.CanRead)
+            else if (!_pipe.CanRead)
                 throw new NotSupportedException($"Current pipe does not support read operations.");
 
-            var buffer = new byte[pipe.InBufferSize];
+            var buffer = new byte[_pipe.InBufferSize];
             var state = new
             {
-                Pipe = pipe,
+                Pipe = _pipe,
                 Buffer = buffer
             };
-            var result = pipe.BeginRead(buffer, 0, buffer.Length, BeginReadCallback, state);
+            var result = _pipe.BeginRead(buffer, 0, buffer.Length, BeginReadCallback, state);
         }
 
         private void BeginReadCallback(IAsyncResult result)
         {
-            result = result ?? throw new ArgumentNullException(nameof(result));
+            _ = result ?? throw new ArgumentNullException(nameof(result));
 
             var state = result.AsyncState as dynamic;
             var pipe = state.Pipe as NamedPipeClientStream;
@@ -192,15 +192,15 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         private async void Terminate()
         {
-            if (isTerminated)
+            if (_isTerminated)
                 return;
-            isTerminated = true;
+            _isTerminated = true;
 
             try
             {
-                await pipe?.FlushAsync();
-                pipe?.WaitForPipeDrain();
-                pipe?.Close();
+                await _pipe?.FlushAsync();
+                _pipe?.WaitForPipeDrain();
+                _pipe?.Close();
             }
             catch { }
         }
@@ -213,7 +213,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void OnDataSent(byte[] data)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
 
             var args = new DataTransferedEventArgs(data);
             DataSent?.Invoke(this, args);
@@ -221,7 +221,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void OnDataReceived(byte[] data)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
 
             var args = new DataTransferedEventArgs(data);
             DataReceived?.Invoke(this, args);

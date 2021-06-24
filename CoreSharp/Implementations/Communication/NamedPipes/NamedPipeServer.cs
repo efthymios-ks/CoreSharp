@@ -17,7 +17,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
     public sealed class NamedPipeServer : Disposable
     {
         //Fields 
-        private bool isStarted;
+        private bool _isStarted;
 
         //Constructor
         public NamedPipeServer(string pipeName) : this(pipeName, NamedPipeServerStream.MaxAllowedServerInstances)
@@ -49,15 +49,15 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         public int MaxAllowedServerInstances { get; set; } = NamedPipeServerStream.MaxAllowedServerInstances;
         public bool IsStarted
         {
-            get { return isStarted; }
+            get { return _isStarted; }
             set
             {
-                if (value == isStarted)
+                if (value == _isStarted)
                     return;
 
-                isStarted = value;
+                _isStarted = value;
 
-                if (isStarted)
+                if (_isStarted)
                 {
                     IsTerminated = false;
                     WaitForNewConnection();
@@ -157,8 +157,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         public async Task MulticastAsync(string text, Encoding encoding)
         {
-            text = text ?? throw new ArgumentNullException(nameof(text));
-            encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            _ = text ?? throw new ArgumentNullException(nameof(text));
+            _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
             var data = encoding.GetBytes(text);
             await MulticastAsync(data);
@@ -171,7 +171,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         public async Task MulticastAsync(params byte[] data)
         {
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
             if (!IsStarted)
                 throw new InvalidOperationException($"Cannot send data while disconnected.");
 
@@ -185,7 +185,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void BeginRead(NamedPipeServerStream pipe)
         {
-            pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
+            _ = pipe ?? throw new ArgumentNullException(nameof(pipe));
             if (!IsStarted)
                 throw new InvalidOperationException($"Cannot read data while disconnected.");
             else if (!pipe.CanRead)
@@ -202,7 +202,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void BeginReadCallback(IAsyncResult result)
         {
-            result = result ?? throw new ArgumentNullException(nameof(result));
+            _ = result ?? throw new ArgumentNullException(nameof(result));
 
             var state = result.AsyncState as dynamic;
             var pipe = state.Pipe as NamedPipeServerStream;
@@ -242,7 +242,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         private static async void Terminate(NamedPipeServerStream pipe)
         {
-            pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
+            _ = pipe ?? throw new ArgumentNullException(nameof(pipe));
 
             try
             {
@@ -258,7 +258,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void OnClientConnected(NamedPipeServerStream clientPipe)
         {
-            clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
+            _ = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
 
             var args = new PipeConnectedEventArgs(clientPipe);
             ClientConnected?.Invoke(this, args);
@@ -266,8 +266,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void OnDataSent(NamedPipeServerStream clientPipe, byte[] data)
         {
-            clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
 
             var args = new PipeDataTransfered(clientPipe, data);
             DataSent?.Invoke(this, args);
@@ -275,8 +275,8 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         private void OnDataReceived(NamedPipeServerStream clientPipe, byte[] data)
         {
-            clientPipe = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
-            data = data ?? throw new ArgumentNullException(nameof(data));
+            _ = clientPipe ?? throw new ArgumentNullException(nameof(clientPipe));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
 
             var args = new PipeDataTransfered(clientPipe, data);
             DataReceived?.Invoke(this, args);
