@@ -14,13 +14,13 @@ namespace CoreSharp.Models
     public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
     {
         //Fields
-        private readonly IEnumerable<TElement> source = Enumerable.Empty<TElement>();
+        private readonly IEnumerable<TElement> _source = Enumerable.Empty<TElement>();
 
         //Constructors 
         public Grouping(TKey key, IEnumerable<TElement> source)
         {
             Key = key;
-            this.source = source ?? throw new ArgumentNullException(nameof(source));
+            _source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
         //Properties 
@@ -37,7 +37,7 @@ namespace CoreSharp.Models
 
         public virtual IEnumerator<TElement> GetEnumerator()
         {
-            return source.GetEnumerator();
+            return _source.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
