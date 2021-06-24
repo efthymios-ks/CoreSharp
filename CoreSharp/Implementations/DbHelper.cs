@@ -15,8 +15,8 @@ namespace CoreSharp.Implementations
     public class DbHelper : IDisposable
     {
         //Fields 
-        private readonly DbConnection connection;
-        private readonly DbTransaction transaction;
+        private readonly DbConnection _connection;
+        private readonly DbTransaction _transaction;
         private int timeoutSeconds = 0;
 
         //Properties 
@@ -49,13 +49,13 @@ namespace CoreSharp.Implementations
         //Constructors 
         public DbHelper(DbConnection connection)
         {
-            this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
         }
 
         public DbHelper(DbTransaction transaction)
         {
-            this.transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
-            connection = transaction?.Connection ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
+            _transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
+            _connection = transaction?.Connection ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
         }
 
         //Methods 
@@ -65,7 +65,7 @@ namespace CoreSharp.Implementations
         /// </summary>
         public void Dispose()
         {
-            connection?.Dispose();
+            _connection?.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -74,7 +74,7 @@ namespace CoreSharp.Implementations
         /// </summary>
         public void AddParameter(string name, object value)
         {
-            var parameter = connection.CreateParameter(name, value);
+            var parameter = _connection.CreateParameter(name, value);
             Parameters.Add(parameter);
         }
 
@@ -96,13 +96,13 @@ namespace CoreSharp.Implementations
         public async Task<int> ExecuteNonQueryAsync(string query, CancellationToken cancellationToken = default)
         {
             //DbConnection Open 
-            if (!connection.IsOpen())
-                await connection.OpenAsync(cancellationToken);
+            if (!_connection.IsOpen())
+                await _connection.OpenAsync(cancellationToken);
 
             //Prepare and execute DbCommand 
-            using var command = connection.CreateCommand();
-            command.Connection = connection;
-            command.Transaction = transaction;
+            using var command = _connection.CreateCommand();
+            command.Connection = _connection;
+            command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
             command.CommandType = QueryType;
             command.CommandText = query;
@@ -133,13 +133,13 @@ namespace CoreSharp.Implementations
         public async Task<T> ExecuteScalarAsync<T>(string query, CancellationToken cancellationToken = default)
         {
             //DbConnection Open 
-            if (!connection.IsOpen())
-                await connection.OpenAsync(cancellationToken);
+            if (!_connection.IsOpen())
+                await _connection.OpenAsync(cancellationToken);
 
             //Prepare and execute DbCommand 
-            using var command = connection.CreateCommand();
-            command.Connection = connection;
-            command.Transaction = transaction;
+            using var command = _connection.CreateCommand();
+            command.Connection = _connection;
+            command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
             command.CommandType = QueryType;
             command.CommandText = query;
@@ -164,16 +164,16 @@ namespace CoreSharp.Implementations
         /// </summary>
         public async Task<int> FillAsync(string query, DataTable table, CancellationToken cancellationToken = default)
         {
-            table = table ?? throw new ArgumentNullException(nameof(table));
+            _ = table ?? throw new ArgumentNullException(nameof(table));
 
             //DbConnection Open
-            if (!connection.IsOpen())
-                await connection.OpenAsync(cancellationToken);
+            if (!_connection.IsOpen())
+                await _connection.OpenAsync(cancellationToken);
 
             //Prepare and execute DbCommand
-            using var command = connection.CreateCommand();
-            command.Connection = connection;
-            command.Transaction = transaction;
+            using var command = _connection.CreateCommand();
+            command.Connection = _connection;
+            command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
             command.CommandType = QueryType;
             command.CommandText = query;
@@ -233,8 +233,8 @@ namespace CoreSharp.Implementations
         /// </summary>
         public async Task<int> FillAsync(string query, DataSet set, params DataTableMapping[] tableMappings)
         {
-            set = set ?? throw new ArgumentNullException(nameof(set));
-            tableMappings = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
+            _ = set ?? throw new ArgumentNullException(nameof(set));
+            _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
 
             return await FillAsync(query, set, tableMappings as IEnumerable<DataTableMapping>);
         }
@@ -245,17 +245,17 @@ namespace CoreSharp.Implementations
         /// </summary>
         public async Task<int> FillAsync(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
         {
-            set = set ?? throw new ArgumentNullException(nameof(set));
-            tableMappings = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
+            _ = set ?? throw new ArgumentNullException(nameof(set));
+            _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
 
             //DbConnection Open 
-            if (!connection.IsOpen())
-                await connection.OpenAsync(cancellationToken);
+            if (!_connection.IsOpen())
+                await _connection.OpenAsync(cancellationToken);
 
             //Prepare DbCommand 
-            using var command = connection.CreateCommand();
-            command.Connection = connection;
-            command.Transaction = transaction;
+            using var command = _connection.CreateCommand();
+            command.Connection = _connection;
+            command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
             command.CommandType = QueryType;
             command.CommandText = query;
@@ -264,7 +264,7 @@ namespace CoreSharp.Implementations
                 command.Parameters.AddRange(Parameters.ToArray());
 
             //Prepare and execute DbDataAdapter
-            var adapter = connection.CreateDataAdapter();
+            var adapter = _connection.CreateDataAdapter();
             try
             {
                 adapter.SelectCommand = command;
