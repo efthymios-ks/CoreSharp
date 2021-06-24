@@ -22,7 +22,7 @@ namespace CoreSharp.Console
         /// </summary>
         public static void ClearLine(int line)
         {
-            string emptyLine = new string(' ', System.Console.WindowWidth);
+            var emptyLine = new string(' ', System.Console.WindowWidth);
             System.Console.SetCursorPosition(0, System.Console.CursorTop);
             System.Console.Write(emptyLine);
             System.Console.SetCursorPosition(0, line);
@@ -33,6 +33,8 @@ namespace CoreSharp.Console
         /// </summary>
         public static void ClearLines(params int[] lines)
         {
+            _ = lines ?? throw new ArgumentNullException(nameof(lines));
+
             foreach (var line in lines)
                 ClearLine(line);
         }
@@ -153,7 +155,7 @@ namespace CoreSharp.Console
         /// </summary>
         public static void Log(string message)
         {
-            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            string timestamp = DateTime.UtcNow.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
             System.Console.ResetColor();
             System.Console.ForegroundColor = ConsoleColor.Gray;
