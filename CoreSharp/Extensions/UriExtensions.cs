@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IDictionary<string, string> GetQueryParameters(this Uri uri)
         {
-            uri = uri ?? throw new ArgumentNullException(nameof(uri));
+            _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
             return GetUriParametersInternal(uri.Query);
         }
@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
         {
-            uri = uri ?? throw new ArgumentNullException(nameof(uri));
+            _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
             return GetUriParametersInternal(uri.Fragment.TrimStart('#'));
         }
@@ -42,7 +42,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string BuildUri<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
         {
-            parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 

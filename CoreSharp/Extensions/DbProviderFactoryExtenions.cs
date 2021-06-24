@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static DbParameter CreateParameter(this DbProviderFactory factory, string parameterName, object parameterValue)
         {
-            factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _ = factory ?? throw new ArgumentNullException(nameof(factory));
 
             var parameter = factory.CreateParameter();
             parameter.ParameterName = parameterName;

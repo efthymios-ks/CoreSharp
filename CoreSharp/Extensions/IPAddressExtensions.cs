@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool Ping(this IPAddress address, int timeoutMillis = 5000)
         {
-            address = address ?? throw new ArgumentNullException(nameof(address));
+            _ = address ?? throw new ArgumentNullException(nameof(address));
             if (timeoutMillis <= 0)
                 throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
 

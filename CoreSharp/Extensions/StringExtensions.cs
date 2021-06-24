@@ -20,7 +20,7 @@ namespace CoreSharp.Extensions
         /// <param name="length">Maximum string length.</param>
         public static string Truncate(this string input, int length)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be a positive and non-zero.");
 
@@ -33,7 +33,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string FormatAsciiControls(this string input, char openBracket = '<', char closeBracked = '>')
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
 
             var formatedControls = new Dictionary<string, string>();
             foreach (var control in AsciiControls.Dictionary)
@@ -50,7 +50,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<string> SplitChunks(this string input, int chunkSize)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             if (chunkSize < 1)
                 throw new ArgumentOutOfRangeException(nameof(chunkSize), $"{nameof(chunkSize)} has to be greater than 0.");
 
@@ -90,8 +90,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string RemoveFirst(this string input, string value)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = value ?? throw new ArgumentNullException(nameof(value));
 
             int index = input.IndexOf(value);
             if (index >= 0)
@@ -105,8 +105,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string RemoveAll(this string input, string value)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = value ?? throw new ArgumentNullException(nameof(value));
 
             return input.Replace(value, string.Empty);
         }
@@ -116,7 +116,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Left(this string input, int length)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
@@ -131,7 +131,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Right(this string input, int length)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
@@ -157,7 +157,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Mid(this string input, int start, int length)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             if (start < 0)
                 throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} has to be greater than 0.");
             else if (start > input.Length)
@@ -182,13 +182,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// String.Format with custom IFormatProvider setting.
         /// </summary>
-        public static string FormatWith(this string format, IFormatProvider formatProvider, params object[] parameters)
+        public static string FormatWith(this string format, IFormatProvider formatProvider, params object[] arguments)
         {
-            format = format ?? throw new ArgumentNullException(nameof(format));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-            parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            return string.Format(formatProvider, format, parameters);
+            return string.Format(formatProvider, format, arguments);
         }
 
         /// <summary>
@@ -212,8 +210,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool EqualsAnyCI(this string input, params string[] values)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            values = values ?? throw new ArgumentNullException(nameof(values));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(v => input.Equals(v, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -231,8 +229,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool StartsWithAnyCI(this string input, params string[] values)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            values = values ?? throw new ArgumentNullException(nameof(values));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -250,8 +248,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool EndsWithAnyCI(this string input, params string[] values)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            values = values ?? throw new ArgumentNullException(nameof(values));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -269,8 +267,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool ContainsAnyCI(this string input, params string[] values)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            values = values ?? throw new ArgumentNullException(nameof(values));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = values ?? throw new ArgumentNullException(nameof(values));
 
             return values.Any(v => input.Contains(v, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -298,7 +296,7 @@ namespace CoreSharp.Extensions
         /// <returns></returns>
         public static string Reverse(this string input)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
 
             var array = input.ToCharArray();
             Array.Reverse(array);
@@ -318,7 +316,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Erase(this string input, string value)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
 
             return input.Replace(value, string.Empty);
         }
@@ -328,7 +326,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string SafeTrim(this string input, params char[] trimChars)
         {
-            trimChars = trimChars ?? throw new ArgumentNullException(nameof(trimChars));
+            _ = trimChars ?? throw new ArgumentNullException(nameof(trimChars));
 
             input ??= string.Empty;
             input = input.Trim();
@@ -350,7 +348,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
         {
-            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             try
             {
@@ -367,7 +365,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<string> GetLines(this string input, StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
 
             return input.Split(new[] { "\r\n", "\r", "\n" }, stringSplitOptions);
         }
@@ -377,8 +375,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
-            dictionary = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
 
             foreach (var pair in dictionary)
                 input = input.Replace(pair.Key, $"{pair.Value}");
@@ -424,7 +422,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (int.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -470,7 +468,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (long.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -516,7 +514,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (short.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -562,7 +560,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (float.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -608,7 +606,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (double.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -654,7 +652,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (decimal.TryParse(input, numberStyles, formatProvider, out var result))
                 return result;
@@ -746,8 +744,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
         {
-            dateTimeFormat = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _ = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
+            _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
             if (DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyle, out var result))
                 return result;

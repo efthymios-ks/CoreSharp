@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static FileInfo ChangeExtension(this FileInfo file, string extension)
         {
-            file = file ?? throw new ArgumentNullException(nameof(file));
+            _ = file ?? throw new ArgumentNullException(nameof(file));
 
             string newFileName = Path.ChangeExtension(file.FullName, extension);
             return new FileInfo(newFileName);
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         /// <returns>FileInfo for renamed file.</returns>
         public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
         {
-            file = file ?? throw new ArgumentNullException(nameof(file));
+            _ = file ?? throw new ArgumentNullException(nameof(file));
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
 

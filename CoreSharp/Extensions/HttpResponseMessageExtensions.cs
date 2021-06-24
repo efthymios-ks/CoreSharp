@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public async static Task EnsureSuccessAsync(this HttpResponseMessage response)
         {
-            response = response ?? throw new ArgumentNullException(nameof(response));
+            _ = response ?? throw new ArgumentNullException(nameof(response));
 
             if (response.IsSuccessStatusCode)
                 return;

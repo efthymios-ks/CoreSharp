@@ -27,8 +27,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder, JsonSerializerSettings settings) where TEntity : class
         {
-            builder = builder ?? throw new ArgumentNullException(nameof(builder));
-            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _ = builder ?? throw new ArgumentNullException(nameof(builder));
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             var converter = new ValueConverter<TEntity, string>(
                 v => v.ToJson(settings),

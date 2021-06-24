@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static SerialPortSettings GetSettings(this SerialPort port)
         {
-            port = port ?? throw new ArgumentNullException(nameof(port));
+            _ = port ?? throw new ArgumentNullException(nameof(port));
 
             return new()
             {

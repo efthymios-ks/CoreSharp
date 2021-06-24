@@ -347,7 +347,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_FormatProviderIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StringEmpty.FormatWith(formatProvider: null, parameters: 1);
+            Action action = () => StringEmpty.FormatWith(formatProvider: null, arguments: 1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -357,7 +357,7 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_ParametersIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StringEmpty.FormatWith(CultureInfo.InvariantCulture, parameters: null);
+            Action action = () => StringEmpty.FormatWith(CultureInfo.InvariantCulture, arguments: null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

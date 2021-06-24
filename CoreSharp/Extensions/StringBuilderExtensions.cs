@@ -12,29 +12,27 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Append String.Format + NewLine.  
         /// </summary>
-        public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] parameters)
+        public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] arguments)
         {
-            return builder.AppendFormatLine(CultureInfo.CurrentCulture, format, parameters);
+            return builder.AppendFormatLine(CultureInfo.CurrentCulture, format, arguments);
         }
 
         /// <summary>
         /// Append InvariantCulture String.Format + NewLine.  
         /// </summary>
-        public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] parameters)
+        public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] arguments)
         {
-            return builder.AppendFormatLine(CultureInfo.InvariantCulture, format, parameters);
+            return builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
         }
 
         /// <summary>
         /// Append StringFormat with custom formatProvider + NewLine. 
         /// </summary>
-        public static StringBuilder AppendFormatLine(this StringBuilder builder, IFormatProvider formatProvider, string format, params object[] parameters)
+        public static StringBuilder AppendFormatLine(this StringBuilder builder, IFormatProvider formatProvider, string format, params object[] arguments)
         {
-            builder = builder ?? throw new ArgumentNullException(nameof(builder));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-            parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = builder ?? throw new ArgumentNullException(nameof(builder));
 
-            builder.AppendFormat(formatProvider, format, parameters);
+            builder.AppendFormat(formatProvider, format, arguments);
             builder.AppendLine();
             return builder;
         }

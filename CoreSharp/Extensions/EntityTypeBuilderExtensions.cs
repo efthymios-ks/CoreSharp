@@ -17,8 +17,8 @@ namespace CoreSharp.Extensions
             where TEntity : class
             where TEnum : struct, IConvertible
         {
-            builder = builder ?? throw new ArgumentNullException(nameof(builder));
-            propertySelector = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+            _ = builder ?? throw new ArgumentNullException(nameof(builder));
+            _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
             if (!typeof(TEnum).IsEnum)
                 throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 

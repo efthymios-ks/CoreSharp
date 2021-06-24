@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsConnected(this TcpClient client, int timeoutMillis = 5000)
         {
-            client = client ?? throw new ArgumentNullException(nameof(client));
+            _ = client ?? throw new ArgumentNullException(nameof(client));
 
             return client.Client.IsConnected(timeoutMillis);
         }

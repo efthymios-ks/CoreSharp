@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool Ping(this IPEndPoint endPoint, int timeoutMillis = 5000)
         {
-            endPoint = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
+            _ = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
 
             return endPoint.Address.Ping(timeoutMillis);
         }

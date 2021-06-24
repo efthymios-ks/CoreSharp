@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string GetMemberName(this LambdaExpression memberExpression)
         {
-            memberExpression = memberExpression ?? throw new ArgumentNullException(nameof(memberExpression));
+            _ = memberExpression ?? throw new ArgumentNullException(nameof(memberExpression));
 
             static string nameSelector(Expression e)
             {

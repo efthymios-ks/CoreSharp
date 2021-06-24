@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToUrlQueryString(this NameValueCollection source, bool encodeParameters = true)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var keys = source?.AllKeys;
             var dictionary = keys.ToDictionary(k => k, k => source[k]);

@@ -20,7 +20,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsEmpty<T>(this IEnumerable<T> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return !source.Any();
         }
@@ -49,7 +49,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<T> ConvertAll<T>(this IEnumerable source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.ConvertAllInternal<T>();
         }
@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<T> Exclude<T>(this IEnumerable<T> source, Predicate<T> filter)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             filter = filter ?? throw new ArgumentNullException(nameof(filter));
 
             return source.Where(i => !filter(i));
@@ -77,8 +77,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             return source.GroupBy(keySelector).Select(i => i.FirstOrDefault());
         }
@@ -152,7 +152,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             //Validate Separator
             if (string.IsNullOrEmpty(separator))
@@ -186,8 +186,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
 
             return new HashSet<T>(source, comparer);
         }
@@ -197,7 +197,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static Collection<T> ToCollection<T>(this IEnumerable<T> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var collection = new Collection<T>();
             collection.AddRange(source);
@@ -209,7 +209,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return new ObservableCollection<T>(source);
         }
@@ -228,8 +228,8 @@ namespace CoreSharp.Extensions
         /// </example>
         public static IEnumerable<T> TakeSkip<T>(this IEnumerable<T> source, params int[] sequence)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            sequence = sequence ?? throw new ArgumentNullException(nameof(sequence));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
 
             var result = new List<T>();
             int enumeratedItems = 0;
@@ -258,9 +258,9 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<TEntity> Except<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
-            left = left ?? throw new ArgumentNullException(nameof(left));
-            right = right ?? throw new ArgumentNullException(nameof(right));
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = left ?? throw new ArgumentNullException(nameof(left));
+            _ = right ?? throw new ArgumentNullException(nameof(right));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             return left.Where(l => !right.Any(r => keySelector(r).Equals(keySelector(l))));
         }
@@ -270,9 +270,9 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<TEntity> Intersect<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
-            left = left ?? throw new ArgumentNullException(nameof(left));
-            right = right ?? throw new ArgumentNullException(nameof(right));
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = left ?? throw new ArgumentNullException(nameof(left));
+            _ = right ?? throw new ArgumentNullException(nameof(right));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             return left.Where(l => right.Any(r => keySelector(r).Equals(keySelector(l))));
         }
@@ -282,7 +282,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence)
         {
-            sequence = sequence ?? throw new ArgumentNullException(nameof(sequence));
+            _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
 
             return sequence.SelectMany(source => source);
         }
@@ -300,8 +300,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> Append<T>(this IEnumerable<T> source, params T[] items)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            items = items ?? throw new ArgumentNullException(nameof(items));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = items ?? throw new ArgumentNullException(nameof(items));
 
             foreach (var item in items)
                 source = Enumerable.Append(source, item);
@@ -314,7 +314,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            action = action ?? throw new ArgumentNullException(nameof(action));
+            _ = action ?? throw new ArgumentNullException(nameof(action));
 
             void indexedAction(T item, int index) => action(item);
             source.ForEach(indexedAction);
@@ -325,8 +325,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T, int> action)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            action = action ?? throw new ArgumentNullException(nameof(action));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = action ?? throw new ArgumentNullException(nameof(action));
 
             var index = 0;
             foreach (var item in source)
@@ -341,7 +341,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> Mutate<T>(this IEnumerable<T> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.ToArray();
         }
@@ -351,9 +351,9 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool Contains<TEntity, TProperty>(this IEnumerable<TEntity> source, TEntity item, Func<TEntity, TProperty> keySelector)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            item = item ?? throw new ArgumentNullException(nameof(item));
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             var itemKey = keySelector(item);
             var sourceKeys = source.Select(i => keySelector(i));
@@ -365,7 +365,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             if (pageIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive and non-zero.");
             if (pageSize <= 0)
@@ -379,7 +379,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<IGrouping<int, T>> GetPages<T>(this IEnumerable<T> source, int pageSize)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
@@ -410,7 +410,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool ContainsAll<T>(this IEnumerable<T> source, params T[] items)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             items = items ?? throw new ArgumentNullException(nameof(items));
 
             return items.All(i => source.Contains(i));
@@ -421,7 +421,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToCsv<T>(this IEnumerable<T> source, char separator = ',', bool includeHeader = true)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var builder = new StringBuilder();
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -458,8 +458,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IDictionary<TKey, int> GetDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             //Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
             var duplicates = source
@@ -492,7 +492,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static DataTable ToDataTable<T>(this IEnumerable<T> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var table = new DataTable(typeof(T).Name);

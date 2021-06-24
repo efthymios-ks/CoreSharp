@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static DbParameter CreateParameter(this DbCommand command, string name, object value)
         {
-            command = command ?? throw new ArgumentNullException(nameof(command));
+            _ = command ?? throw new ArgumentNullException(nameof(command));
 
             var parameter = command.CreateParameter();
             parameter.ParameterName = name;
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static DbParameter AddParameterWithValue(this DbCommand command, string name, object value)
         {
-            command = command ?? throw new ArgumentNullException(nameof(command));
+            _ = command ?? throw new ArgumentNullException(nameof(command));
 
             var parameter = command.CreateParameter(name, value);
             command.Parameters.Add(parameter);

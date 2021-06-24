@@ -22,8 +22,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static void AddRange<T>(this ICollection<T> source, params T[] items)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            items = items ?? throw new ArgumentNullException(nameof(items));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = items ?? throw new ArgumentNullException(nameof(items));
 
             foreach (var value in items)
                 source.Add(value);

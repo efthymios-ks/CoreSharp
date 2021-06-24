@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
         {
-            keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             var itemKey = keySelector(item);
             var sourceKeys = source?.Select(keySelector);
@@ -38,8 +38,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsIn<T>(this T item, params T[] source)
         {
-            item = item ?? throw new ArgumentNullException(nameof(item));
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.Contains(item);
         }
@@ -59,8 +59,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToJson<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
         {
-            item = item ?? throw new ArgumentNullException(nameof(item));
-            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             return JsonConvert.SerializeObject(item, settings);
         }
@@ -80,8 +80,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
         {
-            item = item ?? throw new ArgumentNullException(nameof(item));
-            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             var json = JsonConvert.SerializeObject(item, settings);
             return JsonConvert.DeserializeObject<TEntity>(json, settings);
@@ -117,7 +117,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static XDocument ToXDocument<T>(T input) where T : class
         {
-            input = input ?? throw new ArgumentNullException(nameof(input));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
 
             var serializer = new XmlSerializer(typeof(T));
 

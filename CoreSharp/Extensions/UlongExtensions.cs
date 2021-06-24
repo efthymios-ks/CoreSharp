@@ -37,9 +37,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToComputerSize(this ulong byteSize, string format, IFormatProvider formatProvider)
         {
-            format = format ?? throw new ArgumentNullException(nameof(format));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-
             //Scale down bytes  
             const int thousand = 1024;
             int thousandCounter = 0;

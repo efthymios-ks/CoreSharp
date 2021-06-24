@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static void Fill<T>(this IList<T> source, T value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             for (int i = 0; i < source.Count; i++)
                 source[i] = value;
@@ -25,8 +25,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static int Remove<T>(this IList<T> source, Func<T, bool> removeExpression)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            removeExpression = removeExpression ?? throw new ArgumentNullException(nameof(removeExpression));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = removeExpression ?? throw new ArgumentNullException(nameof(removeExpression));
 
             int count = 0;
             while (source.Any(removeExpression))
@@ -51,8 +51,8 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static void InsertRange<T>(this IList<T> source, int index, params T[] values)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            values = values ?? throw new ArgumentNullException(nameof(values));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = values ?? throw new ArgumentNullException(nameof(values));
             if (index < 0 || index >= source.Count)
                 throw new ArgumentOutOfRangeException(nameof(index), $"{nameof(index)} should be between 0 and {source.Count - 1}.");
 

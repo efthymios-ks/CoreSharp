@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<string> GetColumnNames(this DataTable table)
         {
-            table = table ?? throw new ArgumentNullException(nameof(table));
+            _ = table ?? throw new ArgumentNullException(nameof(table));
 
             var columns = table.Columns.Cast<DataColumn>();
             return columns.Select(x => x.ColumnName);
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = true) where TEntity : new()
         {
-            table = table ?? throw new ArgumentNullException(nameof(table));
+            _ = table ?? throw new ArgumentNullException(nameof(table));
 
             return table.ToEntitiesInternal<TEntity>(ignoreCase);
         }

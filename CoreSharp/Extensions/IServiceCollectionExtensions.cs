@@ -23,8 +23,8 @@ namespace CoreSharp.Extensions
         private static IServiceCollection RegisterAllInternal(this IServiceCollection serviceCollection, Assembly assembly, string suffix, Type baseType)
         {
             //Validate arguments 
-            serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
-            assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
+            _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
+            _ = assembly ?? throw new ArgumentNullException(nameof(assembly));
             if (baseType != null)
                 if (!baseType.IsInterface)
                     throw new ArgumentException($"{nameof(baseType)} ({baseType.FullName}) must be an interface.", nameof(baseType));

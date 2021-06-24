@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IQueryable<T> QueryPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             if (pageIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive and non-zero.");
             if (pageSize <= 0)

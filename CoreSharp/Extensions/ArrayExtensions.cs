@@ -14,15 +14,13 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> GetRow<T>(this T[,] source, int row)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             int rowSize = source.GetLength(0);
             if (row < 0 || row >= rowSize)
                 throw new ArgumentOutOfRangeException(nameof(row), $"{nameof(row)} has to be between 0 and {rowSize - 1}.");
 
             var columnSize = source.GetLength(1);
-            return Enumerable
-                        .Range(0, columnSize)
-                        .Select(c => source[row, c]);
+            return Enumerable.Range(0, columnSize).Select(c => source[row, c]);
         }
 
         /// <summary>
@@ -30,15 +28,13 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<T> GetColumn<T>(this T[,] source, int column)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             int columnSize = source.GetLength(1);
             if (column < 0 || column >= columnSize)
                 throw new ArgumentOutOfRangeException(nameof(column), $"{nameof(column)} has to be between 0 and {columnSize - 1}.");
 
             var rowSize = source.GetLength(0);
-            return Enumerable
-                        .Range(0, rowSize)
-                        .Select(r => source[r, column]);
+            return Enumerable.Range(0, rowSize).Select(r => source[r, column]);
         }
     }
 }

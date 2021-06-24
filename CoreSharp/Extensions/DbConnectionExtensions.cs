@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static DbDataAdapter CreateDataAdapter(this DbConnection connection)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             var factory = DbProviderFactories.GetFactory(connection);
             return factory.CreateDataAdapter();
@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static DbParameter CreateParameter(this DbConnection connection, string parameterName, object parameterValue)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             var factory = DbProviderFactories.GetFactory(connection);
             return factory.CreateParameter(parameterName, parameterValue);
@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection, IsolationLevel isolationLevel)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             if (!connection.IsOpen())
                 await connection.OpenAsync();
@@ -78,7 +78,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsOpen(this DbConnection connection)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             return connection.State.HasFlag(ConnectionState.Open);
         }
@@ -88,7 +88,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsAvailable(this DbConnection connection)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             return connection
                     .IsAvailableAsync()
@@ -101,7 +101,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static async Task<bool> IsAvailableAsync(this DbConnection connection)
         {
-            connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             try
             {

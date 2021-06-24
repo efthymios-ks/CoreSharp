@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string FlattenMessages(this Exception exception)
         {
-            exception = exception ?? throw new ArgumentNullException(nameof(exception));
+            _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
             var exceptions = exception.GetExceptions();
             var messages = exceptions
@@ -29,7 +29,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<Exception> GetExceptions(this Exception exception)
         {
-            exception = exception ?? throw new ArgumentNullException(nameof(exception));
+            _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
             return exception.GetExceptionsInternal();
         }

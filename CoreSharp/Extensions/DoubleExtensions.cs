@@ -51,9 +51,6 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToMetricSize(this double value, string format, IFormatProvider formatProvider)
         {
-            format = format ?? throw new ArgumentNullException(nameof(format));
-            formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-
             var incPrefixes = new[] { 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
             var decPrefixes = new[] { 'm', 'u', 'n', 'p', 'f', 'a', 'z', 'y' };
 

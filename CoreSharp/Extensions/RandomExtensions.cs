@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool CoinToss(this Random RNG)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
 
             return RNG.Next(2) == 0;
         }
@@ -32,8 +32,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static T OneOf<T>(this Random RNG, params T[] source)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             if (source.Length == 0)
                 throw new ArgumentException($"{nameof(source)} cannot be empty.", nameof(source));
 
@@ -47,7 +47,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static double NextDouble(this Random RNG, double minimum, double maximum)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
             if (minimum > maximum)
                 throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).", nameof(minimum));
 
@@ -68,7 +68,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool ChanceGreaterThan(this Random RNG, double percentage, bool includeEnds = true)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
             if (percentage < 0 || percentage > 100)
                 throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
 
@@ -85,7 +85,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool ChanceLowerThan(this Random RNG, double percentage, bool includeEnds = true)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
             if (percentage < 0 || percentage > 100)
                 throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
 
@@ -102,7 +102,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool ChanceBetween(this Random RNG, double percentageLeft, double percentageRight, bool includeEnds = true)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
             if (percentageLeft < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(percentageLeft)} ({percentageLeft}%) has to be between 0 and 100.");
             else if (percentageRight > 100)
@@ -122,8 +122,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static void Shuffle<T>(this Random RNG, IList<T> source)
         {
-            RNG = RNG ?? throw new ArgumentNullException(nameof(RNG));
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             for (int currentIndex = 0; currentIndex < (source.Count - 1); currentIndex++)
             {

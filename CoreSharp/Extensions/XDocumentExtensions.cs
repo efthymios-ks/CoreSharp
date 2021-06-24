@@ -18,7 +18,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static T Deserialize<T>(this XDocument document)
         {
-            document = document ?? throw new ArgumentNullException(nameof(document));
+            _ = document ?? throw new ArgumentNullException(nameof(document));
 
             var xmlSerializer = new XmlSerializer(typeof(T));
             using var reader = document.Root.CreateReader();
@@ -30,8 +30,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<XElement> GetElements(this XDocument document, params string[] pathSections)
         {
-            document = document ?? throw new ArgumentNullException(nameof(document));
-            pathSections = pathSections ?? throw new ArgumentNullException(nameof(pathSections));
+            _ = document ?? throw new ArgumentNullException(nameof(document));
+            _ = pathSections ?? throw new ArgumentNullException(nameof(pathSections));
 
             //Build XPath
             var xpathExpression = string.Join("/", pathSections);
@@ -55,8 +55,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<XElement> WhereAttribute(this IEnumerable<XElement> source, string attributeName, Predicate<string> attributeValueSelector)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            attributeValueSelector = attributeValueSelector ?? throw new ArgumentNullException(nameof(attributeValueSelector));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = attributeValueSelector ?? throw new ArgumentNullException(nameof(attributeValueSelector));
             if (string.IsNullOrWhiteSpace(attributeName))
                 throw new ArgumentNullException(nameof(attributeName));
 
@@ -78,8 +78,8 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static IEnumerable<XElement> WhereChild(this IEnumerable<XElement> source, string childName, Predicate<string> childValueSelector)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            childValueSelector = childValueSelector ?? throw new ArgumentNullException(nameof(childValueSelector));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = childValueSelector ?? throw new ArgumentNullException(nameof(childValueSelector));
             if (string.IsNullOrWhiteSpace(childName))
                 throw new ArgumentNullException(nameof(childName));
 

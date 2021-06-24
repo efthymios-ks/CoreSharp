@@ -12,7 +12,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static T GetService<T>(this IServiceProvider serviceProvider) where T : class
         {
-            serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            _ = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
             return serviceProvider.GetService(typeof(T)) as T;
         }

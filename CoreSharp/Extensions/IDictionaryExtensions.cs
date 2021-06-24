@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryGet<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.TryGetValue(key, out value);
         }
@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             if (!source.ContainsKey(key))
             {
@@ -51,7 +51,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             value = default;
             if (source.ContainsKey(key))
@@ -80,7 +80,7 @@ namespace CoreSharp.Extensions
         /// <param name="updateAction">(value) => ...</param> 
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue, TValue> updateAction)
         {
-            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+            _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
             return source.TryUpdate(key, (k, v) => updateAction(v));
         }
@@ -91,8 +91,8 @@ namespace CoreSharp.Extensions
         /// <param name="updateAction">(key, value) => ...</param> 
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TKey, TValue, TValue> updateAction)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
             if (source.ContainsKey(key))
             {
@@ -126,7 +126,7 @@ namespace CoreSharp.Extensions
         /// <param name="updateAction">(value) => ...</param> 
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TValue, TValue> updateAction)
         {
-            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+            _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
             return source.AddOrUpdate(key, addValue, (k, v) => updateAction(v));
         }
@@ -137,8 +137,8 @@ namespace CoreSharp.Extensions
         /// <param name="updateAction">(key, value) => ...</param> 
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TKey, TValue, TValue> updateAction)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            updateAction = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
             if (source.ContainsKey(key))
                 source.TryUpdate(key, updateAction);
@@ -163,8 +163,8 @@ namespace CoreSharp.Extensions
         /// <returns>Value found or added.</returns>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
-            addValue = addValue ?? throw new ArgumentNullException(nameof(addValue));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = addValue ?? throw new ArgumentNullException(nameof(addValue));
 
             source.TryAdd(key, addValue);
             return source[key];
@@ -175,7 +175,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static IEnumerable<KeyValuePair<TKey, TValue>> ToEnumerable<TKey, TValue>(this IDictionary<TKey, TValue> source)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source;
         }
@@ -185,7 +185,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool ContainsValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
 
             return source.Values.Any(v => v.Equals(value));
         }
@@ -196,7 +196,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static string ToUrlQueryString<TKey, TValue>(this IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
         {
-            parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             var pairs = parameters.Select(p =>
             {
