@@ -39,20 +39,20 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetExceptions_ExceptionUsNull_ReturnEmptyEnumerable()
+        public void Flatten_ExceptionUsNull_ReturnEmptyEnumerable()
         {
             //Arrange
             Exception exception = null;
 
             //Act
-            Action action = () => exception.FlattenMessages();
+            Action action = () => exception.Flatten();
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void GetExceptions_WhenCalled_ReturnAllExceptionMessages()
+        public void Flatten_WhenCalled_ReturnAllExceptionMessages()
         {
             //Arrange
             var level3Exception = new Exception("Level 3");
@@ -61,7 +61,7 @@ namespace CoreSharp.Extensions.Tests
             var excepted = new[] { level1Exception, level2Exception, level3Exception };
 
             //Act
-            var result = level1Exception.GetExceptions();
+            var result = level1Exception.Flatten();
 
             //Assert 
             result.Should().Equal(excepted);

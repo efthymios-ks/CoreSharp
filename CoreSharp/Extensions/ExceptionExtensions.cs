@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
-            var exceptions = exception.GetExceptions();
+            var exceptions = exception.Flatten();
             var messages = exceptions
                                 .Where(e => !string.IsNullOrWhiteSpace(e.Message))
                                 .Select(e => e.Message);
@@ -25,27 +25,27 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return list of exceptions including nested ones. 
+        /// Return unfolded list of exceptions including nested ones. 
         /// </summary> 
-        public static IEnumerable<Exception> GetExceptions(this Exception exception)
+        public static IEnumerable<Exception> Flatten(this Exception exception)
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
-            return exception.GetExceptionsInternal();
+            return exception.FlattenInternal();
         }
 
-        private static IEnumerable<Exception> GetExceptionsInternal(this Exception exception)
+        private static IEnumerable<Exception> FlattenInternal(this Exception exception)
         {
             yield return exception;
 
             if (exception is AggregateException aggregateEx)
             {
-                foreach (Exception innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.GetExceptions()))
+                foreach (Exception innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.Flatten()))
                     yield return innerEx;
             }
             else if (exception.InnerException != null)
             {
-                foreach (Exception innerEx in exception.InnerException.GetExceptions())
+                foreach (Exception innerEx in exception.InnerException.Flatten())
                     yield return innerEx;
             }
         }
