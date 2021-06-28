@@ -29,19 +29,19 @@ namespace CoreSharp.Extensions
         /// Try casting input to given type and 
         /// return default if null or of different type. 
         /// </summary>
-        public static T GetOrDefault<T>(this object input)
+        public static T AsOrDefault<T>(this object input)
         {
             T defaultValue = default;
             if (typeof(T) == typeof(string))
                 defaultValue = (T)(object)string.Empty;
-            return input.GetOrDefault(defaultValue);
+            return input.AsOrDefault(defaultValue);
         }
 
         /// <summary>
         /// Try casting input to given type and 
         /// return default if null or of different type. 
         /// </summary>
-        public static T GetOrDefault<T>(this object input, T defaultValue)
+        public static T AsOrDefault<T>(this object input, T defaultValue)
         {
             if (input == null)
                 return defaultValue;

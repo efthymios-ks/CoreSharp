@@ -39,7 +39,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void Flatten_ExceptionUsNull_ReturnEmptyEnumerable()
+        public void Flatten_ExceptionIsNull_ReturnEmptyEnumerable()
         {
             //Arrange
             Exception exception = null;

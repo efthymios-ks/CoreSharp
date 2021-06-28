@@ -37,7 +37,7 @@ namespace CoreSharp.Extensions
 
             var formatedControls = new Dictionary<string, string>();
             foreach (var control in AsciiControls.Dictionary)
-                formatedControls.Add(control.Value.ToString(), $"{openBracket}{control.Key}{closeBracked}");
+                formatedControls.Add($"{control.Value}", $"{openBracket}{control.Key}{closeBracked}");
 
             foreach (var control in formatedControls)
                 input = input.Replace(control.Key, control.Value);

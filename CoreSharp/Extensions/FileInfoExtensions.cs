@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
             _ = file ?? throw new ArgumentNullException(nameof(file));
 
             string newFileName = Path.ChangeExtension(file.FullName, extension);
-            return new FileInfo(newFileName);
+            return new(newFileName);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions
 
             file.MoveTo(finalName, overwrite);
 
-            return new FileInfo(finalName);
+            return new(finalName);
         }
     }
 }

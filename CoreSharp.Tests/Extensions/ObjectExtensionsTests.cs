@@ -87,78 +87,78 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetOrDefault_InputIsNull_ReturnDefault()
+        public void AsOrDefault_InputIsNull_ReturnDefault()
         {
             //Arrange
             object input = null;
 
             //Action
-            var result = input.GetOrDefault<int>();
+            var result = input.AsOrDefault<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void GetOrDefault_InputIsDbNull_ReturnDefault()
+        public void AsOrDefault_InputIsDbNull_ReturnDefault()
         {
             //Arrange
             object input = DBNull.Value;
 
             //Action
-            var result = input.GetOrDefault<int>();
+            var result = input.AsOrDefault<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void GetOrDefault_InputTypeDiffers_ReturnDefault()
+        public void AsOrDefault_InputTypeDiffers_ReturnDefault()
         {
             //Arrange
             object input = "1";
 
             //Action
-            var result = input.GetOrDefault<int>();
+            var result = input.AsOrDefault<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void GetOrDefault_InputMissMatchAndGenericIsString_ReturnStringEmpty()
+        public void AsOrDefault_InputMissMatchAndGenericIsString_ReturnStringEmpty()
         {
             //Arrange
             object input = DBNull.Value;
 
             //Action
-            var result = input.GetOrDefault<string>();
+            var result = input.AsOrDefault<string>();
 
             //Assert
             result.Should().Be(string.Empty);
         }
 
         [Test]
-        public void GetOrDefault_InputMissMatchAndGivenDefaultValue_ReturnGivenDefaultValue()
+        public void AsOrDefault_InputMissMatchAndGivenDefaultValue_ReturnGivenDefaultValue()
         {
             //Arrange
             object input = "1";
 
             //Action
-            var result = input.GetOrDefault(2);
+            var result = input.AsOrDefault(2);
 
             //Assert
             result.Should().Be(2);
         }
 
         [Test]
-        public void GetOrDefault_InputTypeMatches_ReturnCastValue()
+        public void AsOrDefault_InputTypeMatches_ReturnCastValue()
         {
             //Arrange
             object input = 1;
 
             //Action
-            var result = input.GetOrDefault<int>();
+            var result = input.AsOrDefault<int>();
 
             //Assert
             result.Should().Be(1);

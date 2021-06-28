@@ -10,11 +10,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get service using generic casting directly. 
         /// </summary> 
-        public static T GetService<T>(this IServiceProvider serviceProvider) where T : class
+        public static TService GetService<TService>(this IServiceProvider serviceProvider) where TService : class
         {
             _ = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
-            return serviceProvider.GetService(typeof(T)) as T;
+            return serviceProvider.GetService(typeof(TService)) as TService;
         }
     }
 }
