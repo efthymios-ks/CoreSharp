@@ -510,5 +510,45 @@ namespace CoreSharp.Extensions
 
             return table;
         }
+
+        /// <summary>
+        /// Check if given source starts with given sequence. 
+        /// </summary> 
+        public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
+        {
+            return source.StartsWith(sequence?.ToArray());
+        }
+
+        /// <summary>
+        /// Check if given source starts with given sequence. 
+        /// </summary> 
+        public static bool StartsWith<T>(this IEnumerable<T> source, params T[] sequence)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+
+            var head = source.Take(sequence.Length);
+            return head.SequenceEqual(sequence);
+        }
+
+        /// <summary>
+        /// Check if given source ends with given sequence. 
+        /// </summary> 
+        public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
+        {
+            return source.EndsWith(sequence?.ToArray());
+        }
+
+        /// <summary>
+        /// Check if given source ends with given sequence. 
+        /// </summary> 
+        public static bool EndsWith<T>(this IEnumerable<T> source, params T[] sequence)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+
+            var tail = source.TakeLast(sequence.Length);
+            return tail.SequenceEqual(sequence);
+        }
     }
 }

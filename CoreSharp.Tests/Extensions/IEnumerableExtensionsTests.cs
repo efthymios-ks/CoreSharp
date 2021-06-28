@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -929,6 +930,102 @@ namespace CoreSharp.Extensions.Tests
                 var expectedRow = expected.Rows[rowindex].ItemArray;
                 resultRow.Should().Equal(expectedRow);
             }
+        }
+
+        [Test]
+        public void StartsWith_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.StartsWith(sourceEmpty);
+
+            //Asssert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void StartsWith_SequenceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceEmpty.StartsWith(sourceNull);
+
+            //Asssert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void StartsWith_SourceStartsWithSequence_ReturnTrue()
+        {
+            //Arrange
+            var source = new[] { 1, 2, 3, 4 };
+            var sequence = new[] { 1, 2 };
+
+            //Act 
+            var result = source.StartsWith(sequence);
+
+            //Asssert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void StartsWith_SourceDoesntStartWithSequence_ReturnFalse()
+        {
+            //Arrange
+            var source = new[] { 1, 2, 3, 4 };
+            var sequence = new[] { -1, 2 };
+
+            //Act 
+            var result = source.StartsWith(sequence);
+
+            //Asssert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void EndsWith_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceNull.EndsWith(sourceEmpty);
+
+            //Asssert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void EndsWith_SequenceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => sourceEmpty.EndsWith(sourceNull);
+
+            //Asssert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void EndsWith_SourceEndsWithSequence_ReturnTrue()
+        {
+            //Arrange
+            var source = new[] { 1, 2, 3, 4 };
+            var sequence = new[] { 3, 4 };
+
+            //Act 
+            var result = source.EndsWith(sequence);
+
+            //Asssert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void EndsWithWith_SourceDoesntStartWithSequence_ReturnFalse()
+        {
+            //Arrange
+            var source = new[] { 1, 2, 3, 4 };
+            var sequence = new[] { 3, -4 };
+
+            //Act 
+            var result = source.EndsWith(sequence);
+
+            //Asssert 
+            result.Should().BeFalse();
         }
     }
 }
