@@ -7,7 +7,7 @@ namespace CoreSharp.Implementations
     /// <summary>
     /// Base class implementing INotifyPropertyChanged. 
     /// </summary>
-    public abstract class ObservableObject : INotifyPropertyChanged
+    public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         //Events  
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,13 +19,16 @@ namespace CoreSharp.Implementations
             PropertyChanged?.Invoke(this, args);
         }
 
-        protected void SetProperty<T>(ref T backingField, T newValue, [CallerMemberName] string propertyName = null)
+        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(backingField, newValue))
-                return;
-
-            backingField = newValue;
-            OnPropertyChanged(propertyName);
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+            else
+            {
+                field = value;
+                OnPropertyChanged(propertyName);
+                return true;
+            }
         }
     }
 }
