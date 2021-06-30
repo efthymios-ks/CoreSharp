@@ -43,7 +43,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static T AsOrDefault<T>(this object input, T defaultValue)
         {
-            if (input == null)
+            if (input is null)
                 return defaultValue;
             else if (DBNull.Value.Equals(input))
                 return defaultValue;

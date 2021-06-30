@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions
             //Validate arguments 
             _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             _ = assembly ?? throw new ArgumentNullException(nameof(assembly));
-            if (baseType != null)
+            if (baseType is not null)
                 if (!baseType.IsInterface)
                     throw new ArgumentException($"{nameof(baseType)} ({baseType.FullName}) must be an interface.", nameof(baseType));
 
@@ -46,7 +46,7 @@ namespace CoreSharp.Extensions
                 else if (!t.IsInterface)
                     return false;
                 //Doesn't implement base interface, ignore
-                else if (baseType != null && t.GetInterface(baseType.FullName) == null)
+                else if (baseType is not null && t.GetInterface(baseType.FullName) is null)
                     return false;
                 //Else take 
                 else
@@ -60,7 +60,7 @@ namespace CoreSharp.Extensions
                 var implementations = assembly.GetTypes().Where(t =>
                 {
                     //Doesn't implement given interface, ignore 
-                    if (t.GetInterface(contract.FullName) == null)
+                    if (t.GetInterface(contract.FullName) is null)
                         return false;
                     //Not public, ignore  
                     else if (!t.IsPublic)
@@ -87,7 +87,7 @@ namespace CoreSharp.Extensions
                     static string GetGenericTypeBaseName(string genericName) => genericName.Substring(0, genericName.LastIndexOf('`'));
                     static string TrimGenericTypeName(Type genericType, string name = null)
                     {
-                        genericType = genericType ?? throw new ArgumentNullException(nameof(genericType));
+                        _ = genericType ?? throw new ArgumentNullException(nameof(genericType));
                         name ??= genericType.Name;
 
                         if (genericType.IsGenericType)
@@ -105,7 +105,7 @@ namespace CoreSharp.Extensions
 
                     //Register only if there is a single one with the correct name convention
                     var sameNameImplementation = implementations.FirstOrDefault(i => TrimGenericTypeName(i) == targetImplementationName);
-                    if (sameNameImplementation != null)
+                    if (sameNameImplementation is not null)
                         serviceCollection.AddScoped(contract, sameNameImplementation);
                 }
             }

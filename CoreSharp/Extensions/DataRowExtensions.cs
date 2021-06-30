@@ -60,7 +60,7 @@ namespace CoreSharp.Extensions
 
                 //Extract useful flags 
                 bool valueIsNull = value == DBNull.Value;
-                bool propertyIsNullable = property.PropertyType.IsValueType && (Nullable.GetUnderlyingType(property.PropertyType) != null);
+                bool propertyIsNullable = property.PropertyType.IsValueType && (Nullable.GetUnderlyingType(property.PropertyType) is not null);
                 bool propertyIsEnum = property.PropertyType.IsEnum;
                 bool isSameType = property.PropertyType == value.GetType();
                 bool valueIsAssignable = property.PropertyType.IsAssignableFrom(value.GetType());

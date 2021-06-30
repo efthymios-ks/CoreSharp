@@ -26,7 +26,7 @@ namespace CoreSharp.Implementations.Repositories
         public virtual async Task RollbackAsync()
         {
             var entries = Context?.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged);
-            if (entries == null)
+            if (entries is null)
                 return;
 
             foreach (var entry in entries)

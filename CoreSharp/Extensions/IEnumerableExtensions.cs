@@ -30,7 +30,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
         {
-            if (source == null)
+            if (source is null)
                 return true;
             else
                 return !source.Any();

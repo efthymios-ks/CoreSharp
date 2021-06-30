@@ -36,9 +36,9 @@ namespace CoreSharp.Implementations.Repositories
         public async virtual Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
             var query = Table.AsQueryable();
-            if (navigation != null)
+            if (navigation is not null)
                 query = navigation(query);
-            if (filter != null)
+            if (filter is not null)
                 query = query.Where(filter);
 
             return await query.ToArrayAsync();

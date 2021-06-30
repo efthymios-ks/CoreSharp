@@ -43,7 +43,7 @@ namespace CoreSharp.Extensions
                 foreach (Exception innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.Flatten()))
                     yield return innerEx;
             }
-            else if (exception.InnerException != null)
+            else if (exception.InnerException is not null)
             {
                 foreach (Exception innerEx in exception.InnerException.Flatten())
                     yield return innerEx;

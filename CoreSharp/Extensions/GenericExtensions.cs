@@ -92,7 +92,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static bool IsNull<T>(this T input) where T : class
         {
-            return input == null;
+            return input is null;
         }
 
         /// <summary>
