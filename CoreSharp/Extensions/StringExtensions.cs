@@ -101,6 +101,21 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
+        /// Removes the last occurence of a given value. 
+        /// </summary>
+        public static string RemoveLast(this string input, string value)
+        {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = value ?? throw new ArgumentNullException(nameof(value));
+
+            int index = input.LastIndexOf(value);
+            if (index >= 0)
+                input = input.Remove(index, value.Length);
+
+            return input;
+        }
+
+        /// <summary>
         /// Remove all the occurences of a given value. 
         /// </summary>
         public static string RemoveAll(this string input, string value)

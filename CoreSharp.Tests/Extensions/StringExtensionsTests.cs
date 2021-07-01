@@ -185,6 +185,41 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void RemoveLast_InputIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringNull.RemoveLast("1");
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void RemoveLast_ValueIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.RemoveLast(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void RemoveLast_WhenCalled_RemoveFirstValueOccurence()
+        {
+            //Arrange
+            string input = "1 A 2 A 3 A";
+            string value = "A";
+            string expected = "1 A 2 A 3 ";
+
+            //Act
+            var result = input.RemoveLast(value);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
         public void RemoveAll_InputIsNull_ThrowArgumentNullException()
         {
             //Act
