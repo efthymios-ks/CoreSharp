@@ -354,16 +354,16 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
         {
-            return json.ToDynamic(typeof(TEntity)) as TEntity;
+            return json.ToEntity(typeof(TEntity)) as TEntity;
         }
 
         /// <summary>
-        /// Parse json to dynamic. 
+        /// Parse json to entity. 
         /// </summary> 
-        public static dynamic ToDynamic(this string json, Type entityType)
+        public static object ToEntity(this string json, Type entityType)
         {
             var settings = new JsonSerializerDefaultSettings();
-            return json.ToDynamic(entityType, settings);
+            return json.ToEntity(entityType, settings);
         }
 
         /// <summary>
@@ -371,13 +371,13 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
         {
-            return json.ToDynamic(typeof(TEntity), settings) as TEntity;
+            return json.ToEntity(typeof(TEntity), settings) as TEntity;
         }
 
         /// <summary>
-        /// Parse json to dynamic. 
+        /// Parse json to entity. 
         /// </summary> 
-        public static dynamic ToDynamic(this string json, Type entityType, JsonSerializerSettings settings)
+        public static object ToEntity(this string json, Type entityType, JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
@@ -389,6 +389,23 @@ namespace CoreSharp.Extensions
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Parse json to dynamic. 
+        /// </summary> 
+        public static dynamic ToDynamic(this string json)
+        {
+            var settings = new JsonSerializerDefaultSettings();
+            return json.ToDynamic(settings);
+        }
+
+        /// <summary>
+        /// Parse json to dynamic. 
+        /// </summary> 
+        public static dynamic ToDynamic(this string json, JsonSerializerSettings settings)
+        {
+            return json.ToEntity<object>(settings);
         }
 
         /// <summary>
