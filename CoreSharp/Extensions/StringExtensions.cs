@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CoreSharp.Models.Newtonsoft;
+using CoreSharp.Sources;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using CoreSharp.Models.Newtonsoft;
-using CoreSharp.Sources;
-using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -354,8 +354,16 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
         {
+            return json.ToDynamic(typeof(TEntity)) as TEntity;
+        }
+
+        /// <summary>
+        /// Parse json to dynamic. 
+        /// </summary> 
+        public static dynamic ToDynamic(this string json, Type entityType)
+        {
             var settings = new JsonSerializerDefaultSettings();
-            return json.ToEntity<TEntity>(settings);
+            return json.ToDynamic(entityType, settings);
         }
 
         /// <summary>
@@ -363,11 +371,19 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
         {
+            return json.ToDynamic(typeof(TEntity), settings) as TEntity;
+        }
+
+        /// <summary>
+        /// Parse json to dynamic. 
+        /// </summary> 
+        public static dynamic ToDynamic(this string json, Type entityType, JsonSerializerSettings settings)
+        {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             try
             {
-                return JsonConvert.DeserializeObject<TEntity>(json, settings);
+                return JsonConvert.DeserializeObject(json, entityType, settings);
             }
             catch
             {

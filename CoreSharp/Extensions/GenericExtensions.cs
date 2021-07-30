@@ -47,22 +47,22 @@ namespace CoreSharp.Extensions
         /// <summary> 
         /// Serialize object to json.
         /// </summary> 
-        public static string ToJson<TEntity>(this TEntity item) where TEntity : class
+        public static string ToJson<TEntity>(this TEntity entity) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
 
-            return item.ToJson(settings);
+            return entity.ToJson(settings);
         }
 
         /// <summary> 
         /// Serialize object to json.
         /// </summary> 
-        public static string ToJson<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
+        public static string ToJson<TEntity>(this TEntity entity, JsonSerializerSettings settings) where TEntity : class
         {
-            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            return JsonConvert.SerializeObject(item, settings);
+            return JsonConvert.SerializeObject(entity, settings);
         }
 
         /// <summary> 
