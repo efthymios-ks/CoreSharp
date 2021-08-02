@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace RestClient.Extensions.Tests
+namespace CoreSharp.Extensions.Tests
 {
     [TestFixture]
     public class ExpandoObjectExtensionsTests

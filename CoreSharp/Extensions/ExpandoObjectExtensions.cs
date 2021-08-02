@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace RestClient.Extensions
+namespace CoreSharp.Extensions
 {
     /// <summary>
     /// ExpandoObject extensions. 
