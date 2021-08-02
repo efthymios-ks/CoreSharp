@@ -394,9 +394,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Parse json to dynamic. 
+        /// Parse json to ToExpandoObject. 
         /// </summary> 
-        public static dynamic ToDynamic(this string json)
+        public static dynamic ToExpandoObject(this string json)
         {
             var token = JToken.Parse(json);
 

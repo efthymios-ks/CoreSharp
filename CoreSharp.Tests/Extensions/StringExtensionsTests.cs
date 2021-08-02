@@ -657,7 +657,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToDynamicTest()
+        public void ToExpandoObject_WhenJsonIsJObject_ReturnExpandoObject()
         {
             //Arrange
             int id = 1;
@@ -668,11 +668,31 @@ namespace CoreSharp.Extensions.Tests
                 .Replace("{name}", name);
 
             //Act
-            var result = json.ToDynamic();
+            dynamic result = json.ToExpandoObject();
+
 
             //Assert  
             ((int)result.id).Should().Be(id);
             ((string)result.name).Should().Be(name);
+        }
+
+        [Test]
+        public void ToExpandoObject_WhenJsonIsJArray_ReturnIEnumerableExpandoObject()
+        {
+            //Arrange
+            int id = 1;
+            string name = "Efthymios";
+            string json = "[{\"id\": {id}, \"name\": \"{name}\"}]";
+            json = json
+                .Replace("{id}", $"{id}")
+                .Replace("{name}", name);
+
+            //Act
+            dynamic result = json.ToExpandoObject();
+
+            //Assert 
+            ((int)result[0].id).Should().Be(id);
+            ((string)result[0].name).Should().Be(name);
         }
 
         [Test]
