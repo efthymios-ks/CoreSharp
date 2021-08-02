@@ -1,8 +1,10 @@
 ﻿using CoreSharp.Models.Newtonsoft;
 using CoreSharp.Sources;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 
@@ -396,16 +398,14 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static dynamic ToDynamic(this string json)
         {
-            var settings = new JsonSerializerDefaultSettings();
-            return json.ToDynamic(settings);
-        }
+            var token = JToken.Parse(json);
 
-        /// <summary>
-        /// Parse json to dynamic. 
-        /// </summary> 
-        public static dynamic ToDynamic(this string json, JsonSerializerSettings settings)
-        {
-            return json.ToEntity<object>(settings);
+            if (token is JArray)
+                return token.ToObject<IEnumerable<ExpandoObject>>();
+            else if (token is JObject)
+                return token.ToObject<ExpandoObject>();
+            else
+                throw new InvalidOperationException($"{nameof(json)} is not in a valid json format.");
         }
 
         /// <summary>

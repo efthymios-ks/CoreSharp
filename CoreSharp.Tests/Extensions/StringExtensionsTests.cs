@@ -657,6 +657,25 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void ToDynamicTest()
+        {
+            //Arrange
+            int id = 1;
+            string name = "Efthymios";
+            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
+            json = json
+                .Replace("{id}", $"{id}")
+                .Replace("{name}", name);
+
+            //Act
+            var result = json.ToDynamic();
+
+            //Assert  
+            ((int)result.id).Should().Be(id);
+            ((string)result.name).Should().Be(name);
+        }
+
+        [Test]
         public void GetLines_InputIsNull_ThrowArgumentNullException()
         {
             //Act
