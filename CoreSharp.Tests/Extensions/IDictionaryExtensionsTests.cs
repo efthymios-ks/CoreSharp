@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -203,7 +203,11 @@ namespace CoreSharp.Extensions.Tests
             var expected = new Dictionary<string, int>();
             foreach (var entry in dictionary)
                 expected.Add(entry.Key, entry.Value);
-            static int updateAction(string key, int value) => value = 2;
+            static int updateAction(string key, int value)
+            {
+                return value = 2;
+            }
+
             expected["1"] = 2;
 
             //Act 

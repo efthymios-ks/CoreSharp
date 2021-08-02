@@ -1,7 +1,7 @@
-﻿using System;
-using System.Globalization;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests
 {

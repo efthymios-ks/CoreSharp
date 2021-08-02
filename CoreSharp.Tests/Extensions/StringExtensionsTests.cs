@@ -1,10 +1,9 @@
-﻿using CoreSharp.Extensions;
-using System;
-using System.Globalization;
-using CoreSharp.Tests.Dummies;
+﻿using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests
 {

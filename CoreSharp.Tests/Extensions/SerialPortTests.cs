@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.IO.Ports;
 using System.Text;
-using FluentAssertions;
-using NUnit.Framework;
 
 namespace CoreSharp.Extensions.Tests
 {

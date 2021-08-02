@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Specialized;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Collections.Specialized;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -26,10 +26,12 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsFalse_ReturnQueryStringWithValuesAsIs()
         {
             //Arrange
-            var parameters = new NameValueCollection();
-            parameters.Add("name", "Efthymios Koktsidis");
-            parameters.Add("color", "Black");
-            parameters.Add("count", $"10");
+            var parameters = new NameValueCollection
+            {
+                { "name", "Efthymios Koktsidis" },
+                { "color", "Black" },
+                { "count", $"10" }
+            };
             bool encode = false;
             string expected = "name=Efthymios Koktsidis&color=Black&count=10";
 
@@ -44,10 +46,12 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsTrue_ReturnQueryStringWithEncodedValues()
         {
             //Arrange
-            var parameters = new NameValueCollection();
-            parameters.Add("name", "Efthymios Koktsidis");
-            parameters.Add("color", "Black");
-            parameters.Add("count", $"10");
+            var parameters = new NameValueCollection
+            {
+                { "name", "Efthymios Koktsidis" },
+                { "color", "Black" },
+                { "count", $"10" }
+            };
             bool encode = true;
             string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
 
