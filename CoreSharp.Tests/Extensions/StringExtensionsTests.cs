@@ -1,4 +1,5 @@
-﻿using CoreSharp.Tests.Dummies;
+﻿using CoreSharp.Extensions;
+using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
@@ -965,6 +966,22 @@ namespace CoreSharp.Extensions.Tests
 
             //Act
             var result = input.ToDateTime(dateTimeFormat, formatProvider);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, true)]
+        [TestCase(" ", true)]
+        [TestCase(" { } ", true)]
+        [TestCase(" [ ]", true)]
+        [TestCase(" [ { } ] ", true)]
+        [TestCase("{id=1}", false)]
+        public void IsEmptyJsonTest(string input, bool expected)
+        {
+            //Assert
+            var result = input.IsEmptyJson();
 
             //Assert
             result.Should().Be(expected);

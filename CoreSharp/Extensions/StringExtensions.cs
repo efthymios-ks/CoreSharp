@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CoreSharp.Extensions
 {
@@ -799,6 +800,22 @@ namespace CoreSharp.Extensions
                 return result;
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Check if string is an empty json. 
+        /// </summary> 
+        public static bool IsEmptyJson(this string json)
+        {
+            json ??= string.Empty;
+
+            //Remove spaces, line-breaks and whitespace
+            json = Regex.Replace(json, @"\s+", string.Empty);
+
+            //Empty formats
+            var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
+
+            return emptyFormats.Any(f => f == json);
         }
     }
 }
