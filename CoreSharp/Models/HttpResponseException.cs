@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Extensions;
+using System;
 using System.Net;
 
 namespace CoreSharp.Models
@@ -23,6 +24,17 @@ namespace CoreSharp.Models
         //Properties
         public HttpStatusCode StatusCode { get; }
 
-        public string Content => $"{StatusCode} - {Content}";
+        public string Content => Message;
+
+        public string Status => $"{(int)StatusCode} - {StatusCode}";
+
+        public override string ToString()
+        {
+            if (Content.IsEmptyJson())
+                return Status;
+            else
+                return Status + Environment.NewLine + Content;
+            ;
+        }
     }
 }
