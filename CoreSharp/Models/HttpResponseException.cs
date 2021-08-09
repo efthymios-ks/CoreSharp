@@ -1,4 +1,4 @@
-﻿using CoreSharp.Extensions;
+﻿using CoreSharp.Utilities;
 using System;
 using System.Net;
 
@@ -30,11 +30,10 @@ namespace CoreSharp.Models
 
         public override string ToString()
         {
-            if (Content.IsEmptyJson())
+            if (Json.IsEmpty(Content))
                 return Status;
             else
                 return Status + Environment.NewLine + Content;
-            ;
         }
     }
 }

@@ -801,21 +801,5 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
-
-        /// <summary>
-        /// Check if string is an empty json. 
-        /// </summary> 
-        public static bool IsEmptyJson(this string json)
-        {
-            json ??= string.Empty;
-
-            //Remove spaces, line-breaks and whitespace
-            json = Regex.Replace(json, @"\s+", string.Empty);
-
-            //Empty formats
-            var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
-
-            return emptyFormats.Any(f => f == json);
-        }
     }
 }
