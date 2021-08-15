@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         public static ReferenceCollectionBuilder<EnumShadowEntity<TEnum>, TEntity> HasOneEnum<TEntity, TEnum>(this EntityTypeBuilder<TEntity> builder, Expression<Func<TEntity, TEnum>> propertySelector)
             where TEntity : class
-            where TEnum : struct, IConvertible
+            where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));

@@ -17,8 +17,8 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var keys = source?.AllKeys;
-            var dictionary = keys.ToDictionary(k => k, k => source[k]);
-            return dictionary.ToUrlQueryString(encodeParameters);
+            var dictionary = keys?.ToDictionary(k => k, k => source[k]);
+            return dictionary?.ToUrlQueryString(encodeParameters);
         }
     }
 }

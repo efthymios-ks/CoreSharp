@@ -30,19 +30,10 @@ namespace CoreSharp.Models
         public TKey Key { get; }
 
         //Methods 
-        public override string ToString()
-        {
-            return $"{Key} ({this.Count()})";
-        }
+        public override string ToString() => $"{Key} ({this.Count()})";
 
-        public virtual IEnumerator<TElement> GetEnumerator()
-        {
-            return _source.GetEnumerator();
-        }
+        public virtual IEnumerator<TElement> GetEnumerator() => _source.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

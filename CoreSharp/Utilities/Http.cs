@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Enums;
 using System;
 using System.Net.Http;
 

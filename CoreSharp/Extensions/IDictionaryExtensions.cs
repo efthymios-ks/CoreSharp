@@ -42,9 +42,7 @@ namespace CoreSharp.Extensions
         /// Attempts to remove the item the specified key in dictionary. 
         /// </summary> 
         public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
-        {
-            return source.TryRemove(key, out _);
-        }
+            => source.TryRemove(key, out _);
 
         /// <summary>
         /// Attempts to remove the item the specified key in dictionary and return the value removed. 
@@ -70,9 +68,7 @@ namespace CoreSharp.Extensions
         /// Attempts to update the specifed key in dictionary, if exists. 
         /// </summary> 
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
-        {
-            return source.TryUpdate(key, v => value);
-        }
+            => source.TryUpdate(key, v => value);
 
         /// <summary>
         /// Attempts to update the specifed key in dictionary, if exists. 
@@ -108,17 +104,13 @@ namespace CoreSharp.Extensions
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
-        {
-            return source.AddOrUpdate(key, value, (k, v) => value);
-        }
+            => source.AddOrUpdate(key, value, (k, v) => value);
 
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
         /// </summary> 
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, TValue updateValue)
-        {
-            return source.AddOrUpdate(key, addValue, (k, v) => updateValue);
-        }
+            => source.AddOrUpdate(key, addValue, (k, v) => updateValue);
 
         /// <summary> 
         /// Attempts to add or update an item with the specified key. 
@@ -153,9 +145,7 @@ namespace CoreSharp.Extensions
         /// </summary> 
         /// <returns>Value found or added.</returns>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
-        {
-            return source.GetOrAdd(key, default);
-        }
+            => source.GetOrAdd(key, default);
 
         /// <summary> 
         /// If value exists, get, else add and get.  

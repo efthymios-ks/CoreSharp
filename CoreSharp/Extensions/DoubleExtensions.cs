@@ -25,26 +25,17 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert value to SI string with appropriate prefix. 
         /// </summary> 
-        public static string ToMetricSize(this double value)
-        {
-            return value.ToMetricSize("G");
-        }
+        public static string ToMetricSize(this double value) => value.ToMetricSize("G");
 
         /// <summary>
         /// Convert value to SI string with appropriate prefix. 
         /// </summary> 
-        public static string ToMetricSize(this double value, string format)
-        {
-            return value.ToMetricSize(format, CultureInfo.CurrentCulture);
-        }
+        public static string ToMetricSize(this double value, string format) => value.ToMetricSize(format, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// Convert value to SI string with appropriate prefix. 
         /// </summary> 
-        public static string ToMetricSize(this double value, IFormatProvider formatProvider)
-        {
-            return value.ToMetricSize("G", formatProvider);
-        }
+        public static string ToMetricSize(this double value, IFormatProvider formatProvider) => value.ToMetricSize("G", formatProvider);
 
         /// <summary>
         /// Convert value to SI string with appropriate prefix. 
@@ -79,9 +70,6 @@ namespace CoreSharp.Extensions
         /// Convert value to SI string with appropriate prefix. 
         /// Uses `0.###` and `CultureInfo.InvariantCulture`.
         /// </summary> 
-        public static string ToMetricSizeCI(this double value)
-        {
-            return value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
-        }
+        public static string ToMetricSizeCI(this double value) => value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
     }
 }

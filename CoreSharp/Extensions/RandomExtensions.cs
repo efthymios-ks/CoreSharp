@@ -22,10 +22,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Return random value from list of values. 
         /// </summary>
-        public static T OneOf<T>(this Random RNG, IEnumerable<T> source)
-        {
-            return RNG.OneOf(source?.ToArray());
-        }
+        public static T OneOf<T>(this Random RNG, IEnumerable<T> source) => RNG.OneOf(source?.ToArray());
 
         /// <summary>
         /// Return random value from list of values. 
@@ -58,10 +55,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get random double. 
         /// </summary>
-        public static double NextDouble(this Random RNG, double maximum)
-        {
-            return RNG.NextDouble(0, maximum);
-        }
+        public static double NextDouble(this Random RNG, double maximum) => RNG.NextDouble(0, maximum);
 
         /// <summary>
         /// Check is percentage chance is greater than a given value. 

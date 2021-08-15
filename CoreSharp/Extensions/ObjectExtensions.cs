@@ -11,19 +11,13 @@ namespace CoreSharp.Extensions
         /// Check if the runtime type of an expression is 
         /// compatible with a given type. 
         /// </summary>
-        public static bool Is<T>(this object input)
-        {
-            return input is T;
-        }
+        public static bool Is<T>(this object input) => input is T;
 
         /// <summary>
         /// Explicitly convert an expression to a given type 
         /// if its runtime type is compatible with that type. 
         /// </summary>
-        public static T As<T>(this object input) where T : class
-        {
-            return input as T;
-        }
+        public static T As<T>(this object input) where T : class => input as T;
 
         /// <summary>
         /// Try casting input to given type and 

@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             if (pageIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive and non-zero.");
+                throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive.");
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 

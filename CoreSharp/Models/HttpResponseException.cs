@@ -26,7 +26,7 @@ namespace CoreSharp.Models
 
         public string Content => Message;
 
-        public string Status => $"{(int)StatusCode} - {StatusCode}";
+        public string Status => $"{(int)StatusCode} {StatusCode}";
 
         public override string ToString()
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace CoreSharp.Console
+namespace CoreSharp.Utilities
 {
     /// <summary>
     /// Extended console functions. 
@@ -13,7 +13,7 @@ namespace CoreSharp.Console
         /// </summary>
         public static void ClearLine()
         {
-            int line = System.Console.CursorTop;
+            int line = Console.CursorTop;
             ClearLine(line);
         }
 
@@ -22,10 +22,10 @@ namespace CoreSharp.Console
         /// </summary>
         public static void ClearLine(int line)
         {
-            var emptyLine = new string(' ', System.Console.WindowWidth);
-            System.Console.SetCursorPosition(0, System.Console.CursorTop);
-            System.Console.Write(emptyLine);
-            System.Console.SetCursorPosition(0, line);
+            var emptyLine = new string(' ', Console.WindowWidth);
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(emptyLine);
+            Console.SetCursorPosition(0, line);
         }
 
         /// <summary>
@@ -42,27 +42,17 @@ namespace CoreSharp.Console
         /// <summary>
         /// Wait for enter. 
         /// </summary>
-        public static void WaitForEnter()
-        {
-            System.Console.ReadLine();
-        }
+        public static void WaitForEnter() => Console.ReadLine();
 
         /// <summary>
         /// New line. 
         /// </summary>
-        public static void NewLine()
-        {
-            WriteLine();
-        }
+        public static void NewLine() => WriteLine();
 
         /// <summary>
         /// Write input. 
         /// </summary> 
-        public static void Write(object input)
-        {
-            var message = $"{input}";
-            Write(message);
-        }
+        public static void Write(object input) => Write($"{input}");
 
         /// <summary>
         /// Write with String.Format. 
@@ -85,19 +75,12 @@ namespace CoreSharp.Console
         /// <summary>
         /// Write with String.Format. 
         /// </summary>
-        public static void Write(string message)
-        {
-            System.Console.Write(message);
-        }
+        public static void Write(string message) => Console.Write(message);
 
         /// <summary>
         /// Write input. 
         /// </summary> 
-        public static void WriteLine(object input)
-        {
-            string message = input.ToString();
-            WriteLine(message);
-        }
+        public static void WriteLine(object input) => WriteLine($"{input}");
 
         /// <summary>
         /// Write line with String.Format. 
@@ -120,18 +103,12 @@ namespace CoreSharp.Console
         /// <summary>
         /// Write line with String.Format. 
         /// </summary>
-        public static void WriteLine(string message)
-        {
-            System.Console.WriteLine(message);
-        }
+        public static void WriteLine(string message) => Console.WriteLine(message);
 
         /// <summary>
         /// Write new line. 
         /// </summary>
-        public static void WriteLine()
-        {
-            WriteLine(string.Empty);
-        }
+        public static void WriteLine() => WriteLine(string.Empty);
 
         /// <summary>
         /// Log formatted message with timestamp. 
@@ -146,9 +123,7 @@ namespace CoreSharp.Console
         /// Log CultureInvariant formatted message with timestamp. 
         /// </summary>
         public static void LogCI(string format, params object[] parameters)
-        {
-            Log(CultureInfo.InvariantCulture, format, parameters);
-        }
+            => Log(CultureInfo.InvariantCulture, format, parameters);
 
         /// <summary>
         /// Log message with timestamp. 
@@ -157,16 +132,16 @@ namespace CoreSharp.Console
         {
             string timestamp = DateTime.UtcNow.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
-            System.Console.ResetColor();
-            System.Console.ForegroundColor = ConsoleColor.Gray;
-            System.Console.Write("[");
-            System.Console.ForegroundColor = ConsoleColor.White;
-            System.Console.Write(timestamp);
-            System.Console.ForegroundColor = ConsoleColor.Gray;
-            System.Console.Write("]");
-            System.Console.ForegroundColor = ConsoleColor.White;
-            System.Console.Write(" ");
-            System.Console.WriteLine(message);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Write("[");
+            Console.ForegroundColor = ConsoleColor.White;
+            Write(timestamp);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Write("]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Write(" ");
+            WriteLine(message);
         }
     }
 }

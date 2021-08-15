@@ -15,7 +15,6 @@ namespace CoreSharp.Implementations.Repositories
         public EfRepository(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
-
             Table = Context.Set<TEntity>();
         }
 
@@ -27,7 +26,7 @@ namespace CoreSharp.Implementations.Repositories
         //Methods 
         public async virtual Task<TEntity> GetAsync(object key, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null)
         {
-            key = key ?? throw new ArgumentNullException(nameof(key));
+            _ = key ?? throw new ArgumentNullException(nameof(key));
 
             var entities = await GetAsync(i => i.Id.Equals(key), navigation);
             return entities.SingleOrDefault();
@@ -46,7 +45,7 @@ namespace CoreSharp.Implementations.Repositories
 
         public virtual async Task AddAsync(TEntity entity)
         {
-            entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             entity.DateCreated = DateTime.UtcNow;
             await Table.AddAsync(entity);
@@ -54,7 +53,7 @@ namespace CoreSharp.Implementations.Repositories
 
         public virtual Task UpdateAsync(TEntity entity)
         {
-            entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             entity.DateModified = DateTime.UtcNow;
             Table.Attach(entity);
@@ -65,7 +64,7 @@ namespace CoreSharp.Implementations.Repositories
 
         public virtual Task RemoveAsync(TEntity entity)
         {
-            entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             Table.Remove(entity);
 

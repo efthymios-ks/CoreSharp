@@ -61,19 +61,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetDescription_TypeIsNotEnum_ThrowArgumentException()
-        {
-            //Arrange 
-            var item = new DummyNotAnEnum();
-
-            //Act 
-            Action action = () => item.GetDescription();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentException>();
-        }
-
-        [Test]
         public void GetDescription_WhenCalled_ReturnEnumDescriptionAttribute()
         {
             //Arrange 
@@ -84,19 +71,6 @@ namespace CoreSharp.Extensions.Tests
             var result = item.GetDescription();
 
             result.Should().Be(expected);
-        }
-
-        [Test]
-        public void GetDisplayName_TypeIsNotEnum_ThrowArgumentException()
-        {
-            //Arrange 
-            var item = new DummyNotAnEnum();
-
-            //Act 
-            Action action = () => item.GetDisplayName();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentException>();
         }
 
         [Test]

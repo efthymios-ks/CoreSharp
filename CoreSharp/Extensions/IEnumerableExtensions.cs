@@ -39,10 +39,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Return empty collection if source is null. 
         /// </summary>
-        public static IEnumerable<T> NullToEmpty<T>(this IEnumerable<T> source)
-        {
-            return source ?? Enumerable.Empty<T>();
-        }
+        public static IEnumerable<T> NullToEmpty<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
 
         /// <summary>
         /// Convert items to given type.
@@ -86,66 +83,47 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
         /// </summary>
-        public static string StringJoin<T>(this IEnumerable<T> source)
-        {
-            return source.StringJoin(" ", string.Empty, null);
-        }
+        public static string StringJoin<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, null);
 
         /// <summary>
         /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
         /// </summary>
-        public static string StringJoinCI<T>(this IEnumerable<T> source)
-        {
-            return source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
-        }
+        public static string StringJoinCI<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
         /// </summary>
-        public static string StringJoin<T>(this IEnumerable<T> source, string separator)
-        {
-            return source.StringJoin(separator, string.Empty, null);
-        }
+        public static string StringJoin<T>(this IEnumerable<T> source, string separator) => source.StringJoin(separator, string.Empty, null);
 
         /// <summary>
         /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
         /// </summary>
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator)
-        {
-            return source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
-        }
+            => source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`CurrentCulture`.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat)
-        {
-            return source.StringJoin(separator, stringFormat, null);
-        }
+            => source.StringJoin(separator, stringFormat, null);
 
         /// <summary>
         /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`InvariantCulture`.
         /// </summary>
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator, string stringFormat)
-        {
-            return source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
-        }
+            => source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// String.Join collection of items using custom separator, String.Format=`{0}` and custom FormatProvider.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, IFormatProvider formatProvider)
-        {
-            return source.StringJoin(separator, string.Empty, formatProvider);
-        }
+            => source.StringJoin(separator, string.Empty, formatProvider);
 
         /// <summary>
         /// String.Join collection of items using separator=` `, String.Format=`{0}` and custom FormatProvider.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
-        {
-            return source.StringJoin(" ", string.Empty, formatProvider);
-        }
+            => source.StringJoin(" ", string.Empty, formatProvider);
 
         /// <summary>
         /// String.Join collection of items using custom separator, String.Format and FormatProvider.
@@ -290,10 +268,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Append items to given source. 
         /// </summary> 
-        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items)
-        {
-            return source.Append(items?.ToArray());
-        }
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.Append(items?.ToArray());
 
         /// <summary>
         /// Append items to given source. 
@@ -400,10 +375,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if source contails all given items. 
         /// </summary> 
-        public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items)
-        {
-            return source.ContainsAll(items?.ToArray());
-        }
+        public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.ContainsAll(items?.ToArray());
 
         /// <summary>
         /// Check if source contails all given items. 
@@ -449,9 +421,7 @@ namespace CoreSharp.Extensions
         /// Get key-count combination for duplicate entries. 
         /// </summary> 
         public static IDictionary<TElement, int> GetDuplicates<TElement>(this IEnumerable<TElement> source)
-        {
-            return source.GetDuplicates(i => i);
-        }
+           => source.GetDuplicates(i => i);
 
         /// <summary>
         /// Get key-count combination for duplicate entries based on given key. 
@@ -472,20 +442,13 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if there are any duplicate entries.
         /// </summary> 
-        public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source)
-        {
-            return source.HasDuplicates(i => i);
-        }
+        public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source) => source.HasDuplicates(i => i);
 
         /// <summary>
         /// Check if there are any duplicate entries based on given key. 
         /// </summary> 
         public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
-        {
-            return source
-                .GetDuplicates(keySelector)
-                .Any();
-        }
+            => source.GetDuplicates(keySelector).Any();
 
         /// <summary>
         /// Convert collection of entities to DataTable. 
@@ -514,10 +477,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given source starts with given sequence. 
         /// </summary> 
-        public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
-        {
-            return source.StartsWith(sequence?.ToArray());
-        }
+        public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.StartsWith(sequence?.ToArray());
 
         /// <summary>
         /// Check if given source starts with given sequence. 
@@ -534,10 +494,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given source ends with given sequence. 
         /// </summary> 
-        public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
-        {
-            return source.EndsWith(sequence?.ToArray());
-        }
+        public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.EndsWith(sequence?.ToArray());
 
         /// <summary>
         /// Check if given source ends with given sequence. 

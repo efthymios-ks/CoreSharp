@@ -37,28 +37,22 @@ namespace CoreSharp.Extensions
         /// Try to open the connection and begin a new transaction on it. 
         /// </summary>
         public static DbTransaction OpenTransaction(this DbConnection connection)
-        {
-            return connection.OpenTransaction(IsolationLevel.ReadCommitted);
-        }
+            => connection.OpenTransaction(IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// Try to open the connection and begin a new transaction on it. 
         /// </summary>
         public static DbTransaction OpenTransaction(this DbConnection connection, IsolationLevel isolationLevel)
-        {
-            return connection
+            => connection
                 .OpenTransactionAsync(isolationLevel)
                 .GetAwaiter()
                 .GetResult();
-        }
 
         /// <summary>
         /// Try to open the connection and begin a new transaction on it. 
         /// </summary>
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection)
-        {
-            return await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted);
-        }
+            => await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// Try to open the connection and begin a new transaction on it. 
@@ -87,14 +81,10 @@ namespace CoreSharp.Extensions
         /// Check if connection is available. 
         /// </summary>
         public static bool IsAvailable(this DbConnection connection)
-        {
-            _ = connection ?? throw new ArgumentNullException(nameof(connection));
-
-            return connection
+            => connection
                     .IsAvailableAsync()
                     .GetAwaiter()
                     .GetResult();
-        }
 
         /// <summary>
         /// Check if connection is available. 

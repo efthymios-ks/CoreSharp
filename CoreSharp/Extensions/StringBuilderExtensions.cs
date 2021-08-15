@@ -13,17 +13,13 @@ namespace CoreSharp.Extensions
         /// Append String.Format + NewLine.  
         /// </summary>
         public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] arguments)
-        {
-            return builder.AppendFormatLine(CultureInfo.CurrentCulture, format, arguments);
-        }
+            => builder.AppendFormatLine(CultureInfo.CurrentCulture, format, arguments);
 
         /// <summary>
         /// Append InvariantCulture String.Format + NewLine.  
         /// </summary>
         public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] arguments)
-        {
-            return builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
-        }
+           => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
 
         /// <summary>
         /// Append StringFormat with custom formatProvider + NewLine. 

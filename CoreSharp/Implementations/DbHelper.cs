@@ -26,7 +26,7 @@ namespace CoreSharp.Implementations
         /// </summary>
         public int TimeoutSeconds
         {
-            get { return timeoutSeconds; }
+            get => timeoutSeconds;
             set
             {
                 if (value < 0)
@@ -65,8 +65,8 @@ namespace CoreSharp.Implementations
         /// </summary>
         public void Dispose()
         {
-            _connection?.Dispose();
             GC.SuppressFinalize(this);
+            _connection?.Dispose();
         }
 
         /// <summary>
@@ -203,9 +203,7 @@ namespace CoreSharp.Implementations
         /// to match those in the data source. 
         /// </summary>
         public int Fill(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings)
-        {
-            return Fill(query, set, tableMappings?.ToArray());
-        }
+            => Fill(query, set, tableMappings?.ToArray());
 
         /// <summary>
         /// Adds or refreshes rows in the DataSet 

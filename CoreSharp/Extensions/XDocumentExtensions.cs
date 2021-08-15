@@ -46,9 +46,7 @@ namespace CoreSharp.Extensions
         /// Filter XElement collection on AttributeValue. 
         /// </summary>
         public static IEnumerable<XElement> WhereAttribute(this IEnumerable<XElement> source, string attributeName, string attributeValue)
-        {
-            return source.WhereAttribute(attributeName, i => i == attributeValue);
-        }
+           => source.WhereAttribute(attributeName, i => i == attributeValue);
 
         /// <summary>
         /// Filter XElement collection on attribute value predicate. 
@@ -69,9 +67,7 @@ namespace CoreSharp.Extensions
         /// Filter XElement collection on children value. 
         /// </summary>
         public static IEnumerable<XElement> WhereChild(this IEnumerable<XElement> source, string childName, string childValue)
-        {
-            return source.WhereChild(childName, i => i == childValue);
-        }
+           => source.WhereChild(childName, i => i == childValue);
 
         /// <summary>
         /// Filter XElement collection on children predicate. 

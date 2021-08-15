@@ -165,10 +165,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Take substring from given index. Similar to Sql.Functions.Mid.
         /// </summary>
-        public static string Mid(this string input, int start)
-        {
-            return input.Mid(start, input?.Length ?? 0);
-        }
+        public static string Mid(this string input, int start) => input.Mid(start, input?.Length ?? 0);
 
         /// <summary>
         /// Take N characters from given index. Similar to Sql.Functions.Mid.
@@ -193,9 +190,7 @@ namespace CoreSharp.Extensions
         /// String.Format with custom IFormatProvider setting.
         /// </summary>
         public static string FormatWith(this string format, params object[] parameters)
-        {
-            return format.FormatWith(CultureInfo.DefaultThreadCurrentCulture, parameters);
-        }
+           => format.FormatWith(CultureInfo.DefaultThreadCurrentCulture, parameters);
 
         /// <summary>
         /// String.Format with custom IFormatProvider setting.
@@ -211,17 +206,13 @@ namespace CoreSharp.Extensions
         /// String.Format with InvariantCulture.
         /// </summary>
         public static string FormatWithCI(this string format, params object[] parameters)
-        {
-            return format.FormatWith(CultureInfo.InvariantCulture, parameters);
-        }
+            => format.FormatWith(CultureInfo.InvariantCulture, parameters);
 
         /// <summary>
         /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
         public static bool EqualsAnyCI(this string input, IEnumerable<string> values)
-        {
-            return input.EqualsAnyCI(values?.ToArray());
-        }
+            => input.EqualsAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
@@ -237,10 +228,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool StartsWithAnyCI(this string input, IEnumerable<string> values)
-        {
-            return input.StartsWithAnyCI(values?.ToArray());
-        }
+        public static bool StartsWithAnyCI(this string input, IEnumerable<string> values) => input.StartsWithAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
@@ -256,10 +244,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool EndsWithAnyCI(this string input, IEnumerable<string> values)
-        {
-            return input.EndsWithAnyCI(values?.ToArray());
-        }
+        public static bool EndsWithAnyCI(this string input, IEnumerable<string> values) => input.EndsWithAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
@@ -275,10 +260,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
         /// </summary>
-        public static bool ContainsAnyCI(this string input, IEnumerable<string> values)
-        {
-            return input.ContainsAnyCI(values?.ToArray());
-        }
+        public static bool ContainsAnyCI(this string input, IEnumerable<string> values) => input.ContainsAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
@@ -294,18 +276,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if input is null or empty. 
         /// </summary>
-        public static bool IsNullOrEmpty(this string input)
-        {
-            return string.IsNullOrEmpty(input);
-        }
+        public static bool IsNullOrEmpty(this string input) => string.IsNullOrEmpty(input);
 
         /// <summary>
         /// Check if input is null or whitespace. 
         /// </summary>
-        public static bool IsNullOrWhiteSpace(this string input)
-        {
-            return string.IsNullOrWhiteSpace(input);
-        }
+        public static bool IsNullOrWhiteSpace(this string input) => string.IsNullOrWhiteSpace(input);
 
         /// <summary>
         /// Reverse a string.
@@ -324,10 +300,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Erase given value from String.
         /// </summary>
-        public static string Erase(this string input, char value)
-        {
-            return input.Erase($"{value}");
-        }
+        public static string Erase(this string input, char value) => input.Erase($"{value}");
 
         /// <summary>
         /// Erase given value from string.
@@ -356,9 +329,7 @@ namespace CoreSharp.Extensions
         /// Parse json to entity. 
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
-        {
-            return json.ToEntity(typeof(TEntity)) as TEntity;
-        }
+            => json.ToEntity(typeof(TEntity)) as TEntity;
 
         /// <summary>
         /// Parse json to entity. 
@@ -373,9 +344,7 @@ namespace CoreSharp.Extensions
         /// Parse json to entity. 
         /// </summary> 
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
-        {
-            return json.ToEntity(typeof(TEntity), settings) as TEntity;
-        }
+           => json.ToEntity(typeof(TEntity), settings) as TEntity;
 
         /// <summary>
         /// Parse json to entity. 
@@ -436,35 +405,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string input)
-        {
-            return input.ToInt(NumberStyles.None);
-        }
+        public static int? ToInt(this string input) => input.ToInt(NumberStyles.None);
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string input, NumberStyles numberStyles)
-        {
-            return input.ToInt(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static int? ToInt(this string input, NumberStyles numberStyles) => input.ToInt(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// </summary> 
-        public static int? ToInt(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToInt(NumberStyles.None, formatProvider);
-        }
+        public static int? ToInt(this string input, IFormatProvider formatProvider) => input.ToInt(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static int? ToIntCI(this string input)
-        {
-            return input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static int? ToIntCI(this string input) => input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int?.
@@ -482,35 +439,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string input)
-        {
-            return input.ToLong(NumberStyles.None);
-        }
+        public static long? ToLong(this string input) => input.ToLong(NumberStyles.None);
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string input, NumberStyles numberStyles)
-        {
-            return input.ToLong(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static long? ToLong(this string input, NumberStyles numberStyles) => input.ToLong(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// </summary> 
-        public static long? ToLong(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToLong(NumberStyles.None, formatProvider);
-        }
+        public static long? ToLong(this string input, IFormatProvider formatProvider) => input.ToLong(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static long? ToLongCI(this string input)
-        {
-            return input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static long? ToLongCI(this string input) => input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly long.TryParse resulting to long?.
@@ -528,35 +473,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string input)
-        {
-            return input.ToShort(NumberStyles.None);
-        }
+        public static short? ToShort(this string input) => input.ToShort(NumberStyles.None);
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string input, NumberStyles numberStyles)
-        {
-            return input.ToShort(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static short? ToShort(this string input, NumberStyles numberStyles) => input.ToShort(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// </summary> 
-        public static short? ToShort(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToShort(NumberStyles.None, formatProvider);
-        }
+        public static short? ToShort(this string input, IFormatProvider formatProvider) => input.ToShort(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static short? ToShortCI(this string input)
-        {
-            return input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static short? ToShortCI(this string input) => input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short?.
@@ -574,35 +507,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string input)
-        {
-            return input.ToFloat(NumberStyles.None);
-        }
+        public static float? ToFloat(this string input) => input.ToFloat(NumberStyles.None);
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string input, NumberStyles numberStyles)
-        {
-            return input.ToFloat(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static float? ToFloat(this string input, NumberStyles numberStyles) => input.ToFloat(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// </summary> 
-        public static float? ToFloat(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToFloat(NumberStyles.None, formatProvider);
-        }
+        public static float? ToFloat(this string input, IFormatProvider formatProvider) => input.ToFloat(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static float? ToFloatCI(this string input)
-        {
-            return input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static float? ToFloatCI(this string input) => input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float?.
@@ -620,35 +541,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string input)
-        {
-            return input.ToDouble(NumberStyles.None);
-        }
+        public static double? ToDouble(this string input) => input.ToDouble(NumberStyles.None);
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string input, NumberStyles numberStyles)
-        {
-            return input.ToDouble(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static double? ToDouble(this string input, NumberStyles numberStyles) => input.ToDouble(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
         /// </summary> 
-        public static double? ToDouble(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToDouble(NumberStyles.None, formatProvider);
-        }
+        public static double? ToDouble(this string input, IFormatProvider formatProvider) => input.ToDouble(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?. 
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static double? ToDoubleCI(this string input)
-        {
-            return input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static double? ToDoubleCI(this string input) => input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double?.
@@ -666,35 +575,23 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string input)
-        {
-            return input.ToDecimal(NumberStyles.None);
-        }
+        public static decimal? ToDecimal(this string input) => input.ToDecimal(NumberStyles.None);
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string input, NumberStyles numberStyles)
-        {
-            return input.ToDecimal(numberStyles, CultureInfo.CurrentCulture);
-        }
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyles) => input.ToDecimal(numberStyles, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// </summary> 
-        public static decimal? ToDecimal(this string input, IFormatProvider formatProvider)
-        {
-            return input.ToDecimal(NumberStyles.None, formatProvider);
-        }
+        public static decimal? ToDecimal(this string input, IFormatProvider formatProvider) => input.ToDecimal(NumberStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
         /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
         /// </summary> 
-        public static decimal? ToDecimalCI(this string input)
-        {
-            return input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
-        }
+        public static decimal? ToDecimalCI(this string input) => input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal?.
@@ -750,43 +647,33 @@ namespace CoreSharp.Extensions
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat)
-        {
-            return input.ToDateTime(dateTimeFormat, DateTimeStyles.None);
-        }
+           => input.ToDateTime(dateTimeFormat, DateTimeStyles.None);
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle)
-        {
-            return input.ToDateTime(dateTimeFormat, dateTimeStyle, CultureInfo.CurrentCulture);
-        }
+         => input.ToDateTime(dateTimeFormat, dateTimeStyle, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, IFormatProvider formatProvider)
-        {
-            return input.ToDateTime(dateTimeFormat, DateTimeStyles.None, formatProvider);
-        }
+            => input.ToDateTime(dateTimeFormat, DateTimeStyles.None, formatProvider);
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// Uses "u" format and CultureInfo.InvariantCulture. 
         /// </summary> 
         public static DateTime? ToDateTimeSortable(this string input)
-        {
-            return input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
-        }
+            => input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 
         /// Uses "o" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
         /// </summary> 
         public static DateTime? ToDateTimeSortableUtc(this string input)
-        {
-            return input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
-        }
+           => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
 
         /// <summary>
         /// User-friendly DateTime.TryParse resulting to DateTime?. 

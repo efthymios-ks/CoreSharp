@@ -1,8 +1,7 @@
-﻿using System;
-using CoreSharp.Implementations;
-using CoreSharp.Implementations.EntityFramework;
+﻿using CoreSharp.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace CoreSharp.Extensions
 {
@@ -14,13 +13,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Configure and seed enum to database table. 
         /// </summary> 
-        public static ModelBuilder HasEnum<TEnum>(this ModelBuilder builder, string tableName) where TEnum : struct, IConvertible
+        public static ModelBuilder HasEnum<TEnum>(this ModelBuilder builder, string tableName)
+            where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentNullException(nameof(tableName));
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
             builder.ConfigureEnum<TEnum>(tableName);
             builder.SeedEnum<TEnum>();
@@ -28,13 +26,12 @@ namespace CoreSharp.Extensions
             return builder;
         }
 
-        private static EntityTypeBuilder ConfigureEnum<TEnum>(this ModelBuilder builder, string tableName) where TEnum : struct, IConvertible
+        private static EntityTypeBuilder ConfigureEnum<TEnum>(this ModelBuilder builder, string tableName)
+            where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentNullException(nameof(tableName));
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
             var entityBuilder = builder.Entity<EnumShadowEntity<TEnum>>();
             entityBuilder.ToTable(tableName);
@@ -44,11 +41,10 @@ namespace CoreSharp.Extensions
             return entityBuilder;
         }
 
-        private static void SeedEnum<TEnum>(this ModelBuilder builder) where TEnum : struct, IConvertible
+        private static void SeedEnum<TEnum>(this ModelBuilder builder)
+            where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
             foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
             {

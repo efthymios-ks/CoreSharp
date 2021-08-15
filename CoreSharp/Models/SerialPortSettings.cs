@@ -31,8 +31,6 @@ namespace CoreSharp.Models
 
         //Methods 
         public override string ToString()
-        {
-            return $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate:F0}, {nameof(Parity)}={Parity}, {nameof(DataBits)}={DataBits:F0}, {nameof(StopBits)}={StopBits}";
-        }
+            => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate:F0}, {nameof(Parity)}={Parity}, {nameof(DataBits)}={DataBits:F0}, {nameof(StopBits)}={StopBits}";
     }
 }

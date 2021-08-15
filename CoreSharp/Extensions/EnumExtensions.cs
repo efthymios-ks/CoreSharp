@@ -37,42 +37,29 @@ namespace CoreSharp.Extensions
             }
         }
 
+        public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
+        {
+            var fieldInfo = value.GetType().GetField($"{value}");
+            var attributes = fieldInfo?.GetCustomAttributes(typeof(TAttribute), true)?.Cast<TAttribute>();
+            return attributes?.FirstOrDefault();
+        }
+
         /// <summary>
         /// Get Description attribute from an enum. 
         /// </summary> 
-        public static string GetDescription<TEnum>(this TEnum value) where TEnum : struct, IConvertible
+        public static string GetDescription(this Enum value)
         {
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
-
-            string valueString = $"{value}";
-
-            //Get first attribute of type 'DescriptionAttribute'
-            var fieldInfo = value.GetType().GetField(valueString);
-            var descriptionAttributes = fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), true)?.Cast<DescriptionAttribute>();
-            var descriptionAttribute = descriptionAttributes?.FirstOrDefault();
-
-            //Return attribute or enum itself as description 
-            return descriptionAttribute?.Description ?? valueString;
+            var descriptionAttribute = value.GetAttribute<DescriptionAttribute>();
+            return descriptionAttribute?.Description ?? $"{value}";
         }
 
         /// <summary>
         /// Get Display.Name attribute from an enum. 
         /// </summary> 
-        public static string GetDisplayName<TEnum>(this TEnum value) where TEnum : struct, IConvertible
+        public static string GetDisplayName(this Enum value)
         {
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
-
-            string valueString = $"{value}";
-
-            //Get first attribute of type 'DisplayAttribute'
-            var fieldInfo = value.GetType().GetField(valueString);
-            var displayAttributes = fieldInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)?.Cast<DisplayAttribute>();
-            var displayAttribute = displayAttributes?.FirstOrDefault();
-
-            //Return attribute or enum itself as description 
-            return displayAttribute?.Name ?? valueString;
+            var displayAttribute = value.GetAttribute<DisplayAttribute>();
+            return displayAttribute?.Name ?? $"{value}";
         }
     }
 }

@@ -40,6 +40,5 @@ namespace CoreSharp.Implementations.Repositories
         public abstract Task UpdateAsync(TEntity entity);
 
         public abstract Task RemoveAsync(TEntity entity);
-
     }
 }

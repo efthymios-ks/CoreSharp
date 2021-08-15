@@ -6,7 +6,7 @@ namespace CoreSharp.Implementations.EntityFramework
     /// <summary>
     /// Enum shadow entity used for one-to-many relationship.
     /// </summary> 
-    public class EnumShadowEntity<TEnum> where TEnum : struct, IConvertible
+    public class EnumShadowEntity<TEnum> where TEnum : Enum
     {
         //Properties
         [Key]

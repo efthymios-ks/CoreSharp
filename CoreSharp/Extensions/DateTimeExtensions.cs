@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CoreSharp.Enums;
+using System;
 using System.Globalization;
-using CoreSharp.Enums;
 
 namespace CoreSharp.Extensions
 {
@@ -13,10 +13,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get the elapsed time since the input value. 
         /// </summary>
-        public static TimeSpan GetElapsedTime(this DateTime from)
-        {
-            return DateTime.Now.Subtract(from);
-        }
+        public static TimeSpan GetElapsedTime(this DateTime from) => DateTime.Now.Subtract(from);
 
         /// <summary>
         /// Check if specific TimeSpan has passed since a DateTime.
@@ -43,10 +40,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if date is in a leap year. 
         /// </summary> 
-        public static bool IsInLeapYear(this DateTime date)
-        {
-            return DateTime.IsLeapYear(date.Year);
-        }
+        public static bool IsInLeapYear(this DateTime date) => DateTime.IsLeapYear(date.Year);
 
         /// <summary>
         /// Trim part of DateTime. 
@@ -83,17 +77,11 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert DateTime to sortable format using "u" specifier. 
         /// </summary> 
-        public static string ToStringSortable(this DateTime date)
-        {
-            return date.ToString("u", CultureInfo.InvariantCulture);
-        }
+        public static string ToStringSortable(this DateTime date) => date.ToString("u", CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Convert DateTime to UTC sortable format using "ο" specifier. 
         /// </summary> 
-        public static string ToStringSortableUtc(this DateTime date)
-        {
-            return date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-        }
+        public static string ToStringSortableUtc(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
     }
 }

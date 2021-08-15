@@ -16,7 +16,7 @@ namespace CoreSharp.Utilities
             json = Regex.Replace(json, @"\s+", string.Empty);
 
             //Empty formats
-            var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
+            var emptyFormats = new[] { string.Empty, "", "{}", "[]", "[{}]" };
 
             return emptyFormats.Any(f => f == json);
         }

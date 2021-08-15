@@ -28,8 +28,8 @@ namespace CoreSharp.Implementations
         /// </summary>
         public void Dispose()
         {
-            DisposeNativeResources(true);
             GC.SuppressFinalize(this);
+            DisposeNativeResources(true);
         }
 
         /// <summary>

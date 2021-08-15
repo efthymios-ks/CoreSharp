@@ -1,4 +1,4 @@
-﻿namespace CoreSharp.Models
+﻿namespace CoreSharp.Enums
 {
     public enum RestMethod
     {
