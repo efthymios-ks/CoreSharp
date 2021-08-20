@@ -159,6 +159,76 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        public void JsonEquals_OnlyLeftIsNull_ReturnFalse()
+        {
+            //Arrange
+            DummyClass left = null;
+            DummyClass right = new();
+
+            //Act
+            var result = left.JsonEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void JsonEquals_OnlyRightIsNull_ReturnFalse()
+        {
+            //Arrange
+            DummyClass left = new();
+            DummyClass right = null;
+
+            //Act
+            var result = left.JsonEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void JsonEquals_BothAreNull_ReturnTrue()
+        {
+            //Arrange
+            DummyClass left = null;
+            DummyClass right = null;
+
+            //Act
+            var result = left.JsonEquals(right);
+
+            //Assert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void JsonEquals_PropeprtiesDontMatch_ReturnFalse()
+        {
+            //Arrange 
+            DummyClass left = new(1, "Black");
+            DummyClass right = new(1, "White");
+
+            //Act 
+            var result = left.JsonEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void JsonEquals_PropertiesMatch_ReturnTrue()
+        {
+            //Arrange
+            DummyClass left = new(1, "Black");
+            DummyClass right = new(1, "Black");
+
+            //Act
+            var result = left.JsonEquals(right);
+
+            //Assert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
         public void IsNull_ClassIsNull_ReturnTrue()
         {
             //Arrange 

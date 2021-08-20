@@ -16,10 +16,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if value is contained in list. 
         /// </summary>
-        public static bool IsIn<T>(this T item, IEnumerable<T> source)
-        {
-            return item.IsIn(source?.ToArray());
-        }
+        public static bool IsIn<T>(this T item, IEnumerable<T> source) => item.IsIn(source?.ToArray());
 
         /// <summary>
         /// Check if value is contained in list. 
@@ -50,7 +47,6 @@ namespace CoreSharp.Extensions
         public static string ToJson<TEntity>(this TEntity entity) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
-
             return entity.ToJson(settings);
         }
 
@@ -71,7 +67,6 @@ namespace CoreSharp.Extensions
         public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
-
             return item.JsonClone(settings);
         }
 
@@ -87,30 +82,42 @@ namespace CoreSharp.Extensions
             return JsonConvert.DeserializeObject<TEntity>(json, settings);
         }
 
+        /// <summary> 
+        /// Compares two objects by converting them to json (string). 
+        /// </summary> 
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
+        {
+            var settings = new JsonSerializerDefaultSettings();
+            return left.JsonEquals(right, settings);
+        }
+
+        /// <summary> 
+        /// Compares two objects by converting them to json (string). 
+        /// </summary> 
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
+        {
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
+
+            var jsonLeft = JsonConvert.SerializeObject(left, settings);
+            var jsonRight = JsonConvert.SerializeObject(right, settings);
+            return string.Equals(jsonLeft, jsonRight);
+        }
+
         /// <summary>
         /// Check if class is null. 
         /// </summary>
-        public static bool IsNull<T>(this T input) where T : class
-        {
-            return input is null;
-        }
+        public static bool IsNull<T>(this T input) where T : class => input is null;
 
         /// <summary>
         /// Gets a value indicating whether the current nullable 
         /// object has a valid value of its underlying type. 
         /// </summary>
-        public static bool IsNull<T>(this T? input) where T : struct
-        {
-            return !input.HasValue;
-        }
+        public static bool IsNull<T>(this T? input) where T : struct => !input.HasValue;
 
         /// <summary>
         /// Check if struct has default value. 
         /// </summary>
-        public static bool IsDefault<T>(this T input) where T : struct
-        {
-            return input.Equals(default(T));
-        }
+        public static bool IsDefault<T>(this T input) where T : struct => input.Equals(default(T));
 
         /// <summary>
         /// Serialize to XDocument.
