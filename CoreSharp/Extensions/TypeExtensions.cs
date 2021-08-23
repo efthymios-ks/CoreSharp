@@ -63,5 +63,11 @@ namespace CoreSharp.Extensions
                     return false;
             }
         }
+
+        //TODO: Add unit tests
+        /// <summary>
+        /// If Nullable`T return base type, else the same type. 
+        /// </summary> 
+        public static Type GetNullableBaseType(this Type type) => Nullable.GetUnderlyingType(type) ?? type;
     }
 }
