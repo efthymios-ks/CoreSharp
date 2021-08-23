@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace CoreSharp.Extensions
 {
@@ -47,6 +48,25 @@ namespace CoreSharp.Extensions
                 return defaultValue;
             else
                 return t;
+        }
+
+        //TODO: Add unit tests 
+        /// <summary>
+        /// Shortcut for (TResult)Convert.ChangeType(CultureInfo.CurrentCulture).
+        /// </summary> 
+        public static TResult ChangeType<TResult>(this object value) => value.ChangeType<TResult>(CultureInfo.CurrentCulture);
+
+        /// <summary>
+        /// Shortcut for (TResult)Convert.ChangeType(CultureInfo).
+        /// </summary> 
+        public static TResult ChangeType<TResult>(this object value, CultureInfo cultureInfo)
+        {
+            if (value is null)
+                return default;
+
+            var baseType = typeof(TResult);
+            baseType = Nullable.GetUnderlyingType(baseType) ?? baseType;
+            return (TResult)Convert.ChangeType(value, baseType, cultureInfo);
         }
     }
 }
