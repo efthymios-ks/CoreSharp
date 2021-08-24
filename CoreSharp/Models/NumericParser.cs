@@ -17,7 +17,11 @@ namespace CoreSharp.Models
         private readonly bool _isFormatPercentage;
 
         //Constructors
-        public NumericParser() : this("G", CultureInfo.CurrentCulture)
+        public NumericParser() : this(CultureInfo.CurrentCulture)
+        {
+        }
+
+        public NumericParser(CultureInfo cultureInfo) : this(null, cultureInfo)
         {
         }
 
@@ -32,7 +36,7 @@ namespace CoreSharp.Models
 
             _cultureInfo = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
             _format = format;
-            _isFormatPercentage = Regex.IsMatch(_format, @"^[pP]\d+$");
+            _isFormatPercentage = Regex.IsMatch(_format ?? string.Empty, @"^[pP]\d+$");
         }
 
         //Methods
