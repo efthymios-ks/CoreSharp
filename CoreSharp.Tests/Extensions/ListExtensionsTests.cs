@@ -11,15 +11,15 @@ namespace CoreSharp.Extensions.Tests
     public class ListExtensionsTests
     {
         //Fields
-        private readonly List<DummyClass> sourceNull = null;
-        private readonly List<DummyClass> sourceEmpty = new();
+        private readonly List<DummyClass> _sourceNull = null;
+        private readonly List<DummyClass> _sourceEmpty = new();
 
         //Methods 
         [Test]
         public void Sort_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.Sort(i => i.Id);
+            Action action = () => _sourceNull.Sort(i => i.Id);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -32,7 +32,7 @@ namespace CoreSharp.Extensions.Tests
             Func<DummyClass, int> keySelector = null;
 
             //Act
-            Action action = () => sourceEmpty.Sort(keySelector);
+            Action action = () => _sourceEmpty.Sort(keySelector);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

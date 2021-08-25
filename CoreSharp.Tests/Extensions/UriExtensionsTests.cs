@@ -9,13 +9,13 @@ namespace CoreSharp.Extensions.Tests
     public class UriExtensionsTests
     {
         //Fields 
-        private readonly Uri uriNull = null;
+        private readonly Uri _uriNull = null;
 
         [Test]
         public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => uriNull.GetQueryParameters();
+            Action action = () => _uriNull.GetQueryParameters();
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -44,7 +44,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetFragmentParameters_UriIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => uriNull.GetFragmentParameters();
+            Action action = () => _uriNull.GetFragmentParameters();
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -70,7 +70,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void BuildUri_BaseUrlIsNullOrWhiteSpace_ThrowArgumentxception()
+        public void BuildUri_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
         {
             //Arrange
             string baseUrl = null;

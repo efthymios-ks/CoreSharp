@@ -9,14 +9,14 @@ namespace CoreSharp.Extensions.Tests
     public class NameValueCollectionExtensionsTests
     {
         //Fields
-        private readonly NameValueCollection sourceNull = null;
+        private readonly NameValueCollection _sourceNull = null;
 
         //Methods 
         [Test]
         public void ToUrlQueryString_ParametersInNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.ToUrlQueryString();
+            Action action = () => _sourceNull.ToUrlQueryString();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

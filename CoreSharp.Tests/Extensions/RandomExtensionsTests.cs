@@ -10,15 +10,15 @@ namespace CoreSharp.Extensions.Tests
     public class RandomExtensionsTests
     {
         //Fields
-        private readonly Random rngNull = null;
-        private readonly Random rng = new Random(DateTime.Now.Millisecond);
+        private readonly Random _rngNull = null;
+        private readonly Random _rng = new Random(DateTime.Now.Millisecond);
         private const int SampleCount = 5;
 
         [Test]
         public void CoinToss_RngIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => rngNull.CoinToss();
+            Action action = () => _rngNull.CoinToss();
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -28,7 +28,7 @@ namespace CoreSharp.Extensions.Tests
         public void OneOf_RngIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rngNull.OneOf(1, 2, 3);
+            Action action = () => _rngNull.OneOf(1, 2, 3);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -38,7 +38,7 @@ namespace CoreSharp.Extensions.Tests
         public void OneOf_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => rng.OneOf<int>(null);
+            Action action = () => _rng.OneOf<int>(null);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -48,7 +48,7 @@ namespace CoreSharp.Extensions.Tests
         public void OneOf_SourceIEmpty_ThrowArgumentException()
         {
             //Act
-            Action action = () => rng.OneOf<int>();
+            Action action = () => _rng.OneOf<int>();
 
             //Act
             action.Should().ThrowExactly<ArgumentException>();
@@ -58,7 +58,7 @@ namespace CoreSharp.Extensions.Tests
         public void NextDouble_RngIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rngNull.NextDouble(0, 100);
+            Action action = () => _rngNull.NextDouble(0, 100);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -73,7 +73,7 @@ namespace CoreSharp.Extensions.Tests
 
             //Act 
             for (int i = 0; i < samples.Length; i++)
-                samples[i] = rng.NextDouble(minimum, maximum);
+                samples[i] = _rng.NextDouble(minimum, maximum);
 
             //Act
             samples.Should().OnlyContain(s => s >= minimum && s <= maximum);
@@ -83,7 +83,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceGreaterThan_RngIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rngNull.ChanceGreaterThan(50);
+            Action action = () => _rngNull.ChanceGreaterThan(50);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -95,7 +95,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceGreaterThan_PercentageOutOfRange_ThrowArgumentOutOfRangeException(double percentage)
         {
             //Act 
-            Action action = () => rng.ChanceGreaterThan(percentage);
+            Action action = () => _rng.ChanceGreaterThan(percentage);
 
             //Act
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -105,7 +105,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceLowerThan_RngIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rngNull.ChanceLowerThan(50);
+            Action action = () => _rngNull.ChanceLowerThan(50);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -117,7 +117,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceLowerThan_PercentageOutOfRange_ThrowArgumentOutOfRangeException(double percentage)
         {
             //Act 
-            Action action = () => rng.ChanceLowerThan(percentage);
+            Action action = () => _rng.ChanceLowerThan(percentage);
 
             //Act
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -127,7 +127,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceBetween_RngIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rngNull.ChanceBetween(25, 75);
+            Action action = () => _rngNull.ChanceBetween(25, 75);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -139,7 +139,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceLowerThan_EndsOutOfRange_ThrowArgumentOutOfRangeException(double percentageLeft, double percentageRight)
         {
             //Act 
-            Action action = () => rng.ChanceBetween(percentageLeft, percentageRight);
+            Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
             //Act
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -150,7 +150,7 @@ namespace CoreSharp.Extensions.Tests
         public void ChanceLowerThan_LeftGreaterThanRight_ThrowArgumentOutOfRangeException(double percentageLeft, double percentageRight)
         {
             //Act 
-            Action action = () => rng.ChanceBetween(percentageLeft, percentageRight);
+            Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
             //Act
             action.Should().ThrowExactly<ArgumentException>();
@@ -166,7 +166,7 @@ namespace CoreSharp.Extensions.Tests
             };
 
             //Act 
-            Action action = () => rngNull.Shuffle(source);
+            Action action = () => _rngNull.Shuffle(source);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -176,7 +176,7 @@ namespace CoreSharp.Extensions.Tests
         public void Shuffle_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => rng.Shuffle<int>(null);
+            Action action = () => _rng.Shuffle<int>(null);
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -195,7 +195,7 @@ namespace CoreSharp.Extensions.Tests
 
             //Act 
             for (int i = 0; i < sampleCount; i++)
-                rng.Shuffle(shuffled);
+                _rng.Shuffle(shuffled);
 
             //Act  
             shuffled.Should().NotEqual(original);

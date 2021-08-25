@@ -8,13 +8,13 @@ namespace CoreSharp.Extensions.Tests
     public class ArrayExtensionsTests
     {
         //Fields
-        private readonly int[,] sourceNull = null;
+        private readonly int[,] _sourceNull = null;
 
         [Test]
         public void GetRow_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.GetRow(0);
+            Action action = () => _sourceNull.GetRow(0);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -57,7 +57,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetColumn_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.GetColumn(0);
+            Action action = () => _sourceNull.GetColumn(0);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

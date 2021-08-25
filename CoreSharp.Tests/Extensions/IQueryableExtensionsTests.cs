@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class IQueryableExtensionsTests
     {
         //Fields
-        private readonly IQueryable<DummyClass> sourceNull = null;
+        private readonly IQueryable<DummyClass> _sourceNull = null;
 
         //Methods
         [Test]
@@ -21,7 +21,7 @@ namespace CoreSharp.Extensions.Tests
             int pageSize = 0;
 
             //Act 
-            Action action = () => sourceNull.QueryPage(pageIndex, pageSize);
+            Action action = () => _sourceNull.QueryPage(pageIndex, pageSize);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();

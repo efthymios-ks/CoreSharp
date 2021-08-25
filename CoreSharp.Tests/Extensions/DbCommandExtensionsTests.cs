@@ -10,28 +10,28 @@ namespace CoreSharp.Extensions.Tests
     public class DbCommandExtensionsTests
     {
         //Fields
-        private readonly DbCommand commandNull = null;
-        private SqlCommand sqlCommand;
+        private readonly DbCommand _commandNull = null;
+        private SqlCommand _sqlCommand;
 
         //Methods
         [SetUp]
         public void SetUp()
         {
-            sqlCommand = new SqlCommand();
+            _sqlCommand = new SqlCommand();
         }
 
         [TearDown]
         public void TearDown()
         {
-            sqlCommand?.Dispose();
-            sqlCommand = null;
+            _sqlCommand?.Dispose();
+            _sqlCommand = null;
         }
 
         [Test]
         public void CreateParameter_CommandIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => commandNull.CreateParameter("{name}", "Efthymios");
+            Action action = () => _commandNull.CreateParameter("{name}", "Efthymios");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -45,7 +45,7 @@ namespace CoreSharp.Extensions.Tests
             string value = "Efthymios";
 
             //Act 
-            var result = sqlCommand.CreateParameter(name, value);
+            var result = _sqlCommand.CreateParameter(name, value);
 
             //Assert
             result.Should().BeOfType<SqlParameter>();
@@ -57,7 +57,7 @@ namespace CoreSharp.Extensions.Tests
         public void AddParameter_CommandIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => commandNull.AddParameterWithValue("{name}", "Efthymios");
+            Action action = () => _commandNull.AddParameterWithValue("{name}", "Efthymios");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -71,13 +71,13 @@ namespace CoreSharp.Extensions.Tests
             string value = "Efthymios";
 
             //Act 
-            var result = sqlCommand.AddParameterWithValue(name, value);
+            var result = _sqlCommand.AddParameterWithValue(name, value);
 
             //Assert
             result.Should().BeOfType<SqlParameter>();
             result.ParameterName.Should().Be(name);
             result.Value.Should().Be(value);
-            sqlCommand.Parameters.Should().Contain(result);
+            _sqlCommand.Parameters.Should().Contain(result);
         }
     }
 }

@@ -10,21 +10,21 @@ namespace CoreSharp.Extensions.Tests
     public class StringBuilderExtensionsTests
     {
         //Fields
-        private readonly StringBuilder builderNull = null;
-        private readonly StringBuilder builder = new();
+        private readonly StringBuilder _builderNull = null;
+        private readonly StringBuilder _builder = new();
 
         //Methods
         [SetUp]
         public void SetUp()
         {
-            builder.Clear();
+            _builder.Clear();
         }
 
         [Test]
         public void AppendFormatLine_BuilderIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => builderNull.AppendFormatLine("{0}", 1);
+            Action action = () => _builderNull.AppendFormatLine("{0}", 1);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions.Tests
             string expected = formatResult + Environment.NewLine;
 
             //Act
-            var result = builder.AppendFormatLine(culture, format, value);
+            var result = _builder.AppendFormatLine(culture, format, value);
 
             //Assert
             result.ToString().Should().EndWith(expected);
@@ -57,7 +57,7 @@ namespace CoreSharp.Extensions.Tests
             string expected = formatResult + Environment.NewLine;
 
             //Act
-            var result = builder.AppendFormatLineCI(format, value);
+            var result = _builder.AppendFormatLineCI(format, value);
 
             //Assert
             result.ToString().Should().EndWith(expected);

@@ -10,22 +10,22 @@ namespace CoreSharp.Extensions.Tests
     public class DbProviderFactoryExtenionsTests
     {
         //Fields 
-        private readonly DbProviderFactory factoryNull = null;
-        private DbProviderFactory sqlFactory;
+        private readonly DbProviderFactory _factoryNull = null;
+        private DbProviderFactory _sqlFactory;
 
         //Methods 
         [SetUp]
         public void SetUp()
         {
             using (var connection = new SqlConnection())
-                sqlFactory = DbProviderFactories.GetFactory(connection);
+                _sqlFactory = DbProviderFactories.GetFactory(connection);
         }
 
         [Test]
         public void CreateParameter_FactoryIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => factoryNull.CreateParameter("{name}", "Efthymios");
+            Action action = () => _factoryNull.CreateParameter("{name}", "Efthymios");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -39,7 +39,7 @@ namespace CoreSharp.Extensions.Tests
             string value = "Efthymios";
 
             //Act
-            var result = sqlFactory.CreateParameter(name, value);
+            var result = _sqlFactory.CreateParameter(name, value);
 
             //Assert
             result.Should().BeOfType<SqlParameter>();

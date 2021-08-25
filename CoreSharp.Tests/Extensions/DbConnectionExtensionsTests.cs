@@ -10,28 +10,28 @@ namespace CoreSharp.Extensions.Tests
     public class DbConnectionExtensionsTests
     {
         //Fields
-        private readonly DbConnection connectionNull = null;
-        private DbConnection sqlConnection;
+        private readonly DbConnection _connectionNull = null;
+        private DbConnection _sqlConnection;
 
         //Methods
         [SetUp]
         public void SetUp()
         {
-            sqlConnection = new SqlConnection();
+            _sqlConnection = new SqlConnection();
         }
 
         [TearDown]
         public void TearDown()
         {
-            sqlConnection?.Dispose();
-            sqlConnection = null;
+            _sqlConnection?.Dispose();
+            _sqlConnection = null;
         }
 
         [Test]
         public void CreateDataAdapter_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => connectionNull.CreateDataAdapter();
+            Action action = () => _connectionNull.CreateDataAdapter();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions.Tests
         public void CreateDataAdapter_WhenCalled_ReturnSameTypeDbAdapter()
         {
             //Act
-            var result = sqlConnection.CreateDataAdapter();
+            var result = _sqlConnection.CreateDataAdapter();
 
             //Assert
             result.Should().BeOfType<SqlDataAdapter>();
@@ -51,7 +51,7 @@ namespace CoreSharp.Extensions.Tests
         public void CreateParameter_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => connectionNull.CreateParameter("{name}", "Efthymios");
+            Action action = () => _connectionNull.CreateParameter("{name}", "Efthymios");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions.Tests
             string value = "Efthymios";
 
             //Act
-            var result = sqlConnection.CreateParameter(name, value);
+            var result = _sqlConnection.CreateParameter(name, value);
 
             //Assert
             result.Should().BeOfType<SqlParameter>();
@@ -77,7 +77,7 @@ namespace CoreSharp.Extensions.Tests
         public void OpenTransaction_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => connectionNull.OpenTransaction();
+            Action action = () => _connectionNull.OpenTransaction();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -87,7 +87,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsOpen_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => connectionNull.IsOpen();
+            Action action = () => _connectionNull.IsOpen();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -97,7 +97,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsAvailable_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => connectionNull.IsOpen();
+            Action action = () => _connectionNull.IsOpen();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

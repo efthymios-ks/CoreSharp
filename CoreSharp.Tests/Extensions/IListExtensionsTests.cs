@@ -9,15 +9,15 @@ namespace CoreSharp.Extensions.Tests
     public class IListExtensionsTests
     {
         //Fields
-        private readonly IList<int> sourceNull = null;
-        private readonly IList<int> sourceEmpty = new List<int>();
+        private readonly IList<int> _sourceNull = null;
+        private readonly IList<int> _sourceEmpty = new List<int>();
 
         //Methods 
         [Test]
         public void Fill_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.Fill(0);
+            Action action = () => _sourceNull.Fill(0);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -41,7 +41,7 @@ namespace CoreSharp.Extensions.Tests
         public void Remove_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.Remove(i => i > 0);
+            Action action = () => _sourceNull.Remove(i => i > 0);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -54,7 +54,7 @@ namespace CoreSharp.Extensions.Tests
             Func<int, bool> expression = null;
 
             //Act
-            Action action = () => sourceEmpty.Remove(expression);
+            Action action = () => _sourceEmpty.Remove(expression);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -80,7 +80,7 @@ namespace CoreSharp.Extensions.Tests
         public void InsertRange_SourceIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceNull.InsertRange(0, 0, 1, 2);
+            Action action = () => _sourceNull.InsertRange(0, 0, 1, 2);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -90,7 +90,7 @@ namespace CoreSharp.Extensions.Tests
         public void InsertRange_ValuesIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => sourceEmpty.InsertRange(0, values: null);
+            Action action = () => _sourceEmpty.InsertRange(0, values: null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
