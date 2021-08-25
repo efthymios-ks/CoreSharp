@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CoreSharp.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CoreSharp.Extensions
 {
@@ -17,7 +16,7 @@ namespace CoreSharp.Extensions
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return GetUriParametersInternal(uri.Query);
+            return Url.GetParameters(uri.Query);
         }
 
         /// <summary>
@@ -27,32 +26,7 @@ namespace CoreSharp.Extensions
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return GetUriParametersInternal(uri.Fragment.TrimStart('#'));
-        }
-
-        private static IDictionary<string, string> GetUriParametersInternal(string uri)
-        {
-            var parameters = HttpUtility.ParseQueryString(uri);
-            var dictionary = parameters.AllKeys.ToDictionary(k => k, k => parameters[k]);
-            return dictionary;
-        }
-
-        /// <summary>
-        /// Build url from base url and parameters.
-        /// </summary> 
-        public static string BuildUri<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
-        {
-            _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
-            if (string.IsNullOrWhiteSpace(baseUrl))
-                throw new ArgumentNullException(nameof(baseUrl));
-
-            string query = parameters.ToUrlQueryString(encodeParameters);
-
-            var trimChars = new[] { ' ', '?', '&', '/' };
-            baseUrl = baseUrl.Trim(trimChars);
-            query = query.Trim(trimChars);
-
-            return $"{baseUrl}/?{query}";
+            return Url.GetParameters(uri.Fragment.TrimStart('#'));
         }
     }
 }
