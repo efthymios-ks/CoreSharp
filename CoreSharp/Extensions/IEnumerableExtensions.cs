@@ -39,7 +39,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Return empty collection if source is null. 
         /// </summary>
-        public static IEnumerable<T> NullToEmpty<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
+        public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
 
         /// <summary>
         /// Convert items to given type.

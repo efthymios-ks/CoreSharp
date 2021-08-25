@@ -59,10 +59,10 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void NullToEmpty_SourceIsNull_ReturnEmpty()
+        public void OrEmpty_SourceIsNull_ReturnEmpty()
         {
             //Act
-            var result = sourceNull.NullToEmpty();
+            var result = sourceNull.OrEmpty();
 
             //Assert
             result.Should().Equal(sourceEmpty);
