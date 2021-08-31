@@ -49,23 +49,18 @@ namespace CoreSharp.Utilities
         /// </summary>
         public static void NewLine() => WriteLine();
 
-        /// <summary>
-        /// Write input. 
-        /// </summary> 
-        public static void Write(object input) => Write($"{input}");
+        /// <inheritdoc cref="Write(string)"/>
+        public static void Write(object input)
+            => Write($"{input}");
 
-        /// <summary>
-        /// Write with String.Format. 
-        /// </summary>
+        /// <inheritdoc cref="Write(string)"/>
         public static void Write(IFormatProvider formatProvider, string format, params object[] parameters)
         {
             var message = string.Format(formatProvider, format, parameters);
             Write(message);
         }
 
-        /// <summary>
-        /// Write with String.Format. 
-        /// </summary>
+        /// <inheritdoc cref="Write(string)"/>
         public static void Write(string format, params object[] parameters)
         {
             var message = string.Format(format, parameters);
@@ -73,27 +68,22 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Write with String.Format. 
+        /// Write data. 
         /// </summary>
         public static void Write(string message) => Console.Write(message);
 
-        /// <summary>
-        /// Write input. 
-        /// </summary> 
-        public static void WriteLine(object input) => WriteLine($"{input}");
+        /// <inheritdoc cref="WriteLine(string)"/>
+        public static void WriteLine(object input)
+            => WriteLine($"{input}");
 
-        /// <summary>
-        /// Write line with String.Format. 
-        /// </summary>
+        /// <inheritdoc cref="WriteLine(string)"/>
         public static void WriteLine(IFormatProvider formatProvider, string format, params object[] parameters)
         {
             var message = string.Format(formatProvider, format, parameters);
             WriteLine(message);
         }
 
-        /// <summary>
-        /// Write line with String.Format. 
-        /// </summary>
+        /// <inheritdoc cref="WriteLine(string)"/>
         public static void WriteLine(string format, params object[] parameters)
         {
             var message = string.Format(format, parameters);
@@ -101,27 +91,23 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Write line with String.Format. 
-        /// </summary>
-        public static void WriteLine(string message) => Console.WriteLine(message);
+        /// Write line. 
+        /// </summary> 
+        public static void WriteLine(string message)
+            => Console.WriteLine(message);
 
-        /// <summary>
-        /// Write new line. 
-        /// </summary>
-        public static void WriteLine() => WriteLine(string.Empty);
+        /// <inheritdoc cref="WriteLine(string)"/>
+        public static void WriteLine()
+            => WriteLine(string.Empty);
 
-        /// <summary>
-        /// Log formatted message with timestamp. 
-        /// </summary>
+        /// <inheritdoc cref="Log(string)"/>
         public static void Log(IFormatProvider formatProvider, string format, params object[] parameters)
         {
             string data = string.Format(formatProvider, format, parameters);
             Log(data);
         }
 
-        /// <summary>
-        /// Log CultureInvariant formatted message with timestamp. 
-        /// </summary>
+        /// <inheritdoc cref="Log(string)"/>
         public static void LogCI(string format, params object[] parameters)
             => Log(CultureInfo.InvariantCulture, format, parameters);
 

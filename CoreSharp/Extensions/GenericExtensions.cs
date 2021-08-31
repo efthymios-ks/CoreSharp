@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CoreSharp.Models.Newtonsoft;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using CoreSharp.Models.Newtonsoft;
-using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -13,14 +13,10 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class GenericExtensions
     {
-        /// <summary>
-        /// Check if value is contained in list. 
-        /// </summary>
+        /// <inheritdoc cref="IsIn{T}(T, T[])"/>
         public static bool IsIn<T>(this T item, IEnumerable<T> source) => item.IsIn(source?.ToArray());
 
-        /// <summary>
-        /// Check if value is contained in list. 
-        /// </summary>
+        /// <inheritdoc cref="IsIn{T}(T, T[])"/>
         public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
@@ -41,9 +37,7 @@ namespace CoreSharp.Extensions
             return source.Contains(item);
         }
 
-        /// <summary> 
-        /// Serialize object to json.
-        /// </summary> 
+        /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonSerializerSettings)"/>
         public static string ToJson<TEntity>(this TEntity entity) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
@@ -61,9 +55,7 @@ namespace CoreSharp.Extensions
             return JsonConvert.SerializeObject(entity, settings);
         }
 
-        /// <summary> 
-        /// Perform a deep copy using Json serialization. 
-        /// </summary> 
+        /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonSerializerSettings)"/>
         public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
@@ -82,9 +74,7 @@ namespace CoreSharp.Extensions
             return JsonConvert.DeserializeObject<TEntity>(json, settings);
         }
 
-        /// <summary> 
-        /// Compares two objects by converting them to json (string). 
-        /// </summary> 
+        /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonSerializerSettings)"/>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
@@ -103,9 +93,7 @@ namespace CoreSharp.Extensions
             return string.Equals(jsonLeft, jsonRight);
         }
 
-        /// <summary>
-        /// Check if class is null. 
-        /// </summary>
+        /// <inheritdoc cref="IsNull{T}(T?)"/>
         public static bool IsNull<T>(this T input) where T : class => input is null;
 
         /// <summary>

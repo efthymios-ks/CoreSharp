@@ -38,10 +38,9 @@ namespace CoreSharp.Extensions
             return count;
         }
 
-        /// <summary>
-        /// Insert range in given position. 
-        /// </summary> 
-        public static void InsertRange<T>(this IList<T> source, int index, IEnumerable<T> values) => source.InsertRange(index, values?.ToArray());
+        /// <inheritdoc cref="InsertRange{T}(IList{T}, int, T[])"/>
+        public static void InsertRange<T>(this IList<T> source, int index, IEnumerable<T> values)
+            => source.InsertRange(index, values?.ToArray());
 
         /// <summary>
         /// Insert range in given position. 

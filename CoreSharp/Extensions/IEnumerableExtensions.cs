@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if collection is null empty.
+        /// Check if collection is null or empty.
         /// </summary>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
         {
@@ -80,48 +80,32 @@ namespace CoreSharp.Extensions
             return source.GroupBy(keySelector).Select(i => i.FirstOrDefault());
         }
 
-        /// <summary>
-        /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoin<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, null);
 
-        /// <summary>
-        /// String.Join collection of items using separator=` `, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>  
         public static string StringJoinCI<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`CurrentCulture`. 
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoin<T>(this IEnumerable<T> source, string separator) => source.StringJoin(separator, string.Empty, null);
 
-        /// <summary>
-        /// String.Join collection of items using custom separator, String.Format=`{0}` and FormatProvider=`InvariantCulture`. 
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator)
             => source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`CurrentCulture`.
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat)
             => source.StringJoin(separator, stringFormat, null);
 
-        /// <summary>
-        /// String.Join collection of items using custom separator, custom String.Format and FormatProvider=`InvariantCulture`.
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator, string stringFormat)
             => source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// String.Join collection of items using custom separator, String.Format=`{0}` and custom FormatProvider.
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, IFormatProvider formatProvider)
             => source.StringJoin(separator, string.Empty, formatProvider);
 
-        /// <summary>
-        /// String.Join collection of items using separator=` `, String.Format=`{0}` and custom FormatProvider.
-        /// </summary>
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>  
         public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
             => source.StringJoin(" ", string.Empty, formatProvider);
 
@@ -150,9 +134,7 @@ namespace CoreSharp.Extensions
             return string.Join(separator, convertedItems);
         }
 
-        /// <summary>
-        /// Convert IEnumerable Source to HashSet.
-        /// </summary>
+        /// <inheritdoc cref="ToHashSet{T}(IEnumerable{T}, IEqualityComparer{T})"/> 
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
         {
             var comparer = EqualityComparer<T>.Default;
@@ -265,9 +247,7 @@ namespace CoreSharp.Extensions
             return sequence.SelectMany(source => source);
         }
 
-        /// <summary>
-        /// Append items to given source. 
-        /// </summary> 
+        /// <inheritdoc cref="Append{T}(IEnumerable{T}, T[])"/> 
         public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.Append(items?.ToArray());
 
         /// <summary>
@@ -284,9 +264,7 @@ namespace CoreSharp.Extensions
             return source;
         }
 
-        /// <summary>
-        /// Perform an action to all elements.
-        /// </summary>
+        /// <inheritdoc cref="ForEach{T}(IEnumerable{T}, Action{T, int})"/> 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             _ = action ?? throw new ArgumentNullException(nameof(action));
@@ -335,18 +313,11 @@ namespace CoreSharp.Extensions
             return sourceKeys.Contains(itemKey);
         }
 
-        /// <summary>
-        /// Paginate collection on given size and return page of given index. 
-        /// </summary> 
+        /// <inheritdoc cref="IQueryableExtensions.QueryPage{T}(IQueryable{T}, int, int)"/> 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
-            if (pageIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive and non-zero.");
-            if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
-
-            return source.Skip(pageIndex * pageSize).Take(pageSize);
+            return source.AsQueryable().GetPage(pageIndex, pageSize);
         }
 
         /// <summary>
@@ -372,9 +343,7 @@ namespace CoreSharp.Extensions
             return groups;
         }
 
-        /// <summary>
-        /// Check if source contails all given items. 
-        /// </summary> 
+        /// <inheritdoc cref="ContainsAll{T}(IEnumerable{T}, T[])"/>  
         public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.ContainsAll(items?.ToArray());
 
         /// <summary>
@@ -417,14 +386,12 @@ namespace CoreSharp.Extensions
             return builder.ToString();
         }
 
-        /// <summary>
-        /// Get key-count combination for duplicate entries. 
-        /// </summary> 
+        /// <inheritdoc cref="GetDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/> 
         public static IDictionary<TElement, int> GetDuplicates<TElement>(this IEnumerable<TElement> source)
            => source.GetDuplicates(i => i);
 
         /// <summary>
-        /// Get key-count combination for duplicate entries based on given key. 
+        /// Get key-count combination for duplicate entries. 
         /// </summary> 
         public static IDictionary<TKey, int> GetDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
         {
@@ -439,13 +406,11 @@ namespace CoreSharp.Extensions
             return duplicates.ToDictionary(d => d.Key, d => d.Count());
         }
 
-        /// <summary>
-        /// Check if there are any duplicate entries.
-        /// </summary> 
+        /// <inheritdoc cref="HasDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/> 
         public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source) => source.HasDuplicates(i => i);
 
         /// <summary>
-        /// Check if there are any duplicate entries based on given key. 
+        /// Check if there are any duplicate entries. 
         /// </summary> 
         public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
             => source.GetDuplicates(keySelector).Any();
@@ -474,9 +439,7 @@ namespace CoreSharp.Extensions
             return table;
         }
 
-        /// <summary>
-        /// Check if given source starts with given sequence. 
-        /// </summary> 
+        /// <inheritdoc cref="StartsWith{T}(IEnumerable{T}, T[])"/> 
         public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.StartsWith(sequence?.ToArray());
 
         /// <summary>
@@ -491,9 +454,7 @@ namespace CoreSharp.Extensions
             return head.SequenceEqual(sequence);
         }
 
-        /// <summary>
-        /// Check if given source ends with given sequence. 
-        /// </summary> 
+        /// <inheritdoc cref="EndsWith{T}(IEnumerable{T}, T[])"/> 
         public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.EndsWith(sequence?.ToArray());
 
         /// <summary>
@@ -510,10 +471,13 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
         public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, string filter)
-            => source?.FilterFlexible(i => $"{i}", filter);
+            => source.FilterFlexible(i => $"{i}", filter);
 
         /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
         public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, Func<TItem, string> propertySelector, string filter)
-            => source?.AsQueryable().FilterFlexible(propertySelector, filter);
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            return source.AsQueryable().FilterFlexible(propertySelector, filter);
+        }
     }
 }

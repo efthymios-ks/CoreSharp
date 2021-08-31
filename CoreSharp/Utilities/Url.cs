@@ -12,7 +12,12 @@ namespace CoreSharp.Utilities
     {
         /// <summary>
         /// Combines url segments.
-        /// "/sec1", "/sec2/", "sec3" results to "/sec1/sec2/sec3/". 
+        /// <example>
+        /// <code>
+        /// // "/sec1/sec2/sec3/" 
+        /// var url = Url.Combine("/sec1", "/sec2/", "sec3"); 
+        /// </code>
+        /// </example> 
         /// </summary> 
         public static string Combine(params object[] segments)
         {
@@ -26,7 +31,7 @@ namespace CoreSharp.Utilities
                 var trimmed = $"/{segment}".Trim();
                 builder.Append(trimmed);
             }
-            builder.Append("/");
+            builder.Append('/');
 
             //Build url 
             var url = builder.ToString();

@@ -22,7 +22,7 @@ namespace CoreSharp.Extensions
             if (!typeof(TEnum).IsEnum)
                 throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
-            string enumPropertyName = propertySelector.GetMemberName();
+            var enumPropertyName = propertySelector.GetMemberName();
             return builder
                      .HasOne<EnumShadowEntity<TEnum>>()
                      .WithMany()

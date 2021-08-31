@@ -22,20 +22,21 @@ namespace CoreSharp.Extensions
             return (double)dResult;
         }
 
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// </summary> 
-        public static string ToMetricSize(this double value) => value.ToMetricSize("G");
+        /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/> 
+        public static string ToMetricSize(this double value)
+            => value.ToMetricSize("G");
 
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// </summary> 
-        public static string ToMetricSize(this double value, string format) => value.ToMetricSize(format, CultureInfo.CurrentCulture);
+        /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/> 
+        public static string ToMetricSize(this double value, string format)
+            => value.ToMetricSize(format, CultureInfo.CurrentCulture);
 
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// </summary> 
-        public static string ToMetricSize(this double value, IFormatProvider formatProvider) => value.ToMetricSize("G", formatProvider);
+        /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/> 
+        public static string ToMetricSize(this double value, IFormatProvider formatProvider)
+            => value.ToMetricSize("G", formatProvider);
+
+        /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/> 
+        public static string ToMetricSizeCI(this double value)
+            => value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Convert value to SI string with appropriate prefix. 
@@ -65,11 +66,5 @@ namespace CoreSharp.Extensions
 
             return scaledValue.ToString(format, formatProvider) + prefix;
         }
-
-        /// <summary>
-        /// Convert value to SI string with appropriate prefix. 
-        /// Uses `0.###` and `CultureInfo.InvariantCulture`.
-        /// </summary> 
-        public static string ToMetricSizeCI(this double value) => value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
     }
 }

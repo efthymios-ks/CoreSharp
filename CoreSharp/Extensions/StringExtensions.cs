@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace CoreSharp.Extensions
 {
@@ -18,9 +17,7 @@ namespace CoreSharp.Extensions
     {
         /// <summary>
         /// Truncates string.
-        /// </summary>
-        /// <param name="input">String to truncate.</param>
-        /// <param name="length">Maximum string length.</param>
+        /// </summary> 
         public static string Truncate(this string input, int length)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
@@ -162,9 +159,7 @@ namespace CoreSharp.Extensions
                 return input;
         }
 
-        /// <summary>
-        /// Take substring from given index. Similar to Sql.Functions.Mid.
-        /// </summary>
+        /// <inheritdoc cref="Mid(string, int, int)"/>
         public static string Mid(this string input, int start) => input.Mid(start, input?.Length ?? 0);
 
         /// <summary>
@@ -186,11 +181,13 @@ namespace CoreSharp.Extensions
                 return input.Substring(start, length);
         }
 
-        /// <summary>
-        /// String.Format with custom IFormatProvider setting.
-        /// </summary>
+        /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
         public static string FormatWith(this string format, params object[] parameters)
-           => format.FormatWith(CultureInfo.DefaultThreadCurrentCulture, parameters);
+           => format.FormatWith(CultureInfo.CurrentCulture, parameters);
+
+        /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
+        public static string FormatWithCI(this string format, params object[] parameters)
+            => format.FormatWith(CultureInfo.InvariantCulture, parameters);
 
         /// <summary>
         /// String.Format with custom IFormatProvider setting.
@@ -202,15 +199,7 @@ namespace CoreSharp.Extensions
             return string.Format(formatProvider, format, arguments);
         }
 
-        /// <summary>
-        /// String.Format with InvariantCulture.
-        /// </summary>
-        public static string FormatWithCI(this string format, params object[] parameters)
-            => format.FormatWith(CultureInfo.InvariantCulture, parameters);
-
-        /// <summary>
-        /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
-        /// </summary>
+        /// <inheritdoc cref="EqualsAnyCI(string, string[])"/>
         public static bool EqualsAnyCI(this string input, IEnumerable<string> values)
             => input.EqualsAnyCI(values?.ToArray());
 
@@ -225,10 +214,9 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.Equals(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <summary>
-        /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
-        /// </summary>
-        public static bool StartsWithAnyCI(this string input, IEnumerable<string> values) => input.StartsWithAnyCI(values?.ToArray());
+        /// <inheritdoc cref="StartsWithAnyCI(string, string[])"/>
+        public static bool StartsWithAnyCI(this string input, IEnumerable<string> values)
+            => input.StartsWithAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
@@ -241,10 +229,9 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <summary>
-        /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
-        /// </summary>
-        public static bool EndsWithAnyCI(this string input, IEnumerable<string> values) => input.EndsWithAnyCI(values?.ToArray());
+        /// <inheritdoc cref=""/>
+        public static bool EndsWithAnyCI(this string input, IEnumerable<string> values)
+            => input.EndsWithAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
@@ -257,10 +244,9 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <summary>
-        /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
-        /// </summary>
-        public static bool ContainsAnyCI(this string input, IEnumerable<string> values) => input.ContainsAnyCI(values?.ToArray());
+        /// <inheritdoc cref=""/>
+        public static bool ContainsAnyCI(this string input, IEnumerable<string> values)
+            => input.ContainsAnyCI(values?.ToArray());
 
         /// <summary>
         /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
@@ -297,10 +283,9 @@ namespace CoreSharp.Extensions
             return new string(array);
         }
 
-        /// <summary>
-        /// Erase given value from String.
-        /// </summary>
-        public static string Erase(this string input, char value) => input.Erase($"{value}");
+        /// <inheritdoc cref="Erase(string, string)"/>
+        public static string Erase(this string input, char value)
+            => input.Erase($"{value}");
 
         /// <summary>
         /// Erase given value from string.
@@ -325,24 +310,18 @@ namespace CoreSharp.Extensions
             return input;
         }
 
-        /// <summary>
-        /// Parse json to entity. 
-        /// </summary> 
+        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
         public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
             => json.ToEntity(typeof(TEntity)) as TEntity;
 
-        /// <summary>
-        /// Parse json to entity. 
-        /// </summary> 
+        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
         public static object ToEntity(this string json, Type entityType)
         {
             var settings = new JsonSerializerDefaultSettings();
             return json.ToEntity(entityType, settings);
         }
 
-        /// <summary>
-        /// Parse json to entity. 
-        /// </summary> 
+        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
            => json.ToEntity(typeof(TEntity), settings) as TEntity;
 
@@ -402,29 +381,24 @@ namespace CoreSharp.Extensions
             return input;
         }
 
-        /// <summary>
-        /// User-friendly int.TryParse resulting to int?.
-        /// </summary> 
-        public static int? ToInt(this string input) => input.ToInt(NumberStyles.None);
+        /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
+        public static int? ToInt(this string input)
+            => input.ToInt(NumberStyles.None);
+
+        /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
+        public static int? ToInt(this string input, NumberStyles numberStyles)
+            => input.ToInt(numberStyles, CultureInfo.CurrentCulture);
+
+        /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
+        public static int? ToInt(this string input, IFormatProvider formatProvider)
+            => input.ToInt(NumberStyles.None, formatProvider);
+
+        /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
+        public static int? ToIntCI(this string input)
+            => input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly int.TryParse resulting to int?.
-        /// </summary> 
-        public static int? ToInt(this string input, NumberStyles numberStyles) => input.ToInt(numberStyles, CultureInfo.CurrentCulture);
-
-        /// <summary>
-        /// User-friendly int.TryParse resulting to int?.
-        /// </summary> 
-        public static int? ToInt(this string input, IFormatProvider formatProvider) => input.ToInt(NumberStyles.None, formatProvider);
-
-        /// <summary>
-        /// User-friendly int.TryParse resulting to int?.
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static int? ToIntCI(this string input) => input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
-
-        /// <summary>
-        /// User-friendly int.TryParse resulting to int?.
+        /// User-friendly int.TryParse resulting to int.
         /// </summary> 
         public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -436,30 +410,23 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly long.TryParse resulting to long?.
-        /// </summary> 
-        public static long? ToLong(this string input) => input.ToLong(NumberStyles.None);
+        /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
+        public static long? ToLong(this string input)
+            => input.ToLong(NumberStyles.None);
 
-        /// <summary>
-        /// User-friendly long.TryParse resulting to long?.
-        /// </summary> 
-        public static long? ToLong(this string input, NumberStyles numberStyles) => input.ToLong(numberStyles, CultureInfo.CurrentCulture);
+        /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
+        public static long? ToLong(this string input, NumberStyles numberStyles)
+            => input.ToLong(numberStyles, CultureInfo.CurrentCulture);
 
-        /// <summary>
-        /// User-friendly long.TryParse resulting to long?.
-        /// </summary> 
-        public static long? ToLong(this string input, IFormatProvider formatProvider) => input.ToLong(NumberStyles.None, formatProvider);
+        /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
+        public static long? ToLong(this string input, IFormatProvider formatProvider)
+            => input.ToLong(NumberStyles.None, formatProvider);
 
-        /// <summary>
-        /// User-friendly long.TryParse resulting to long?.
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static long? ToLongCI(this string input) => input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
+        /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
+        public static long? ToLongCI(this string input)
+            => input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// User-friendly long.TryParse resulting to long?.
-        /// </summary> 
+        /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -470,29 +437,24 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly short.TryParse resulting to short?.
-        /// </summary> 
-        public static short? ToShort(this string input) => input.ToShort(NumberStyles.None);
+        /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
+        public static short? ToShort(this string input)
+            => input.ToShort(NumberStyles.None);
+
+        /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
+        public static short? ToShort(this string input, NumberStyles numberStyles)
+            => input.ToShort(numberStyles, CultureInfo.CurrentCulture);
+
+        /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
+        public static short? ToShort(this string input, IFormatProvider formatProvider)
+            => input.ToShort(NumberStyles.None, formatProvider);
+
+        /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
+        public static short? ToShortCI(this string input)
+            => input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly short.TryParse resulting to short?.
-        /// </summary> 
-        public static short? ToShort(this string input, NumberStyles numberStyles) => input.ToShort(numberStyles, CultureInfo.CurrentCulture);
-
-        /// <summary>
-        /// User-friendly short.TryParse resulting to short?.
-        /// </summary> 
-        public static short? ToShort(this string input, IFormatProvider formatProvider) => input.ToShort(NumberStyles.None, formatProvider);
-
-        /// <summary>
-        /// User-friendly short.TryParse resulting to short?.
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static short? ToShortCI(this string input) => input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
-
-        /// <summary>
-        /// User-friendly short.TryParse resulting to short?.
+        /// User-friendly short.TryParse resulting to short.
         /// </summary> 
         public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -504,29 +466,24 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly float.TryParse resulting to float?.
-        /// </summary> 
-        public static float? ToFloat(this string input) => input.ToFloat(NumberStyles.None);
+        /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
+        public static float? ToFloat(this string input)
+            => input.ToFloat(NumberStyles.None);
+
+        /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
+        public static float? ToFloat(this string input, NumberStyles numberStyles)
+            => input.ToFloat(numberStyles, CultureInfo.CurrentCulture);
+
+        /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
+        public static float? ToFloat(this string input, IFormatProvider formatProvider)
+            => input.ToFloat(NumberStyles.None, formatProvider);
+
+        /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
+        public static float? ToFloatCI(this string input)
+            => input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly float.TryParse resulting to float?.
-        /// </summary> 
-        public static float? ToFloat(this string input, NumberStyles numberStyles) => input.ToFloat(numberStyles, CultureInfo.CurrentCulture);
-
-        /// <summary>
-        /// User-friendly float.TryParse resulting to float?.
-        /// </summary> 
-        public static float? ToFloat(this string input, IFormatProvider formatProvider) => input.ToFloat(NumberStyles.None, formatProvider);
-
-        /// <summary>
-        /// User-friendly float.TryParse resulting to float?.
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static float? ToFloatCI(this string input) => input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
-
-        /// <summary>
-        /// User-friendly float.TryParse resulting to float?.
+        /// User-friendly float.TryParse resulting to float.
         /// </summary> 
         public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -538,29 +495,24 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly double.TryParse resulting to double?.
-        /// </summary> 
-        public static double? ToDouble(this string input) => input.ToDouble(NumberStyles.None);
+        /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
+        public static double? ToDouble(this string input)
+            => input.ToDouble(NumberStyles.None);
+
+        /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
+        public static double? ToDouble(this string input, NumberStyles numberStyles)
+            => input.ToDouble(numberStyles, CultureInfo.CurrentCulture);
+
+        /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
+        public static double? ToDouble(this string input, IFormatProvider formatProvider)
+            => input.ToDouble(NumberStyles.None, formatProvider);
+
+        /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
+        public static double? ToDoubleCI(this string input)
+            => input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly double.TryParse resulting to double?.
-        /// </summary> 
-        public static double? ToDouble(this string input, NumberStyles numberStyles) => input.ToDouble(numberStyles, CultureInfo.CurrentCulture);
-
-        /// <summary>
-        /// User-friendly double.TryParse resulting to double?.
-        /// </summary> 
-        public static double? ToDouble(this string input, IFormatProvider formatProvider) => input.ToDouble(NumberStyles.None, formatProvider);
-
-        /// <summary>
-        /// User-friendly double.TryParse resulting to double?. 
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static double? ToDoubleCI(this string input) => input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
-
-        /// <summary>
-        /// User-friendly double.TryParse resulting to double?.
+        /// User-friendly double.TryParse resulting to double.
         /// </summary> 
         public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -572,29 +524,24 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal?.
-        /// </summary> 
-        public static decimal? ToDecimal(this string input) => input.ToDecimal(NumberStyles.None);
+        /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
+        public static decimal? ToDecimal(this string input)
+            => input.ToDecimal(NumberStyles.None);
+
+        /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
+        public static decimal? ToDecimal(this string input, NumberStyles numberStyles)
+            => input.ToDecimal(numberStyles, CultureInfo.CurrentCulture);
+
+        /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
+        public static decimal? ToDecimal(this string input, IFormatProvider formatProvider)
+            => input.ToDecimal(NumberStyles.None, formatProvider);
+
+        /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
+        public static decimal? ToDecimalCI(this string input)
+            => input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal?.
-        /// </summary> 
-        public static decimal? ToDecimal(this string input, NumberStyles numberStyles) => input.ToDecimal(numberStyles, CultureInfo.CurrentCulture);
-
-        /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal?.
-        /// </summary> 
-        public static decimal? ToDecimal(this string input, IFormatProvider formatProvider) => input.ToDecimal(NumberStyles.None, formatProvider);
-
-        /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal?.
-        /// Uses NumberStyles.Any and CultureInfo.InvariantCulture. 
-        /// </summary> 
-        public static decimal? ToDecimalCI(this string input) => input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
-
-        /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal?.
+        /// User-friendly decimal.TryParse resulting to decimal.
         /// </summary> 
         public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -643,40 +590,28 @@ namespace CoreSharp.Extensions
                 return null;
         }
 
-        /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// </summary> 
+        /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat)
            => input.ToDateTime(dateTimeFormat, DateTimeStyles.None);
 
-        /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// </summary> 
+        /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle)
          => input.ToDateTime(dateTimeFormat, dateTimeStyle, CultureInfo.CurrentCulture);
 
-        /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// </summary> 
+        /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, IFormatProvider formatProvider)
             => input.ToDateTime(dateTimeFormat, DateTimeStyles.None, formatProvider);
 
-        /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// Uses "u" format and CultureInfo.InvariantCulture. 
-        /// </summary> 
+        /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTimeSortable(this string input)
             => input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
-        /// Uses "o" format, CultureInfo.InvariantCulture and ToUniversalTime(). 
-        /// </summary> 
+        /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTimeSortableUtc(this string input)
            => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
 
         /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime?. 
+        /// User-friendly DateTime.TryParse resulting to DateTime. 
         /// </summary> 
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
         {

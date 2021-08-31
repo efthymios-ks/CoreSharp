@@ -5,9 +5,7 @@
     /// </summary>
     public static partial class ByteExtensions
     {
-        /// <summary>
-        /// Re-maps a number from one range to another. 
-        /// </summary>
+        /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/>
         public static byte Map(this byte value, byte fromLow, byte fromHigh, byte toLow, byte toHigh)
         {
             var dValue = (decimal)value;

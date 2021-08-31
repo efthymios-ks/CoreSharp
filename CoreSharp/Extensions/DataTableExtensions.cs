@@ -24,7 +24,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Map DataTable values to TEntity collection. 
         /// </summary>
-        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = true) where TEntity : new()
+        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
         {
             _ = table ?? throw new ArgumentNullException(nameof(table));
 

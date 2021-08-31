@@ -13,9 +13,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class PropertyBuilderExtensions
     {
-        /// <summary>
-        /// Convert a property from and to json for database storage. 
-        /// </summary>
+        /// <inheritdoc cref="HasJsonConversion{TEntity}(PropertyBuilder{TEntity}, JsonSerializerSettings)"/>
         public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder) where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();

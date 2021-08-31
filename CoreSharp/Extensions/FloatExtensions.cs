@@ -5,9 +5,7 @@
     /// </summary>
     public static partial class FloatExtensions
     {
-        /// <summary>
-        /// Re-maps a number from one range to another. 
-        /// </summary>
+        /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/> 
         public static float Map(this float value, float fromLow, float fromHigh, float toLow, float toHigh)
         {
             var dValue = (decimal)value;

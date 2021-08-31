@@ -10,57 +10,6 @@ namespace CoreSharp.Extensions.Tests
     public class EnumExtensionsTests
     {
         [Test]
-        public void GetValues_TypeIsNotEnum_ThrowArgumentException()
-        {
-            //Act 
-            Action action = () => EnumExtensions.GetValues<DummyNotAnEnum>();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentException>();
-        }
-
-        [Test]
-        public void GetValues_WhenCalled_ReturnEnumValues()
-        {
-            //Arrange
-            var values = new[] { DummyEnum.Option1, DummyEnum.Option2, DummyEnum.Option3 };
-
-            //Act 
-            var result = EnumExtensions.GetValues<DummyEnum>();
-
-            //Assert
-            result.Should().Equal(values);
-        }
-
-        [Test]
-        public void GetDictionary_TypeIsNotEnum_ThrowArgumentException()
-        {
-            //Act 
-            Action action = () => EnumExtensions.GetDictionary<DummyNotAnEnum>();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentException>();
-        }
-
-        [Test]
-        public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
-        {
-            //Arrange
-            var dictionary = new Dictionary<string, DummyEnum>
-            {
-                { $"{DummyEnum.Option1}", DummyEnum.Option1 },
-                { $"{DummyEnum.Option2}", DummyEnum.Option2 },
-                { $"{DummyEnum.Option3}", DummyEnum.Option3 }
-            };
-
-            //Act 
-            var result = EnumExtensions.GetDictionary<DummyEnum>();
-
-            //Assert
-            result.Should().Equal(dictionary);
-        }
-
-        [Test]
         public void GetDescription_WhenCalled_ReturnEnumDescriptionAttribute()
         {
             //Arrange 

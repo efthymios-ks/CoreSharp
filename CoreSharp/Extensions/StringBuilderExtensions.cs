@@ -9,15 +9,11 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class StringBuilderExtensions
     {
-        /// <summary>
-        /// Append String.Format + NewLine.  
-        /// </summary>
+        /// <inheritdoc cref="AppendFormatLine(StringBuilder, IFormatProvider, string, object[])"/>
         public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] arguments)
             => builder.AppendFormatLine(CultureInfo.CurrentCulture, format, arguments);
 
-        /// <summary>
-        /// Append InvariantCulture String.Format + NewLine.  
-        /// </summary>
+        /// <inheritdoc cref="AppendFormatLine(StringBuilder, IFormatProvider, string, object[])"/>
         public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] arguments)
            => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
 

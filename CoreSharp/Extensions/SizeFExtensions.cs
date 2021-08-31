@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions
         public static Size ToSize(this SizeF source) => Size.Round(source);
 
         /// <summary>
-        /// Scale SizeF proportionally. 
+        /// Scale size proportionally. 
         /// </summary>
         public static SizeF Scale(this SizeF source, SizeF target)
         {

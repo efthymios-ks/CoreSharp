@@ -8,9 +8,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class IPEndPointExtensions
     {
-        /// <summary>
-        /// Ping host. 
-        /// </summary>
+        /// <inheritdoc cref="IPAddressExtensions.Ping(IPAddress, int)"/> 
         public static bool Ping(this IPEndPoint endPoint, int timeoutMillis = 5000)
         {
             _ = endPoint ?? throw new ArgumentNullException(nameof(endPoint));

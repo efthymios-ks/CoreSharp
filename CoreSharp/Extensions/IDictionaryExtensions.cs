@@ -38,9 +38,7 @@ namespace CoreSharp.Extensions
             }
         }
 
-        /// <summary>
-        /// Attempts to remove the item the specified key in dictionary. 
-        /// </summary> 
+        /// <inheritdoc cref="TryRemove{TKey, TValue}(IDictionary{TKey, TValue}, TKey, out TValue)"/> 
         public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
             => source.TryRemove(key, out _);
 
@@ -64,16 +62,11 @@ namespace CoreSharp.Extensions
             }
         }
 
-        /// <summary>
-        /// Attempts to update the specifed key in dictionary, if exists. 
-        /// </summary> 
+        /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
             => source.TryUpdate(key, v => value);
 
-        /// <summary>
-        /// Attempts to update the specifed key in dictionary, if exists. 
-        /// </summary> 
-        /// <param name="updateAction">(value) => ...</param> 
+        /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue, TValue> updateAction)
         {
             _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
@@ -100,22 +93,15 @@ namespace CoreSharp.Extensions
                 return false;
         }
 
-        /// <summary> 
-        /// Attempts to add or update an item with the specified key. 
-        /// </summary> 
+        /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
             => source.AddOrUpdate(key, value, (k, v) => value);
 
-        /// <summary> 
-        /// Attempts to add or update an item with the specified key. 
-        /// </summary> 
+        /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, TValue updateValue)
             => source.AddOrUpdate(key, addValue, (k, v) => updateValue);
 
-        /// <summary> 
-        /// Attempts to add or update an item with the specified key. 
-        /// </summary> 
-        /// <param name="updateAction">(value) => ...</param> 
+        /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TValue, TValue> updateAction)
         {
             _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
@@ -140,10 +126,7 @@ namespace CoreSharp.Extensions
             return source[key];
         }
 
-        /// <summary> 
-        /// If value exists, get, else add default and get.  
-        /// </summary> 
-        /// <returns>Value found or added.</returns>
+        /// <inheritdoc cref="GetOrAdd{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> 
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
             => source.GetOrAdd(key, default);
 

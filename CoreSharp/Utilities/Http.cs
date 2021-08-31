@@ -6,8 +6,12 @@ namespace CoreSharp.Utilities
 {
     public static class Http
     {
+        /// <inheritdoc cref="GetRestMethod(string)"/>
+        public static RestMethod GetRestMethod(HttpMethod method)
+            => GetRestMethod(method?.Method);
+
         /// <summary>
-        /// Get RestMethod from string name. 
+        /// Get RestMethod from HttpMethod. 
         /// </summary> 
         public static RestMethod GetRestMethod(string methodName)
         {
@@ -29,10 +33,9 @@ namespace CoreSharp.Utilities
                 throw new ArgumentOutOfRangeException(nameof(methodName));
         }
 
-        /// <summary>
-        /// Get RestMethod from HttpMethod. 
-        /// </summary> 
-        public static RestMethod GetRestMethod(HttpMethod method) => GetRestMethod(method?.Method);
+        /// <inheritdoc cref="GetHttpMethod(string)"/>
+        public static HttpMethod GetHttpMethod(RestMethod method)
+            => GetHttpMethod($"{method}");
 
         /// <summary>
         /// Get HttpMethod from string name. 
@@ -46,10 +49,5 @@ namespace CoreSharp.Utilities
             RestMethod.Delete => HttpMethod.Delete,
             _ => throw new ArgumentOutOfRangeException(nameof(methodName))
         };
-
-        /// <summary>
-        /// Get HttpMethod from RestMethod. 
-        /// </summary> 
-        public static HttpMethod GetHttpMethod(RestMethod method) => GetHttpMethod($"{method}");
     }
 }

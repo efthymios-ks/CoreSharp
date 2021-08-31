@@ -9,6 +9,11 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class ExpandoObjectExtensions
     {
+        /// <summary>
+        /// Convert to dictionary. 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -16,6 +21,9 @@ namespace CoreSharp.Extensions
             return source;
         }
 
+        /// <summary>
+        /// Try get specific value by key. 
+        /// </summary> 
         public static TValue GetValue<TValue>(this ExpandoObject source, string key)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

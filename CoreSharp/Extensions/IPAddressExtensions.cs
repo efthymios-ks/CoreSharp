@@ -30,15 +30,5 @@ namespace CoreSharp.Extensions
                 return false;
             }
         }
-
-        /// <summary>
-        /// Get current machines ip collection.
-        /// </summary>
-        public static IEnumerable<IPAddress> GetCurrentIpCollection()
-        {
-            string hostName = Dns.GetHostName();
-            var iphe = Dns.GetHostEntry(hostName);
-            return iphe.AddressList;
-        }
     }
 }

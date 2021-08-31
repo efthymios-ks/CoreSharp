@@ -8,10 +8,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class TcpClientExtensions
     {
-        /// <summary>
-        /// Check if TcpClient is Connected. 
-        /// Performs Flag checking, Polling and Pinging. 
-        /// </summary>
+        /// <inheritdoc cref="SocketExtensions.IsConnected(Socket, int)"/>
         public static bool IsConnected(this TcpClient client, int timeoutMillis = 5000)
         {
             _ = client ?? throw new ArgumentNullException(nameof(client));

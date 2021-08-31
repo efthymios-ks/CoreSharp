@@ -19,10 +19,9 @@ namespace CoreSharp.Extensions
             return RNG.Next(2) == 0;
         }
 
-        /// <summary>
-        /// Return random value from list of values. 
-        /// </summary>
-        public static T OneOf<T>(this Random RNG, IEnumerable<T> source) => RNG.OneOf(source?.ToArray());
+        /// <inheritdoc cref="OneOf{T}(Random, T[])"/>
+        public static T OneOf<T>(this Random RNG, IEnumerable<T> source)
+            => RNG.OneOf(source?.ToArray());
 
         /// <summary>
         /// Return random value from list of values. 
@@ -39,9 +38,7 @@ namespace CoreSharp.Extensions
             return source[index];
         }
 
-        /// <summary>
-        /// Get random double between two numbers. 
-        /// </summary>
+        /// <inheritdoc cref="NextDouble(Random, double)"/>
         public static double NextDouble(this Random RNG, double minimum, double maximum)
         {
             _ = RNG ?? throw new ArgumentNullException(nameof(RNG));
@@ -53,7 +50,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get random double. 
+        /// Get random double in given range. 
         /// </summary>
         public static double NextDouble(this Random RNG, double maximum) => RNG.NextDouble(0, maximum);
 

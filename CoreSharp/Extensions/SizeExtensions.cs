@@ -10,11 +10,9 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert Size to SizeF. 
         /// </summary>
-        public static SizeF ToSizeF(this Size source) => new SizeF(source);
+        public static SizeF ToSizeF(this Size source) => new(source);
 
-        /// <summary>
-        /// Scale Size proportionally. 
-        /// </summary>
+        /// <inheritdoc cref="SizeFExtensions.Scale(SizeF, SizeF)"/>
         public static Size Scale(this Size source, Size target)
         {
             var sourceF = source.ToSizeF();

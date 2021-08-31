@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions
     public static partial class FileInfoExtensions
     {
         /// <summary>
-        /// Change extension to file. 
+        /// Change given file extension. 
         /// </summary> 
         public static FileInfo ChangeExtension(this FileInfo file, string extension)
         {
@@ -22,8 +22,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Rename given file.
         /// </summary>
-        /// <param name="name">New file name. May include or not a new extension.</param>
-        /// <returns>FileInfo for renamed file.</returns>
+        /// <param name="name">New file name. May include or not a new extension.</param> 
         public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));

@@ -22,9 +22,7 @@ namespace CoreSharp.Extensions
             return factory.CreateDataAdapter();
         }
 
-        /// <summary>
-        /// Return a new instance of the provider's class that implements the DbParameter class. 
-        /// </summary>
+        /// <inheritdoc cref="DbProviderFactoryExtenions.CreateParameter(DbProviderFactory, string, object)" />
         public static DbParameter CreateParameter(this DbConnection connection, string parameterName, object parameterValue)
         {
             _ = connection ?? throw new ArgumentNullException(nameof(connection));
@@ -33,29 +31,23 @@ namespace CoreSharp.Extensions
             return factory.CreateParameter(parameterName, parameterValue);
         }
 
-        /// <summary>
-        /// Try to open the connection and begin a new transaction on it. 
-        /// </summary>
+        /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" /> 
         public static DbTransaction OpenTransaction(this DbConnection connection)
             => connection.OpenTransaction(IsolationLevel.ReadCommitted);
 
-        /// <summary>
-        /// Try to open the connection and begin a new transaction on it. 
-        /// </summary>
+        /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" /> 
         public static DbTransaction OpenTransaction(this DbConnection connection, IsolationLevel isolationLevel)
             => connection
                 .OpenTransactionAsync(isolationLevel)
                 .GetAwaiter()
                 .GetResult();
 
-        /// <summary>
-        /// Try to open the connection and begin a new transaction on it. 
-        /// </summary>
+        /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" /> 
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection)
             => await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted);
 
         /// <summary>
-        /// Try to open the connection and begin a new transaction on it. 
+        /// Try to open connection and begin a new transaction on it. 
         /// </summary>
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection, IsolationLevel isolationLevel)
         {
@@ -77,9 +69,7 @@ namespace CoreSharp.Extensions
             return connection.State.HasFlag(ConnectionState.Open);
         }
 
-        /// <summary>
-        /// Check if connection is available. 
-        /// </summary>
+        /// <inheritdoc cref="IsAvailableAsync(DbConnection)" /> 
         public static bool IsAvailable(this DbConnection connection)
             => connection
                     .IsAvailableAsync()

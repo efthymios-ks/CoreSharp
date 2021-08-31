@@ -8,20 +8,21 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static partial class UlongExtensions
     {
-        /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// </summary> 
-        public static string ToComputerSize(this ulong byteSize) => byteSize.ToComputerSize("G");
+        /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
+        public static string ToComputerSize(this ulong byteSize)
+            => byteSize.ToComputerSize("G");
 
-        /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// </summary> 
-        public static string ToComputerSize(this ulong byteSize, string format) => byteSize.ToComputerSize(format, CultureInfo.CurrentCulture);
+        /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
+        public static string ToComputerSize(this ulong byteSize, string format)
+            => byteSize.ToComputerSize(format, CultureInfo.CurrentCulture);
 
-        /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// </summary> 
-        public static string ToComputerSize(this ulong byteSize, IFormatProvider formatProvider) => byteSize.ToComputerSize("G", formatProvider);
+        /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
+        public static string ToComputerSize(this ulong byteSize, IFormatProvider formatProvider)
+            => byteSize.ToComputerSize("G", formatProvider);
+
+        /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
+        public static string ToComputerSizeCI(this ulong byteSize)
+            => byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Downsizes bytes and adds appropriate prefix. 
@@ -49,16 +50,10 @@ namespace CoreSharp.Extensions
             }
 
             //Get prefix
-            var prefices = new[] { string.Empty, "K", "M", "G", "T", "P", "E", "Z", "Y" };
+            var prefices = new[] { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
             var prefix = prefices[thousandCounter];
 
             return scaledValue.ToString(format, formatProvider) + prefix + "B";
         }
-
-        /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// Uses `0.###` and `CultureInfo.InvariantCulture`.
-        /// </summary> 
-        public static string ToComputerSizeCI(this ulong byteSize) => byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
     }
 }

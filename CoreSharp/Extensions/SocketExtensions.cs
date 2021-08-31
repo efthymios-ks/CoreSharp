@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions
     public static partial class SocketExtensions
     {
         /// <summary>
-        /// Check if socket is Connected using simple flag polling and pinging. 
+        /// Check if socket is connected using simple flag polling and pinging. 
         /// </summary>
         public static bool IsConnected(this Socket socket, int timeoutMillis = 5000)
         {

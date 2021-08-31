@@ -21,7 +21,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get column values.
+        /// Get DataRow column values.
         /// </summary> 
         public static IEnumerable<object> GetColumnValues(this DataRow row)
         {
@@ -33,7 +33,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Map DataRow values to TEntity.
         /// </summary>
-        public static TEntity ToEntity<TEntity>(this DataRow row, bool ignoreCase = true) where TEntity : new()
+        public static TEntity ToEntity<TEntity>(this DataRow row, bool ignoreCase = false) where TEntity : new()
         {
             _ = row ?? throw new ArgumentNullException(nameof(row));
 

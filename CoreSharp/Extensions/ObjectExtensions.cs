@@ -20,10 +20,7 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static T As<T>(this object input) where T : class => input as T;
 
-        /// <summary>
-        /// Try casting input to given type and 
-        /// return default if null or of different type. 
-        /// </summary>
+        /// <inheritdoc cref="AsOrDefault{T}(object, T)"/> 
         public static T AsOrDefault<T>(this object input)
         {
             T defaultValue = default;
@@ -51,9 +48,7 @@ namespace CoreSharp.Extensions
         }
 
         //TODO: Add unit tests 
-        /// <summary>
-        /// Shortcut for (TResult)Convert.ChangeType(CultureInfo.CurrentCulture).
-        /// </summary> 
+        /// <inheritdoc cref="ChangeType{TResult}(object, CultureInfo)"/> 
         public static TResult ChangeType<TResult>(this object value) => value.ChangeType<TResult>(CultureInfo.CurrentCulture);
 
         /// <summary>
