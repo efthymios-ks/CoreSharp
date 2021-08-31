@@ -507,5 +507,13 @@ namespace CoreSharp.Extensions
             var tail = source.TakeLast(sequence.Length);
             return tail.SequenceEqual(sequence);
         }
+
+        /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
+        public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, string filter)
+            => source?.FilterFlexible(i => $"{i}", filter);
+
+        /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
+        public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, Func<TItem, string> propertySelector, string filter)
+            => source?.AsQueryable().FilterFlexible(propertySelector, filter);
     }
 }
