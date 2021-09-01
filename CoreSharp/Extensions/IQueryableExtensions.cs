@@ -25,8 +25,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
-        public static IQueryable<TItem> FilterFlexible<TItem>(this IQueryable<TItem> source, string filter)
-            => source.FilterFlexible(i => $"{i}", filter);
+        public static IQueryable<string> FilterFlexible(this IQueryable<string> source, string filter)
+            => source.FilterFlexible(i => i, filter);
 
         /// <summary>
         /// Filter source by given value. 
