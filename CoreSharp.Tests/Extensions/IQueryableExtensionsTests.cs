@@ -11,6 +11,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Fields
         private readonly IQueryable<DummyClass> _sourceNull = null;
+        private readonly IQueryable<DummyClass> _sourceEmpty = Enumerable.Empty<DummyClass>().AsQueryable();
 
         //Methods
         [Test]
@@ -53,6 +54,55 @@ namespace CoreSharp.Extensions.Tests
 
             //Act 
             var result = source.QueryPage(pageIndex, pageSize);
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void FilterFlexible_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.FilterFlexible(i => i.Name, "a");
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void FilterFlexible_PropertySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceEmpty.FilterFlexible(null, "a");
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void FilterFlexible_FilterIsNullOrEmpty_ReturnEmptyQueryable()
+        {
+            //Arrange
+            var source = new[] { "a", "b" }.AsQueryable();
+            var expected = Enumerable.Empty<string>().AsQueryable();
+
+            //Act 
+            var result = source.FilterFlexible(i => i, "");
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void FilterFlexible_WhenCalled_ReturnFilteredItems()
+        {
+            //Arrange 
+            var source = new[] { "a", "b", "ab", ".a.b.", " A B " }.AsQueryable();
+            var expected = new[] { "ab", ".a.b.", " A B " }.AsQueryable();
+            var filter = "ab";
+
+            //Act 
+            var result = source.FilterFlexible(i => i, filter);
 
             //Assert 
             result.Should().Equal(expected);
