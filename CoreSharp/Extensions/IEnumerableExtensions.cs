@@ -315,10 +315,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="IQueryableExtensions.QueryPage{T}(IQueryable{T}, int, int)"/> 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
-        {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
-            return source.AsQueryable().GetPage(pageIndex, pageSize);
-        }
+            => IQueryableExtensions.QueryPage(source?.AsQueryable(), pageIndex, pageSize);
 
         /// <summary>
         /// Paginate collection on given size and group them by Group.Key = Page.Index. 
@@ -352,7 +349,7 @@ namespace CoreSharp.Extensions
         public static bool ContainsAll<T>(this IEnumerable<T> source, params T[] items)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
-            items = items ?? throw new ArgumentNullException(nameof(items));
+            _ = items ?? throw new ArgumentNullException(nameof(items));
 
             return items.All(i => source.Contains(i));
         }
@@ -475,9 +472,6 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
         public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, Func<TItem, string> propertySelector, string filter)
-        {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
-            return source.AsQueryable().FilterFlexible(propertySelector, filter);
-        }
+            => IQueryableExtensions.FilterFlexible(source?.AsQueryable(), propertySelector, filter);
     }
 }
