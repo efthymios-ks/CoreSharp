@@ -77,7 +77,7 @@ namespace CoreSharp.Extensions.Tests
             result.Should().BeOfType<SqlParameter>();
             result.ParameterName.Should().Be(name);
             result.Value.Should().Be(value);
-            _sqlCommand.Parameters.Should().Contain(result);
+            _sqlCommand.Parameters.Contains(result).Should().BeTrue();
         }
     }
 }
