@@ -4,7 +4,7 @@ using System.Net;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// IPAddress utilities. 
+    /// IPAddress utilities.
     /// </summary>
     public static class IPAddress
     {

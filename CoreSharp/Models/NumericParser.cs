@@ -41,9 +41,9 @@ namespace CoreSharp.Models
 
         //Methods
         /// <summary>
-        /// Parse and convert string input to TValue. 
-        /// If fails to do so, value remains untouched. 
-        /// </summary> 
+        /// Parse and convert string input to TValue.
+        /// If fails to do so, value remains untouched.
+        /// </summary>
         public bool TryParseValue(string input, ref TValue value)
         {
             try
@@ -86,12 +86,12 @@ namespace CoreSharp.Models
         }
 
         /// <summary>
-        /// Parse value to decimal?. 
-        /// Handles any type and format. 
-        /// </summary> 
+        /// Parse value to decimal?.
+        /// Handles any type and format.
+        /// </summary>
         private decimal? ParseValue(string input)
         {
-            bool isValuePercentage = input.Contains("%");
+            var isValuePercentage = input.Contains("%");
 
             //Remove all whitespace 
             input = Regex.Replace(input, @"\s+", string.Empty);
@@ -100,26 +100,28 @@ namespace CoreSharp.Models
             if (isValuePercentage)
                 input = input.Replace(_cultureInfo.NumberFormat.PercentSymbol, string.Empty);
 
-            if (decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out decimal result))
+            if (decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out var result))
             {
-                //Divive by 100, since `ToString("P")` format specifier multiplies by 100 
+                //Divide by 100, since `ToString("P")` format specifier multiplies by 100 
                 if (_isFormatPercentage || isValuePercentage)
                     return result / 100;
                 else
                     return result;
             }
             else
+            {
                 return default;
+            }
         }
 
         /// <summary>
-        /// Format TValue to string. 
-        /// </summary> 
+        /// Format TValue to string.
+        /// </summary>
         public string FormatValue(TValue value) => FormatValue(value.ChangeType<decimal?>(_cultureInfo));
 
         /// <summary>
-        /// Format decimal? to string. 
-        /// </summary> 
+        /// Format decimal? to string.
+        /// </summary>
         private string FormatValue(decimal? value) => value?.ToString(_format, _cultureInfo);
     }
 }

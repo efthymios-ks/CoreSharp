@@ -29,11 +29,11 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var info = new NumberFormatInfo();
-            int expected = (int)input;
+            var expected = (int)input;
 
             //Act 
             info.SetCurrencyPositivePattern(input);
-            int result = info.CurrencyPositivePattern;
+            var result = info.CurrencyPositivePattern;
 
             //Assert 
             result.Should().Be(expected);
@@ -59,11 +59,11 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var info = new NumberFormatInfo();
-            int expected = (int)input;
+            var expected = (int)input;
 
             //Act 
             info.SetCurrencyNegativePattern(input);
-            int result = info.CurrencyNegativePattern;
+            var result = info.CurrencyNegativePattern;
 
             //Assert 
             result.Should().Be(expected);
@@ -89,11 +89,11 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var info = new NumberFormatInfo();
-            int expected = (int)input;
+            var expected = (int)input;
 
             //Act 
             info.SetNumberNegativePattern(input);
-            int result = info.NumberNegativePattern;
+            var result = info.NumberNegativePattern;
 
             //Assert 
             result.Should().Be(expected);

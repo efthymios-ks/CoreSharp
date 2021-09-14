@@ -6,13 +6,13 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Enum extensions. 
+    /// Enum extensions.
     /// </summary>
     public static class EnumExtensions
     {
         /// <summary>
-        /// Get specific attribute from enum. 
-        /// </summary> 
+        /// Get specific attribute from enum.
+        /// </summary>
         public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
         {
             _ = value ?? throw new ArgumentNullException(nameof(value));
@@ -22,8 +22,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get <see cref="DescriptionAttribute"/> attribute from an enum.  
-        /// </summary> 
+        /// Get <see cref="DescriptionAttribute"/> attribute from an enum.
+        /// </summary>
         public static string GetDescription(this Enum value)
         {
             _ = value ?? throw new ArgumentNullException(nameof(value));
@@ -32,8 +32,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get <see cref="DisplayAttribute.Name"/> attribute from an enum.  
-        /// </summary> 
+        /// Get <see cref="DisplayAttribute.Name"/> attribute from an enum.
+        /// </summary>
         public static string GetDisplayName(this Enum value)
         {
             _ = value ?? throw new ArgumentNullException(nameof(value));

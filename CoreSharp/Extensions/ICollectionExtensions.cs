@@ -7,13 +7,13 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// ICollection extensions.
     /// </summary>
-    public static partial class ICollectionExtensions
+    public static class ICollectionExtensions
     {
         /// <inheritdoc cref="AddRange{T}(ICollection{T}, T[])"/>
         public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
             => source.AddRange(items?.ToArray());
 
-        /// <summary> 
+        /// <summary>
         /// Adds multiple items to ICollection.
         /// </summary>
         public static void AddRange<T>(this ICollection<T> source, params T[] items)

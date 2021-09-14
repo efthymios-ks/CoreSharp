@@ -13,10 +13,10 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// IEnumerable extensions.
     /// </summary>
-    public static partial class IEnumerableExtensions
+    public static class IEnumerableExtensions
     {
         /// <summary>
-        /// Check if collection is empty. 
+        /// Check if collection is empty.
         /// </summary>
         public static bool IsEmpty<T>(this IEnumerable<T> source)
         {
@@ -37,9 +37,10 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return empty collection if source is null. 
+        /// Return empty collection if source is null.
         /// </summary>
-        public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
+        public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> source)
+            => source ?? Enumerable.Empty<T>();
 
         /// <summary>
         /// Convert items to given type.
@@ -52,10 +53,7 @@ namespace CoreSharp.Extensions
         }
 
         private static IEnumerable<T> ConvertAllInternal<T>(this IEnumerable source)
-        {
-            foreach (var item in source)
-                yield return (T)Convert.ChangeType(item, typeof(T));
-        }
+            => from object item in source select (T)Convert.ChangeType(item, typeof(T));
 
         /// <summary>
         /// Exclude items from collection satisfying a condition.
@@ -69,7 +67,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return all distinct elements of the given source, 
+        /// Return all distinct elements of the given source,
         /// where "distinctness" is determined via a specified key.
         /// </summary>
         public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
@@ -80,32 +78,35 @@ namespace CoreSharp.Extensions
             return source.GroupBy(keySelector).Select(i => i.FirstOrDefault());
         }
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
-        public static string StringJoin<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, null);
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
+        public static string StringJoin<T>(this IEnumerable<T> source)
+            => source.StringJoin(" ", string.Empty, null);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>  
-        public static string StringJoinCI<T>(this IEnumerable<T> source) => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
+        public static string StringJoinCI<T>(this IEnumerable<T> source)
+            => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
-        public static string StringJoin<T>(this IEnumerable<T> source, string separator) => source.StringJoin(separator, string.Empty, null);
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
+        public static string StringJoin<T>(this IEnumerable<T> source, string separator)
+            => source.StringJoin(separator, string.Empty, null);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator)
             => source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat)
             => source.StringJoin(separator, stringFormat, null);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator, string stringFormat)
             => source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/> 
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, IFormatProvider formatProvider)
             => source.StringJoin(separator, string.Empty, formatProvider);
 
-        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>  
+        /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
             => source.StringJoin(" ", string.Empty, formatProvider);
 
@@ -134,7 +135,7 @@ namespace CoreSharp.Extensions
             return string.Join(separator, convertedItems);
         }
 
-        /// <inheritdoc cref="ToHashSet{T}(IEnumerable{T}, IEqualityComparer{T})"/> 
+        /// <inheritdoc cref="ToHashSet{T}(IEnumerable{T}, IEqualityComparer{T})"/>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
         {
             var comparer = EqualityComparer<T>.Default;
@@ -142,7 +143,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Create a HashSet from an IEnumerable. 
+        /// Create a HashSet from an IEnumerable.
         /// </summary>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
         {
@@ -153,7 +154,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Create a Collection from an IEnumerable. 
+        /// Create a Collection from an IEnumerable.
         /// </summary>
         public static Collection<T> ToCollection<T>(this IEnumerable<T> source)
         {
@@ -165,7 +166,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Create a ObservableCollection from an IEnumerable. 
+        /// Create a ObservableCollection from an IEnumerable.
         /// </summary>
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> source)
         {
@@ -175,8 +176,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Take/Skip items in a given order. 
-        /// Positive Chunk value means take. 
+        /// Take/Skip items in a given order.
+        /// Positive Chunk value means take.
         /// Negative Chunk value means skips.
         /// </summary>
         /// <example>
@@ -192,16 +193,17 @@ namespace CoreSharp.Extensions
             _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
 
             var result = new List<T>();
-            int enumeratedItems = 0;
+            var enumeratedItems = 0;
+            var sourceArray = source.ToArray();
             foreach (var chunk in sequence)
             {
-                bool isTaking = (chunk > 0);
+                var isTaking = (chunk > 0);
                 //bool isSkipping = !isTaking;
                 var absoluteChunk = Math.Abs(chunk);
 
                 if (isTaking)
                 {
-                    var taken = source
+                    var taken = sourceArray
                         .Skip(enumeratedItems)
                         .Take(absoluteChunk);
                     result.AddRange(taken);
@@ -215,7 +217,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// LINQ Except(), using a key for equality comparison.
-        /// </summary> 
+        /// </summary>
         public static IEnumerable<TEntity> Except<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
             _ = left ?? throw new ArgumentNullException(nameof(left));
@@ -227,7 +229,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// LINQ Intersect(), using a key for equality comparison.
-        /// </summary> 
+        /// </summary>
         public static IEnumerable<TEntity> Intersect<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
         {
             _ = left ?? throw new ArgumentNullException(nameof(left));
@@ -238,8 +240,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Flatten the nested sequence. 
-        /// </summary> 
+        /// Flatten the nested sequence.
+        /// </summary>
         public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> sequence)
         {
             _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
@@ -247,30 +249,28 @@ namespace CoreSharp.Extensions
             return sequence.SelectMany(source => source);
         }
 
-        /// <inheritdoc cref="Append{T}(IEnumerable{T}, T[])"/> 
-        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.Append(items?.ToArray());
+        /// <inheritdoc cref="Append{T}(IEnumerable{T}, T[])"/>
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> items)
+            => source.Append(items?.ToArray());
 
         /// <summary>
-        /// Append items to given source. 
-        /// </summary> 
+        /// Append items to given source.
+        /// </summary>
         public static IEnumerable<T> Append<T>(this IEnumerable<T> source, params T[] items)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = items ?? throw new ArgumentNullException(nameof(items));
 
-            foreach (var item in items)
-                source = Enumerable.Append(source, item);
-
-            return source;
+            return items.Aggregate(source, Enumerable.Append);
         }
 
-        /// <inheritdoc cref="ForEach{T}(IEnumerable{T}, Action{T, int})"/> 
+        /// <inheritdoc cref="ForEach{T}(IEnumerable{T}, Action{T, int})"/>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             _ = action ?? throw new ArgumentNullException(nameof(action));
 
-            void indexedAction(T item, int index) => action(item);
-            source.ForEach(indexedAction);
+            void IndexedAction(T item, int _) => action(item);
+            source.ForEach(IndexedAction);
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Mutate sequence reference. 
-        /// </summary> 
+        /// Mutate sequence reference.
+        /// </summary>
         public static IEnumerable<T> Mutate<T>(this IEnumerable<T> source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -300,8 +300,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if source contains a specific item, using a key for equality comparison. 
-        /// </summary> 
+        /// Check if source contains a specific item, using a key for equality comparison.
+        /// </summary>
         public static bool Contains<TEntity, TProperty>(this IEnumerable<TEntity> source, TEntity item, Func<TEntity, TProperty> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -313,13 +313,13 @@ namespace CoreSharp.Extensions
             return sourceKeys.Contains(itemKey);
         }
 
-        /// <inheritdoc cref="IQueryableExtensions.QueryPage{T}(IQueryable{T}, int, int)"/> 
+        /// <inheritdoc cref="IQueryableExtensions.QueryPage{T}(IQueryable{T}, int, int)"/>
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
-            => IQueryableExtensions.QueryPage(source?.AsQueryable(), pageIndex, pageSize);
+            => (source?.AsQueryable()).QueryPage(pageIndex, pageSize);
 
         /// <summary>
-        /// Paginate collection on given size and group them by Group.Key = Page.Index. 
-        /// </summary> 
+        /// Paginate collection on given size and group them by Group.Key = Page.Index.
+        /// </summary>
         public static IEnumerable<IGrouping<int, T>> GetPages<T>(this IEnumerable<T> source, int pageSize)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -332,7 +332,7 @@ namespace CoreSharp.Extensions
             //Group by page index 
             var groups = sourceArray.GroupBy(i =>
             {
-                int itemIndex = Array.IndexOf(sourceArray, i);
+                var itemIndex = Array.IndexOf(sourceArray, i);
                 var pageIndex = itemIndex / pageSize;
                 return pageIndex;
             });
@@ -340,23 +340,24 @@ namespace CoreSharp.Extensions
             return groups;
         }
 
-        /// <inheritdoc cref="ContainsAll{T}(IEnumerable{T}, T[])"/>  
-        public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items) => source.ContainsAll(items?.ToArray());
+        /// <inheritdoc cref="ContainsAll{T}(IEnumerable{T}, T[])"/>
+        public static bool ContainsAll<T>(this IEnumerable<T> source, IEnumerable<T> items)
+            => source.ContainsAll(items?.ToArray());
 
         /// <summary>
-        /// Check if source contails all given items. 
-        /// </summary> 
+        /// Check if source contains all given items.
+        /// </summary>
         public static bool ContainsAll<T>(this IEnumerable<T> source, params T[] items)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = items ?? throw new ArgumentNullException(nameof(items));
 
-            return items.All(i => source.Contains(i));
+            return items.All(source.Contains);
         }
 
         /// <summary>
-        /// Converts collection to csv. 
-        /// </summary> 
+        /// Converts collection to csv.
+        /// </summary>
         public static string ToCsv<T>(this IEnumerable<T> source, char separator = ',', bool includeHeader = true)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -383,13 +384,13 @@ namespace CoreSharp.Extensions
             return builder.ToString();
         }
 
-        /// <inheritdoc cref="GetDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/> 
+        /// <inheritdoc cref="GetDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>
         public static IDictionary<TElement, int> GetDuplicates<TElement>(this IEnumerable<TElement> source)
            => source.GetDuplicates(i => i);
 
         /// <summary>
-        /// Get key-count combination for duplicate entries. 
-        /// </summary> 
+        /// Get key-count combination for duplicate entries.
+        /// </summary>
         public static IDictionary<TKey, int> GetDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -403,18 +404,19 @@ namespace CoreSharp.Extensions
             return duplicates.ToDictionary(d => d.Key, d => d.Count());
         }
 
-        /// <inheritdoc cref="HasDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/> 
-        public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source) => source.HasDuplicates(i => i);
+        /// <inheritdoc cref="HasDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>
+        public static bool HasDuplicates<TElement>(this IEnumerable<TElement> source)
+            => source.HasDuplicates(i => i);
 
         /// <summary>
-        /// Check if there are any duplicate entries. 
-        /// </summary> 
+        /// Check if there are any duplicate entries.
+        /// </summary>
         public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
-            => source.GetDuplicates(keySelector).Any();
+            => source.GetDuplicates(keySelector).Count > 0;
 
         /// <summary>
-        /// Convert collection of entities to DataTable. 
-        /// </summary> 
+        /// Convert collection of entities to DataTable.
+        /// </summary>
         public static DataTable ToDataTable<T>(this IEnumerable<T> source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -436,12 +438,13 @@ namespace CoreSharp.Extensions
             return table;
         }
 
-        /// <inheritdoc cref="StartsWith{T}(IEnumerable{T}, T[])"/> 
-        public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.StartsWith(sequence?.ToArray());
+        /// <inheritdoc cref="StartsWith{T}(IEnumerable{T}, T[])"/>
+        public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
+            => source.StartsWith(sequence?.ToArray());
 
         /// <summary>
-        /// Check if given source starts with given sequence. 
-        /// </summary> 
+        /// Check if given source starts with given sequence.
+        /// </summary>
         public static bool StartsWith<T>(this IEnumerable<T> source, params T[] sequence)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -451,12 +454,13 @@ namespace CoreSharp.Extensions
             return head.SequenceEqual(sequence);
         }
 
-        /// <inheritdoc cref="EndsWith{T}(IEnumerable{T}, T[])"/> 
-        public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence) => source.EndsWith(sequence?.ToArray());
+        /// <inheritdoc cref="EndsWith{T}(IEnumerable{T}, T[])"/>
+        public static bool EndsWith<T>(this IEnumerable<T> source, IEnumerable<T> sequence)
+            => source.EndsWith(sequence?.ToArray());
 
         /// <summary>
-        /// Check if given source ends with given sequence. 
-        /// </summary> 
+        /// Check if given source ends with given sequence.
+        /// </summary>
         public static bool EndsWith<T>(this IEnumerable<T> source, params T[] sequence)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -472,6 +476,6 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
         public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, Func<TItem, string> propertySelector, string filter)
-            => IQueryableExtensions.FilterFlexible(source?.AsQueryable(), propertySelector, filter);
+            => (source?.AsQueryable()).FilterFlexible(propertySelector, filter);
     }
 }

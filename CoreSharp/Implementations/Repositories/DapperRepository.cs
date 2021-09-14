@@ -12,7 +12,7 @@ namespace CoreSharp.Implementations.Repositories
     public abstract class DapperRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         //Constructors 
-        public DapperRepository(DbTransaction transaction)
+        protected DapperRepository(DbTransaction transaction)
         {
             Transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
         }
@@ -27,14 +27,18 @@ namespace CoreSharp.Implementations.Repositories
 
         public abstract Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> navigation = null);
 
+        /// <summary>
         /// <example>
-        /// --Use OUTPUT to get auto-identity newly added Id 
-        /// INSERT INTO Table 
-        /// (Columns) 
-        /// OUTPUT INSERTED.ColumnId 
-        /// VALUES 
-        /// (@ColumnValues) 
-        /// </example> 
+        /// <code>
+        /// --Use OUTPUT to get auto-identity newly added Id
+        /// INSERT INTO Table
+        /// (Columns)
+        /// OUTPUT INSERTED.ColumnId
+        /// VALUES
+        /// (@ColumnValues)
+        /// </code>
+        /// </example>
+        /// </summary>
         public abstract Task AddAsync(TEntity entity);
 
         public abstract Task UpdateAsync(TEntity entity);

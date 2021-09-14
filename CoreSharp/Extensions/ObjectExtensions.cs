@@ -4,23 +4,23 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Object extensions. 
+    /// Object extensions.
     /// </summary>
-    public static partial class ObjectExtensions
+    public static class ObjectExtensions
     {
         /// <summary>
-        /// Check if the runtime type of an expression is 
-        /// compatible with a given type. 
+        /// Check if the runtime type of an expression is
+        /// compatible with a given type.
         /// </summary>
         public static bool Is<T>(this object input) => input is T;
 
         /// <summary>
-        /// Explicitly convert an expression to a given type 
-        /// if its runtime type is compatible with that type. 
+        /// Explicitly convert an expression to a given type
+        /// if its runtime type is compatible with that type.
         /// </summary>
         public static T As<T>(this object input) where T : class => input as T;
 
-        /// <inheritdoc cref="AsOrDefault{T}(object, T)"/> 
+        /// <inheritdoc cref="AsOrDefault{T}(object, T)"/>
         public static T AsOrDefault<T>(this object input)
         {
             T defaultValue = default;
@@ -30,8 +30,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Try casting input to given type and 
-        /// return default if null or of different type. 
+        /// Try casting input to given type and
+        /// return default if null or of different type.
         /// </summary>
         public static T AsOrDefault<T>(this object input, T defaultValue)
         {
@@ -48,12 +48,13 @@ namespace CoreSharp.Extensions
         }
 
         //TODO: Add unit tests 
-        /// <inheritdoc cref="ChangeType{TResult}(object, CultureInfo)"/> 
-        public static TResult ChangeType<TResult>(this object value) => value.ChangeType<TResult>(CultureInfo.CurrentCulture);
+        /// <inheritdoc cref="ChangeType{TResult}(object, CultureInfo)"/>
+        public static TResult ChangeType<TResult>(this object value)
+            => value.ChangeType<TResult>(CultureInfo.CurrentCulture);
 
         /// <summary>
         /// Shortcut for (TResult)Convert.ChangeType(CultureInfo).
-        /// </summary> 
+        /// </summary>
         public static TResult ChangeType<TResult>(this object value, CultureInfo cultureInfo)
         {
             if (value is null)

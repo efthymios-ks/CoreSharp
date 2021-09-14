@@ -13,7 +13,7 @@ namespace CoreSharp.Implementations.EntityFramework
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [System.Text.Json.Serialization.JsonIgnore]
         [Newtonsoft.Json.JsonIgnore]
-        private DateTime? dateCreated;
+        private DateTime? _dateCreated;
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -29,15 +29,15 @@ namespace CoreSharp.Implementations.EntityFramework
         [Newtonsoft.Json.JsonIgnore]
         object IKeyedEntity.Id
         {
-            get { return Id; }
-            set { Id = (TKey)value; }
+            get => Id;
+            set => Id = (TKey)value;
         }
 
         [DataType(DataType.DateTime)]
         public DateTime DateCreated
         {
-            get { return dateCreated ?? DateTime.UtcNow; }
-            set { dateCreated = value; }
+            get => _dateCreated ?? DateTime.UtcNow;
+            set => _dateCreated = value;
         }
 
         [DataType(DataType.DateTime)]

@@ -42,7 +42,7 @@ namespace CoreSharp.Extensions.Tests
         public void Sort_WhenCalled_SortByGivenKey()
         {
             //Arrange
-            var source = new List<DummyClass>
+            var source = new List<DummyClass>()
             {
                 new DummyClass(3),
                 new DummyClass(1),

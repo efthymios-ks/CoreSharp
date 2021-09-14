@@ -6,12 +6,12 @@ namespace CoreSharp.Extensions
 {
     //TODO: Add unit tests for DirectoryExtensions. 
     /// <summary>
-    /// Directory extensions. 
+    /// Directory extensions.
     /// </summary>
     public static class DirectoryExtensions
     {
         /// <summary>
-        /// Deletes all files from directory. 
+        /// Deletes all files from directory.
         /// </summary>
         public static void Clear(this DirectoryInfo input, bool recursive = false)
         {

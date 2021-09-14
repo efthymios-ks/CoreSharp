@@ -29,7 +29,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsNumeric_TypeIsNumeric_ReturnTrue(Type type, bool expected)
         {
             //Act
-            bool result = type.IsNumeric();
+            var result = type.IsNumeric();
 
             //Assert
             result.Should().Be(expected);
@@ -57,7 +57,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsDate_TypeIsDate_ReturnTrue(Type type, bool expected)
         {
             //Act
-            bool result = type.IsDate();
+            var result = type.IsDate();
 
             //Assert
             result.Should().Be(expected);

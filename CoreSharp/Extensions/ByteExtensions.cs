@@ -1,9 +1,9 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Byte extensions. 
+    /// Byte extensions.
     /// </summary>
-    public static partial class ByteExtensions
+    public static class ByteExtensions
     {
         /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/>
         public static byte Map(this byte value, byte fromLow, byte fromHigh, byte toLow, byte toHigh)

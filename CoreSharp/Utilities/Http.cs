@@ -11,8 +11,8 @@ namespace CoreSharp.Utilities
             => GetRestMethod(method?.Method);
 
         /// <summary>
-        /// Get RestMethod from HttpMethod. 
-        /// </summary> 
+        /// Get RestMethod from HttpMethod.
+        /// </summary>
         public static RestMethod GetRestMethod(string methodName)
         {
             _ = methodName ?? throw new ArgumentNullException(nameof(methodName));
@@ -38,8 +38,8 @@ namespace CoreSharp.Utilities
             => GetHttpMethod($"{method}");
 
         /// <summary>
-        /// Get HttpMethod from string name. 
-        /// </summary> 
+        /// Get HttpMethod from string name.
+        /// </summary>
         public static HttpMethod GetHttpMethod(string methodName) => GetRestMethod(methodName) switch
         {
             RestMethod.Get => HttpMethod.Get,

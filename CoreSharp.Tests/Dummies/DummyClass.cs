@@ -12,7 +12,6 @@ namespace CoreSharp.Tests.Dummies
 
         public DummyClass(int id) : this(id, default)
         {
-
         }
 
         public DummyClass(int id, string name)

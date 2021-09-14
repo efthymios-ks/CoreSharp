@@ -17,21 +17,21 @@ namespace CoreSharp.Implementations
         //Fields 
         private readonly DbConnection _connection;
         private readonly DbTransaction _transaction;
-        private int timeoutSeconds = 0;
+        private int _timeoutSeconds = 0;
 
         //Properties 
         /// <summary>
-        /// Gets or sets the wait time (in seconds) before terminating 
+        /// Gets or sets the wait time (in seconds) before terminating
         /// the attempt to execute a command and generating an error.
         /// </summary>
         public int TimeoutSeconds
         {
-            get => timeoutSeconds;
+            get => _timeoutSeconds;
             set
             {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(TimeoutSeconds), $"{nameof(TimeoutSeconds)} ({value}) cannot have negative value.");
-                timeoutSeconds = value;
+                _timeoutSeconds = value;
             }
         }
 
@@ -41,10 +41,10 @@ namespace CoreSharp.Implementations
         public CommandType QueryType { get; set; } = CommandType.Text;
 
         /// <summary>
-        /// Represents a collection of parameters associated with a SqlCommand 
-        /// and their respective mappings to columns in a DataSet. 
+        /// Represents a collection of parameters associated with a SqlCommand
+        /// and their respective mappings to columns in a DataSet.
         /// </summary>
-        public ICollection<DbParameter> Parameters { get; private set; } = new HashSet<DbParameter>();
+        public ICollection<DbParameter> Parameters { get; } = new HashSet<DbParameter>();
 
         //Constructors 
         public DbHelper(DbConnection connection)
@@ -60,8 +60,8 @@ namespace CoreSharp.Implementations
 
         //Methods 
         /// <summary>
-        /// Performs application-defined tasks associated with 
-        /// freeing, releasing, or resetting unmanaged resources. 
+        /// Performs application-defined tasks associated with
+        /// freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -79,28 +79,27 @@ namespace CoreSharp.Implementations
         }
 
         /// <summary>
-        /// Executes a Transact-SQL statement against the connection and 
+        /// Executes a Transact-SQL statement against the connection and
         /// returns the number of rows affected.
         /// </summary>
         public int ExecuteNonQuery(string query)
         {
-            Task<int> action() => ExecuteNonQueryAsync(query);
-            return Task.Run(action).GetAwaiter().GetResult();
-
+            Task<int> Action() => ExecuteNonQueryAsync(query);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Executes a Transact-SQL statement against the connection and 
+        /// Executes a Transact-SQL statement against the connection and
         /// returns the number of rows affected.
         /// </summary>
         public async Task<int> ExecuteNonQueryAsync(string query, CancellationToken cancellationToken = default)
         {
             //DbConnection Open 
             if (!_connection.IsOpen())
-                await _connection.OpenAsync(cancellationToken);
+                await _connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
             //Prepare and execute DbCommand 
-            using var command = _connection.CreateCommand();
+            await using var command = _connection.CreateCommand();
             command.Connection = _connection;
             command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
@@ -110,34 +109,34 @@ namespace CoreSharp.Implementations
             if (!Parameters.IsNullOrEmpty())
                 command.Parameters.AddRange(Parameters.ToArray());
 
-            int rowsAffected = await command.ExecuteNonQueryAsync(cancellationToken);
+            var rowsAffected = await command.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
             return rowsAffected;
         }
 
         /// <summary>
-        /// Executes the query, and returns the first column of the first 
-        /// row in the result set returned by the query. 
+        /// Executes the query, and returns the first column of the first
+        /// row in the result set returned by the query.
         /// Additional columns or rows are ignored.
         /// </summary>
         public T ExecuteScalar<T>(string query)
         {
-            Task<T> action() => ExecuteScalarAsync<T>(query);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<T> Action() => ExecuteScalarAsync<T>(query);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Executes the query, and returns the first column of the first 
-        /// row in the result set returned by the query. 
+        /// Executes the query, and returns the first column of the first
+        /// row in the result set returned by the query.
         /// Additional columns or rows are ignored.
         /// </summary>
         public async Task<T> ExecuteScalarAsync<T>(string query, CancellationToken cancellationToken = default)
         {
             //DbConnection Open 
             if (!_connection.IsOpen())
-                await _connection.OpenAsync(cancellationToken);
+                await _connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
             //Prepare and execute DbCommand 
-            using var command = _connection.CreateCommand();
+            await using var command = _connection.CreateCommand();
             command.Connection = _connection;
             command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
@@ -147,7 +146,7 @@ namespace CoreSharp.Implementations
             if (!Parameters.IsNullOrEmpty())
                 command.Parameters.AddRange(Parameters.ToArray());
 
-            return (T)await command.ExecuteScalarAsync(cancellationToken);
+            return (T)await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,8 +154,8 @@ namespace CoreSharp.Implementations
         /// </summary>
         public int Fill(string query, DataTable table)
         {
-            Task<int> action() => FillAsync(query, table);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<int> Action() => FillAsync(query, table);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -168,10 +167,10 @@ namespace CoreSharp.Implementations
 
             //DbConnection Open
             if (!_connection.IsOpen())
-                await _connection.OpenAsync(cancellationToken);
+                await _connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
             //Prepare and execute DbCommand
-            using var command = _connection.CreateCommand();
+            await using var command = _connection.CreateCommand();
             command.Connection = _connection;
             command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
@@ -181,16 +180,16 @@ namespace CoreSharp.Implementations
             if (!Parameters.IsNullOrEmpty())
                 command.Parameters.AddRange(Parameters.ToArray());
 
-            using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+            await using (var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 table.Load(reader);
 
-            int rowsAffected = table.Rows.Count;
+            var rowsAffected = table.Rows.Count;
             return rowsAffected;
         }
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public int Fill(string query, DataSet set)
         {
@@ -199,47 +198,47 @@ namespace CoreSharp.Implementations
         }
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public int Fill(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings)
             => Fill(query, set, tableMappings?.ToArray());
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public int Fill(string query, DataSet set, params DataTableMapping[] tableMappings)
         {
-            Task<int> action() => FillAsync(query, set, tableMappings);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<int> Action() => FillAsync(query, set, tableMappings);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public async Task<int> FillAsync(string query, DataSet set)
         {
             var mappings = Enumerable.Empty<DataTableMapping>();
-            return await FillAsync(query, set, mappings);
+            return await FillAsync(query, set, mappings).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public async Task<int> FillAsync(string query, DataSet set, params DataTableMapping[] tableMappings)
         {
             _ = set ?? throw new ArgumentNullException(nameof(set));
             _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
 
-            return await FillAsync(query, set, tableMappings as IEnumerable<DataTableMapping>);
+            return await FillAsync(query, set, tableMappings as IEnumerable<DataTableMapping>).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Adds or refreshes rows in the DataSet 
-        /// to match those in the data source. 
+        /// Adds or refreshes rows in the DataSet
+        /// to match those in the data source.
         /// </summary>
         public async Task<int> FillAsync(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
         {
@@ -248,10 +247,10 @@ namespace CoreSharp.Implementations
 
             //DbConnection Open 
             if (!_connection.IsOpen())
-                await _connection.OpenAsync(cancellationToken);
+                await _connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
             //Prepare DbCommand 
-            using var command = _connection.CreateCommand();
+            await using var command = _connection.CreateCommand();
             command.Connection = _connection;
             command.Transaction = _transaction;
             command.CommandTimeout = TimeoutSeconds;
@@ -267,10 +266,11 @@ namespace CoreSharp.Implementations
             {
                 adapter.SelectCommand = command;
 
-                if (!tableMappings.IsNullOrEmpty())
-                    adapter.TableMappings.AddRange(tableMappings.ToArray());
+                var tableMappingsArray = tableMappings?.ToArray();
+                if (tableMappingsArray is not null)
+                    adapter.TableMappings.AddRange(tableMappingsArray);
 
-                int rowsAffected = await Task.Run(() => adapter.Fill(set));
+                var rowsAffected = await Task.Run(() => adapter.Fill(set), cancellationToken).ConfigureAwait(false);
                 return rowsAffected;
             }
             finally

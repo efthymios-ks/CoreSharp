@@ -6,9 +6,11 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// List extensions.
     /// </summary>
-    public static partial class ListExtensions
+    public static class ListExtensions
     {
-        /// <inheritdoc cref="List{T}.Sort"/>
+        /// <inheritdoc>
+        ///     <cref>List{T}.Sort</cref>
+        /// </inheritdoc>
         public static void Sort<TEntity, TKey>(this List<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

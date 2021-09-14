@@ -9,24 +9,24 @@ namespace CoreSharp.Extensions
 {
     //TODO: Add unit tests 
     /// <summary>
-    /// XDocument extensions. 
+    /// XDocument extensions.
     /// </summary>
-    public static partial class XDocumentExtensions
+    public static class XDocumentExtensions
     {
         /// <summary>
-        /// Deserialize XDocument to T item. 
-        /// </summary> 
+        /// Deserialize XDocument to T item.
+        /// </summary>
         public static T Deserialize<T>(this XDocument document)
         {
             _ = document ?? throw new ArgumentNullException(nameof(document));
 
             var xmlSerializer = new XmlSerializer(typeof(T));
-            using var reader = document.Root.CreateReader();
-            return (T)xmlSerializer.Deserialize(reader);
+            using var reader = document.Root?.CreateReader();
+            return (T)xmlSerializer.Deserialize(reader!);
         }
 
         /// <summary>
-        /// Get all XElements on given path. 
+        /// Get all XElements on given path.
         /// </summary>
         public static IEnumerable<XElement> GetElements(this XDocument document, params string[] pathSections)
         {
@@ -37,9 +37,7 @@ namespace CoreSharp.Extensions
             var xpathExpression = string.Join("/", pathSections);
 
             //Get elements 
-            var elements = document.XPathSelectElements(xpathExpression);
-
-            return elements;
+            return document.XPathSelectElements(xpathExpression);
         }
 
         /// <inheritdoc cref="WhereAttribute(IEnumerable{XElement}, string, Predicate{string})"/>
@@ -47,7 +45,7 @@ namespace CoreSharp.Extensions
            => source.WhereAttribute(attributeName, i => i == attributeValue);
 
         /// <summary>
-        /// Filter XElement collection on attribute value predicate. 
+        /// Filter XElement collection on attribute value predicate.
         /// </summary>
         public static IEnumerable<XElement> WhereAttribute(this IEnumerable<XElement> source, string attributeName, Predicate<string> attributeValueSelector)
         {
@@ -57,7 +55,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentNullException(nameof(attributeName));
 
             return source
-                     .Where(i => attributeValueSelector(i.Attribute(attributeName).Value))
+                     .Where(i => attributeValueSelector(i.Attribute(attributeName)?.Value))
                      .ToArray();
         }
 
@@ -66,7 +64,7 @@ namespace CoreSharp.Extensions
            => source.WhereChild(childName, i => i == childValue);
 
         /// <summary>
-        /// Filter XElement collection on children predicate. 
+        /// Filter XElement collection on children predicate.
         /// </summary>
         public static IEnumerable<XElement> WhereChild(this IEnumerable<XElement> source, string childName, Predicate<string> childValueSelector)
         {
@@ -76,7 +74,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentNullException(nameof(childName));
 
             return source
-                    .Where(i => childValueSelector(i.Element(childName).Value))
+                    .Where(i => childValueSelector(i.Element(childName)?.Value))
                     .ToArray();
         }
     }

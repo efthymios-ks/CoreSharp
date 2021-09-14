@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetQueryParameters_WhenCalled_ReturnDictionaryWithQueryParameters()
         {
             //Arrange
-            string url = @"https://example.com/?name=efthymios&color=black";
+            const string url = "https://example.com/?name=efthymios&color=black";
             var uri = new Uri(url);
             var expected = new Dictionary<string, string>()
             {
@@ -54,7 +54,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetFragmentParameters_WhenCalled_ReturnDictionaryWithFragmentParameters()
         {
             //Arrange
-            string url = @"https://example.com/route#name=efthymios&color=black";
+            const string url = "https://example.com/route#name=efthymios&color=black";
             var uri = new Uri(url);
             var expected = new Dictionary<string, string>()
             {

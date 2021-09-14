@@ -1,11 +1,11 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Float extensions. 
+    /// Float extensions.
     /// </summary>
-    public static partial class FloatExtensions
+    public static class FloatExtensions
     {
-        /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/> 
+        /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/>
         public static float Map(this float value, float fromLow, float fromHigh, float toLow, float toHigh)
         {
             var dValue = (decimal)value;

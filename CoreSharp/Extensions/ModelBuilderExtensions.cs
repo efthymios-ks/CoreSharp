@@ -6,13 +6,13 @@ using System;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ModelBuilder extensions. 
+    /// ModelBuilder extensions.
     /// </summary>
-    public static partial class ModelBuilderExtensions
+    public static class ModelBuilderExtensions
     {
         /// <summary>
-        /// Configure and seed enum to database table. 
-        /// </summary> 
+        /// Configure and seed enum to database table.
+        /// </summary>
         public static ModelBuilder HasEnum<TEnum>(this ModelBuilder builder, string tableName)
             where TEnum : Enum
         {
@@ -48,7 +48,7 @@ namespace CoreSharp.Extensions
 
             foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
             {
-                var entry = new EnumShadowEntity<TEnum>
+                var entry = new EnumShadowEntity<TEnum>()
                 {
                     Value = value,
                     Name = $"{value}"

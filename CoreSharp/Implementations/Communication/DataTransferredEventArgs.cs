@@ -2,15 +2,15 @@
 
 namespace CoreSharp.Implementations.Communication
 {
-    public class DataTransferedEventArgs : EventArgs
+    public class DataTransferredEventArgs : EventArgs
     {
         //Constructors 
-        public DataTransferedEventArgs(byte[] data)
+        public DataTransferredEventArgs(byte[] data)
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
 
         //Properties 
-        public byte[] Data { get; private set; } = Array.Empty<byte>();
+        public byte[] Data { get; } = Array.Empty<byte>();
     }
 }

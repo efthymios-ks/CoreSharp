@@ -5,15 +5,13 @@ using System.Dynamic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ExpandoObject extensions. 
+    /// ExpandoObject extensions.
     /// </summary>
     public static class ExpandoObjectExtensions
     {
         /// <summary>
-        /// Convert to dictionary. 
+        /// Convert to dictionary.
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
         public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -22,8 +20,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Try get specific value by key. 
-        /// </summary> 
+        /// Try get specific value by key.
+        /// </summary>
         public static TValue GetValue<TValue>(this ExpandoObject source, string key)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

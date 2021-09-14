@@ -6,7 +6,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DataTable extensions. 
+    /// DataTable extensions.
     /// </summary>
     public static class DataTableExtensions
     {
@@ -22,7 +22,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Map DataTable values to TEntity collection. 
+        /// Map DataTable values to TEntity collection.
         /// </summary>
         public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
         {
@@ -32,9 +32,6 @@ namespace CoreSharp.Extensions
         }
 
         private static IEnumerable<TEntity> ToEntitiesInternal<TEntity>(this DataTable table, bool ignoreCase) where TEntity : new()
-        {
-            foreach (DataRow row in table.Rows)
-                yield return row.ToEntity<TEntity>(ignoreCase);
-        }
+            => from DataRow row in table.Rows select row.ToEntity<TEntity>(ignoreCase);
     }
 }

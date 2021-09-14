@@ -3,14 +3,15 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Size extensions. 
+    /// Size extensions.
     /// </summary>
     public static class SizeExtensions
     {
         /// <summary>
-        /// Convert Size to SizeF. 
+        /// Convert Size to SizeF.
         /// </summary>
-        public static SizeF ToSizeF(this Size source) => new(source);
+        public static SizeF ToSizeF(this Size source)
+            => new(source);
 
         /// <inheritdoc cref="SizeFExtensions.Scale(SizeF, SizeF)"/>
         public static Size Scale(this Size source, Size target)

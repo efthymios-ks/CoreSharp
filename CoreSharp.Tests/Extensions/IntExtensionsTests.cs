@@ -36,9 +36,9 @@ namespace CoreSharp.Extensions.Tests
         public void January_WhenCalled_ReturnJanuaryDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 1;
-            int day = 1;
+            const int year = 2021;
+            const int month = 1;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -64,9 +64,9 @@ namespace CoreSharp.Extensions.Tests
         public void February_WhenCalled_ReturnFebruaryDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 2;
-            int day = 1;
+            const int year = 2021;
+            const int month = 2;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -92,9 +92,9 @@ namespace CoreSharp.Extensions.Tests
         public void March_WhenCalled_ReturnMarchDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 3;
-            int day = 1;
+            const int year = 2021;
+            const int month = 3;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -120,9 +120,9 @@ namespace CoreSharp.Extensions.Tests
         public void April_WhenCalled_ReturnAprilDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 4;
-            int day = 1;
+            const int year = 2021;
+            const int month = 4;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -148,9 +148,9 @@ namespace CoreSharp.Extensions.Tests
         public void May_WhenCalled_ReturnMayDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 5;
-            int day = 1;
+            const int year = 2021;
+            const int month = 5;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -176,9 +176,9 @@ namespace CoreSharp.Extensions.Tests
         public void June_WhenCalled_ReturnJuneDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 6;
-            int day = 1;
+            const int year = 2021;
+            const int month = 6;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -204,9 +204,9 @@ namespace CoreSharp.Extensions.Tests
         public void July_WhenCalled_ReturnJulyDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 7;
-            int day = 1;
+            const int year = 2021;
+            const int month = 7;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -232,9 +232,9 @@ namespace CoreSharp.Extensions.Tests
         public void August_WhenCalled_ReturnAugustDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 8;
-            int day = 1;
+            const int year = 2021;
+            const int month = 8;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -260,9 +260,9 @@ namespace CoreSharp.Extensions.Tests
         public void September_WhenCalled_ReturnSeptemberDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 9;
-            int day = 1;
+            const int year = 2021;
+            const int month = 9;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -288,9 +288,9 @@ namespace CoreSharp.Extensions.Tests
         public void October_WhenCalled_ReturnOctoberDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 10;
-            int day = 1;
+            const int year = 2021;
+            const int month = 10;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -316,9 +316,9 @@ namespace CoreSharp.Extensions.Tests
         public void November_WhenCalled_ReturnNovemberDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 11;
-            int day = 1;
+            const int year = 2021;
+            const int month = 11;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act
@@ -344,9 +344,9 @@ namespace CoreSharp.Extensions.Tests
         public void December_WhenCalled_ReturnDecemberDate()
         {
             //Arrange 
-            int year = 2021;
-            int month = 12;
-            int day = 1;
+            const int year = 2021;
+            const int month = 12;
+            const int day = 1;
             var date = new DateTime(year, month, day);
 
             //Act

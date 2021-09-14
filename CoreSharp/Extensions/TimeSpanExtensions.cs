@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// TimeSpan extensions. 
+    /// TimeSpan extensions.
     /// </summary>
-    public static partial class TimeSpanExtensions
+    public static class TimeSpanExtensions
     {
         /// <summary>
-        /// Convert TimeSpan to human readable string. 
+        /// Convert TimeSpan to human readable string.
         /// </summary>
         public static string ToStringReadable(this TimeSpan time)
         {

@@ -40,8 +40,8 @@ namespace CoreSharp.Extensions.Tests
         public void Truncate_WhenCalled_ReturnTruncatedString()
         {
             //Arrange
-            string input = "12345";
-            string expected = "123";
+            const string input = "12345";
+            const string expected = "123";
 
             //Act
             var result = input.Truncate(3);
@@ -64,10 +64,10 @@ namespace CoreSharp.Extensions.Tests
         public void FormatAsciiControls_WhenCalled_ReplaceAsciiControlCharsAndReturn()
         {
             //Arrange
-            char SOH = Convert.ToChar(1);
-            char EOT = Convert.ToChar(4);
-            string input = $"{SOH}_Hello_{EOT}";
-            string expected = "<SOH>_Hello_<EOT>";
+            var SOH = Convert.ToChar(1);
+            var EOT = Convert.ToChar(4);
+            var input = $"{SOH}_Hello_{EOT}";
+            const string expected = "<SOH>_Hello_<EOT>";
 
             //Act
             var result = input.FormatAsciiControls('<', '>');
@@ -102,7 +102,7 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_WhenCalled_SplitInputInChunks()
         {
             //Arrange 
-            string input = "12345";
+            const string input = "12345";
             var expected = new[] { "12", "34", "5" };
 
             //Act
@@ -136,11 +136,10 @@ namespace CoreSharp.Extensions.Tests
         public void PadCenter_WhenCalled_PadCenterAndReturnInput()
         {
             //Arrange
-            string input = "123";
-            char padCharacter = ' ';
-            int totalWidth = 7;
-            string expected = "  123  ";
-
+            const string input = "123";
+            const char padCharacter = ' ';
+            const int totalWidth = 7;
+            const string expected = "  123  ";
 
             //Act
             var result = input.PadCenter(totalWidth, padCharacter);
@@ -173,9 +172,9 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveFirst_WhenCalled_RemoveFirstValueOccurence()
         {
             //Arrange
-            string input = "1 A 2 A 3 A";
-            string value = "A";
-            string expected = "1  2 A 3 A";
+            const string input = "1 A 2 A 3 A";
+            const string value = "A";
+            const string expected = "1  2 A 3 A";
 
             //Act
             var result = input.RemoveFirst(value);
@@ -208,9 +207,9 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveLast_WhenCalled_RemoveFirstValueOccurence()
         {
             //Arrange
-            string input = "1 A 2 A 3 A";
-            string value = "A";
-            string expected = "1 A 2 A 3 ";
+            const string input = "1 A 2 A 3 A";
+            const string value = "A";
+            const string expected = "1 A 2 A 3 ";
 
             //Act
             var result = input.RemoveLast(value);
@@ -243,9 +242,9 @@ namespace CoreSharp.Extensions.Tests
         public void RemoveAll_WhenCalled_RemoveFirstValueOccurence()
         {
             //Arrange
-            string input = "1 A 2 A 3 A";
-            string value = "A";
-            string expected = "1  2  3 ";
+            const string input = "1 A 2 A 3 A";
+            const string value = "A";
+            const string expected = "1  2  3 ";
 
             //Act
             var result = input.RemoveAll(value);
@@ -278,8 +277,8 @@ namespace CoreSharp.Extensions.Tests
         public void Left_WhenCalled_ReturnLeftSubstring()
         {
             //Arrange
-            string input = "12345";
-            string expected = "123";
+            const string input = "12345";
+            const string expected = "123";
 
             //Act
             var result = input.Left(3);
@@ -312,8 +311,8 @@ namespace CoreSharp.Extensions.Tests
         public void Right_WhenCalled_ReturnRightSubstring()
         {
             //Arrange
-            string input = "12345";
-            string expected = "345";
+            const string input = "12345";
+            const string expected = "345";
 
             //Act
             var result = input.Right(3);
@@ -358,8 +357,8 @@ namespace CoreSharp.Extensions.Tests
         public void Mid_WhenCalled_ReturnMidSubstring()
         {
             //Arrange
-            string input = "12345";
-            string expected = "234";
+            const string input = "12345";
+            const string expected = "234";
 
             //Act
             var result = input.Mid(1, 3);
@@ -402,10 +401,10 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWith_WhenCalled_ReturnFormattedString()
         {
             //Arrange
-            string format = "{0}";
-            int value = 1000;
+            const string format = "{0}";
+            const int value = 1000;
             var culture = CultureInfo.CurrentCulture;
-            string expected = string.Format(culture, format, value);
+            var expected = string.Format(culture, format, value);
 
             //Act
             var result = format.FormatWith(culture, value);
@@ -418,10 +417,10 @@ namespace CoreSharp.Extensions.Tests
         public void FormatWithCI_WhenCalled_FormatStringWithCultureInvariant()
         {
             //Arrange
-            string format = "{0}";
-            int value = 1000;
+            const string format = "{0}";
+            const int value = 1000;
             var culture = CultureInfo.InvariantCulture;
-            string expected = "1000";
+            const string expected = "1000";
 
             //Act
             var result = format.FormatWith(culture, value);
@@ -641,9 +640,9 @@ namespace CoreSharp.Extensions.Tests
         public void ToEntity_WhenCalled_MapItemPropertiesAndReturnTrue()
         {
             //Arrange
-            int id = 1;
-            string name = "Efthymios";
-            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
+            const int id = 1;
+            const string name = "Efthymios";
+            var json = "{\"id\": {id}, \"name\": \"{name}\"}";
             json = json
                 .Replace("{id}", $"{id}")
                 .Replace("{name}", name);
@@ -660,16 +659,15 @@ namespace CoreSharp.Extensions.Tests
         public void ToExpandoObject_WhenJsonIsJObject_ReturnExpandoObject()
         {
             //Arrange
-            int id = 1;
-            string name = "Efthymios";
-            string json = "{\"id\": {id}, \"name\": \"{name}\"}";
+            const int id = 1;
+            const string name = "Efthymios";
+            var json = "{\"id\": {id}, \"name\": \"{name}\"}";
             json = json
                 .Replace("{id}", $"{id}")
                 .Replace("{name}", name);
 
             //Act
-            dynamic result = json.ToExpandoObject();
-
+            var result = json.ToExpandoObject();
 
             //Assert  
             ((int)result.id).Should().Be(id);
@@ -680,15 +678,15 @@ namespace CoreSharp.Extensions.Tests
         public void ToExpandoObject_WhenJsonIsJArray_ReturnIEnumerableExpandoObject()
         {
             //Arrange
-            int id = 1;
-            string name = "Efthymios";
-            string json = "[{\"id\": {id}, \"name\": \"{name}\"}]";
+            const int id = 1;
+            const string name = "Efthymios";
+            var json = "[{\"id\": {id}, \"name\": \"{name}\"}]";
             json = json
                 .Replace("{id}", $"{id}")
                 .Replace("{name}", name);
 
             //Act
-            dynamic result = json.ToExpandoObject();
+            var result = json.ToExpandoObject();
 
             //Assert 
             ((int)result[0].id).Should().Be(id);
@@ -715,7 +713,7 @@ namespace CoreSharp.Extensions.Tests
                 "Line 2",
                 "Line 3"
             };
-            string joined = string.Join(Environment.NewLine, lines);
+            var joined = string.Join(Environment.NewLine, lines);
 
             //Act
             var result = joined.GetLines();
@@ -754,14 +752,14 @@ namespace CoreSharp.Extensions.Tests
         public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
         {
             //Arrange
-            string input = "Key1, Key2, Key3";
-            var dictionary = new Dictionary<string, int>
+            const string input = "Key1, Key2, Key3";
+            var dictionary = new Dictionary<string, int>()
             {
                 { "Key1", 1 },
                 { "Key2", 2 },
                 { "Key3", 3 }
             };
-            var expected = "1, 2, 3";
+            const string expected = "1, 2, 3";
 
             //Act
             var result = input.Replace(dictionary);
@@ -959,8 +957,8 @@ namespace CoreSharp.Extensions.Tests
         public void ToDateTime_InputValid_ReturnDateTime()
         {
             //Arrange 
-            var expected = new DateTime(2021, 5, 4, 11, 17, 45);
-            var dateTimeFormat = "u";
+            DateTime expected = new(2021, 5, 4, 11, 17, 45);
+            const string dateTimeFormat = "u";
             var formatProvider = CultureInfo.InvariantCulture;
             var input = expected.ToString(dateTimeFormat, formatProvider);
 

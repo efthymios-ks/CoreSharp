@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// EntityTypeBuilder extensions. 
+    /// EntityTypeBuilder extensions.
     /// </summary>
-    public static partial class EntityTypeBuilderExtensions
+    public static class EntityTypeBuilderExtensions
     {
         /// <summary>
-        /// One-to-many relation with an enum. 
-        /// </summary> 
+        /// One-to-many relation with an enum.
+        /// </summary>
         public static ReferenceCollectionBuilder<EnumShadowEntity<TEnum>, TEntity> HasOneEnum<TEntity, TEnum>(this EntityTypeBuilder<TEntity> builder, Expression<Func<TEntity, TEnum>> propertySelector)
             where TEntity : class
             where TEnum : Enum

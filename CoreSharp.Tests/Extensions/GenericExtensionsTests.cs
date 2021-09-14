@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsIn_ItemIsNull_ThrowArgumentException()
         {
             //Arrange 
-            string item = null;
+            const string item = null;
 
             //Act 
             Action action = () => item.IsIn("1", "2");
@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsIn_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            string item = "1";
+            const string item = "1";
 
             //Act 
             Action action = () => item.IsIn(null);
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions.Tests
         public void IsIn_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange 
-            string item = "1";
+            const string item = "1";
             var source = new[] { "1", "2" };
 
             //Act 
@@ -105,7 +105,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var item = new DummyClass(1, "Red");
-            string expected = @"{""Id"":1,""Name"":""Red""}";
+            const string expected = @"{""Id"":1,""Name"":""Red""}";
             var settings = new JsonSerializerSettings()
             {
                 Formatting = Formatting.None
@@ -163,7 +163,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             DummyClass left = null;
-            DummyClass right = new();
+            var right = new DummyClass();
 
             //Act
             var result = left.JsonEquals(right);
@@ -176,7 +176,7 @@ namespace CoreSharp.Extensions.Tests
         public void JsonEquals_OnlyRightIsNull_ReturnFalse()
         {
             //Arrange
-            DummyClass left = new();
+            var left = new DummyClass();
             DummyClass right = null;
 
             //Act
@@ -204,8 +204,8 @@ namespace CoreSharp.Extensions.Tests
         public void JsonEquals_PropeprtiesDontMatch_ReturnFalse()
         {
             //Arrange 
-            DummyClass left = new(1, "Black");
-            DummyClass right = new(1, "White");
+            var left = new DummyClass(1, "Black");
+            var right = new DummyClass(1, "White");
 
             //Act 
             var result = left.JsonEquals(right);
@@ -218,8 +218,8 @@ namespace CoreSharp.Extensions.Tests
         public void JsonEquals_PropertiesMatch_ReturnTrue()
         {
             //Arrange
-            DummyClass left = new(1, "Black");
-            DummyClass right = new(1, "Black");
+            var left = new DummyClass(1, "Black");
+            var right = new DummyClass(1, "Black");
 
             //Act
             var result = left.JsonEquals(right);

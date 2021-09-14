@@ -12,6 +12,6 @@ namespace CoreSharp.Implementations.Communication.Tcp
         }
 
         //Properties 
-        public SocketError Error { get; private set; } = SocketError.SocketError;
+        public SocketError Error { get; }
     }
 }

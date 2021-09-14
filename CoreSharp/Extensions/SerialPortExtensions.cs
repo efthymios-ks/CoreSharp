@@ -5,18 +5,18 @@ using CoreSharp.Models;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// SerialPort extensions. 
+    /// SerialPort extensions.
     /// </summary>
-    public static partial class SerialPortExtensions
+    public static class SerialPortExtensions
     {
         /// <summary>
-        /// Extract SerialPortSettings from SerialPort. 
+        /// Extract SerialPortSettings from SerialPort.
         /// </summary>
         public static SerialPortSettings GetSettings(this SerialPort port)
         {
             _ = port ?? throw new ArgumentNullException(nameof(port));
 
-            return new()
+            return new SerialPortSettings
             {
                 PortName = port.PortName,
                 BaudRate = port.BaudRate,

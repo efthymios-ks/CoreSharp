@@ -34,11 +34,11 @@ namespace CoreSharp.Extensions.Tests
         public void AppendFormatLine_WhenCalled_AppendFormattedStringAndNewLine()
         {
             //Arrange
-            string format = "{0}";
-            int value = 1000;
+            const string format = "{0}";
+            const int value = 1000;
             var culture = CultureInfo.CurrentCulture;
-            string formatResult = string.Format(culture, format, value);
-            string expected = formatResult + Environment.NewLine;
+            var formatResult = string.Format(culture, format, value);
+            var expected = formatResult + Environment.NewLine;
 
             //Act
             var result = _builder.AppendFormatLine(culture, format, value);
@@ -51,10 +51,10 @@ namespace CoreSharp.Extensions.Tests
         public void AppendFormatLineCI_WhenCalledAppendStringFormatWithInvariantCultureArgument()
         {
             //Arrange
-            string format = "{0}";
-            int value = 1000;
-            string formatResult = string.Format(CultureInfo.InvariantCulture, format, value);
-            string expected = formatResult + Environment.NewLine;
+            const string format = "{0}";
+            const int value = 1000;
+            var formatResult = string.Format(CultureInfo.InvariantCulture, format, value);
+            var expected = formatResult + Environment.NewLine;
 
             //Act
             var result = _builder.AppendFormatLineCI(format, value);

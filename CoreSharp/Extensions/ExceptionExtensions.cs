@@ -7,11 +7,11 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// Exception extensions.
     /// </summary>
-    public static partial class ExceptionExtensions
+    public static class ExceptionExtensions
     {
         /// <summary>
-        /// Get all messages including nested exceptions. 
-        /// </summary> 
+        /// Get all messages including nested exceptions.
+        /// </summary>
         public static string FlattenMessages(this Exception exception)
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
@@ -25,8 +25,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return unfolded list of exceptions including nested ones. 
-        /// </summary> 
+        /// Return unfolded list of exceptions including nested ones.
+        /// </summary>
         public static IEnumerable<Exception> Flatten(this Exception exception)
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
@@ -40,12 +40,12 @@ namespace CoreSharp.Extensions
 
             if (exception is AggregateException aggregateEx)
             {
-                foreach (Exception innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.Flatten()))
+                foreach (var innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.Flatten()))
                     yield return innerEx;
             }
             else if (exception.InnerException is not null)
             {
-                foreach (Exception innerEx in exception.InnerException.Flatten())
+                foreach (var innerEx in exception.InnerException.Flatten())
                     yield return innerEx;
             }
         }

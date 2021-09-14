@@ -18,8 +18,8 @@ namespace CoreSharp.Extensions.Tests
         public void QueryPage_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange
-            int pageIndex = 0;
-            int pageSize = 0;
+            const int pageIndex = 0;
+            const int pageSize = 0;
 
             //Act 
             Action action = () => _sourceNull.QueryPage(pageIndex, pageSize);
@@ -48,8 +48,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var source = new[] { 1, 2, 3, 4, 5 }.AsQueryable();
-            var pageIndex = 1;
-            var pageSize = 2;
+            const int pageIndex = 1;
+            const int pageSize = 2;
             var expected = new[] { 3, 4 }.AsQueryable();
 
             //Act 
@@ -87,7 +87,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = Enumerable.Empty<string>().AsQueryable();
 
             //Act 
-            var result = source.FilterFlexible(i => i, "");
+            var result = source.FilterFlexible("");
 
             //Assert 
             result.Should().Equal(expected);
@@ -99,10 +99,10 @@ namespace CoreSharp.Extensions.Tests
             //Arrange 
             var source = new[] { "a", "b", "ab", ".a.b.", " A B " }.AsQueryable();
             var expected = new[] { "ab", ".a.b.", " A B " }.AsQueryable();
-            var filter = "ab";
+            const string filter = "ab";
 
             //Act 
-            var result = source.FilterFlexible(i => i, filter);
+            var result = source.FilterFlexible(filter);
 
             //Assert 
             result.Should().Equal(expected);

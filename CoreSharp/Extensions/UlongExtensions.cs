@@ -6,7 +6,7 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// ulong extensions.
     /// </summary>
-    public static partial class UlongExtensions
+    public static class UlongExtensions
     {
         /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
         public static string ToComputerSize(this ulong byteSize)
@@ -25,13 +25,13 @@ namespace CoreSharp.Extensions
             => byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// Downsizes bytes and adds appropriate prefix. 
-        /// </summary> 
+        /// Downsizes bytes and adds appropriate prefix.
+        /// </summary>
         public static string ToComputerSize(this ulong byteSize, string format, IFormatProvider formatProvider)
         {
             //Scale down bytes  
             const int thousand = 1024;
-            int thousandCounter = 0;
+            var thousandCounter = 0;
 
             //Integral division 
             var integralLimit = (ulong)Math.Pow(thousand, 2);
@@ -50,8 +50,8 @@ namespace CoreSharp.Extensions
             }
 
             //Get prefix
-            var prefices = new[] { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
-            var prefix = prefices[thousandCounter];
+            var prefixes = new[] { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
+            var prefix = prefixes[thousandCounter];
 
             return scaledValue.ToString(format, formatProvider) + prefix + "B";
         }

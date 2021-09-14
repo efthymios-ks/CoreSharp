@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IPAddress extensions. 
+    /// IPAddress extensions.
     /// </summary>
-    public static partial class IPAddressExtensions
+    public static class IPAddressExtensions
     {
         /// <summary>
-        /// Ping host. 
+        /// Ping host.
         /// </summary>
         public static bool Ping(this IPAddress address, int timeoutMillis = 5000)
         {
@@ -23,7 +22,7 @@ namespace CoreSharp.Extensions
             {
                 using var ping = new Ping();
                 var reply = ping.Send($"{address}", timeoutMillis);
-                return reply.Status == IPStatus.Success;
+                return reply is { Status: IPStatus.Success };
             }
             catch
             {

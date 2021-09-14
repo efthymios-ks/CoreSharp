@@ -40,7 +40,7 @@ namespace CoreSharp.Sources
         internal static char US => Convert.ToChar(31);
 
         /// <summary>
-        /// List with ASCII control characters and their abbreviations. 
+        /// List with ASCII control characters and their abbreviations.
         /// </summary>
         internal static readonly IDictionary<string, char> Dictionary = new Dictionary<string, char>()
         {

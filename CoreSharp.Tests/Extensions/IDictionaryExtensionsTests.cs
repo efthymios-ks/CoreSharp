@@ -46,7 +46,7 @@ namespace CoreSharp.Extensions.Tests
         public void TryGet_KeyFound_ReturnTrueAndValue()
         {
             //Act 
-            var result = _dictionary.TryGet("1", out int value);
+            var result = _dictionary.TryGet("1", out var value);
 
             //Assert
             result.Should().BeTrue();
@@ -132,7 +132,7 @@ namespace CoreSharp.Extensions.Tests
             expected.Remove("3");
 
             //Act 
-            var removed = _dictionary.TryRemove("3", out int value);
+            var removed = _dictionary.TryRemove("3", out var value);
 
             //Assert
             removed.Should().BeTrue();
@@ -203,7 +203,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new Dictionary<string, int>();
             foreach (var entry in _dictionary)
                 expected.Add(entry.Key, entry.Value);
-            static int updateAction(string key, int value)
+            static int UpdateAction(string _, int value)
             {
                 return value = 2;
             }
@@ -211,7 +211,7 @@ namespace CoreSharp.Extensions.Tests
             expected["1"] = 2;
 
             //Act 
-            var result = _dictionary.TryUpdate("1", updateAction);
+            var result = _dictionary.TryUpdate("1", UpdateAction);
 
             //Assert
             result.Should().BeTrue();
@@ -285,7 +285,7 @@ namespace CoreSharp.Extensions.Tests
             expected["3"] = 300;
 
             //Act 
-            var result = _dictionary.AddOrUpdate("3", -3, v => 300);
+            var result = _dictionary.AddOrUpdate("3", -3, _ => 300);
 
             //Assert
             result.Should().Be(300);
@@ -406,8 +406,8 @@ namespace CoreSharp.Extensions.Tests
                 { "color", "Black" },
                 { "count", 10 }
             };
-            bool encode = false;
-            string expected = "name=Efthymios Koktsidis&color=Black&count=10";
+            const bool encode = false;
+            const string expected = "name=Efthymios Koktsidis&color=Black&count=10";
 
             //Act
             var result = parameters.ToUrlQueryString(encode);
@@ -426,8 +426,8 @@ namespace CoreSharp.Extensions.Tests
                 { "color", "Black" },
                 { "count", 10 }
             };
-            bool encode = true;
-            string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
+            const bool encode = true;
+            const string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
 
             //Act
             var result = parameters.ToUrlQueryString(encode);

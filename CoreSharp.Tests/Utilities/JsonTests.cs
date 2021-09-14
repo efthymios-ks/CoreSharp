@@ -6,8 +6,6 @@ namespace CoreSharp.Utilities.Tests
     [TestFixture]
     public class JsonTests
     {
-
-
         [Test]
         [TestCase(null, true)]
         [TestCase(" ", true)]

@@ -17,8 +17,8 @@ namespace CoreSharp.Extensions.Tests
         [SetUp]
         public void SetUp()
         {
-            using (var connection = new SqlConnection())
-                _sqlFactory = DbProviderFactories.GetFactory(connection);
+            using var connection = new SqlConnection();
+            _sqlFactory = DbProviderFactories.GetFactory(connection);
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace CoreSharp.Extensions.Tests
         public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
         {
             //Arrange
-            string name = "{name}";
-            string value = "Efthymios";
+            const string name = "{name}";
+            const string value = "Efthymios";
 
             //Act
             var result = _sqlFactory.CreateParameter(name, value);

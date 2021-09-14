@@ -22,7 +22,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Get DataRow column values.
-        /// </summary> 
+        /// </summary>
         public static IEnumerable<object> GetColumnValues(this DataRow row)
         {
             _ = row ?? throw new ArgumentNullException(nameof(row));
@@ -39,19 +39,19 @@ namespace CoreSharp.Extensions
 
             //Object setup 
             var result = new TEntity();
-            Type impliedType = typeof(TEntity);
+            var impliedType = typeof(TEntity);
             var properties = impliedType.GetProperties();
             var fields = impliedType.GetFields();
 
             //DataTable setup 
-            var columnNames = row.GetColumnNames();
+            var columnNames = row.GetColumnNames().ToArray();
 
             //Scan Properties
             foreach (var property in properties)
             {
                 //Check if Property exists  
                 var comparison = ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture;
-                var foundColumnName = columnNames.FirstOrDefault(i => i.Equals(property.Name, comparison));
+                var foundColumnName = Array.Find(columnNames, i => i.Equals(property.Name, comparison));
                 if (string.IsNullOrWhiteSpace(foundColumnName))
                     continue;
 
@@ -59,11 +59,11 @@ namespace CoreSharp.Extensions
                 var value = row[foundColumnName] ?? DBNull.Value;
 
                 //Extract useful flags 
-                bool valueIsNull = value == DBNull.Value;
-                bool propertyIsNullable = property.PropertyType.IsValueType && (Nullable.GetUnderlyingType(property.PropertyType) is not null);
-                bool propertyIsEnum = property.PropertyType.IsEnum;
-                bool isSameType = property.PropertyType == value.GetType();
-                bool valueIsAssignable = property.PropertyType.IsAssignableFrom(value.GetType());
+                var valueIsNull = value == DBNull.Value;
+                var propertyIsNullable = property.PropertyType.IsValueType && (Nullable.GetUnderlyingType(property.PropertyType) is not null);
+                var propertyIsEnum = property.PropertyType.IsEnum;
+                var isSameType = property.PropertyType == value.GetType();
+                var valueIsAssignable = property.PropertyType.IsInstanceOfType(value);
 
                 /*
                     With the following checks, 
@@ -74,7 +74,7 @@ namespace CoreSharp.Extensions
                 */
 
                 //Fix value 
-                object finalValue = value;
+                var finalValue = value;
 
                 //Property=Nullable && Value=Null, because you cannot assign DBNull.Value. 
                 if (propertyIsNullable && valueIsNull)
@@ -85,7 +85,7 @@ namespace CoreSharp.Extensions
                     finalValue = property.GetValue(result);
 
                 //Value!=Null && DifferentType && Property!=Enum, to convert (mostly numeric) variables. 
-                else if ((!valueIsNull) && (!isSameType) && (!propertyIsEnum))
+                else if (!valueIsNull && !isSameType && !propertyIsEnum)
                     finalValue = Convert.ChangeType(value, property.PropertyType);
 
                 property.SetValue(result, finalValue);

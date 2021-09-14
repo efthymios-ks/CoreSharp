@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IComparable extensions. 
+    /// IComparable extensions.
     /// </summary>
-    public static partial class IComparableExtensions
+    public static class IComparableExtensions
     {
         /// <summary>
-        /// Check if an IComparable object is between two values. 
+        /// Check if an IComparable object is between two values.
         /// </summary>
         public static bool IsBetween<T>(this T value, T from, T to, bool includeEnds = true) where T : IComparable<T>
         {

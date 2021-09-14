@@ -1,12 +1,12 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Decimal extensions. 
+    /// Decimal extensions.
     /// </summary>
-    public static partial class DecimalExtensions
+    public static class DecimalExtensions
     {
         /// <summary>
-        /// Re-maps a number from one range to another. 
+        /// Re-maps a number from one range to another.
         /// </summary>
         public static decimal Map(this decimal value, decimal fromLow, decimal fromHigh, decimal toLow, decimal toHigh)
             => (value - fromLow) * ((toHigh - toLow) / (fromHigh - fromLow)) + toLow;

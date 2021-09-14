@@ -3,10 +3,10 @@ using System.IO.Pipes;
 
 namespace CoreSharp.Implementations.Communication.NamedPipes
 {
-    public class PipeDataTransfered : DataTransferedEventArgs
+    public class PipeDataTransferred : DataTransferredEventArgs
     {
         //Constructors 
-        public PipeDataTransfered(NamedPipeServerStream pipe, byte[] data) : base(data)
+        public PipeDataTransferred(NamedPipeServerStream pipe, byte[] data) : base(data)
         {
             Pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
         }

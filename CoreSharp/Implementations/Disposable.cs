@@ -3,14 +3,14 @@
 namespace CoreSharp.Implementations
 {
     /// <summary>
-    /// Automatic and safe Disposing. 
+    /// Automatic and safe Disposing.
     /// Just override the two CleanUp methods.
     /// </summary>
     public abstract class Disposable : IDisposable
     {
         //Fields
         private readonly object _lock = new();
-        private bool disposed = false;
+        private bool _disposed;
 
         //Constructors
         /// <summary>
@@ -23,7 +23,7 @@ namespace CoreSharp.Implementations
 
         //Methods
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, 
+        /// Performs application-defined tasks associated with freeing,
         /// releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -33,17 +33,17 @@ namespace CoreSharp.Implementations
         }
 
         /// <summary>
-        /// Helper method to call from two locations. 
+        /// Helper method to call from two locations.
         /// The actually Disposal is performed here.
         /// </summary>
         private void DisposeNativeResources(bool disposeManagedResources)
         {
             lock (_lock)
             {
-                if (disposed)
+                if (_disposed)
                     return;
 
-                disposed = true;
+                _disposed = true;
 
                 try
                 {
@@ -57,14 +57,14 @@ namespace CoreSharp.Implementations
         }
 
         /// <summary>
-        /// Clean up managed resources. 
-        /// Handles, Streams and other IDisposables. 
+        /// Clean up managed resources.
+        /// Handles, Streams and other IDisposables.
         /// </summary>
         protected abstract void CleanUpManagedResources();
 
         /// <summary>
-        /// Clean up native resources, lists and set large fields to null. 
-        /// Usually fields and properties set in Constructor. 
+        /// Clean up native resources, lists and set large fields to null.
+        /// Usually fields and properties set in Constructor.
         /// </summary>
         protected abstract void CleanUpNativeResources();
     }

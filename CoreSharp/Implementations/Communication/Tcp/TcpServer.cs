@@ -23,7 +23,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         private string DebuggerDisplay => $"'{EndPoint}', Sessions={ActiveSessions?.Count}";
         public IPEndPoint EndPoint { get; private set; }
         public int BufferSize { get; set; } = 8 * 1024;
-        public IList<TcpSession> ActiveSessions { get; private set; } = new List<TcpSession>();
+        public IList<TcpSession> ActiveSessions { get; } = new List<TcpSession>();
         public bool IsListening
         {
             get { return _isListening; }
@@ -43,7 +43,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         /// </summary>
         public bool NoDelay { get; set; }
         /// <summary>
-        /// Allow both IPv4 and IPv6. 
+        /// Allow both IPv4 and IPv6.
         /// </summary>
         public bool DualMode { get; set; }
         /// <summary>
@@ -168,7 +168,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             _ = args ?? throw new ArgumentNullException(nameof(args));
 
             if (!IsListening)
-                throw new InvalidOperationException($"Cannot accept sessions while not listening.");
+                throw new InvalidOperationException("Cannot accept sessions while not listening.");
 
             args.AcceptSocket = null;
             if (!_socket.AcceptAsync(args))
@@ -246,7 +246,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.ConnectionReset,
                 SocketError.OperationAborted,
                 SocketError.Shutdown))
+            {
                 return;
+            }
 
             var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);
@@ -273,7 +275,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             }
         }
 
-        private void Session_DataReceived(object sender, DataTransferedEventArgs args)
+        private void Session_DataReceived(object sender, DataTransferredEventArgs args)
         {
             _ = args ?? throw new ArgumentNullException(nameof(args));
 
@@ -281,7 +283,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             OnDataReceived(session, args.Data);
         }
 
-        private void Session_DataSent(object sender, DataTransferedEventArgs args)
+        private void Session_DataSent(object sender, DataTransferredEventArgs args)
         {
             _ = args ?? throw new ArgumentNullException(nameof(args));
 

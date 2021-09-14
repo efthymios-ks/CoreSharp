@@ -11,6 +11,6 @@ namespace CoreSharp.Implementations.Communication
         }
 
         //Properties 
-        public bool IsConnected { get; private set; } = false;
+        public bool IsConnected { get; }
     }
 }

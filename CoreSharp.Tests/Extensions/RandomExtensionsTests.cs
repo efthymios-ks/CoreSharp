@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions.Tests
     {
         //Fields
         private readonly Random _rngNull = null;
-        private readonly Random _rng = new Random(DateTime.Now.Millisecond);
+        private readonly Random _rng = new(DateTime.Now.Millisecond);
         private const int SampleCount = 5;
 
         [Test]
@@ -72,7 +72,7 @@ namespace CoreSharp.Extensions.Tests
             var samples = new double[sampleCount];
 
             //Act 
-            for (int i = 0; i < samples.Length; i++)
+            for (var i = 0; i < samples.Length; i++)
                 samples[i] = _rng.NextDouble(minimum, maximum);
 
             //Act
@@ -160,10 +160,7 @@ namespace CoreSharp.Extensions.Tests
         public void Shuffle_RngIsNull_ThrowArgumentNullException()
         {
             //Arrange
-            var source = new List<int>
-            {
-                1, 2, 3,4,5
-            };
+            var source = new List<int>() { 1, 2, 3, 4, 5 };
 
             //Act 
             Action action = () => _rngNull.Shuffle(source);
@@ -187,14 +184,11 @@ namespace CoreSharp.Extensions.Tests
         public void Shuffle_WhenCalled_ShufflesList(int sampleCount)
         {
             //Arrange
-            var original = new List<int>
-            {
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-            };
+            var original = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             var shuffled = original.ToList();
 
             //Act 
-            for (int i = 0; i < sampleCount; i++)
+            for (var i = 0; i < sampleCount; i++)
                 _rng.Shuffle(shuffled);
 
             //Act  

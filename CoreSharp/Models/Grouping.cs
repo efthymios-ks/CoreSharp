@@ -6,15 +6,16 @@ using System.Linq;
 
 namespace CoreSharp.Models
 {
-    //TODO: Add unit tests 
+    //TODO: Add unit tests
     /// <summary>
-    /// Simple IGrouping implementation. 
-    /// </summary> 
+    /// Simple IGrouping implementation.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
     {
         //Fields
-        private readonly IEnumerable<TElement> _source = Enumerable.Empty<TElement>();
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly IEnumerable<TElement> _source;
 
         //Constructors 
         public Grouping(TKey key, IEnumerable<TElement> source)

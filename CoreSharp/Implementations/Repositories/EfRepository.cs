@@ -12,7 +12,7 @@ namespace CoreSharp.Implementations.Repositories
     public abstract class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         //Constructors
-        public EfRepository(DbContext context)
+        protected EfRepository(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
             Table = Context.Set<TEntity>();
@@ -28,7 +28,7 @@ namespace CoreSharp.Implementations.Repositories
         {
             _ = key ?? throw new ArgumentNullException(nameof(key));
 
-            var entities = await GetAsync(i => i.Id.Equals(key), navigation);
+            var entities = await GetAsync(i => Equals(i.Id, key), navigation).ConfigureAwait(false);
             return entities.SingleOrDefault();
         }
 
@@ -40,7 +40,7 @@ namespace CoreSharp.Implementations.Repositories
             if (filter is not null)
                 query = query.Where(filter);
 
-            return await query.ToArrayAsync();
+            return await query.ToArrayAsync().ConfigureAwait(false);
         }
 
         public virtual async Task AddAsync(TEntity entity)
@@ -48,7 +48,7 @@ namespace CoreSharp.Implementations.Repositories
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             entity.DateCreated = DateTime.UtcNow;
-            await Table.AddAsync(entity);
+            await Table.AddAsync(entity).ConfigureAwait(false);
         }
 
         public virtual Task UpdateAsync(TEntity entity)

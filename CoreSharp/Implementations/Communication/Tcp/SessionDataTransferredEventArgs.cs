@@ -3,7 +3,7 @@ using System.Net;
 
 namespace CoreSharp.Implementations.Communication.Tcp
 {
-    public class SessionDataTransferredEventArgs : DataTransferedEventArgs
+    public class SessionDataTransferredEventArgs : DataTransferredEventArgs
     {
         //Constructors 
         public SessionDataTransferredEventArgs(TcpSession session, byte[] data) : base(data)

@@ -7,7 +7,7 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// StringBuilder extensions.
     /// </summary>
-    public static partial class StringBuilderExtensions
+    public static class StringBuilderExtensions
     {
         /// <inheritdoc cref="AppendFormatLine(StringBuilder, IFormatProvider, string, object[])"/>
         public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] arguments)
@@ -18,7 +18,7 @@ namespace CoreSharp.Extensions
            => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
 
         /// <summary>
-        /// Append StringFormat with custom formatProvider + NewLine. 
+        /// Append StringFormat with custom formatProvider + NewLine.
         /// </summary>
         public static StringBuilder AppendFormatLine(this StringBuilder builder, IFormatProvider formatProvider, string format, params object[] arguments)
         {

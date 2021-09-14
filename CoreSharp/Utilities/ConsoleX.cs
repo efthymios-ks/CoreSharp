@@ -4,21 +4,21 @@ using System.Globalization;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Extended console functions. 
+    /// Extended console functions.
     /// </summary>
     public static class ConsoleX
     {
         /// <summary>
-        /// Clear current line. 
+        /// Clear current line.
         /// </summary>
         public static void ClearLine()
         {
-            int line = Console.CursorTop;
+            var line = Console.CursorTop;
             ClearLine(line);
         }
 
         /// <summary>
-        /// Clear line. 
+        /// Clear line.
         /// </summary>
         public static void ClearLine(int line)
         {
@@ -29,7 +29,7 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Clear list of lines. 
+        /// Clear list of lines.
         /// </summary>
         public static void ClearLines(params int[] lines)
         {
@@ -40,12 +40,12 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Wait for enter. 
+        /// Wait for enter.
         /// </summary>
         public static void WaitForEnter() => Console.ReadLine();
 
         /// <summary>
-        /// New line. 
+        /// New line.
         /// </summary>
         public static void NewLine() => WriteLine();
 
@@ -68,7 +68,7 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Write data. 
+        /// Write data.
         /// </summary>
         public static void Write(string message) => Console.Write(message);
 
@@ -91,8 +91,8 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Write line. 
-        /// </summary> 
+        /// Write line.
+        /// </summary>
         public static void WriteLine(string message)
             => Console.WriteLine(message);
 
@@ -103,7 +103,7 @@ namespace CoreSharp.Utilities
         /// <inheritdoc cref="Log(string)"/>
         public static void Log(IFormatProvider formatProvider, string format, params object[] parameters)
         {
-            string data = string.Format(formatProvider, format, parameters);
+            var data = string.Format(formatProvider, format, parameters);
             Log(data);
         }
 
@@ -112,11 +112,11 @@ namespace CoreSharp.Utilities
             => Log(CultureInfo.InvariantCulture, format, parameters);
 
         /// <summary>
-        /// Log message with timestamp. 
+        /// Log message with timestamp.
         /// </summary>
         public static void Log(string message)
         {
-            string timestamp = DateTime.UtcNow.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            var timestamp = DateTime.UtcNow.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture);
 
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Gray;

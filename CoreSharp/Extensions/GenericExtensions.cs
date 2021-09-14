@@ -9,9 +9,9 @@ using System.Xml.Serialization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Generic extensions. 
+    /// Generic extensions.
     /// </summary>
-    public static partial class GenericExtensions
+    public static class GenericExtensions
     {
         /// <inheritdoc cref="IsIn{T}(T, T[])"/>
         public static bool IsIn<T>(this T item, IEnumerable<T> source) => item.IsIn(source?.ToArray());
@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if value is contained in list. 
+        /// Check if value is contained in list.
         /// </summary>
         public static bool IsIn<T>(this T item, params T[] source)
         {
@@ -44,9 +44,9 @@ namespace CoreSharp.Extensions
             return entity.ToJson(settings);
         }
 
-        /// <summary> 
+        /// <summary>
         /// Serialize object to json.
-        /// </summary> 
+        /// </summary>
         public static string ToJson<TEntity>(this TEntity entity, JsonSerializerSettings settings) where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
@@ -62,9 +62,9 @@ namespace CoreSharp.Extensions
             return item.JsonClone(settings);
         }
 
-        /// <summary> 
-        /// Perform a deep copy using Json serialization. 
-        /// </summary> 
+        /// <summary>
+        /// Perform a deep copy using Json serialization.
+        /// </summary>
         public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
@@ -81,13 +81,20 @@ namespace CoreSharp.Extensions
             return left.JsonEquals(right, settings);
         }
 
-        /// <summary> 
-        /// Compares two objects by converting them to json (string). 
-        /// </summary> 
+        /// <summary>
+        /// Compares two objects by converting them to json (string).
+        /// </summary>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
+            //If of different type, return false
+            var typeLeft = left?.GetType();
+            var typeRight = right?.GetType();
+            if (!Equals(typeLeft, typeRight))
+                return false;
+
+            //Else compare string
             var jsonLeft = JsonConvert.SerializeObject(left, settings);
             var jsonRight = JsonConvert.SerializeObject(right, settings);
             return string.Equals(jsonLeft, jsonRight);
@@ -97,28 +104,27 @@ namespace CoreSharp.Extensions
         public static bool IsNull<T>(this T input) where T : class => input is null;
 
         /// <summary>
-        /// Gets a value indicating whether the current nullable 
-        /// object has a valid value of its underlying type. 
+        /// Gets a value indicating whether the current nullable
+        /// object has a valid value of its underlying type.
         /// </summary>
         public static bool IsNull<T>(this T? input) where T : struct => !input.HasValue;
 
         /// <summary>
-        /// Check if struct has default value. 
+        /// Check if struct has default value.
         /// </summary>
         public static bool IsDefault<T>(this T input) where T : struct => input.Equals(default(T));
 
         /// <summary>
         /// Serialize to XDocument.
-        /// </summary> 
-        public static XDocument ToXDocument<T>(T input) where T : class
+        /// </summary>
+        public static XDocument ToXDocument<T>(this T input) where T : class
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
 
             var serializer = new XmlSerializer(typeof(T));
-
             var document = new XDocument();
-            using (var writer = document.CreateWriter())
-                serializer.Serialize(writer, input);
+            using var writer = document.CreateWriter();
+            serializer.Serialize(writer, input);
 
             return document;
         }

@@ -28,8 +28,8 @@ namespace CoreSharp.Extensions.Tests
         public void GetColumnNames_WhenCalled_ReturnsColumnNames()
         {
             //Arrange 
-            var columnNames = new[] { "Column 1", "Column 2", "Column3" };
             var table = new DataTable();
+            var columnNames = new[] { "Column 1", "Column 2", "Column3" };
             foreach (var name in columnNames)
                 table.Columns.Add(name);
 
@@ -39,7 +39,6 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Equal(columnNames);
         }
-
 
         [Test]
         public void ToEntities_DataTableIsNull_ThrowArgumentNullException()

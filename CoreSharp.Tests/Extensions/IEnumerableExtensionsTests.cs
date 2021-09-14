@@ -190,10 +190,10 @@ namespace CoreSharp.Extensions.Tests
         public void StringJoinCI_WhenCalled_ReturnStringFormatWithInvariantCultureArgument()
         {
             //Arrange
-            string separator = " ";
-            string format = "{0}";
+            const string separator = " ";
+            const string format = "{0}";
             var values = new[] { 1000, 2000 };
-            string expected = "1000 2000";
+            const string expected = "1000 2000";
 
             //Act
             var result = values.StringJoinCI(separator, format);
@@ -207,7 +207,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var source = new[] { 1.111, 2.222, 3.333 };
-            var expected = "1.1 2.2 3.3";
+            const string expected = "1.1 2.2 3.3";
 
             //Act 
             var result = source.StringJoin(" ", "{0:F1}", CultureInfo.InvariantCulture);
@@ -241,7 +241,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
-            var expected = new HashSet<int> { 1, 2, 3, 4 };
+            var expected = new HashSet<int>()
+            { 1, 2, 3, 4 };
 
             //Act 
             var result = source.ToHashSet();
@@ -618,8 +619,8 @@ namespace CoreSharp.Extensions.Tests
         public void GetPage_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange
-            int pageIndex = 0;
-            int pageSize = 0;
+            const int pageIndex = 0;
+            const int pageSize = 0;
 
             //Act 
             Action action = () => _sourceNull.GetPage(pageIndex, pageSize);
@@ -648,8 +649,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var source = new[] { 1, 2, 3, 4, 5 };
-            var pageIndex = 1;
-            var pageSize = 2;
+            const int pageIndex = 1;
+            const int pageSize = 2;
             var expected = new[] { 3, 4 };
 
             //Act 
@@ -685,8 +686,8 @@ namespace CoreSharp.Extensions.Tests
         public void GetPages_WhenCalled_ReturnItemGroupsByPageIndex()
         {
             var source = new int[] { 1, 2, 3, 4, 5 };
-            var pageSize = 2;
-            int expectedCount = 3;
+            const int pageSize = 2;
+            const int expectedCount = 3;
             var group1 = new[] { 1, 2 };
             var group2 = new[] { 3, 4 };
             var group3 = new[] { 5 };
@@ -751,7 +752,7 @@ namespace CoreSharp.Extensions.Tests
         public void ToCsv_SourceIsNull_IncludeHeaderIsFalse_ReturnCsvWithoutHeader()
         {
             //Arrange
-            var source = new List<DummyClass>
+            var source = new List<DummyClass>()
             {
                 new DummyClass(1, "Black"),
                 new DummyClass(2, "White")
@@ -797,7 +798,7 @@ namespace CoreSharp.Extensions.Tests
                 new DummyClass(2),
                 new DummyClass(3),
             };
-            var expected = new Dictionary<int, int>
+            var expected = new Dictionary<int, int>()
             {
                 { 1, 2 },
                 { 2, 2 }
@@ -818,7 +819,7 @@ namespace CoreSharp.Extensions.Tests
             {
                 1, 1, 2, 2, 3
             };
-            var expected = new Dictionary<int, int>
+            var expected = new Dictionary<int, int>()
             {
                 { 1, 2 },
                 { 2, 2 }
@@ -918,12 +919,12 @@ namespace CoreSharp.Extensions.Tests
             //Assert 
             result.Rows.Count.Should().Be(expected.Rows.Count);
             result.Columns.Count.Should().Be(expected.Columns.Count);
-            for (int i = 0; i < result.Columns.Count; i++)
+            for (var i = 0; i < result.Columns.Count; i++)
             {
                 result.Columns[i].ColumnName.Should().Be(expected.Columns[i].ColumnName);
                 result.Columns[i].DataType.Should().Be(expected.Columns[i].DataType);
             }
-            for (int rowindex = 0; rowindex < result.Rows.Count; rowindex++)
+            for (var rowindex = 0; rowindex < result.Rows.Count; rowindex++)
             {
                 var resultRow = result.Rows[rowindex].ItemArray;
                 var expectedRow = expected.Rows[rowindex].ItemArray;

@@ -9,7 +9,7 @@ namespace CoreSharp.Implementations.Repositories
     public abstract class EfUnitOfWork : IUnitOfWork
     {
         //Constructors
-        public EfUnitOfWork(DbContext context)
+        protected EfUnitOfWork(DbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -20,7 +20,7 @@ namespace CoreSharp.Implementations.Repositories
         //Methods   
         public virtual async Task CommitAsync()
         {
-            await Context?.SaveChangesAsync();
+            await (Context?.SaveChangesAsync()).ConfigureAwait(false);
         }
 
         public virtual async Task RollbackAsync()
@@ -38,7 +38,7 @@ namespace CoreSharp.Implementations.Repositories
                         break;
                     case EntityState.Modified:
                     case EntityState.Deleted:
-                        await entry.ReloadAsync();
+                        await entry.ReloadAsync().ConfigureAwait(false);
                         entry.State = EntityState.Unchanged;
                         break;
                 }

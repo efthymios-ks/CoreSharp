@@ -14,11 +14,11 @@ namespace CoreSharp.Utilities
         /// Combines url segments.
         /// <example>
         /// <code>
-        /// // "/sec1/sec2/sec3/" 
-        /// var url = Url.Combine("/sec1", "/sec2/", "sec3"); 
+        /// // "/sec1/sec2/sec3/"
+        /// var url = Url.Combine("/sec1", "/sec2/", "sec3");
         /// </code>
-        /// </example> 
-        /// </summary> 
+        /// </example>
+        /// </summary>
         public static string Combine(params object[] segments)
         {
             _ = segments ?? throw new ArgumentNullException(nameof(segments));
@@ -37,14 +37,12 @@ namespace CoreSharp.Utilities
             var url = builder.ToString();
 
             //Multiple forward-slashes to single one 
-            url = Regex.Replace(url, @"\/+", @"/");
-
-            return url;
+            return Regex.Replace(url, @"\/+", "/");
         }
 
         /// <summary>
-        /// Extract uri parameters. 
-        /// </summary> 
+        /// Extract uri parameters.
+        /// </summary>
         public static IDictionary<string, string> GetParameters(string url)
         {
             var parameters = HttpUtility.ParseQueryString(url);
@@ -53,14 +51,14 @@ namespace CoreSharp.Utilities
 
         /// <summary>
         /// Build url from base url and parameters.
-        /// </summary> 
+        /// </summary>
         public static string Build<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
-            string query = parameters.ToUrlQueryString(encodeParameters);
+            var query = parameters.ToUrlQueryString(encodeParameters);
 
             var trimChars = new[] { ' ', '?', '&', '/' };
             baseUrl = baseUrl.Trim(trimChars);

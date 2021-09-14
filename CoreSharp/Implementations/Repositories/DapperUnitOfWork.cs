@@ -15,7 +15,7 @@ namespace CoreSharp.Implementations.Repositories
         protected DbTransaction Transaction { get; private set; }
 
         //Constructors
-        public DapperUnitOfWork(DbConnection connection)
+        protected DapperUnitOfWork(DbConnection connection)
         {
             Connection = connection ?? throw new ArgumentNullException(nameof(connection));
             Transaction = connection?.OpenTransaction();
@@ -24,20 +24,20 @@ namespace CoreSharp.Implementations.Repositories
         //Methods 
         private async Task ResetTransactionAsync()
         {
-            await Transaction?.DisposeAsync().AsTask();
-            Transaction = await Connection?.OpenTransactionAsync();
+            await (Transaction?.DisposeAsync().AsTask()).ConfigureAwait(false);
+            Transaction = await (Connection?.OpenTransactionAsync()).ConfigureAwait(false);
         }
 
         public virtual async Task CommitAsync()
         {
-            await Transaction?.CommitAsync();
-            await ResetTransactionAsync();
+            await (Transaction?.CommitAsync()).ConfigureAwait(false);
+            await ResetTransactionAsync().ConfigureAwait(false);
         }
 
         public virtual async Task RollbackAsync()
         {
-            await Transaction?.RollbackAsync();
-            await ResetTransactionAsync();
+            await (Transaction?.RollbackAsync()).ConfigureAwait(false);
+            await ResetTransactionAsync().ConfigureAwait(false);
         }
 
         public virtual void Dispose()

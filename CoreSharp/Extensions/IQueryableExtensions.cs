@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IQueryable extensions. 
+    /// IQueryable extensions.
     /// </summary>
-    public static partial class IQueryableExtensions
+    public static class IQueryableExtensions
     {
         /// <summary>
-        /// Paginate collection on given size and return page of given index. 
-        /// </summary> 
+        /// Paginate collection on given size and return page of given index.
+        /// </summary>
         public static IQueryable<T> QueryPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -29,16 +29,16 @@ namespace CoreSharp.Extensions
             => source.FilterFlexible(i => i, filter);
 
         /// <summary>
-        /// Filter source by given value. 
-        /// In-between characters are allowed in filtering value.  
+        /// Filter source by given value.
+        /// In-between characters are allowed in filtering value.
         /// <example>
-        /// <code> 
-        /// var source = new [] { "a", "b", "ab", ".a.b.", "AB", "ba" }; 
-        /// var filter = "ab"; 
-        /// var result = source.FilterFlexible(filter); // "ab", ".a.b.", "AB" 
-        /// </code> 
-        /// </example> 
-        /// </summary> 
+        /// <code>
+        /// var source = new [] { "a", "b", "ab", ".a.b.", "AB", "ba" };
+        /// var filter = "ab";
+        /// var result = source.FilterFlexible(filter); // "ab", ".a.b.", "AB"
+        /// </code>
+        /// </example>
+        /// </summary>
         public static IQueryable<TItem> FilterFlexible<TItem>(this IQueryable<TItem> source, Func<TItem, string> propertySelector, string filter)
         {
             //Argument validation 
@@ -58,14 +58,15 @@ namespace CoreSharp.Extensions
 
             //Build RegEx pattern 
             var builder = new StringBuilder();
-            for (int i = 0; i < characters.Length; i++)
+            for (var i = 0; i < characters.Length; i++)
             {
                 var character = characters[i];
                 var escapedChar = Regex.Escape($"{character}");
+
+                builder.Append(escapedChar);
+
                 if (i < (characters.Length - 1))
-                    builder.Append($"{escapedChar}.*");
-                else
-                    builder.Append(escapedChar);
+                    builder.Append(".*");
             }
             var pattern = $"{builder}";
 

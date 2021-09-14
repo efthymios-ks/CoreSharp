@@ -5,7 +5,7 @@ namespace CoreSharp.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        //Metods 
+        //Methods 
         Task CommitAsync();
 
         Task RollbackAsync();

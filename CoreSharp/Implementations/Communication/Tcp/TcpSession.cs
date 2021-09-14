@@ -55,8 +55,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
         //Events 
         public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
-        public event EventHandler<DataTransferedEventArgs> DataSent;
-        public event EventHandler<DataTransferedEventArgs> DataReceived;
+        public event EventHandler<DataTransferredEventArgs> DataSent;
+        public event EventHandler<DataTransferredEventArgs> DataReceived;
         public event EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
@@ -105,9 +105,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
             if (!IsConnected)
-                throw new InvalidOperationException($"Cannot send data while disconnected.");
+                throw new InvalidOperationException("Cannot send data while disconnected.");
 
-            int count = _socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
+            var count = _socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
             if (count > 0)
                 OnDataSent(data.Take(count));
 
@@ -144,7 +144,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
             if (!IsConnected)
-                throw new InvalidOperationException($"Cannot send data while disconnected");
+                throw new InvalidOperationException("Cannot send data while disconnected");
 
             var args = new SocketAsyncEventArgs();
             args.SetBuffer(data, 0, data.Length);
@@ -156,7 +156,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         private void BeginReceive()
         {
             if (!IsConnected)
-                throw new InvalidOperationException($"Cannot receive data while disconnected");
+                throw new InvalidOperationException("Cannot receive data while disconnected");
 
             var buffer = new byte[_socket.ReceiveBufferSize];
             var args = new SocketAsyncEventArgs();
@@ -173,7 +173,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             try
             {
                 if (args.SocketError == SocketError.Success)
+                {
                     OnDataSent(args.Buffer);
+                }
                 else
                 {
                     OnError(args.SocketError);
@@ -245,7 +247,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataSent?.Invoke(this, args);
         }
 
@@ -253,7 +255,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataReceived?.Invoke(this, args);
         }
 
@@ -267,7 +269,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.NotConnected,
                 SocketError.OperationAborted,
                 SocketError.Shutdown))
+            {
                 return;
+            }
 
             var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);

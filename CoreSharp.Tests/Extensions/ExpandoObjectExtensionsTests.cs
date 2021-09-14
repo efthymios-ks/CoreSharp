@@ -26,10 +26,12 @@ namespace CoreSharp.Extensions.Tests
         public void ToDictionary_WhenCalled_ReturnDictionary()
         {
             //Arrange 
-            var source = new Dictionary<string, object>();
-            source.Add("id", 1);
-            source.Add("color", "black");
-            var expando = new ExpandoObject() as IDictionary<string, object>;
+            var source = new Dictionary<string, object>
+            {
+                { "id", 1 },
+                { "color", "black" }
+            };
+            IDictionary<string, object> expando = new ExpandoObject();
             foreach (var item in source)
                 expando.Add(item);
 

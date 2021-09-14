@@ -4,43 +4,43 @@ using System.IO;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// FileInfo extensions. 
+    /// FileInfo extensions.
     /// </summary>
-    public static partial class FileInfoExtensions
+    public static class FileInfoExtensions
     {
         /// <summary>
-        /// Change given file extension. 
-        /// </summary> 
+        /// Change given file extension.
+        /// </summary>
         public static FileInfo ChangeExtension(this FileInfo file, string extension)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
 
-            string newFileName = Path.ChangeExtension(file.FullName, extension);
-            return new(newFileName);
+            var newFileName = Path.ChangeExtension(file.FullName, extension);
+            return new FileInfo(newFileName);
         }
 
         /// <summary>
         /// Rename given file.
         /// </summary>
-        /// <param name="name">New file name. May include or not a new extension.</param> 
+        /// <param name="name">New file name. May include or not a new extension.</param>
         public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
         {
             _ = file ?? throw new ArgumentNullException(nameof(file));
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
 
-            string oldParent = file.DirectoryName;
-            string oldExtension = file.Extension.Trim('.');
+            var oldParent = file.DirectoryName;
+            var oldExtension = file.Extension.Trim('.');
 
-            string newName = Path.GetFileNameWithoutExtension(name);
-            string newExtension = Path.GetExtension(name).Trim('.');
+            var newName = Path.GetFileNameWithoutExtension(name);
+            var newExtension = Path.GetExtension(name).Trim('.');
 
-            string finalExtension = string.IsNullOrWhiteSpace(newExtension) ? oldExtension : newExtension;
-            string finalName = $"{Path.Combine(oldParent, newName)}.{finalExtension}";
+            var finalExtension = string.IsNullOrWhiteSpace(newExtension) ? oldExtension : newExtension;
+            var finalName = $"{Path.Combine(oldParent!, newName)}.{finalExtension}";
 
             file.MoveTo(finalName, overwrite);
 
-            return new(finalName);
+            return new FileInfo(finalName);
         }
     }
 }

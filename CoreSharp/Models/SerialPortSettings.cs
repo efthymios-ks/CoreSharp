@@ -6,12 +6,12 @@ using System.Text;
 namespace CoreSharp.Models
 {
     /// <summary>
-    /// Short SerialPort settings class. 
+    /// Short SerialPort settings class.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SerialPortSettings
     {
-        // Properties 
+        //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate}, {nameof(Parity)}={Parity}";
 

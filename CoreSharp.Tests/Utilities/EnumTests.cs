@@ -26,7 +26,7 @@ namespace CoreSharp.Utilities.Tests
         public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
         {
             //Arrange
-            var dictionary = new Dictionary<string, DummyEnum>
+            var dictionary = new Dictionary<string, DummyEnum>()
             {
                 { $"{DummyEnum.Option1}", DummyEnum.Option1 },
                 { $"{DummyEnum.Option2}", DummyEnum.Option2 },

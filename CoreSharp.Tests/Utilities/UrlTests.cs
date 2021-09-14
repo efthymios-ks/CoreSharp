@@ -12,7 +12,7 @@ namespace CoreSharp.Utilities.Tests
         public void Build_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
         {
             //Arrange
-            string baseUrl = null;
+            const string baseUrl = null;
             var parameters = new Dictionary<string, string>()
             {
                 { "name", "efthymios" },
@@ -30,7 +30,7 @@ namespace CoreSharp.Utilities.Tests
         public void Build_ParametersIsNull_ThrowArgumentNullException()
         {
             //Arrange
-            string baseUrl = @"https://example.com/";
+            const string baseUrl = "https://example.com/";
             IDictionary<string, string> parameters = null;
 
             //Act
@@ -44,14 +44,14 @@ namespace CoreSharp.Utilities.Tests
         public void Build_EncodeIsFalse_BuildAndReturnUrlWithParametersAsIs()
         {
             //Arrange
-            string baseUrl = @"https://example.com/";
+            const string baseUrl = "https://example.com/";
             var parameters = new Dictionary<string, object>()
             {
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
             };
-            bool encode = false;
-            string expected = @"https://example.com/?name=Efthymios Koktsidis&count=10";
+            const bool encode = false;
+            const string expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
 
             //Act
             var result = Url.Build(baseUrl, parameters, encode);
@@ -64,14 +64,14 @@ namespace CoreSharp.Utilities.Tests
         public void Build_EncodeIsTrue_BuildAndReturnUrlWithEncodedParameters()
         {
             //Arrange
-            string baseUrl = @"https://example.com/";
+            const string baseUrl = "https://example.com/";
             var parameters = new Dictionary<string, object>()
             {
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
             };
-            bool encode = true;
-            string expected = @"https://example.com/?name=Efthymios+Koktsidis&count=10";
+            const bool encode = true;
+            const string expected = "https://example.com/?name=Efthymios+Koktsidis&count=10";
 
             //Act
             var result = Url.Build(baseUrl, parameters, encode);

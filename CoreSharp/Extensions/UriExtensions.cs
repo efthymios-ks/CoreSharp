@@ -7,11 +7,11 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// Uri extensions.
     /// </summary>
-    public static partial class UriExtensions
+    public static class UriExtensions
     {
         /// <summary>
-        /// Get url query parameters to dictionary. 
-        /// </summary> 
+        /// Get url query parameters to dictionary.
+        /// </summary>
         public static IDictionary<string, string> GetQueryParameters(this Uri uri)
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));
@@ -20,8 +20,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get url fragment parameters to dictionary. 
-        /// </summary> 
+        /// Get url fragment parameters to dictionary.
+        /// </summary>
         public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));

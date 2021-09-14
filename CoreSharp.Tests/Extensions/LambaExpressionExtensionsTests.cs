@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             Expression<Func<DummyClass, int>> exression = d => d.Id;
-            string expected = nameof(DummyClass.Id);
+            const string expected = nameof(DummyClass.Id);
 
             //Act 
             var result = exression.GetMemberName();

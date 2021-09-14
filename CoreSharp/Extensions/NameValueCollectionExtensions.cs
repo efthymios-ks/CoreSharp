@@ -5,13 +5,13 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// NameValueCollection extensions. 
+    /// NameValueCollection extensions.
     /// </summary>
-    public static partial class NameValueCollectionExtensions
+    public static class NameValueCollectionExtensions
     {
         /// <summary>
-        /// Build url query string from dictionary parameters. 
-        /// </summary> 
+        /// Build url query string from dictionary parameters.
+        /// </summary>
         public static string ToUrlQueryString(this NameValueCollection source, bool encodeParameters = true)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

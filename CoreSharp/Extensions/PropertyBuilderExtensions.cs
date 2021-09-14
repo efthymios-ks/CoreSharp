@@ -9,19 +9,20 @@ using Newtonsoft.Json;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// PropertyBuilder extensions. 
+    /// PropertyBuilder extensions.
     /// </summary>
-    public static partial class PropertyBuilderExtensions
+    public static class PropertyBuilderExtensions
     {
         /// <inheritdoc cref="HasJsonConversion{TEntity}(PropertyBuilder{TEntity}, JsonSerializerSettings)"/>
-        public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder) where TEntity : class
+        public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder)
+            where TEntity : class
         {
             var settings = new JsonSerializerDefaultSettings();
             return builder.HasJsonConversion(settings);
         }
 
         /// <summary>
-        /// Convert a property from and to json for database storage. 
+        /// Convert a property from and to json for database storage.
         /// </summary>
         public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder, JsonSerializerSettings settings) where TEntity : class
         {

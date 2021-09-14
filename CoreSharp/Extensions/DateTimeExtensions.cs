@@ -5,15 +5,16 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DateTime extensions. 
+    /// DateTime extensions.
     /// </summary>
-    public static partial class DateTimeExtensions
+    public static class DateTimeExtensions
     {
         //TODO: Add mock test to `DateTime.GetElapsedTime()`. 
         /// <summary>
-        /// Get the elapsed time since the input value. 
+        /// Get the elapsed time since the input value.
         /// </summary>
-        public static TimeSpan GetElapsedTime(this DateTime from) => DateTime.Now.Subtract(from);
+        public static TimeSpan GetElapsedTime(this DateTime from)
+            => DateTime.Now.Subtract(from);
 
         /// <summary>
         /// Check if specific TimeSpan has passed since a DateTime.
@@ -25,8 +26,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if date is in a weekend. 
-        /// </summary> 
+        /// Check if date is in a weekend.
+        /// </summary>
         public static bool IsWeekend(this DateTime date)
         {
             if (date.DayOfWeek == DayOfWeek.Saturday)
@@ -38,15 +39,15 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if date is in a leap year. 
-        /// </summary> 
+        /// Check if date is in a leap year.
+        /// </summary>
         public static bool IsInLeapYear(this DateTime date) => DateTime.IsLeapYear(date.Year);
 
         /// <summary>
-        /// Trim part of DateTime. 
+        /// Trim part of DateTime.
         /// </summary>
         /// <example>
-        /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds); 
+        /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds);
         /// </example>
         public static DateTime Trim(this DateTime date, DateTimeParts parts)
         {
@@ -75,13 +76,15 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Convert DateTime to sortable format using "u" specifier. 
-        /// </summary> 
-        public static string ToStringSortable(this DateTime date) => date.ToString("u", CultureInfo.InvariantCulture);
+        /// Convert DateTime to sortable format using "u" specifier.
+        /// </summary>
+        public static string ToStringSortable(this DateTime date) 
+            => date.ToString("u", CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// Convert DateTime to UTC sortable format using "ο" specifier. 
-        /// </summary> 
-        public static string ToStringSortableUtc(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+        /// Convert DateTime to UTC sortable format using "ο" specifier.
+        /// </summary>
+        public static string ToStringSortableUtc(this DateTime date) 
+            => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
     }
 }

@@ -13,8 +13,8 @@ namespace CoreSharp.Extensions.Tests
         public void GetDescription_WhenCalled_ReturnEnumDescriptionAttribute()
         {
             //Arrange 
-            var item = DummyEnum.Option1;
-            string expected = "Description 1";
+            const DummyEnum item = DummyEnum.Option1;
+            const string expected = "Description 1";
 
             //Act 
             var result = item.GetDescription();
@@ -26,8 +26,8 @@ namespace CoreSharp.Extensions.Tests
         public void GetDisplayName_WhenCalled_ReturnEnumDisplayAttribute()
         {
             //Arrange 
-            var item = DummyEnum.Option1;
-            string expected = "Option 1";
+            const DummyEnum item = DummyEnum.Option1;
+            const string expected = "Option 1";
 
             //Act 
             var result = item.GetDisplayName();

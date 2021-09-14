@@ -3,9 +3,9 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Guid extensions. 
+    /// Guid extensions.
     /// </summary>
-    public static partial class GuidExtensions
+    public static class GuidExtensions
     {
         /// <inheritdoc cref="IsNullOrEmpty(Guid)"/>
         public static bool IsNullOrEmpty(this Guid? guid)
@@ -15,8 +15,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Compare given value with Guid.Empty (all zeros). 
-        /// </summary> 
-        public static bool IsNullOrEmpty(this Guid guid) => guid == Guid.Empty;
+        /// Compare given value with Guid.Empty (all zeros).
+        /// </summary>
+        public static bool IsNullOrEmpty(this Guid guid) 
+            => guid == Guid.Empty;
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace CoreSharp.Interfaces.EntityFramework
+﻿namespace CoreSharp.Interfaces.EntityFramework
 {
     public interface IEntity : IKeyedEntity, IModifiableEntity
     {
-
     }
 }

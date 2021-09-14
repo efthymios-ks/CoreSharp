@@ -4,11 +4,11 @@ using System.Net;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IPEndPoint extensions. 
+    /// IPEndPoint extensions.
     /// </summary>
-    public static partial class IPEndPointExtensions
+    public static class IPEndPointExtensions
     {
-        /// <inheritdoc cref="IPAddressExtensions.Ping(IPAddress, int)"/> 
+        /// <inheritdoc cref="IPAddressExtensions.Ping(IPAddress, int)"/>
         public static bool Ping(this IPEndPoint endPoint, int timeoutMillis = 5000)
         {
             _ = endPoint ?? throw new ArgumentNullException(nameof(endPoint));

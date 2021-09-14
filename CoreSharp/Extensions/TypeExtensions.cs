@@ -3,13 +3,13 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Type extensions. 
+    /// Type extensions.
     /// </summary>
     public static class TypeExtensions
     {
         /// <summary>
-        /// Check if given type is numeric. 
-        /// </summary> 
+        /// Check if given type is numeric.
+        /// </summary>
         public static bool IsNumeric(this Type type)
         {
             _ = type ?? throw new ArgumentNullException(nameof(type));
@@ -39,8 +39,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if given type is DateTime(Offset). 
-        /// </summary> 
+        /// Check if given type is DateTime(Offset).
+        /// </summary>
         public static bool IsDate(this Type type)
         {
             _ = type ?? throw new ArgumentNullException(nameof(type));
@@ -48,17 +48,13 @@ namespace CoreSharp.Extensions
             switch (Type.GetTypeCode(type))
             {
                 case TypeCode.DateTime:
+                case TypeCode.Object when type == typeof(DateTimeOffset):
                     return true;
                 case TypeCode.Object:
-                    {
-                        if (type == typeof(DateTimeOffset))
-                            return true;
-                        else
-                        {
-                            var baseType = Nullable.GetUnderlyingType(type);
-                            return baseType?.IsDate() ?? false;
-                        }
-                    }
+                {
+                    var baseType = Nullable.GetUnderlyingType(type);
+                    return baseType?.IsDate() ?? false;
+                }
                 default:
                     return false;
             }
@@ -66,8 +62,9 @@ namespace CoreSharp.Extensions
 
         //TODO: Add unit tests
         /// <summary>
-        /// If Nullable`T return base type, else the same type. 
-        /// </summary> 
-        public static Type GetNullableBaseType(this Type type) => Nullable.GetUnderlyingType(type) ?? type;
+        /// If Nullable`T return base type, else the same type.
+        /// </summary>
+        public static Type GetNullableBaseType(this Type type)
+            => Nullable.GetUnderlyingType(type) ?? type;
     }
 }

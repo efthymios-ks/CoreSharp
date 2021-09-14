@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace CoreSharp.Implementations
 {
     /// <summary>
-    /// Base class implementing INotifyPropertyChanged. 
+    /// Base class implementing INotifyPropertyChanged.
     /// </summary>
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
@@ -22,7 +22,9 @@ namespace CoreSharp.Implementations
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
+            {
                 return false;
+            }
             else
             {
                 field = value;

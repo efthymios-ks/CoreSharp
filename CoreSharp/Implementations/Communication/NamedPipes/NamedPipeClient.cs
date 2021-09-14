@@ -47,7 +47,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         public string PipeName { get; }
         public bool IsConnected
         {
-            get { return _isConnected; }
+            get => _isConnected;
             set
             {
                 if (value == _isConnected)
@@ -68,17 +68,13 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         //Events 
         public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
-        public event EventHandler<DataTransferedEventArgs> DataReceived;
-        public event EventHandler<DataTransferedEventArgs> DataSent;
+        public event EventHandler<DataTransferredEventArgs> DataReceived;
+        public event EventHandler<DataTransferredEventArgs> DataSent;
 
         //Methods
-        public void Connect()
-        {
-            Connect(500);
-        }
 
         [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-        public void Connect(int millis)
+        public void Connect(int millis = 500)
         {
             if (IsConnected)
                 return;
@@ -119,7 +115,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         public async Task<int> SendAsync(string text)
         {
-            return await SendAsync(text, Encoding.UTF8);
+            return await SendAsync(text, Encoding.UTF8).ConfigureAwait(false);
         }
 
         public async Task<int> SendAsync(string text, Encoding encoding)
@@ -128,24 +124,24 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
             var data = encoding.GetBytes(text);
-            return await SendAsync(data);
+            return await SendAsync(data).ConfigureAwait(false);
         }
 
         public async Task<int> SendAsync(IEnumerable<byte> data)
         {
-            return await SendAsync(data?.ToArray());
+            return await SendAsync(data?.ToArray()).ConfigureAwait(false);
         }
 
         public async Task<int> SendAsync(params byte[] data)
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
             if (!IsConnected)
-                throw new InvalidOperationException($"Cannot send data while disconnected.");
+                throw new InvalidOperationException("Cannot send data while disconnected.");
             else if (!_pipe.CanWrite)
-                throw new NotSupportedException($"Current pipe does not support write operations.");
+                throw new NotSupportedException("Current pipe does not support write operations.");
 
-            await _pipe.WriteAsync(data.AsMemory(0, data.Length));
-            await _pipe.FlushAsync();
+            await _pipe.WriteAsync(data.AsMemory(0, data.Length)).ConfigureAwait(false);
+            await _pipe.FlushAsync().ConfigureAwait(false);
             OnDataSent(data);
             return data.Length;
         }
@@ -153,9 +149,9 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         private void BeginRead()
         {
             if (!IsConnected)
-                throw new InvalidOperationException($"Cannot read data while disconnected.");
+                throw new InvalidOperationException("Cannot read data while disconnected.");
             else if (!_pipe.CanRead)
-                throw new NotSupportedException($"Current pipe does not support read operations.");
+                throw new NotSupportedException("Current pipe does not support read operations.");
 
             var buffer = new byte[_pipe.InBufferSize];
             var state = new
@@ -171,10 +167,10 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
             _ = result ?? throw new ArgumentNullException(nameof(result));
 
             var state = result.AsyncState as dynamic;
-            var pipe = state.Pipe as NamedPipeClientStream;
-            var buffer = state.Buffer as byte[];
+            var pipe = state?.Pipe as NamedPipeClientStream;
+            var buffer = state?.Buffer as byte[];
 
-            int bytesRead = pipe.EndRead(result);
+            var bytesRead = pipe.EndRead(result);
 
             if (bytesRead <= 0)
             {
@@ -198,7 +194,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
             try
             {
-                await _pipe?.FlushAsync();
+                await (_pipe?.FlushAsync()).ConfigureAwait(false);
                 _pipe?.WaitForPipeDrain();
                 _pipe?.Close();
             }
@@ -215,7 +211,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataSent?.Invoke(this, args);
         }
 
@@ -223,7 +219,7 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataReceived?.Invoke(this, args);
         }
 
@@ -236,7 +232,6 @@ namespace CoreSharp.Implementations.Communication.NamedPipes
 
         protected override void CleanUpNativeResources()
         {
-
         }
         #endregion
     }

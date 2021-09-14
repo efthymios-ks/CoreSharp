@@ -4,26 +4,24 @@ using System.Linq;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Enum utilitie. 
+    /// Enum utilitie.
     /// </summary>
     public static class Enum
     {
         /// <summary>
-        /// Get enum values. 
+        /// Get enum values.
         /// </summary>
         public static IEnumerable<TEnum> GetValues<TEnum>() where TEnum : System.Enum
             => System.Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
 
         /// <summary>
-        /// Get enum dictionary (Text-Value). 
+        /// Get enum dictionary (Text-Value).
         /// </summary>
         public static IDictionary<string, TEnum> GetDictionary<TEnum>() where TEnum : System.Enum
         {
             var dictionary = new Dictionary<string, TEnum>();
             var values = GetValues<TEnum>();
-            foreach (var value in values)
-                dictionary.Add($"{value}", value);
-            return dictionary;
+            return values.ToDictionary(key => $"{key}", value => value);
         }
     }
 }

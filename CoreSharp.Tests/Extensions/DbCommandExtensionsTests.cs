@@ -41,8 +41,8 @@ namespace CoreSharp.Extensions.Tests
         public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
         {
             //Arrang 
-            string name = "{name}";
-            string value = "Efthymios";
+            const string name = "{name}";
+            const string value = "Efthymios";
 
             //Act 
             var result = _sqlCommand.CreateParameter(name, value);
@@ -67,8 +67,8 @@ namespace CoreSharp.Extensions.Tests
         public void AddParameter_WhenCalled_AddsAndReturnSameTypeDbParameterWithValues()
         {
             //Arrang 
-            string name = "{name}";
-            string value = "Efthymios";
+            const string name = "{name}";
+            const string value = "Efthymios";
 
             //Act 
             var result = _sqlCommand.AddParameterWithValue(name, value);

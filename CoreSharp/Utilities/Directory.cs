@@ -3,13 +3,13 @@
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Directory utilities. 
+    /// Directory utilities.
     /// </summary>
-    public static partial class Directory
+    public static class Directory
     {
         /// <summary>
-        /// Open directory with explorer.exe. 
-        /// </summary> 
+        /// Open directory with explorer.exe.
+        /// </summary>
         public static bool Open(string path)
         {
             try
@@ -22,6 +22,5 @@ namespace CoreSharp.Utilities
                 return false;
             }
         }
-
     }
 }

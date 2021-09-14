@@ -5,18 +5,13 @@ using System.Net;
 namespace CoreSharp.Models
 {
     /// <summary>
-    /// Simple HttpResponseMessage exception. 
-    /// Stores an HttpStatusCode and Content (Exception.Message). 
+    /// Simple HttpResponseMessage exception.
+    /// Stores an HttpStatusCode and Content (Exception.Message).
     /// </summary>
     public class HttpResponseException : Exception
     {
         //Constructors
-        public HttpResponseException(HttpStatusCode statusCode, string content) : this(statusCode, content, null)
-        {
-
-        }
-
-        public HttpResponseException(HttpStatusCode statusCode, string content, Exception innerException) : base(content, innerException)
+        public HttpResponseException(HttpStatusCode statusCode, string content, Exception innerException = null) : base(content, innerException)
         {
             StatusCode = statusCode;
         }
@@ -28,6 +23,7 @@ namespace CoreSharp.Models
 
         public string Status => $"{(int)StatusCode} {StatusCode}";
 
+        //Methods 
         public override string ToString()
         {
             if (Json.IsEmpty(Content))

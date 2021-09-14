@@ -13,40 +13,37 @@ namespace CoreSharp.Extensions
     /// <summary>
     /// String extensions.
     /// </summary>
-    public static partial class StringExtensions
+    public static class StringExtensions
     {
         /// <summary>
         /// Truncates string.
-        /// </summary> 
+        /// </summary>
         public static string Truncate(this string input, int length)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be a positive and non-zero.");
 
-            int maxLength = Math.Min(input.Length, length);
-            return input.Substring(0, maxLength);
+            var maxLength = Math.Min(input.Length, length);
+            return input[..maxLength];
         }
 
         /// <summary>
         /// Replace each ASCII control character with its corresponding abbreviation.
-        /// </summary> 
-        public static string FormatAsciiControls(this string input, char openBracket = '<', char closeBracked = '>')
+        /// </summary>
+        public static string FormatAsciiControls(this string input, char openBracket = '<', char closeBracket = '>')
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
 
-            var formatedControls = new Dictionary<string, string>();
+            var formattedControls = new Dictionary<string, string>();
             foreach (var control in AsciiControls.Dictionary)
-                formatedControls.Add($"{control.Value}", $"{openBracket}{control.Key}{closeBracked}");
+                formattedControls.Add($"{control.Value}", $"{openBracket}{control.Key}{closeBracket}");
 
-            foreach (var control in formatedControls)
-                input = input.Replace(control.Key, control.Value);
-
-            return input;
+            return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
         }
 
         /// <summary>
-        /// Split text into fixed-length chuncks.
+        /// Split text into fixed-length chunks.
         /// </summary>
         public static IEnumerable<string> SplitChunks(this string input, int chunkSize)
         {
@@ -59,7 +56,7 @@ namespace CoreSharp.Extensions
 
         private static IEnumerable<string> SplitChunksInternal(this string input, int chunkSize)
         {
-            int index = 0;
+            var index = 0;
 
             while ((index + chunkSize) < input.Length)
             {
@@ -72,28 +69,28 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Center align text.
-        /// </summary> 
+        /// </summary>
         public static string PadCenter(this string input, int totalWidth, char paddingChar = ' ')
         {
             input = input ?? throw new ArgumentNullException(nameof(input));
             if (totalWidth < 0)
                 throw new ArgumentOutOfRangeException(nameof(totalWidth), $"{nameof(totalWidth)} has to be zero or greater.");
 
-            int padding = totalWidth - input.Length;
-            int padLeft = padding / 2 + input.Length;
+            var padding = totalWidth - input.Length;
+            var padLeft = (padding / 2) + input.Length;
 
             return input.PadLeft(padLeft, paddingChar).PadRight(totalWidth, paddingChar);
         }
 
         /// <summary>
-        /// Removes the first occurence of a given value. 
+        /// Removes the first occurence of a given value.
         /// </summary>
         public static string RemoveFirst(this string input, string value)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
             _ = value ?? throw new ArgumentNullException(nameof(value));
 
-            int index = input.IndexOf(value);
+            var index = input.IndexOf(value, StringComparison.Ordinal);
             if (index >= 0)
                 input = input.Remove(index, value.Length);
 
@@ -101,14 +98,14 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Removes the last occurence of a given value. 
+        /// Removes the last occurence of a given value.
         /// </summary>
         public static string RemoveLast(this string input, string value)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
             _ = value ?? throw new ArgumentNullException(nameof(value));
 
-            int index = input.LastIndexOf(value);
+            var index = input.LastIndexOf(value, StringComparison.Ordinal);
             if (index >= 0)
                 input = input.Remove(index, value.Length);
 
@@ -116,7 +113,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Remove all the occurences of a given value. 
+        /// Remove all the occurrences of a given value.
         /// </summary>
         public static string RemoveAll(this string input, string value)
         {
@@ -136,7 +133,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
             if (length <= input.Length)
-                return input.Substring(0, length);
+                return input[..length];
             else
                 return input;
         }
@@ -152,11 +149,13 @@ namespace CoreSharp.Extensions
 
             if (length <= input.Length)
             {
-                int start = input.Length - length;
+                var start = input.Length - length;
                 return input.Substring(start, length);
             }
             else
+            {
                 return input;
+            }
         }
 
         /// <inheritdoc cref="Mid(string, int, int)"/>
@@ -260,14 +259,16 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if input is null or empty. 
+        /// Check if input is null or empty.
         /// </summary>
-        public static bool IsNullOrEmpty(this string input) => string.IsNullOrEmpty(input);
+        public static bool IsNullOrEmpty(this string input)
+            => string.IsNullOrEmpty(input);
 
         /// <summary>
-        /// Check if input is null or whitespace. 
+        /// Check if input is null or whitespace.
         /// </summary>
-        public static bool IsNullOrWhiteSpace(this string input) => string.IsNullOrWhiteSpace(input);
+        public static bool IsNullOrWhiteSpace(this string input)
+            => string.IsNullOrWhiteSpace(input);
 
         /// <summary>
         /// Reverse a string.
@@ -298,8 +299,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Trim with null check. 
-        /// </summary> 
+        /// Trim with null check.
+        /// </summary>
         public static string SafeTrim(this string input, params char[] trimChars)
         {
             _ = trimChars ?? throw new ArgumentNullException(nameof(trimChars));
@@ -326,8 +327,8 @@ namespace CoreSharp.Extensions
            => json.ToEntity(typeof(TEntity), settings) as TEntity;
 
         /// <summary>
-        /// Parse json to entity. 
-        /// </summary> 
+        /// Parse json to entity.
+        /// </summary>
         public static object ToEntity(this string json, Type entityType, JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
@@ -343,23 +344,23 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Parse json to ToExpandoObject. 
-        /// </summary> 
+        /// Parse json to ToExpandoObject.
+        /// </summary>
         public static dynamic ToExpandoObject(this string json)
         {
             var token = JToken.Parse(json);
 
-            if (token is JArray)
-                return token.ToObject<IEnumerable<ExpandoObject>>();
-            else if (token is JObject)
-                return token.ToObject<ExpandoObject>();
-            else
-                throw new InvalidOperationException($"{nameof(json)} is not in a valid json format.");
+            return token switch
+            {
+                JArray => token.ToObject<IEnumerable<ExpandoObject>>(),
+                JObject => token.ToObject<ExpandoObject>(),
+                _ => throw new InvalidOperationException($"{nameof(json)} is not in a valid json format.")
+            };
         }
 
         /// <summary>
-        /// Split string to array of lines on new line indication. 
-        /// </summary> 
+        /// Split string to array of lines on new line indication.
+        /// </summary>
         public static IEnumerable<string> GetLines(this string input, StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
@@ -368,8 +369,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Replace dictionary entries in string. 
-        /// </summary> 
+        /// Replace dictionary entries in string.
+        /// </summary>
         public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
@@ -399,7 +400,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly int.TryParse resulting to int.
-        /// </summary> 
+        /// </summary>
         public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -455,7 +456,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly short.TryParse resulting to short.
-        /// </summary> 
+        /// </summary>
         public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -484,7 +485,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly float.TryParse resulting to float.
-        /// </summary> 
+        /// </summary>
         public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -513,7 +514,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly double.TryParse resulting to double.
-        /// </summary> 
+        /// </summary>
         public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -542,7 +543,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// User-friendly decimal.TryParse resulting to decimal.
-        /// </summary> 
+        /// </summary>
         public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
@@ -554,40 +555,41 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Convert string to bool. 
-        /// Can convert "true/false", "1/0" and "yes/no" strings. 
-        /// </summary> 
+        /// Convert string to bool.
+        /// Can convert "true/false", "1/0" and "yes/no" strings.
+        /// </summary>
         public static bool? ToBool(this string input)
         {
             input ??= string.Empty;
             input = input.ToLowerInvariant().Trim();
 
-            var intInput = input.ToIntCI();
+            int? intInput = input.ToIntCI();
 
             if (bool.TryParse(input, out var result))
+            {
                 return result;
-
-            //1 or 0 
-            else if (intInput.HasValue && intInput == 1)
-                return true;
-            else if (intInput.HasValue && intInput == 0)
-                return false;
-
-            //true or false 
-            else if (input == "true")
-                return true;
-            else if (input == "false")
-                return false;
-
-            //Yes or no 
-            else if (input == "yes")
-                return true;
-            else if (input == "no")
-                return false;
-
-            //Not valid 
+            }
             else
-                return null;
+            {
+                return intInput switch
+                {
+                    //1 or 0 
+                    1 => true,
+                    0 => false,
+                    _ => input switch
+                    {
+                        //true or false 
+                        "true" => true,
+                        "false" => false,
+
+                        //Yes or no 
+                        "yes" => true,
+                        "no" => false,
+
+                        _ => null
+                    }
+                };
+            }
         }
 
         /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
@@ -611,8 +613,8 @@ namespace CoreSharp.Extensions
            => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
 
         /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime. 
-        /// </summary> 
+        /// User-friendly DateTime.TryParse resulting to DateTime.
+        /// </summary>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
         {
             _ = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));

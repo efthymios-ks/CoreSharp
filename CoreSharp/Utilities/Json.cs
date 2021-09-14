@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace CoreSharp.Utilities
 {
-    public static partial class Json
+    public static class Json
     {
         /// <summary>
-        /// Check if string is an empty json. 
-        /// </summary> 
+        /// Check if string is an empty json.
+        /// </summary>
         public static bool IsEmpty(string json)
         {
             json ??= string.Empty;
@@ -16,7 +16,7 @@ namespace CoreSharp.Utilities
             json = Regex.Replace(json, @"\s+", string.Empty);
 
             //Empty formats
-            var emptyFormats = new[] { string.Empty, "", "{}", "[]", "[{}]" };
+            var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
 
             return emptyFormats.Any(f => f == json);
         }

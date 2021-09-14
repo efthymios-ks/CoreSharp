@@ -4,9 +4,9 @@ using System.Net.Sockets;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// TcpClient extensions. 
+    /// TcpClient extensions.
     /// </summary>
-    public static partial class TcpClientExtensions
+    public static class TcpClientExtensions
     {
         /// <inheritdoc cref="SocketExtensions.IsConnected(Socket, int)"/>
         public static bool IsConnected(this TcpClient client, int timeoutMillis = 5000)

@@ -4,17 +4,18 @@ using System.Drawing;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// SizeF extensions. 
+    /// SizeF extensions.
     /// </summary>
     public static class SizeFExtensions
     {
         /// <summary>
-        /// Convert SizeF to Size. 
+        /// Convert SizeF to Size.
         /// </summary>
-        public static Size ToSize(this SizeF source) => Size.Round(source);
+        public static Size ToSize(this SizeF source)
+            => Size.Round(source);
 
         /// <summary>
-        /// Scale size proportionally. 
+        /// Scale size proportionally.
         /// </summary>
         public static SizeF Scale(this SizeF source, SizeF target)
         {

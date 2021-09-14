@@ -26,11 +26,11 @@ namespace CoreSharp.Implementations.Communication.Tcp
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => $"Local='{LocalEndPoint}', Remote='{RemoteEndPoint}'";
         public IPEndPoint LocalEndPoint { get; private set; }
-        public IPEndPoint RemoteEndPoint { get; private set; }
+        public IPEndPoint RemoteEndPoint { get; }
         public int BufferSize { get; set; } = 8 * 1024;
         public TimeSpan Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value.IsIn(TimeSpan.Zero, TimeSpan.MinValue, TimeSpan.MaxValue))
@@ -41,7 +41,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
                 _timeout = value;
 
-                bool enabledState = _timeoutTimer.Enabled;
+                var enabledState = _timeoutTimer.Enabled;
                 _timeoutTimer.Enabled = false;
                 _timeoutTimer.Interval = _timeout.TotalMilliseconds;
                 _timeoutTimer.Enabled = enabledState;
@@ -49,7 +49,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         }
         public bool IsConnected
         {
-            get { return _isConnected; }
+            get => _isConnected;
             private set
             {
                 if (value == _isConnected)
@@ -72,12 +72,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
         //Constructors 
         public TcpClient(int port) : this(IPAddress.Loopback, port)
         {
-
         }
 
         public TcpClient(string ip, int port) : this(IPAddress.Parse(ip), port)
         {
-
         }
 
         public TcpClient(IPAddress ip, int port)
@@ -96,8 +94,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
         //Events 
         public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
-        public event EventHandler<DataTransferedEventArgs> DataSent;
-        public event EventHandler<DataTransferedEventArgs> DataReceived;
+        public event EventHandler<DataTransferredEventArgs> DataSent;
+        public event EventHandler<DataTransferredEventArgs> DataReceived;
         public event EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
@@ -148,7 +146,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             };
 
             //Async connect 
-            var args = new SocketAsyncEventArgs
+            var args = new SocketAsyncEventArgs()
             {
                 RemoteEndPoint = RemoteEndPoint
             };
@@ -199,9 +197,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
             if (_isConnecting || !IsConnected)
-                throw new InvalidOperationException($"Cannot send data while disconnected.");
+                throw new InvalidOperationException("Cannot send data while disconnected.");
 
-            int count = _socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
+            var count = _socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
             if (count > 0)
                 OnDataSent(data.Take(count));
 
@@ -238,7 +236,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
             if (_isConnecting || !IsConnected)
-                throw new InvalidOperationException($"Cannot send data while disconnected.");
+                throw new InvalidOperationException("Cannot send data while disconnected.");
 
             var args = new SocketAsyncEventArgs();
             args.SetBuffer(data, 0, data.Length);
@@ -250,10 +248,10 @@ namespace CoreSharp.Implementations.Communication.Tcp
         private void BeginReceive()
         {
             if (_isConnecting || !IsConnected)
-                throw new InvalidOperationException($"Cannot receive data while disconnected.");
+                throw new InvalidOperationException("Cannot receive data while disconnected.");
 
             var buffer = new byte[_socket.ReceiveBufferSize];
-            var args = new SocketAsyncEventArgs
+            var args = new SocketAsyncEventArgs()
             {
                 RemoteEndPoint = RemoteEndPoint
             };
@@ -290,7 +288,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             try
             {
                 if (args.SocketError == SocketError.Success)
+                {
                     OnDataSent(args.Buffer);
+                }
                 else
                 {
                     OnError(args.SocketError);
@@ -317,7 +317,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 if (args.SocketError == SocketError.Success)
                 {
                     var bytesReceived = new byte[args.BytesTransferred];
-                    Array.Copy(args.Buffer, bytesReceived, args.BytesTransferred);
+                    Array.Copy(args.Buffer!, bytesReceived, args.BytesTransferred);
                     OnDataReceived(bytesReceived);
                     BeginReceive();
                 }
@@ -365,7 +365,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataSent?.Invoke(this, args);
         }
 
@@ -373,7 +373,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            var args = new DataTransferedEventArgs(data);
+            var args = new DataTransferredEventArgs(data);
             DataReceived?.Invoke(this, args);
         }
 
@@ -387,7 +387,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 SocketError.NotConnected,
                 SocketError.OperationAborted,
                 SocketError.Shutdown))
+            {
                 return;
+            }
 
             var args = new SocketErrorEventArgs(error);
             ErrorOccured?.Invoke(this, args);
@@ -419,14 +421,14 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             lock (_timerLock)
             {
-                var timer = sender as System.Timers.Timer;
-                timer.Stop();
+                var timer = sender as Timer;
+                timer?.Stop();
 
                 IsConnected = _socket.IsConnected((int)Timeout.TotalMilliseconds);
                 if (!IsConnected)
                     Terminate();
 
-                timer.Start();
+                timer?.Start();
             }
         }
 
