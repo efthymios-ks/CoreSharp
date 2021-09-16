@@ -625,5 +625,22 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <inheritdoc cref="ToGuid(string, string)"/>>
+        public static Guid? ToGuid(this string input)
+            => input?.ToGuid("D");
+
+        /// <summary>
+        /// User-friendly Guid.TryParseExact resulting to Guid.
+        /// </summary>
+        public static Guid? ToGuid(this string input, string format)
+        {
+            _ = format ?? throw new ArgumentNullException(nameof(format));
+
+            if (Guid.TryParseExact(input, format, out var result))
+                return result;
+            else
+                return null;
+        }
     }
 }

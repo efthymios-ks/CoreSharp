@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using CoreSharp.Tests.Dummies;
+﻿using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
@@ -957,13 +956,38 @@ namespace CoreSharp.Extensions.Tests
         public void ToDateTime_InputValid_ReturnDateTime()
         {
             //Arrange 
-            DateTime expected = new(2021, 5, 4, 11, 17, 45);
+            var expected = new DateTime(2021, 5, 4, 11, 17, 45);
             const string dateTimeFormat = "u";
             var formatProvider = CultureInfo.InvariantCulture;
             var input = expected.ToString(dateTimeFormat, formatProvider);
 
             //Act
             var result = input.ToDateTime(dateTimeFormat, formatProvider);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToGuid_FormatIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => StringEmpty.ToGuid(StringNull);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToGuid_InputValid_ReturnGuid()
+        {
+            //Arrange 
+            var expected = Guid.NewGuid();
+            const string format = "D";
+            var input = expected.ToString(format);
+
+            //Act
+            var result = input.ToGuid(format);
 
             //Assert
             result.Should().Be(expected);
