@@ -4,7 +4,7 @@ using System.Linq;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// String utilities. 
+    /// String utilities.
     /// </summary>
     public static class String
     {
@@ -13,8 +13,8 @@ namespace CoreSharp.Utilities
             => FirstNotEmpty(values?.ToArray());
 
         /// <summary>
-        /// Return first value not null or whitespace. 
-        /// </summary> 
+        /// Return first value not null or whitespace.
+        /// </summary>
         public static string FirstNotEmpty(params string[] values)
             => values?.FirstOrDefault(v => !string.IsNullOrWhiteSpace(v));
     }

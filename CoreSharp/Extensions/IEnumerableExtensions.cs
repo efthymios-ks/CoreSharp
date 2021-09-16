@@ -88,7 +88,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator)
-            => source.StringJoin(separator, string.Empty, null);
+            => source.StringJoin(separator, null, null);
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoinCI<T>(this IEnumerable<T> source, string separator)
@@ -104,7 +104,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, IFormatProvider formatProvider)
-            => source.StringJoin(separator, string.Empty, formatProvider);
+            => source.StringJoin(separator, null, formatProvider);
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
         public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
@@ -116,23 +116,15 @@ namespace CoreSharp.Extensions
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
-
-            //Validate Separator
-            if (string.IsNullOrEmpty(separator))
-                separator = " ";
-
-            //Validate StringFormat
-            if (string.IsNullOrEmpty(stringFormat))
-                stringFormat = "{0}";
-
-            //Validate FormatProvider 
+            separator ??= string.Empty;
+            stringFormat ??= "{0}";
             formatProvider ??= CultureInfo.CurrentCulture;
 
-            //Convert items
-            var convertedItems = source.Select(i => string.Format(formatProvider, stringFormat, i));
+            //Format items
+            var formattedItems = source.Select(i => string.Format(formatProvider, stringFormat, i));
 
             //Return
-            return string.Join(separator, convertedItems);
+            return string.Join(separator, formattedItems);
         }
 
         /// <inheritdoc cref="ToHashSet{T}(IEnumerable{T}, IEqualityComparer{T})"/>
