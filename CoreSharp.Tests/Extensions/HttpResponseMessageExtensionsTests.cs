@@ -53,7 +53,7 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             var exception = action.Should().ThrowExactlyAsync<HttpResponseException>().GetAwaiter().GetResult().Which;
-            exception.StatusCode.Should().Be(statusCode);
+            exception.ResponseStatusCode.Should().Be(statusCode);
             exception.Message.Should().Be(contentValue);
         }
     }

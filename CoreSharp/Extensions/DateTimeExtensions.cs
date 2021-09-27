@@ -78,13 +78,29 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert DateTime to sortable format using "u" specifier.
         /// </summary>
-        public static string ToStringSortable(this DateTime date) 
+        public static string ToStringSortable(this DateTime date)
             => date.ToString("u", CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Convert DateTime to UTC sortable format using "ο" specifier.
         /// </summary>
-        public static string ToStringSortableUtc(this DateTime date) 
+        public static string ToStringSortableUtc(this DateTime date)
             => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+        /// <inheritdoc cref="DateTime.ToShortDateString"/>
+        public static string ToShortDateString(this DateTime date, CultureInfo culture)
+            => date.ToString("d", culture);
+
+        /// <inheritdoc cref="DateTime.ToLongDateString"/>
+        public static string ToLongDateString(this DateTime date, CultureInfo culture)
+            => date.ToString("D", culture);
+
+        /// <inheritdoc cref="DateTime.ToShortTimeString"/>
+        public static string ToShortTimeString(this DateTime date, CultureInfo culture)
+            => date.ToString("t", culture);
+
+        /// <inheritdoc cref="DateTime.ToLongTimeString"/>
+        public static string ToLongTimeString(this DateTime date, CultureInfo culture)
+            => date.ToString("T", culture);
     }
 }

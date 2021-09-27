@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions
     public static class EnumExtensions
     {
         /// <summary>
-        /// Get specific attribute from enum.
+        /// Get specific <see cref="Attribute"/> from enum.
         /// </summary>
         public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
         {
@@ -32,13 +32,18 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
+        /// Get <see cref="DisplayAttribute"/> attribute from an enum.
+        /// </summary>
+        public static DisplayAttribute GetDisplay(this Enum value)
+        {
+            _ = value ?? throw new ArgumentNullException(nameof(value));
+            return value.GetAttribute<DisplayAttribute>();
+        }
+
+        /// <summary>
         /// Get <see cref="DisplayAttribute.Name"/> attribute from an enum.
         /// </summary>
         public static string GetDisplayName(this Enum value)
-        {
-            _ = value ?? throw new ArgumentNullException(nameof(value));
-            var displayAttribute = value.GetAttribute<DisplayAttribute>();
-            return displayAttribute?.Name ?? $"{value}";
-        }
+            => value.GetDisplay()?.Name ?? $"{value}";
     }
 }

@@ -15,20 +15,20 @@ namespace CoreSharp.Utilities
         /// <example>
         /// <code>
         /// // "/sec1/sec2/sec3/"
-        /// var url = Url.Combine("/sec1", "/sec2/", "sec3");
+        /// var url = Url.JoinSegments("/sec1/", "/sec2/", "/sec3");
         /// </code>
         /// </example>
         /// </summary>
-        public static string Combine(params object[] segments)
+        public static string JoinSegments(params object[] segments)
         {
             _ = segments ?? throw new ArgumentNullException(nameof(segments));
 
             var builder = new StringBuilder();
 
             //Connect 
-            foreach (var segment in segments)
+            foreach (object segment in segments)
             {
-                var trimmed = $"/{segment}".Trim();
+                string trimmed = $"/{segment}".Trim();
                 builder.Append(trimmed);
             }
             builder.Append('/');

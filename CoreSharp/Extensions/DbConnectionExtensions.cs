@@ -44,7 +44,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" />
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection)
-            => await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted).ConfigureAwait(false);
+            => await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// Try to open connection and begin a new transaction on it.
@@ -54,9 +54,9 @@ namespace CoreSharp.Extensions
             _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             if (!connection.IsOpen())
-                await connection.OpenAsync().ConfigureAwait(false);
+                await connection.OpenAsync();
 
-            return await connection.BeginTransactionAsync(isolationLevel).ConfigureAwait(false);
+            return await connection.BeginTransactionAsync(isolationLevel);
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace CoreSharp.Extensions
 
             try
             {
-                await connection.OpenAsync().ConfigureAwait(false);
-                await connection.CloseAsync().ConfigureAwait(false);
+                await connection.OpenAsync();
+                await connection.CloseAsync();
                 return true;
             }
             catch

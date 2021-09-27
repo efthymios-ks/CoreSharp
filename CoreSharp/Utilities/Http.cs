@@ -17,7 +17,7 @@ namespace CoreSharp.Utilities
         {
             _ = methodName ?? throw new ArgumentNullException(nameof(methodName));
 
-            methodName = methodName.Trim().ToLowerInvariant();
+            methodName = methodName.ToLowerInvariant();
 
             if (methodName.Contains("get"))
                 return RestMethod.Get;

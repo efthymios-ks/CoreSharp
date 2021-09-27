@@ -4,7 +4,7 @@ using System;
 
 namespace CoreSharp.Extensions.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class TimeSpanExtensionsTests
     {
         [Test]

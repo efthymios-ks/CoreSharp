@@ -159,7 +159,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="Mid(string, int, int)"/>
-        public static string Mid(this string input, int start) => input.Mid(start, input?.Length ?? 0);
+        public static string Mid(this string input, int start)
+            => input.Mid(start, input?.Length ?? 0);
 
         /// <summary>
         /// Take N characters from given index. Similar to Sql.Functions.Mid.
@@ -365,7 +366,7 @@ namespace CoreSharp.Extensions
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
 
-            return input.Split(new[] { "\r\n", "\r", "\n" }, stringSplitOptions);
+            return input.Split(new[] { "\r", "\n", "\r\n", Environment.NewLine }, stringSplitOptions);
         }
 
         /// <summary>

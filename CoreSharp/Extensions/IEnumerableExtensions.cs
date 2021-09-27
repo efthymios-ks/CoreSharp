@@ -152,9 +152,10 @@ namespace CoreSharp.Extensions
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            var collection = new Collection<T>();
-            collection.AddRange(source);
-            return collection;
+            if (source is IList<T> list)
+                return new Collection<T>(list);
+            else
+                return new Collection<T>(source.ToList());
         }
 
         /// <summary>
@@ -322,14 +323,12 @@ namespace CoreSharp.Extensions
             var sourceArray = source.ToArray();
 
             //Group by page index 
-            var groups = sourceArray.GroupBy(i =>
+            return sourceArray.GroupBy(i =>
             {
                 var itemIndex = Array.IndexOf(sourceArray, i);
                 var pageIndex = itemIndex / pageSize;
                 return pageIndex;
             });
-
-            return groups;
         }
 
         /// <inheritdoc cref="ContainsAll{T}(IEnumerable{T}, T[])"/>
@@ -406,15 +405,19 @@ namespace CoreSharp.Extensions
         public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
             => source.GetDuplicates(keySelector).Count > 0;
 
+        /// <inheritdoc cref="ToDataTable{T}(IEnumerable{T}, string)"/>
+        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source) where TEntity : class
+            => source.ToDataTable(typeof(TEntity).Name);
+
         /// <summary>
         /// Convert collection of entities to DataTable.
         /// </summary>
-        public static DataTable ToDataTable<T>(this IEnumerable<T> source)
+        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source, string tableName) where TEntity : class
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var table = new DataTable(typeof(T).Name);
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var table = new DataTable(tableName);
 
             //Create columns 
             foreach (var property in properties)

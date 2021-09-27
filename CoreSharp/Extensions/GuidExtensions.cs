@@ -17,7 +17,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Compare given value with Guid.Empty (all zeros).
         /// </summary>
-        public static bool IsNullOrEmpty(this Guid guid) 
+        public static bool IsNullOrEmpty(this Guid guid)
             => guid == Guid.Empty;
     }
 }

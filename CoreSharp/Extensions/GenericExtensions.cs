@@ -101,18 +101,21 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="IsNull{T}(T?)"/>
-        public static bool IsNull<T>(this T input) where T : class => input is null;
+        public static bool IsNull<T>(this T input) where T : class
+            => input is null;
 
         /// <summary>
         /// Gets a value indicating whether the current nullable
         /// object has a valid value of its underlying type.
         /// </summary>
-        public static bool IsNull<T>(this T? input) where T : struct => !input.HasValue;
+        public static bool IsNull<T>(this T? input) where T : struct
+            => !input.HasValue;
 
         /// <summary>
         /// Check if struct has default value.
         /// </summary>
-        public static bool IsDefault<T>(this T input) where T : struct => input.Equals(default(T));
+        public static bool IsDefault<T>(this T input) where T : struct
+            => input.Equals(default(T));
 
         /// <summary>
         /// Serialize to XDocument.

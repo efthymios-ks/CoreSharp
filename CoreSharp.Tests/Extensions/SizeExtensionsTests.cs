@@ -1,14 +1,13 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Drawing;
-using System.IO.Ports;
 
 namespace CoreSharp.Extensions.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class SizeExtensionsTests
     {
-        [Test()]
+        [Test]
         public void ToSizeF_WhenCalled_ReturnSizeFWithSameValues()
         {
             //Arrange 

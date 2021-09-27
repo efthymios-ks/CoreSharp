@@ -19,7 +19,6 @@ namespace CoreSharp.Utilities
         /// </summary>
         public static IDictionary<string, TEnum> GetDictionary<TEnum>() where TEnum : System.Enum
         {
-            var dictionary = new Dictionary<string, TEnum>();
             var values = GetValues<TEnum>();
             return values.ToDictionary(key => $"{key}", value => value);
         }

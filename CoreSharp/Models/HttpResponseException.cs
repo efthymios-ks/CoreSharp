@@ -6,30 +6,39 @@ namespace CoreSharp.Models
 {
     /// <summary>
     /// Simple HttpResponseMessage exception.
-    /// Stores an HttpStatusCode and Content (Exception.Message).
     /// </summary>
     public class HttpResponseException : Exception
     {
-        //Constructors
-        public HttpResponseException(HttpStatusCode statusCode, string content, Exception innerException = null) : base(content, innerException)
+        //Constructors  
+        public HttpResponseException(
+            string requestUrl,
+            string requestMethod,
+            HttpStatusCode responseStatusCode,
+            string responseContent,
+            Exception innerException = null) : base(responseContent, innerException)
         {
-            StatusCode = statusCode;
+            RequestUrl = requestUrl;
+            RequestMethod = requestMethod;
+            ResponseStatusCode = responseStatusCode;
         }
 
         //Properties
-        public HttpStatusCode StatusCode { get; }
+        public string RequestUrl { get; }
 
-        public string Content => Message;
+        public string RequestMethod { get; }
 
-        public string Status => $"{(int)StatusCode} {StatusCode}";
+        public HttpStatusCode ResponseStatusCode { get; }
 
-        //Methods 
+        public string ResponseContent => Message;
+
+        public string ResponseStatus => $"{RequestMethod} > {RequestUrl} > {(int)ResponseStatusCode} {ResponseStatusCode}";
+
         public override string ToString()
         {
-            if (Json.IsEmpty(Content))
-                return Status;
+            if (Json.IsEmpty(ResponseContent))
+                return ResponseStatus;
             else
-                return Status + Environment.NewLine + Content;
+                return ResponseStatus + Environment.NewLine + ResponseContent;
         }
     }
 }

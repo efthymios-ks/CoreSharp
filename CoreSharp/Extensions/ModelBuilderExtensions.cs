@@ -13,8 +13,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Configure and seed enum to database table.
         /// </summary>
-        public static ModelBuilder HasEnum<TEnum>(this ModelBuilder builder, string tableName)
-            where TEnum : Enum
+        public static ModelBuilder HasEnum<TEnum>(this ModelBuilder builder, string tableName) where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             if (string.IsNullOrWhiteSpace(tableName))
@@ -26,8 +25,7 @@ namespace CoreSharp.Extensions
             return builder;
         }
 
-        private static EntityTypeBuilder ConfigureEnum<TEnum>(this ModelBuilder builder, string tableName)
-            where TEnum : Enum
+        private static EntityTypeBuilder ConfigureEnum<TEnum>(this ModelBuilder builder, string tableName) where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             if (string.IsNullOrWhiteSpace(tableName))
@@ -41,8 +39,7 @@ namespace CoreSharp.Extensions
             return entityBuilder;
         }
 
-        private static void SeedEnum<TEnum>(this ModelBuilder builder)
-            where TEnum : Enum
+        private static void SeedEnum<TEnum>(this ModelBuilder builder) where TEnum : Enum
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
 

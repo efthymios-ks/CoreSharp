@@ -4,10 +4,10 @@ using System.Drawing;
 
 namespace CoreSharp.Extensions.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class SizeFExtensionsTests
     {
-        [Test()]
+        [Test]
         public void ToSize_WhenCalled_ReturnSizeWithSameValues()
         {
             //Arrange 

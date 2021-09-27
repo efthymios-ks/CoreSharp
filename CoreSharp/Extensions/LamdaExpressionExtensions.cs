@@ -24,7 +24,7 @@ namespace CoreSharp.Extensions
                     ExpressionType.Call => (e as MethodCallExpression)?.Method?.Name,
                     ExpressionType.Convert or ExpressionType.ConvertChecked => NameSelector((e as UnaryExpression)?.Operand),
                     ExpressionType.Invoke => NameSelector(((InvocationExpression)e).Expression),
-                    ExpressionType.ArrayLength => "Length",
+                    ExpressionType.ArrayLength => nameof(Array.Length),
                     _ => throw new ArgumentException("Expression is not a proper member selector.", nameof(memberExpression)),
                 };
             }
