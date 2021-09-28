@@ -1,8 +1,9 @@
-﻿using CoreSharp.Models.Newtonsoft;
+﻿using CoreSharp.Models.Newtonsoft.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -14,7 +15,8 @@ namespace CoreSharp.Extensions
     public static class GenericExtensions
     {
         /// <inheritdoc cref="IsIn{T}(T, T[])"/>
-        public static bool IsIn<T>(this T item, IEnumerable<T> source) => item.IsIn(source?.ToArray());
+        public static bool IsIn<T>(this T item, IEnumerable<T> source)
+            => item.IsIn(source?.ToArray());
 
         /// <inheritdoc cref="IsIn{T}(T, T[])"/>
         public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
@@ -39,10 +41,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonSerializerSettings)"/>
         public static string ToJson<TEntity>(this TEntity entity) where TEntity : class
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return entity.ToJson(settings);
-        }
+            => entity.ToJson(DefaultJsonSettings.Instance);
 
         /// <summary>
         /// Serialize object to json.
@@ -57,10 +56,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonSerializerSettings)"/>
         public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return item.JsonClone(settings);
-        }
+            => item.JsonClone(DefaultJsonSettings.Instance);
 
         /// <summary>
         /// Perform a deep copy using Json serialization.
@@ -76,10 +72,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonSerializerSettings)"/>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return left.JsonEquals(right, settings);
-        }
+            => left.JsonEquals(right, DefaultJsonSettings.Instance);
 
         /// <summary>
         /// Compares two objects by converting them to json (string).
@@ -88,16 +81,64 @@ namespace CoreSharp.Extensions
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            //If of different type, return false
-            var typeLeft = left?.GetType();
-            var typeRight = right?.GetType();
-            if (!Equals(typeLeft, typeRight))
-                return false;
-
             //Else compare string
             var jsonLeft = JsonConvert.SerializeObject(left, settings);
             var jsonRight = JsonConvert.SerializeObject(right, settings);
             return string.Equals(jsonLeft, jsonRight);
+        }
+
+        /// <summary>
+        /// Perform a deep copy using reflection and public properties.
+        /// </summary>
+        public static TEntity ReflectionClone<TEntity>(this TEntity item) where TEntity : class, new()
+        {
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+
+            var result = new TEntity();
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(item);
+                property.SetValue(result, value);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Compares two objects using reflection and public properties.
+        /// </summary>
+        public static bool ReflectionEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
+        {
+            if (left is null && right is null)
+                return true;
+            else if (left is null)
+                return false;
+            else if (right is null)
+                return false;
+            else
+            {
+                var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach (var property in properties)
+                {
+                    var leftValue = property.GetValue(left);
+                    var rightValue = property.GetValue(right);
+
+                    //If primitive, so just compare 
+                    if (property.PropertyType.IsExtendedPrimitive())
+                    {
+                        if (!Equals(leftValue, rightValue))
+                            return false;
+                    }
+                    //Else recursive call 
+                    else
+                    {
+                        if (!leftValue.ReflectionEquals(rightValue))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
         }
 
         /// <inheritdoc cref="IsNull{T}(T?)"/>

@@ -1,4 +1,5 @@
-﻿using CoreSharp.Tests.Dummies;
+﻿using CoreSharp.Extensions;
+using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -201,7 +202,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void JsonEquals_PropeprtiesDontMatch_ReturnFalse()
+        public void JsonEquals_PropertiesDontMatch_ReturnFalse()
         {
             //Arrange 
             var left = new DummyClass(1, "Black");
@@ -278,6 +279,116 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ReflectionClone_ItemIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            DummyClass item = null;
+
+            //Act
+            Action action = () => item.ReflectionClone();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ReflectionClone_InputIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            DummyClass item = null;
+
+            //Act
+            Action action = () => item.ReflectionClone();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ReflectionClone_WhenCalled_ReturnNewReferenceWithSameValues()
+        {
+            //Arrange
+            var item = new DummyClass(1, "Red");
+
+            //Act
+            var result = item.ReflectionClone();
+
+            //Assert 
+            result.Id.Should().Be(item.Id);
+            result.Name.Should().Be(item.Name);
+        }
+
+        [Test]
+        public void ReferenceEquals_OnlyLeftIsNull_ReturnFalse()
+        {
+            //Arrange
+            DummyClass left = null;
+            var right = new DummyClass();
+
+            //Act
+            var result = left.ReflectionEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void ReferenceEquals_OnlyRightIsNull_ReturnFalse()
+        {
+            //Arrange
+            var left = new DummyClass();
+            DummyClass right = null;
+
+            //Act
+            var result = left.ReflectionEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void ReferenceEquals_BothAreNull_ReturnTrue()
+        {
+            //Arrange
+            DummyClass left = null;
+            DummyClass right = null;
+
+            //Act
+            var result = left.ReflectionEquals(right);
+
+            //Assert 
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void ReferenceEquals_PropertiesDontMatch_ReturnFalse()
+        {
+            //Arrange 
+            var left = new DummyClass(1, "Black");
+            var right = new DummyClass(1, "White");
+
+            //Act 
+            var result = left.ReflectionEquals(right);
+
+            //Assert 
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void ReferenceEquals_PropertiesMatch_ReturnTrue()
+        {
+            //Arrange
+            var left = new DummyClass(1, "Black");
+            var right = new DummyClass(1, "Black");
+
+            //Act
+            var result = left.ReflectionEquals(right);
+
+            //Assert 
+            result.Should().BeTrue();
         }
     }
 }

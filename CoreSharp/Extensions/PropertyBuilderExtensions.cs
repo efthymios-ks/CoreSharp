@@ -1,10 +1,10 @@
-﻿using System;
-using CoreSharp.Models.Newtonsoft;
+﻿using CoreSharp.Models.Newtonsoft.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
+using System;
 
 namespace CoreSharp.Extensions
 {
@@ -16,10 +16,7 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="HasJsonConversion{TEntity}(PropertyBuilder{TEntity}, JsonSerializerSettings)"/>
         public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder)
             where TEntity : class
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return builder.HasJsonConversion(settings);
-        }
+            => builder.HasJsonConversion(DefaultJsonSettings.Instance);
 
         /// <summary>
         /// Convert a property from and to json for database storage.

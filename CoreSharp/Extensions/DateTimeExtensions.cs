@@ -89,18 +89,18 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="DateTime.ToShortDateString"/>
         public static string ToShortDateString(this DateTime date, CultureInfo culture)
-            => date.ToString("d", culture);
+            => date.ToString(culture.DateTimeFormat.ShortDatePattern, culture);
 
         /// <inheritdoc cref="DateTime.ToLongDateString"/>
         public static string ToLongDateString(this DateTime date, CultureInfo culture)
-            => date.ToString("D", culture);
+            => date.ToString(culture.DateTimeFormat.LongDatePattern, culture);
 
         /// <inheritdoc cref="DateTime.ToShortTimeString"/>
         public static string ToShortTimeString(this DateTime date, CultureInfo culture)
-            => date.ToString("t", culture);
+            => date.ToString(culture.DateTimeFormat.ShortTimePattern, culture);
 
         /// <inheritdoc cref="DateTime.ToLongTimeString"/>
         public static string ToLongTimeString(this DateTime date, CultureInfo culture)
-            => date.ToString("T", culture);
+            => date.ToString(culture.DateTimeFormat.LongTimePattern, culture);
     }
 }

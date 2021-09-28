@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models.Newtonsoft;
+﻿using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Sources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -229,7 +229,7 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <inheritdoc cref=""/>
+        /// <inheritdoc cref="EndsWithAnyCI(string, string[])"/>
         public static bool EndsWithAnyCI(this string input, IEnumerable<string> values)
             => input.EndsWithAnyCI(values?.ToArray());
 
@@ -244,7 +244,7 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <inheritdoc cref=""/>
+        /// <inheritdoc cref="ContainsAnyCI(string, string[])"/>
         public static bool ContainsAnyCI(this string input, IEnumerable<string> values)
             => input.ContainsAnyCI(values?.ToArray());
 
@@ -274,8 +274,6 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Reverse a string.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         public static string Reverse(this string input)
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
@@ -318,10 +316,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
         public static object ToEntity(this string json, Type entityType)
-        {
-            var settings = new JsonSerializerDefaultSettings();
-            return json.ToEntity(entityType, settings);
-        }
+            => json.ToEntity(entityType, DefaultJsonSettings.Instance);
 
         /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
         public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class

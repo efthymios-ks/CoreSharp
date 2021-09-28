@@ -20,6 +20,9 @@ namespace CoreSharp.Tests.Dummies
             Name = name;
         }
 
+        //Properties
+        public static DummyClass Null => null;
+
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => ToString();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CoreSharp.Extensions
 {
@@ -51,12 +52,43 @@ namespace CoreSharp.Extensions
                 case TypeCode.Object when type == typeof(DateTimeOffset):
                     return true;
                 case TypeCode.Object:
-                {
-                    var baseType = Nullable.GetUnderlyingType(type);
-                    return baseType?.IsDate() ?? false;
-                }
+                    {
+                        var baseType = Nullable.GetUnderlyingType(type);
+                        return baseType?.IsDate() ?? false;
+                    }
                 default:
                     return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks for
+        /// <see cref="Type.IsPrimitive"/>,
+        /// <see cref="string"/>,
+        /// <see cref="decimal"/>,
+        /// <see cref="DateTime"/>,
+        /// <see cref="DateTimeOffset"/>,
+        /// <see cref="Guid"/>.
+        /// </summary>
+        public static bool IsExtendedPrimitive(this Type type)
+        {
+            var baseType = Nullable.GetUnderlyingType(type) ?? type;
+
+            if (baseType.IsPrimitive)
+            {
+                return true;
+            }
+            else
+            {
+                var allowedTypes = new[]
+                {
+                    typeof(string),
+                    typeof(decimal),
+                    typeof(DateTime),
+                    typeof(DateTimeOffset),
+                    typeof(Guid)
+                };
+                return allowedTypes.Any(t => Equals(t, type));
             }
         }
 
