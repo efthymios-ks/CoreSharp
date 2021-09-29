@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreSharp", "CoreSharp\CoreSharp.csproj", "{DE182172-932A-431B-B4C0-4A003EC45D45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreSharp.Tests", "CoreSharp.Tests\CoreSharp.Tests.csproj", "{3C587366-6D73-459A-BD8F-6489F115673F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreSharp.Tests", "CoreSharp.Tests\CoreSharp.Tests.csproj", "{3C587366-6D73-459A-BD8F-6489F115673F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

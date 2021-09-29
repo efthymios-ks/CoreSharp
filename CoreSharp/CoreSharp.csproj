@@ -19,13 +19,19 @@
         <Version>1.0.6</Version>
         <PackageReleaseNotes>-Code clean-up.
 -New Stream and generic extensions.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.6.0</AssemblyVersion>
+        <AssemblyVersion>1.0.7.0</AssemblyVersion>
+        <FileVersion>1.0.7.0</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DocumentationFile></DocumentationFile>
+        <DocumentationFile>C:\Users\Efthymios\Desktop\efthymios-ks\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
         <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
         <WarningsAsErrors>NU1605;</WarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DocumentationFile>C:\Users\Efthymios\Desktop\efthymios-ks\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
+      <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
