@@ -29,8 +29,14 @@ namespace CoreSharp.Extensions
         {
             _ = stream ?? throw new ArgumentNullException(nameof(stream));
 
+            if (!stream.CanRead)
+                throw new NotSupportedException($"{nameof(stream)} is not readable.");
+            else if (stream.Position > 0  && !stream.CanSeek)
+                throw new NotSupportedException($"{nameof(stream)} is not seekable.");
+
             try
             {
+                stream.Position = 0;
                 var serializer = JsonSerializer.Create(settings);
                 using var streamReader = new StreamReader(stream);
                 using var jsonReader = new JsonTextReader(streamReader);

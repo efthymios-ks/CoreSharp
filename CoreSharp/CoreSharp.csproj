@@ -6,7 +6,7 @@
         <Company>Efthymios Koktsidis</Company>
         <Copyright></Copyright>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Description>Collection of usefull extensions and interfaces.</Description>
+        <Description>Collection of extensions, utilities and interfaces.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/efthymios-ks/CoreSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/efthymios-ks/CoreSharp</RepositoryUrl>
@@ -16,9 +16,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.0.5</Version>
-        <PackageReleaseNotes>-Code clean-up.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.5.0</AssemblyVersion>
+        <Version>1.0.6</Version>
+        <PackageReleaseNotes>-Code clean-up.
+-New Stream and generic extensions.</PackageReleaseNotes>
+        <AssemblyVersion>1.0.6.0</AssemblyVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,12 +29,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
-        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.9" />
-        <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="5.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="5.0.10" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
         <PackageReference Include="System.IO.Ports" Version="5.0.1" />
     </ItemGroup>
 

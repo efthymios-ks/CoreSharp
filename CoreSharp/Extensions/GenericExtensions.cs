@@ -123,18 +123,16 @@ namespace CoreSharp.Extensions
                     var leftValue = property.GetValue(left);
                     var rightValue = property.GetValue(right);
 
-                    //If primitive, so just compare 
+                    //If primitive, just compare 
                     if (property.PropertyType.IsExtendedPrimitive())
                     {
                         if (!Equals(leftValue, rightValue))
                             return false;
                     }
+
                     //Else recursive call 
-                    else
-                    {
-                        if (!leftValue.ReflectionEquals(rightValue))
-                            return false;
-                    }
+                    else if (!leftValue.ReflectionEquals(rightValue))
+                        return false;
                 }
 
                 return true;
