@@ -595,6 +595,14 @@
             Serialize to XDocument.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0,System.Reflection.BindingFlags)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0,System.Reflection.BindingFlags)">
+            <summary>
+            Convert  item to <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            </summary> 
+        </member>
         <member name="T:CoreSharp.Extensions.GuidExtensions">
             <summary>
             Guid extensions.

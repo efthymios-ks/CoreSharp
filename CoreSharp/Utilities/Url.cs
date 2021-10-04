@@ -64,7 +64,10 @@ namespace CoreSharp.Utilities
             baseUrl = baseUrl.Trim(trimChars);
             query = query.Trim(trimChars);
 
-            return $"{baseUrl}/?{query}";
+            if (string.IsNullOrWhiteSpace(query))
+                return baseUrl;
+            else
+                return $"{baseUrl}/?{query}";
         }
     }
 }

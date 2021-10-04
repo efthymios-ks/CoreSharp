@@ -171,21 +171,23 @@ namespace CoreSharp.Extensions
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
-            var pairs = parameters.Select(p =>
-            {
-                var key = $"{p.Key}";
-                var value = $"{p.Value}";
-
-                if (encodeParameters)
+            var pairs = parameters
+                .Where(p => p.Value is not null)
+                .Select(p =>
                 {
-                    key = HttpUtility.UrlEncode(key);
-                    value = HttpUtility.UrlEncode(value);
-                }
+                    var key = $"{p.Key}";
+                    var value = $"{p.Value}";
 
-                key = key.Trim();
+                    if (encodeParameters)
+                    {
+                        key = HttpUtility.UrlEncode(key);
+                        value = HttpUtility.UrlEncode(value);
+                    }
 
-                return $"{key}={value}";
-            });
+                    key = key.Trim();
+
+                    return $"{key}={value}";
+                });
 
             return string.Join("&", pairs);
         }
