@@ -171,7 +171,6 @@ namespace CoreSharp.Extensions
             return document;
         }
 
-
         /// <inheritdoc cref="ToDictionary{TEntity}(TEntity, BindingFlags)"/>
         public static IDictionary<string, object> ToDictionary<TEntity>(this TEntity entity) where TEntity : class
             => entity.ToDictionary(BindingFlags.Public | BindingFlags.Instance);
@@ -179,7 +178,7 @@ namespace CoreSharp.Extensions
         //TODO: Add unit tests.
         /// <summary>
         /// Convert  item to <see cref="IDictionary{TKey, TValue}"/>.
-        /// </summary> 
+        /// </summary>
         public static IDictionary<string, object> ToDictionary<TEntity>(this TEntity entity, BindingFlags flags) where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));

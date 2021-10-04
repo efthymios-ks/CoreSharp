@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -167,16 +169,37 @@ namespace CoreSharp.Extensions
         /// Build url query string from parameters dictionary.
         /// Converts both key and value to string with default converter.
         /// </summary>
-        public static string ToUrlQueryString<TKey, TValue>(this IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
+        public static string ToUrlQueryString(this IDictionary<string, object> parameters, bool encodeParameters = true)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             var pairs = parameters
+                //Unfolder inner lists 
+                .SelectMany(p =>
+                {
+                    var innerParameters = new List<KeyValuePair<string, object>>();
+
+                    //If value is list 
+                    if (p.Value is IEnumerable values)
+                    {
+                        foreach (var value in values)
+                            innerParameters.Add(new KeyValuePair<string, object>(p.Key, value));
+                    }
+                    //If single value 
+                    else
+                    {
+                        innerParameters.Add(new KeyValuePair<string, object>(p.Key, p.Value));
+                    }
+
+                    return innerParameters;
+                })
+                //Filter null 
                 .Where(p => p.Value is not null)
+                //Format
                 .Select(p =>
                 {
-                    var key = $"{p.Key}";
-                    var value = $"{p.Value}";
+                    var key = p.Key;
+                    var value = Convert.ToString(p.Value, CultureInfo.InvariantCulture);
 
                     if (encodeParameters)
                     {
@@ -184,9 +207,7 @@ namespace CoreSharp.Extensions
                         value = HttpUtility.UrlEncode(value);
                     }
 
-                    key = key.Trim();
-
-                    return $"{key}={value}";
+                    return $"{key}={value}".Trim();
                 });
 
             return string.Join("&", pairs);

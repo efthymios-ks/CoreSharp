@@ -52,7 +52,7 @@ namespace CoreSharp.Utilities
         /// <summary>
         /// Build url from base url and parameters.
         /// </summary>
-        public static string Build<TKey, TValue>(string baseUrl, IDictionary<TKey, TValue> parameters, bool encodeParameters = true)
+        public static string Build(string baseUrl, IDictionary<string, object> parameters, bool encodeParameters = true)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
