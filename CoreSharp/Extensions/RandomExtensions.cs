@@ -39,6 +39,12 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="NextDouble(Random, double)"/>
+        public static double NextDouble(this Random rng, double maximum)
+            => rng.NextDouble(0, maximum);
+
+        /// <summary>
+        /// Get random double in given range.
+        /// </summary>
         public static double NextDouble(this Random rng, double minimum, double maximum)
         {
             _ = rng ?? throw new ArgumentNullException(nameof(rng));
@@ -49,10 +55,35 @@ namespace CoreSharp.Extensions
             return (randomValue * (maximum - minimum)) + minimum;
         }
 
+        /// <inheritdoc cref="NextString(Random, int)"/>
+        public static string NextString(this Random rng)
+        {
+            _ = rng ?? throw new ArgumentNullException(nameof(rng));
+            var randomSize = rng.Next(0, 256);
+            return rng.NextString(randomSize);
+        }
+
+        //TODO: Add unit tests. 
         /// <summary>
-        /// Get random double in given range.
+        /// Generate random string containing A-Z, a-z, 0-1.
         /// </summary>
-        public static double NextDouble(this Random rng, double maximum) => rng.NextDouble(0, maximum);
+        public static string NextString(this Random rng, int size)
+        {
+            _ = rng ?? throw new ArgumentNullException(nameof(rng));
+            if (size < 1)
+                throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} has to be at least 1.");
+
+            const string Seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var result = new char[size];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                var randomIndex = rng.Next(Seed.Length);
+                result[i] = Seed[randomIndex];
+            }
+
+            return new string(result);
+        }
 
         /// <summary>
         /// Check is percentage chance is greater than a given value.

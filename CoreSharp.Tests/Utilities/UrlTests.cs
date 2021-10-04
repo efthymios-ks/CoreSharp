@@ -50,14 +50,14 @@ namespace CoreSharp.Utilities.Tests
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
             };
-            const bool encode = false;
-            const string expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
+            const bool Encode = false;
+            const string Expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
 
             //Act
-            var result = Url.Build(baseUrl, parameters, encode);
+            var result = Url.Build(baseUrl, parameters, Encode);
 
             //Assert
-            result.Should().Be(expected);
+            result.Should().Be(Expected);
         }
 
         [Test]

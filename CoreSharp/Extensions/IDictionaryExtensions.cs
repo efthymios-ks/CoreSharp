@@ -169,7 +169,7 @@ namespace CoreSharp.Extensions
         /// Build url query string from parameters dictionary.
         /// Converts both key and value to string with default converter.
         /// </summary>
-        public static string ToUrlQueryString(this IDictionary<string, object> parameters, bool encodeParameters = true)
+        public static string ToUrlQueryString<TValue>(this IDictionary<string, TValue> parameters, bool encodeParameters = true)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
@@ -177,18 +177,18 @@ namespace CoreSharp.Extensions
                 //Unfolder inner lists 
                 .SelectMany(p =>
                 {
-                    var innerParameters = new List<KeyValuePair<string, object>>();
+                    var innerParameters = new List<KeyValuePair<string, TValue>>();
 
                     //If value is list 
-                    if (p.Value is IEnumerable values)
+                    if (p.Value is IEnumerable values && p.Value is not string)
                     {
                         foreach (var value in values)
-                            innerParameters.Add(new KeyValuePair<string, object>(p.Key, value));
+                            innerParameters.Add(new KeyValuePair<string, TValue>(p.Key, (TValue)value));
                     }
                     //If single value 
                     else
                     {
-                        innerParameters.Add(new KeyValuePair<string, object>(p.Key, p.Value));
+                        innerParameters.Add(new KeyValuePair<string, TValue>(p.Key, p.Value));
                     }
 
                     return innerParameters;
