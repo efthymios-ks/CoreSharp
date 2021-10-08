@@ -595,13 +595,13 @@
             Serialize to XDocument.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0)">
-            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0,System.Reflection.BindingFlags)"/>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0,System.Reflection.BindingFlags)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.ToDictionary``1(``0,System.Reflection.BindingFlags)">
+        <member name="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0,System.Reflection.BindingFlags)">
             <summary>
             Convert  item to <see cref="T:System.Collections.Generic.IDictionary`2"/>.
-            </summary> 
+            </summary>
         </member>
         <member name="T:CoreSharp.Extensions.GuidExtensions">
             <summary>
@@ -718,7 +718,7 @@
             Returns given value occurrences in dictionary.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``2(System.Collections.Generic.IDictionary{``0,``1},System.Boolean)">
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
             <summary>
             Build url query string from parameters dictionary.
             Converts both key and value to string with default converter.
@@ -1260,12 +1260,20 @@
             Return random value from list of values.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double,System.Double)">
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double)">
             <inheritdoc cref="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double)">
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextDouble(System.Random,System.Double,System.Double)">
             <summary>
             Get random double in given range.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextString(System.Random)">
+            <inheritdoc cref="M:CoreSharp.Extensions.RandomExtensions.NextString(System.Random,System.Int32)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.RandomExtensions.NextString(System.Random,System.Int32)">
+            <summary>
+            Generate random string containing A-Z, a-z, 0-1.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.RandomExtensions.ChanceGreaterThan(System.Random,System.Double,System.Boolean)">
@@ -2011,6 +2019,36 @@
             Short SerialPort settings class.
             </summary>
         </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add``1(System.Collections.Generic.IDictionary{System.String,``0})">
+            <summary>
+            Add <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.DateTime)">
+            <summary>
+            Add <see cref="T:System.DateTime"/> and format with "s" specifier.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.DateTimeOffset)">
+            <summary>
+            Add <see cref="T:System.DateTimeOffset"/> and format with "s" specifier.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.TimeSpan)">
+            <summary>
+            Add <see cref="T:System.TimeSpan"/> and format with "s" specifier.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add``1(System.String,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Add <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.Collections.IEnumerable)">
+            <summary>
+            Add <see cref="T:System.Collections.IEnumerable"/>.
+            </summary>
+        </member>
         <member name="F:CoreSharp.Sources.AsciiControls.Dictionary">
             <summary>
             List with ASCII control characters and their abbreviations.
@@ -2173,7 +2211,7 @@
             Extract uri parameters.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Url.Build``2(System.String,System.Collections.Generic.IDictionary{``0,``1},System.Boolean)">
+        <member name="M:CoreSharp.Utilities.Url.Build``1(System.String,System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
             <summary>
             Build url from base url and parameters.
             </summary>
