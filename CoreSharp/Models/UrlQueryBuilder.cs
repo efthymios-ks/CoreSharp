@@ -30,7 +30,7 @@ namespace CoreSharp.Models
             else if (value is TimeSpan timeSpanValue)
                 Add(key, timeSpanValue);
             else if (value is string stringValue && !string.IsNullOrWhiteSpace(stringValue))
-                InternalAdd(key, stringValue);
+                InternalAdd(key, stringValue.Trim());
             else if (value is IEnumerable enumerable)
                 Add(key, enumerable);
             else if (value is IEnumerable<object> enumerableObject)
