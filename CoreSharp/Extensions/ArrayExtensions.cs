@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Array extensions.
+    /// <see cref="Array"/> extensions.
     /// </summary>
     public static class ArrayExtensions
     {

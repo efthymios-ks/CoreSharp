@@ -3,7 +3,7 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Guid extensions.
+    /// <see cref="Guid"/> extensions.
     /// </summary>
     public static class GuidExtensions
     {
@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Compare given value with Guid.Empty (all zeros).
+        /// Compare given value with <see cref="Guid.Empty"/>.
         /// </summary>
         public static bool IsNullOrEmpty(this Guid guid)
             => guid == Guid.Empty;

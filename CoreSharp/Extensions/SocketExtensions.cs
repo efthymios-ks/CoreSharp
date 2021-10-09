@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Socket extensions.
+    /// <see cref="Socket"/> extensions.
     /// </summary>
     public static class SocketExtensions
     {
-        /// <summary>
-        /// Check if socket is connected using simple flag polling and pinging.
-        /// </summary>
+        /// <inheritdoc cref="IsConnectedAsync(Socket, int)" />
         public static bool IsConnected(this Socket socket, int timeoutMillis = 5000)
+            => socket.IsConnectedAsync(timeoutMillis).GetAwaiter().GetResult();
+
+        /// <summary>
+        /// Check if <see cref="Socket"/> is connected using simple flag polling and pinging.
+        /// </summary>
+        public static async Task<bool> IsConnectedAsync(this Socket socket, int timeoutMillis = 5000)
         {
             _ = socket ?? throw new ArgumentNullException(nameof(socket));
             if (timeoutMillis <= 0)
@@ -29,7 +34,7 @@ namespace CoreSharp.Extensions
                     return false;
 
                 //Ping 
-                if (socket.RemoteEndPoint is IPEndPoint endPoint && !endPoint.Ping(timeoutMillis))
+                if (socket.RemoteEndPoint is IPEndPoint endPoint && !await endPoint.PingAsync(timeoutMillis))
                     return false;
 
                 return true;

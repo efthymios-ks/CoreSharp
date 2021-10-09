@@ -3,13 +3,11 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IServiceProvider extensions.
+    /// <see cref="IServiceProvider"/> extensions.
     /// </summary>
     public static class IServiceProviderExtensions
     {
-        /// <summary>
-        /// Get service using generic casting directly.
-        /// </summary>
+        /// <inheritdoc cref="IServiceProvider.GetService(Type)"/>
         public static TService GetService<TService>(this IServiceProvider serviceProvider) where TService : class
         {
             _ = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));

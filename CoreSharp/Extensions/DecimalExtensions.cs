@@ -1,7 +1,7 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Decimal extensions.
+    /// <see cref="decimal"/> extensions.
     /// </summary>
     public static class DecimalExtensions
     {

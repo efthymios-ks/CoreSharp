@@ -5,12 +5,12 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Random extensions.
+    /// <see cref="Random"/> extensions.
     /// </summary>
     public static class RandomExtensions
     {
         /// <summary>
-        /// Return true or false.
+        /// Return <see langword="true"/> or <see langword="false"/>.
         /// </summary>
         public static bool CoinToss(this Random random)
         {

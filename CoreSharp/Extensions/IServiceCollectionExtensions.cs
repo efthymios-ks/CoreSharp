@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IServiceCollection extensions.
+    /// <see cref="IServiceCollection"/> extensions.
     /// </summary>
     public static class IServiceCollectionExtensions
     {

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IPAddress extensions.
+    /// <see cref="IPAddress"/> extensions.
     /// </summary>
     public static class IPAddressExtensions
     {
-        /// <summary>
-        /// Ping host.
-        /// </summary>
+        /// <inheritdoc cref="PingAsync(IPAddress, int)"/>
         public static bool Ping(this IPAddress address, int timeoutMillis = 5000)
+            => address.PingAsync(timeoutMillis).GetAwaiter().GetResult();
+
+        /// <inheritdoc cref="Ping.SendPingAsync(string, int)"/>
+        public static async Task<bool> PingAsync(this IPAddress address, int timeoutMillis = 5000)
         {
             _ = address ?? throw new ArgumentNullException(nameof(address));
             if (timeoutMillis <= 0)
@@ -21,7 +24,7 @@ namespace CoreSharp.Extensions
             try
             {
                 using var ping = new Ping();
-                var reply = ping.Send($"{address}", timeoutMillis);
+                var reply = await ping.SendPingAsync($"{address}", timeoutMillis);
                 return reply is { Status: IPStatus.Success };
             }
             catch

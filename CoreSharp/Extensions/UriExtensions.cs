@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Uri extensions.
+    /// <see cref="Uri"/> extensions.
     /// </summary>
     public static class UriExtensions
     {

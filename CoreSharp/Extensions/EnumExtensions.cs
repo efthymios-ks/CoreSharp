@@ -6,7 +6,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Enum extensions.
+    /// <see cref="Enum"/> extensions.
     /// </summary>
     public static class EnumExtensions
     {
@@ -45,5 +45,17 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string GetDisplayName(this Enum value)
             => value.GetDisplay()?.Name ?? $"{value}";
+
+        /// <summary>
+        /// Get <see cref="DisplayAttribute.ShortName"/> attribute from an enum.
+        /// </summary>
+        public static string GetDisplayShortName(this Enum value)
+            => value.GetDisplay()?.ShortName ?? $"{value}";
+
+        /// <summary>
+        /// Get <see cref="DisplayAttribute.Description"/> attribute from an enum.
+        /// </summary>
+        public static string GetDisplayDescription(this Enum value)
+            => value.GetDisplay()?.Description ?? $"{value}";
     }
 }

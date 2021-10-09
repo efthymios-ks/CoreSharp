@@ -8,13 +8,11 @@ using System.Web;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IDictionary extensions.
+    /// <see cref="IDictionary{TKey, TValue}"/> extensions.
     /// </summary>
     public static class IDictionaryExtensions
     {
-        /// <summary>
-        /// Attempts to get the item with the specified key.
-        /// </summary>
+        /// <inheritdoc cref="IDictionary{TKey, TValue}.TryGetValue(TKey, out TValue)" />
         public static bool TryGet<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -23,7 +21,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Attempts to add the item with the specified key.
+        /// Chain calls <see cref="IDictionary{TKey, TValue}.ContainsKey(TKey)"/> and <see cref="IDictionary{TKey, TValue}.Add(TKey, TValue)"/>.
         /// </summary>
         public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
         {
@@ -45,7 +43,7 @@ namespace CoreSharp.Extensions
             => source.TryRemove(key, out _);
 
         /// <summary>
-        /// Attempts to remove the item the specified key in dictionary and return the value removed.
+        /// Chain calls <see cref="IDictionary{TKey, TValue}.ContainsKey(TKey)"/> and <see cref="IDictionary{TKey, TValue}.Remove(TKey)"/>.
         /// </summary>
         public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
         {
@@ -78,8 +76,10 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Attempts to update the specifed key in dictionary, if exists.
+        /// <code>
+        /// dictionary.TryUpdate("key1", (key, value) => value + 5);
+        /// </code>
         /// </summary>
-        /// <param name="updateAction">(key, value) => ...</param>
         public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TKey, TValue, TValue> updateAction)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -114,8 +114,10 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Attempts to add or update an item with the specified key.
+        /// <code>
+        /// dictionary.AddOrUpdate("key1", (key, value) => value + 5);
+        /// </code>
         /// </summary>
-        /// <param name="updateAction">(key, value) => ...</param>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TKey, TValue, TValue> updateAction)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

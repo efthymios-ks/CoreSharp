@@ -4,12 +4,12 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Type extensions.
+    /// <see cref="Type"/> extensions.
     /// </summary>
     public static class TypeExtensions
     {
         /// <summary>
-        /// Check if given type is numeric.
+        /// Check if given <see cref="Type"/> is numeric.
         /// </summary>
         public static bool IsNumeric(this Type type)
         {
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if given type is DateTime(Offset).
+        /// Check if given <see cref="Type"/> is <see cref="DateTime"/> or <see cref="DateTimeOffset"/>.
         /// </summary>
         public static bool IsDate(this Type type)
         {
@@ -94,7 +94,7 @@ namespace CoreSharp.Extensions
 
         //TODO: Add unit tests
         /// <summary>
-        /// If Nullable`T return base type, else the same type.
+        /// If <see cref="Nullable{T}"/> return <see cref="Nullable.GetUnderlyingType(Type)"/>, else the provided <see cref="Type"/> itself.
         /// </summary>
         public static Type GetNullableBaseType(this Type type)
             => Nullable.GetUnderlyingType(type) ?? type;

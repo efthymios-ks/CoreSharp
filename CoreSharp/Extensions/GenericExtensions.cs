@@ -28,9 +28,7 @@ namespace CoreSharp.Extensions
             return itemKey.IsIn(sourceKeys);
         }
 
-        /// <summary>
-        /// Check if value is contained in list.
-        /// </summary>
+        /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>>
         public static bool IsIn<T>(this T item, params T[] source)
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
@@ -143,10 +141,7 @@ namespace CoreSharp.Extensions
         public static bool IsNull<T>(this T input) where T : class
             => input is null;
 
-        /// <summary>
-        /// Gets a value indicating whether the current nullable
-        /// object has a valid value of its underlying type.
-        /// </summary>
+        /// <inheritdoc cref="Nullable{T}.HasValue"/>
         public static bool IsNull<T>(this T? input) where T : struct
             => !input.HasValue;
 

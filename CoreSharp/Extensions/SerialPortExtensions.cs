@@ -1,16 +1,16 @@
-﻿using System;
+﻿using CoreSharp.Models;
+using System;
 using System.IO.Ports;
-using CoreSharp.Models;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// SerialPort extensions.
+    /// <see cref="SerialPort"/> extensions.
     /// </summary>
     public static class SerialPortExtensions
     {
         /// <summary>
-        /// Extract SerialPortSettings from SerialPort.
+        /// Extract <see cref="SerialPortSettings"/> from given <see cref="SerialPort"/>.
         /// </summary>
         public static SerialPortSettings GetSettings(this SerialPort port)
         {

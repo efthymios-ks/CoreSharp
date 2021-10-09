@@ -4,7 +4,7 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ulong extensions.
+    /// <see cref="ulong"/> extensions.
     /// </summary>
     public static class UlongExtensions
     {

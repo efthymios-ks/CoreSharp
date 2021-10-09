@@ -9,13 +9,12 @@ using System;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// PropertyBuilder extensions.
+    /// <see cref="PropertyBuilder{TProperty}"/> extensions.
     /// </summary>
     public static class PropertyBuilderExtensions
     {
         /// <inheritdoc cref="HasJsonConversion{TEntity}(PropertyBuilder{TEntity}, JsonSerializerSettings)"/>
-        public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder)
-            where TEntity : class
+        public static PropertyBuilder<TEntity> HasJsonConversion<TEntity>(this PropertyBuilder<TEntity> builder) where TEntity : class
             => builder.HasJsonConversion(DefaultJsonSettings.Instance);
 
         /// <summary>

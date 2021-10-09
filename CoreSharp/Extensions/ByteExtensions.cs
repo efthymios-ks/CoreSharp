@@ -1,7 +1,7 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Byte extensions.
+    /// <see cref="byte"/> extensions.
     /// </summary>
     public static class ByteExtensions
     {

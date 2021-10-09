@@ -4,7 +4,7 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Object extensions.
+    /// <see cref="object"/> extensions.
     /// </summary>
     public static class ObjectExtensions
     {
@@ -24,9 +24,7 @@ namespace CoreSharp.Extensions
         public static TResult ChangeType<TResult>(this object value)
             => value.ChangeType<TResult>(CultureInfo.CurrentCulture);
 
-        /// <summary>
-        /// Shortcut for (TResult)Convert.ChangeType(CultureInfo).
-        /// </summary>
+        /// <inheritdoc cref="Convert.ChangeType(object?, Type, IFormatProvider)" />
         public static TResult ChangeType<TResult>(this object value, CultureInfo cultureInfo)
         {
             if (value is null)

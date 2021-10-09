@@ -3,12 +3,12 @@
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Size extensions.
+    /// <see cref="Size"/> extensions.
     /// </summary>
     public static class SizeExtensions
     {
         /// <summary>
-        /// Convert Size to SizeF.
+        /// Convert <see cref="Size"/> to <see cref="SizeF"/>.
         /// </summary>
         public static SizeF ToSizeF(this Size source)
             => new(source);

@@ -1,19 +1,19 @@
-﻿using System;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// TcpClient extensions.
+    /// <see cref="TcpClient"/> extensions.
     /// </summary>
     public static class TcpClientExtensions
     {
-        /// <inheritdoc cref="SocketExtensions.IsConnected(Socket, int)"/>
+        /// <inheritdoc cref="IsConnectedAsync(TcpClient, int)"/>
         public static bool IsConnected(this TcpClient client, int timeoutMillis = 5000)
-        {
-            _ = client ?? throw new ArgumentNullException(nameof(client));
+            => client.IsConnectedAsync(timeoutMillis).GetAwaiter().GetResult();
 
-            return client.Client.IsConnected(timeoutMillis);
-        }
+        /// <inheritdoc cref="SocketExtensions.IsConnected(Socket, int)"/>
+        public static async Task<bool> IsConnectedAsync(this TcpClient client, int timeoutMillis = 5000)
+            => await (client?.Client).IsConnectedAsync(timeoutMillis);
     }
 }

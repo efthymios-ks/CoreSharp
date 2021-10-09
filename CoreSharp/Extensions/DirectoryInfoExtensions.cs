@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace CoreSharp.Extensions
 {
     //TODO: Add unit tests for DirectoryExtensions. 
     /// <summary>
-    /// Directory extensions.
+    /// <see cref="DirectoryInfo"/> extensions.
     /// </summary>
-    public static class DirectoryExtensions
+    public static class DirectoryInfoExtensions
     {
         /// <summary>
         /// Deletes all files from directory.

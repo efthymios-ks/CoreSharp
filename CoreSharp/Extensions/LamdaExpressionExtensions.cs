@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// LambdaExpression extensions.
+    /// <see cref="LambdaExpression"/> extensions.
     /// </summary>
     public static class LambdaExpressionExtensions
     {

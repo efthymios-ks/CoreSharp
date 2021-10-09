@@ -11,7 +11,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// String extensions.
+    /// <see cref="string"/> extensions.
     /// </summary>
     public static class StringExtensions
     {

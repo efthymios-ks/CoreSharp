@@ -4,13 +4,11 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Double extensions.
+    /// <see cref="double"/> extensions.
     /// </summary>
     public static class DoubleExtensions
     {
-        /// <summary>
-        /// Re-maps a number from one range to another.
-        /// </summary>
+        /// <inheritdoc cref="DecimalExtensions.Map(decimal, decimal, decimal, decimal, decimal)"/>
         public static double Map(this double value, double fromLow, double fromHigh, double toLow, double toHigh)
         {
             var dValue = (decimal)value;

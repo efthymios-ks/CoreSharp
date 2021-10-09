@@ -6,7 +6,7 @@ using System.IO;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// StreamExtensions.
+    /// <see cref="Stream"/> extensions.
     /// </summary>
     public static class StreamExtensions
     {
@@ -31,7 +31,7 @@ namespace CoreSharp.Extensions
 
             if (!stream.CanRead)
                 throw new NotSupportedException($"{nameof(stream)} is not readable.");
-            else if (stream.Position > 0  && !stream.CanSeek)
+            else if (stream.Position > 0 && !stream.CanSeek)
                 throw new NotSupportedException($"{nameof(stream)} is not seekable.");
 
             try

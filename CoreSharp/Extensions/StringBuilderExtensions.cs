@@ -5,7 +5,7 @@ using System.Text;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// StringBuilder extensions.
+    /// <see cref="StringBuilderExtensions"/> extensions.
     /// </summary>
     public static class StringBuilderExtensions
     {
@@ -18,13 +18,15 @@ namespace CoreSharp.Extensions
            => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
 
         /// <summary>
-        /// Append StringFormat with custom formatProvider + NewLine.
+        /// Chain calls <see cref="StringBuilder.AppendFormat(IFormatProvider?, string, object?[])"/> + <see cref="StringBuilder.AppendLine(string?)"/>.
         /// </summary>
         public static StringBuilder AppendFormatLine(this StringBuilder builder, IFormatProvider formatProvider, string format, params object[] arguments)
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
 
-            return builder.AppendFormat(formatProvider, format, arguments).AppendLine();
+            return builder
+                .AppendFormat(formatProvider, format, arguments)
+                .AppendLine();
         }
     }
 }

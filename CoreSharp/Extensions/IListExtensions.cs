@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IList extensions.
+    /// <see cref="IList{T}"/> extensions.
     /// </summary>
     public static class IListExtensions
     {

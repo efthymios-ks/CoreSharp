@@ -4,13 +4,11 @@ using System.Collections.Generic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// List extensions.
+    /// <see cref="List{T}"/> extensions.
     /// </summary>
     public static class ListExtensions
     {
-        /// <inheritdoc>
-        ///     <cref>List{T}.Sort</cref>
-        /// </inheritdoc>
+        /// <inheritdoc cref="List{T}.Sort(IComparer{T}?)" />
         public static void Sort<TEntity, TKey>(this List<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IQueryable extensions.
+    /// <see cref="IQueryable{T}"/> extensions.
     /// </summary>
     public static class IQueryableExtensions
     {

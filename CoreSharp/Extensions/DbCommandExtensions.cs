@@ -4,13 +4,11 @@ using System.Data.Common;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DbCommand extensions.
+    /// <see cref="DbCommand"/> extensions.
     /// </summary>
     public static class DbCommandExtensions
     {
-        /// <summary>
-        /// Return a new instance of the provider's class that implements the DbParameter class.
-        /// </summary>
+        /// <inheritdoc cref="DbCommand.CreateDbParameter"/>
         public static DbParameter CreateParameter(this DbCommand command, string name, object value)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
@@ -21,9 +19,7 @@ namespace CoreSharp.Extensions
             return parameter;
         }
 
-        /// <summary>
-        /// Adds the specified DbParameter object to the DbParameterCollection.
-        /// </summary>
+        /// <inheritdoc cref="DbParameterCollection.Add(object)"/>
         public static DbParameter AddParameterWithValue(this DbCommand command, string name, object value)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));

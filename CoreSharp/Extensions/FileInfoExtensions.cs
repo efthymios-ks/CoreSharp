@@ -4,7 +4,7 @@ using System.IO;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// FileInfo extensions.
+    /// <see cref="FileInfo"/> extensions.
     /// </summary>
     public static class FileInfoExtensions
     {

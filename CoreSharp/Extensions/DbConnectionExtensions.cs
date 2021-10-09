@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
     //TODO: Finish unit tests for DbConnection. 
     /// <summary>
-    /// DbConnection extensions.
+    /// <see cref="DbConnection"/> extensions.
     /// </summary>
     public static class DbConnectionExtensions
     {
-        /// <summary>
-        /// Return a new instance of the provider's class that implements the DbDataAdapter class.
-        /// </summary>
+        /// <inheritdoc cref="DbProviderFactory.CreateDataAdapter"/>
         public static DbDataAdapter CreateDataAdapter(this DbConnection connection)
         {
             _ = connection ?? throw new ArgumentNullException(nameof(connection));
@@ -60,7 +59,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if connection is open.
+        /// Check <see cref="DbConnection.State"/> for <see cref="ConnectionState.Open"/>.
         /// </summary>
         public static bool IsOpen(this DbConnection connection)
         {
@@ -69,7 +68,7 @@ namespace CoreSharp.Extensions
             return connection.State.HasFlag(ConnectionState.Open);
         }
 
-        /// <inheritdoc cref="IsAvailableAsync(DbConnection)" />
+        /// <inheritdoc cref="IsAvailableAsync(DbConnection, CancellationToken)" />
         public static bool IsAvailable(this DbConnection connection)
             => connection
                     .IsAvailableAsync()
@@ -77,15 +76,15 @@ namespace CoreSharp.Extensions
                     .GetResult();
 
         /// <summary>
-        /// Check if connection is available.
+        /// Chain calls <see cref="DbConnection.OpenAsync(System.Threading.CancellationToken)"/> and <see cref="DbConnection.CloseAsync"/>.
         /// </summary>
-        public static async Task<bool> IsAvailableAsync(this DbConnection connection)
+        public static async Task<bool> IsAvailableAsync(this DbConnection connection, CancellationToken cancellationToken = default)
         {
             _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
             try
             {
-                await connection.OpenAsync();
+                await connection.OpenAsync(cancellationToken);
                 await connection.CloseAsync();
                 return true;
             }

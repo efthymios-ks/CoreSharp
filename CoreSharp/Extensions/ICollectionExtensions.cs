@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ICollection extensions.
+    /// <see cref="ICollection{T}"/> extensions.
     /// </summary>
     public static class ICollectionExtensions
     {
@@ -13,9 +13,7 @@ namespace CoreSharp.Extensions
         public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
             => source.AddRange(items?.ToArray());
 
-        /// <summary>
-        /// Adds multiple items to ICollection.
-        /// </summary>
+        /// <inheritdoc cref="List{T}.AddRange(IEnumerable{T})"/>
         public static void AddRange<T>(this ICollection<T> source, params T[] items)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

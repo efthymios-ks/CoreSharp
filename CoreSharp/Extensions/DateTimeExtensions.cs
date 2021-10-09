@@ -5,7 +5,7 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DateTime extensions.
+    /// <see cref="DateTime"/> extensions.
     /// </summary>
     public static class DateTimeExtensions
     {

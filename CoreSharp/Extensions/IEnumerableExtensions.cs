@@ -11,7 +11,7 @@ using System.Text;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IEnumerable extensions.
+    /// <see cref="IEnumerable{T}"/> extensions.
     /// </summary>
     public static class IEnumerableExtensions
     {

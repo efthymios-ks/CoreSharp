@@ -4,12 +4,12 @@ using System.Drawing;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// SizeF extensions.
+    /// <see cref="SizeF"/> extensions.
     /// </summary>
     public static class SizeFExtensions
     {
         /// <summary>
-        /// Convert SizeF to Size.
+        /// Convert <see cref="SizeF"/> to <see cref="Size"/>.
         /// </summary>
         public static Size ToSize(this SizeF source)
             => Size.Round(source);

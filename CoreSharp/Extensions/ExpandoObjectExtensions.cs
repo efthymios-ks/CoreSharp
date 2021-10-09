@@ -5,7 +5,7 @@ using System.Dynamic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ExpandoObject extensions.
+    /// <see cref="ExpandoObject"/> extensions.
     /// </summary>
     public static class ExpandoObjectExtensions
     {

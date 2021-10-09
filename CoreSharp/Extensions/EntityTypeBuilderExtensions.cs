@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq.Expressions;
-using CoreSharp.Implementations.EntityFramework;
+﻿using CoreSharp.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Linq.Expressions;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// EntityTypeBuilder extensions.
+    /// <see cref="EntityTypeBuilder{TEntity}"/> extensions.
     /// </summary>
     public static class EntityTypeBuilderExtensions
     {
         /// <summary>
-        /// One-to-many relation with an enum.
+        /// One-to-many relation with an <see cref="Enum"/>.
         /// </summary>
         public static ReferenceCollectionBuilder<EnumShadowEntity<TEnum>, TEntity> HasOneEnum<TEntity, TEnum>(this EntityTypeBuilder<TEntity> builder, Expression<Func<TEntity, TEnum>> propertySelector)
             where TEntity : class
@@ -19,8 +19,6 @@ namespace CoreSharp.Extensions
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
-            if (!typeof(TEnum).IsEnum)
-                throw new ArgumentException($"{typeof(TEnum).FullName} is not an enum.", nameof(TEnum));
 
             var enumPropertyName = propertySelector.GetMemberName();
             return builder

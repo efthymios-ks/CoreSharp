@@ -1,7 +1,7 @@
 ﻿namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Float extensions.
+    /// <see cref="float"/> extensions.
     /// </summary>
     public static class FloatExtensions
     {

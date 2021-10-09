@@ -5,12 +5,12 @@ using System.Globalization;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// NumberFormatInfo extensions.
+    /// <see cref="NumberFormatInfo"/> extensions.
     /// </summary>
     public static class NumberFormatInfoExtensions
     {
         /// <summary>
-        /// Set CurrencyPositivePattern from given enum.
+        /// Map given <see cref="CurrencyPositivePattern"/> to <see cref="NumberFormatInfo.CurrencyPositivePattern"/>.
         /// </summary>
         public static NumberFormatInfo SetCurrencyPositivePattern(this NumberFormatInfo info, CurrencyPositivePattern pattern)
         {
@@ -22,7 +22,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Set CurrencyNegativePattern from given enum.
+        /// Map given <see cref="CurrencyNegativePattern"/> to <see cref="NumberFormatInfo.CurrencyNegativePattern"/>.
         /// </summary>
         public static NumberFormatInfo SetCurrencyNegativePattern(this NumberFormatInfo info, CurrencyNegativePattern pattern)
         {
@@ -34,7 +34,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Set NumberNegativePattern from given enum.
+        /// Map given <see cref="NumberNegativePattern"/> to <see cref="NumberFormatInfo.NumberNegativePattern"/>.
         /// </summary>
         public static NumberFormatInfo SetNumberNegativePattern(this NumberFormatInfo info, NumberNegativePattern pattern)
         {

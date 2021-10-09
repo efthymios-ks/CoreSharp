@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -9,13 +10,11 @@ namespace CoreSharp.Extensions
 {
     //TODO: Add unit tests 
     /// <summary>
-    /// XDocument extensions.
+    /// <see cref="XDocument"/> extensions.
     /// </summary>
     public static class XDocumentExtensions
     {
-        /// <summary>
-        /// Deserialize XDocument to T item.
-        /// </summary>
+        /// <inheritdoc cref="XmlSerializer.Deserialize(XmlReader)"/>
         public static T Deserialize<T>(this XDocument document)
         {
             _ = document ?? throw new ArgumentNullException(nameof(document));

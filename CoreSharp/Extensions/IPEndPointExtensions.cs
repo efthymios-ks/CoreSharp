@@ -1,19 +1,19 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// IPEndPoint extensions.
+    /// <see cref="IPEndPoint"/> extensions.
     /// </summary>
     public static class IPEndPointExtensions
     {
-        /// <inheritdoc cref="IPAddressExtensions.Ping(IPAddress, int)"/>
+        /// <inheritdoc cref="PingAsync(IPEndPoint, int)"/>
         public static bool Ping(this IPEndPoint endPoint, int timeoutMillis = 5000)
-        {
-            _ = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
+            => (endPoint?.Address).PingAsync(timeoutMillis).GetAwaiter().GetResult();
 
-            return endPoint.Address.Ping(timeoutMillis);
-        }
+        /// <inheritdoc cref="IPAddressExtensions.PingAsync(IPAddress, int)"/>
+        public static async Task<bool> PingAsync(this IPEndPoint endPoint, int timeoutMillis = 5000)
+            => await (endPoint?.Address).PingAsync(timeoutMillis);
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// TimeSpan extensions.
+    /// <see cref="TimeSpan"/> extensions.
     /// </summary>
     public static class TimeSpanExtensions
     {

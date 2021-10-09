@@ -6,7 +6,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DataTable extensions.
+    /// <see cref="DataTable"/> extensions.
     /// </summary>
     public static class DataTableExtensions
     {

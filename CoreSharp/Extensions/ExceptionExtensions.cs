@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// Exception extensions.
+    /// <see cref="Exception"/> extensions.
     /// </summary>
     public static class ExceptionExtensions
     {

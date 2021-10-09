@@ -4,13 +4,11 @@ using System.Data.Common;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// DbProviderFactory extensions
+    /// <see cref="DbProviderFactory"/> extensions.
     /// </summary>
     public static class DbProviderFactoryExtensions
     {
-        /// <summary>
-        /// Return a new instance of the provider's class that implements the DbParameter class.
-        /// </summary>
+        /// <inheritdoc cref="DbProviderFactory.CreateParameter"/>
         public static DbParameter CreateParameter(this DbProviderFactory factory, string parameterName, object parameterValue)
         {
             _ = factory ?? throw new ArgumentNullException(nameof(factory));

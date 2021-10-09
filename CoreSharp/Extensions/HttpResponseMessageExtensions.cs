@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CoreSharp.Models;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using CoreSharp.Models;
 
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// HttpResponseMessage extensions.
+    /// <see cref="HttpResponseMessage"/> extensions.
     /// </summary>
     public static class HttpResponseMessageExtensions
     {

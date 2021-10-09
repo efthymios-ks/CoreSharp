@@ -6,7 +6,7 @@ using System;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// ModelBuilder extensions.
+    /// <see cref="ModelBuilder"/> extensions.
     /// </summary>
     public static class ModelBuilderExtensions
     {
