@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreSharp.Implementations
+namespace CoreSharp.Abstracts
 {
     /// <summary>
     /// Automatic and safe Disposing.

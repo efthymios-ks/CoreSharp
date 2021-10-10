@@ -1,30 +1,56 @@
-﻿using System;
+﻿using CoreSharp.Abstracts;
+using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using CoreSharp.Extensions;
+using System.Timers;
 
-namespace CoreSharp.Implementations.Communication.Tcp
+namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class TcpSession : Disposable
+    public sealed class TcpClient : Disposable
     {
         //Fields 
-        private readonly TcpServer _server;
         private Socket _socket;
         private bool _isConnected;
+        private bool _isConnecting;
         private bool _isTerminated;
+        private TimeSpan _timeout = TimeSpan.FromSeconds(10);
+        private readonly object _timerLock = new();
+        private readonly Timer _timeoutTimer = new() { AutoReset = true };
 
         //Properties 
-        private string DebuggerDisplay => $"Server='{ServerEndPoint}', Session='{SessionEndPoint}'";
-        public IPEndPoint ServerEndPoint => _socket?.LocalEndPoint as IPEndPoint;
-        public IPEndPoint SessionEndPoint { get; private set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay => $"Local='{LocalEndPoint}', Remote='{RemoteEndPoint}'";
+        public IPEndPoint LocalEndPoint { get; private set; }
+        public IPEndPoint RemoteEndPoint { get; }
+        public int BufferSize { get; set; } = 8 * 1024;
+        public TimeSpan Timeout
+        {
+            get => _timeout;
+            set
+            {
+                if (value.IsIn(TimeSpan.Zero, TimeSpan.MinValue, TimeSpan.MaxValue))
+                    throw new ArgumentOutOfRangeException(nameof(Timeout), $"{nameof(Timeout)} has to has a valid, discrete value.");
+
+                if (value == _timeout)
+                    return;
+
+                _timeout = value;
+
+                var enabledState = _timeoutTimer.Enabled;
+                _timeoutTimer.Enabled = false;
+                _timeoutTimer.Interval = _timeout.TotalMilliseconds;
+                _timeoutTimer.Enabled = enabledState;
+            }
+        }
         public bool IsConnected
         {
-            get { return _isConnected; }
+            get => _isConnected;
             private set
             {
                 if (value == _isConnected)
@@ -35,20 +61,34 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 if (_isConnected)
                 {
                     _isTerminated = false;
+                    LocalEndPoint = _socket?.LocalEndPoint as IPEndPoint;
                     BeginReceive();
                 }
 
+                _timeoutTimer.Enabled = _isConnected;
                 OnConnectionStatusChanged(_isConnected);
             }
         }
 
         //Constructors 
-        public TcpSession(TcpServer server)
+        public TcpClient(int port) : this(IPAddress.Loopback, port)
         {
-            _server = server ?? throw new ArgumentNullException(nameof(server));
         }
 
-        ~TcpSession()
+        public TcpClient(string ip, int port) : this(IPAddress.Parse(ip), port)
+        {
+        }
+
+        public TcpClient(IPAddress ip, int port)
+        {
+            ip = ip ?? throw new ArgumentNullException(nameof(ip));
+
+            RemoteEndPoint = new IPEndPoint(ip, port);
+            _timeoutTimer.Interval = Timeout.TotalMilliseconds;
+            _timeoutTimer.Elapsed += TimeoutTimer_Elapsed;
+        }
+
+        ~TcpClient()
         {
             Dispose();
         }
@@ -60,25 +100,78 @@ namespace CoreSharp.Implementations.Communication.Tcp
         public event EventHandler<SocketErrorEventArgs> ErrorOccured;
 
         //Methods 
-        public void Connect(Socket socket)
+        public void Connect()
         {
-            _ = socket ?? throw new ArgumentNullException(nameof(socket));
+            if (_isConnecting || IsConnected)
+                return;
 
-            socket.NoDelay = _server.NoDelay;
-            _socket = socket;
-            SessionEndPoint = _socket?.RemoteEndPoint as IPEndPoint;
+            try
+            {
+                //Create new socket 
+                _socket = new Socket(RemoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+                {
+                    ReceiveTimeout = (int)Timeout.TotalMilliseconds,
+                    ReceiveBufferSize = BufferSize,
+                    SendTimeout = (int)Timeout.TotalMilliseconds,
+                    SendBufferSize = BufferSize
+                };
+                _socket.Connect(RemoteEndPoint);
+                IsConnected = true;
+            }
+            catch (SocketException ex)
+            {
+                IsConnected = false;
+                Terminate();
+                OnError(ex.SocketErrorCode);
+            }
+        }
 
-            IsConnected = true;
+        public void BeginConnecting()
+        {
+            //Check connection status 
+            if (_isConnecting)
+                return;
+            else if (IsConnected)
+                return;
+
+            //Status change 
+            _isConnecting = true;
+
+            //Create new socket 
+            _socket = new Socket(RemoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+            {
+                ReceiveTimeout = (int)Timeout.TotalMilliseconds,
+                ReceiveBufferSize = BufferSize,
+                SendTimeout = (int)Timeout.TotalMilliseconds,
+                SendBufferSize = BufferSize
+            };
+
+            //Async connect 
+            var args = new SocketAsyncEventArgs()
+            {
+                RemoteEndPoint = RemoteEndPoint
+            };
+            args.Completed += AsyncOperationCompleted;
+
+            if (!_socket.ConnectAsync(args))
+                HandleConnect(args);
         }
 
         public void Disconnect()
         {
-            if (!IsConnected)
+            if (!(IsConnected || _isConnecting))
                 return;
             IsConnected = false;
 
+            //Cancel connecting operation
+            if (_isConnecting)
+            {
+                var args = new SocketAsyncEventArgs();
+                args.Completed += AsyncOperationCompleted;
+                Socket.CancelConnectAsync(args);
+            }
+
             Terminate();
-            _server?.UnregisterSession(this);
         }
 
         public int Send(string text)
@@ -104,7 +197,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            if (!IsConnected)
+            if (_isConnecting || !IsConnected)
                 throw new InvalidOperationException("Cannot send data while disconnected.");
 
             var count = _socket.Send(data, 0, data.Length, SocketFlags.None, out var error);
@@ -120,17 +213,17 @@ namespace CoreSharp.Implementations.Communication.Tcp
             return count;
         }
 
-        public void BeginSend(string text)
+        public void BeginSend(string data)
         {
-            BeginSend(text, Encoding.UTF8);
+            BeginSend(data, Encoding.UTF8);
         }
 
-        public void BeginSend(string text, Encoding encoding)
+        public void BeginSend(string data, Encoding encoding)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
             _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
-            var buffer = encoding.GetBytes(text);
+            var buffer = encoding.GetBytes(data);
             BeginSend(buffer);
         }
 
@@ -143,8 +236,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
-            if (!IsConnected)
-                throw new InvalidOperationException("Cannot send data while disconnected");
+            if (_isConnecting || !IsConnected)
+                throw new InvalidOperationException("Cannot send data while disconnected.");
 
             var args = new SocketAsyncEventArgs();
             args.SetBuffer(data, 0, data.Length);
@@ -155,15 +248,38 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
         private void BeginReceive()
         {
-            if (!IsConnected)
-                throw new InvalidOperationException("Cannot receive data while disconnected");
+            if (_isConnecting || !IsConnected)
+                throw new InvalidOperationException("Cannot receive data while disconnected.");
 
             var buffer = new byte[_socket.ReceiveBufferSize];
-            var args = new SocketAsyncEventArgs();
+            var args = new SocketAsyncEventArgs()
+            {
+                RemoteEndPoint = RemoteEndPoint
+            };
             args.SetBuffer(buffer, 0, buffer.Length);
             args.Completed += AsyncOperationCompleted;
             if (!_socket.ReceiveAsync(args))
                 HandleReceive(args);
+        }
+
+        private void HandleConnect(SocketAsyncEventArgs args)
+        {
+            _ = args ?? throw new ArgumentNullException(nameof(args));
+
+            try
+            {
+                if (args.SocketError == SocketError.Success)
+                    IsConnected = true;
+                else
+                    OnError(args.SocketError);
+                Disconnect();
+            }
+            finally
+            {
+                _isConnecting = false;
+                args.Completed -= AsyncOperationCompleted;
+                args.Dispose();
+            }
         }
 
         private void HandleSend(SocketAsyncEventArgs args)
@@ -191,6 +307,8 @@ namespace CoreSharp.Implementations.Communication.Tcp
 
         private void HandleReceive(SocketAsyncEventArgs args)
         {
+            _ = args ?? throw new ArgumentNullException(nameof(args));
+
             try
             {
                 //If Socket has disconnected, then BytesTransfered = 0 
@@ -200,7 +318,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 if (args.SocketError == SocketError.Success)
                 {
                     var bytesReceived = new byte[args.BytesTransferred];
-                    Array.Copy(args.Buffer, bytesReceived, args.BytesTransferred);
+                    Array.Copy(args.Buffer!, bytesReceived, args.BytesTransferred);
                     OnDataReceived(bytesReceived);
                     BeginReceive();
                 }
@@ -228,6 +346,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
                 _socket?.Shutdown(SocketShutdown.Both);
             }
             catch { }
+
             _socket?.Close();
             _socket?.Dispose();
         }
@@ -243,7 +362,7 @@ namespace CoreSharp.Implementations.Communication.Tcp
             OnDataSent(data?.ToArray());
         }
 
-        private void OnDataSent(params byte[] data)
+        private void OnDataSent(byte[] data)
         {
             _ = data ?? throw new ArgumentNullException(nameof(data));
 
@@ -284,6 +403,9 @@ namespace CoreSharp.Implementations.Communication.Tcp
             //var socket = sender as Socket;
             switch (args.LastOperation)
             {
+                case SocketAsyncOperation.Connect:
+                    HandleConnect(args);
+                    break;
                 case SocketAsyncOperation.Send:
                     HandleSend(args);
                     break;
@@ -296,12 +418,35 @@ namespace CoreSharp.Implementations.Communication.Tcp
             }
         }
 
+        private void TimeoutTimer_Elapsed(object sender, ElapsedEventArgs args)
+        {
+            lock (_timerLock)
+            {
+                var timer = sender as Timer;
+                timer?.Stop();
+
+                IsConnected = _socket.IsConnected((int)Timeout.TotalMilliseconds);
+                if (!IsConnected)
+                    Terminate();
+
+                timer?.Start();
+            }
+        }
+
         #region Dispose 
         protected override void CleanUpManagedResources()
         {
+            try
+            {
+                lock (_timerLock)
+                {
+                    _timeoutTimer.Stop();
+                    _timeoutTimer.Dispose();
+                }
+            }
+            catch { }
             Disconnect();
             Terminate();
-            IsConnected = false;
         }
 
         protected override void CleanUpNativeResources()

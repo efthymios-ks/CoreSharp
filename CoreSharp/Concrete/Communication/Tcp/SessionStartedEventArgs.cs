@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreSharp.Implementations.Communication.Tcp
+namespace CoreSharp.Concrete.Communication.Tcp
 {
     public class SessionStartedEventArgs : SessionEventArgs
     {

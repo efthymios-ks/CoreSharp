@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreSharp.Implementations.Communication
+namespace CoreSharp.Concrete.Communication
 {
     public class ConnectionStatusChangedEventArgs : EventArgs
     {

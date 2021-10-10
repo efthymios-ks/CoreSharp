@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoreSharp.Abstracts;
+using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -6,9 +8,8 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CoreSharp.Extensions;
 
-namespace CoreSharp.Implementations.Communication.NamedPipes
+namespace CoreSharp.Concrete.Communication.NamedPipes
 {
     /// <summary>
     /// Server for NamedPipe communication.

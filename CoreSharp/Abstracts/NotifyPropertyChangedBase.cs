@@ -2,11 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace CoreSharp.Implementations
+namespace CoreSharp.Abstracts
 {
-    /// <summary>
-    /// Base class implementing INotifyPropertyChanged.
-    /// </summary>
+    /// <inheritdoc cref="INotifyPropertyChanged" />
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         //Events  

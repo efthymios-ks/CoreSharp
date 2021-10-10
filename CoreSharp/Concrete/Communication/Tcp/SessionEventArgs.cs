@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace CoreSharp.Implementations.Communication.Tcp
+namespace CoreSharp.Concrete.Communication.Tcp
 {
     public class SessionEventArgs : EventArgs
     {

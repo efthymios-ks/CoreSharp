@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO.Pipes;
 
-namespace CoreSharp.Implementations.Communication.NamedPipes
+namespace CoreSharp.Concrete.Communication.NamedPipes
 {
     public class PipeDataTransferred : DataTransferredEventArgs
     {

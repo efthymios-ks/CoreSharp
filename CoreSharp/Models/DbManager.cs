@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CoreSharp.Implementations
+namespace CoreSharp.Models
 {
     /// <summary>
     /// An extension to <see cref="DbConnection"/> to run quick actions on it.

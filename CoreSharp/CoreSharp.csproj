@@ -16,11 +16,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.0.6</Version>
-        <PackageReleaseNotes>-Code clean-up.
--New Stream and generic extensions.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.7.0</AssemblyVersion>
-        <FileVersion>1.0.7.0</FileVersion>
+        <Version>1.0.8</Version>
+        <PackageReleaseNotes>-Code clean-up.</PackageReleaseNotes>
+        <AssemblyVersion>1.0.8.0</AssemblyVersion>
+        <FileVersion>1.0.8.0</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

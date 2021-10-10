@@ -1,13 +1,14 @@
-﻿using System;
+﻿using CoreSharp.Abstracts;
+using CoreSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using CoreSharp.Extensions;
 
-namespace CoreSharp.Implementations.Communication.Tcp
+namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public sealed class TcpServer : Disposable
