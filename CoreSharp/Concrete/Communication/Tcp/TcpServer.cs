@@ -11,7 +11,7 @@ using System.Text;
 namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class TcpServer : Disposable
+    public sealed class TcpServer : DisposableBase
     {
         //Fields 
         private Socket _socket;

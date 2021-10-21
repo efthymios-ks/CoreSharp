@@ -6,7 +6,7 @@ namespace CoreSharp.Abstracts
     /// Automatic and safe Disposing.
     /// Just override the two CleanUp methods.
     /// </summary>
-    public abstract class Disposable : IDisposable
+    public abstract class DisposableBase : IDisposable
     {
         //Fields
         private readonly object _lock = new();
@@ -16,7 +16,7 @@ namespace CoreSharp.Abstracts
         /// <summary>
         /// Deconstructor.
         /// </summary>
-        ~Disposable()
+        ~DisposableBase()
         {
             DisposeNativeResources(false);
         }

@@ -15,7 +15,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
     /// Client for NamedPipe communication.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class NamedPipeClient : Disposable
+    public sealed class NamedPipeClient : DisposableBase
     {
         //Fields 
         private readonly NamedPipeClientStream _pipe;

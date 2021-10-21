@@ -15,7 +15,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
     /// Server for NamedPipe communication.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class NamedPipeServer : Disposable
+    public sealed class NamedPipeServer : DisposableBase
     {
         //Fields 
         private bool _isStarted;

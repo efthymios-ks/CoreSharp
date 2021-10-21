@@ -12,7 +12,7 @@ using System.Timers;
 namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class TcpClient : Disposable
+    public sealed class TcpClient : DisposableBase
     {
         //Fields 
         private Socket _socket;
