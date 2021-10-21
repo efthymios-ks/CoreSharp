@@ -7,7 +7,9 @@ namespace CoreSharp.Models
     /// <summary>
     /// Simple HttpResponseMessage exception.
     /// </summary>
+#pragma warning disable RCS1194 // Implement exception constructors.
     public class HttpResponseException : Exception
+#pragma warning restore RCS1194 // Implement exception constructors.
     {
         //Constructors  
         public HttpResponseException(
