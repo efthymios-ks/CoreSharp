@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CoreSharp.Extensions
@@ -98,5 +99,21 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static Type GetNullableBaseType(this Type type)
             => Nullable.GetUnderlyingType(type) ?? type;
+
+        /// <summary>
+        /// Get list of specific <see cref="Attribute"/>.
+        /// </summary>
+        public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this Type type) where TAttribute : Attribute
+        {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            return type.GetCustomAttributes(typeof(TAttribute), true)?.Cast<TAttribute>();
+        }
+
+        /// <summary>
+        /// Get specific <see cref="Attribute"/>.
+        /// </summary>
+        public static TAttribute GetAttribute<TAttribute>(this Type type) where TAttribute : Attribute
+            => type.GetAttributes<TAttribute>()?.FirstOrDefault();
     }
 }

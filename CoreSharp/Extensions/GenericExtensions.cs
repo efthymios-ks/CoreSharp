@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -182,5 +183,17 @@ namespace CoreSharp.Extensions
                 .GetProperties(flags)
                 .ToDictionary(p => p.Name, p => p.GetValue(entity));
         }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable RCS1175 // Unused this parameter.
+        /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
+        public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
+#pragma warning restore RCS1175 // Unused this parameter.
+#pragma warning restore IDE0060 // Remove unused parameter
+            => Utilities.Expression.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
+
+        /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>
+        public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
+            => item.GetAttributes<TItem, TMember, TAttribute>(memberSelector)?.FirstOrDefault();
     }
 }
