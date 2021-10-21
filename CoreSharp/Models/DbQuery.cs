@@ -12,7 +12,7 @@ namespace CoreSharp.Models
     /// <summary>
     /// An extension to <see cref="DbConnection"/> to run quick actions on it.
     /// </summary>
-    public class DbManager : IDisposable
+    public class DbQuery : IDisposable
     {
         //Fields 
         private readonly DbConnection _connection;
@@ -20,12 +20,12 @@ namespace CoreSharp.Models
         private int _timeoutSeconds = 0;
 
         //Constructors 
-        public DbManager(DbConnection connection)
+        public DbQuery(DbConnection connection)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));
         }
 
-        public DbManager(DbTransaction transaction)
+        public DbQuery(DbTransaction transaction)
         {
             _transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
             _connection = transaction?.Connection ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
