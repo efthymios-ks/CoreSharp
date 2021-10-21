@@ -8,11 +8,18 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class TimeSpanExtensions
     {
+        /// <inheritdoc cref="ToStringReadable(TimeSpan)" />
+        public static string ToStringReadable(this TimeSpan? time)
+            => (time ?? TimeSpan.Zero).ToStringReadable();
+
         /// <summary>
         /// Convert TimeSpan to human readable string.
         /// </summary>
         public static string ToStringReadable(this TimeSpan time)
         {
+            if (time == TimeSpan.Zero)
+                return "0ms";
+
             var fields = new List<string>();
 
             void Add(int value, string unit)

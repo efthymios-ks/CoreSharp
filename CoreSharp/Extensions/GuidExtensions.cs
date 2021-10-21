@@ -9,10 +9,7 @@ namespace CoreSharp.Extensions
     {
         /// <inheritdoc cref="IsNullOrEmpty(Guid)"/>
         public static bool IsNullOrEmpty(this Guid? guid)
-        {
-            guid ??= Guid.Empty;
-            return guid.Value.IsNullOrEmpty();
-        }
+            => (guid ?? Guid.Empty).IsNullOrEmpty();
 
         /// <summary>
         /// Compare given value with <see cref="Guid.Empty"/>.
