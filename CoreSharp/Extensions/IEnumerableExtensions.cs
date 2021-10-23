@@ -472,5 +472,68 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="IQueryableExtensions.FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
         public static IEnumerable<TItem> FilterFlexible<TItem>(this IEnumerable<TItem> source, Func<TItem, string> propertySelector, string filter)
             => (source?.AsQueryable()).FilterFlexible(propertySelector, filter);
+
+        /// <summary>
+        /// Split the elements of a sequence into chunks of size at most size.
+        /// </summary>
+        public static IEnumerable<IEnumerable<TItem>> Chunk<TItem>(this IEnumerable<TItem> source, int size)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            if (size < 1)
+                throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} ({size}) has to be at least 1.");
+
+            return source.ChunkInternal(size);
+        }
+
+        /// <inheritdoc cref="Chunk{TItem}(IEnumerable{TItem}, int)"/>
+        private static IEnumerable<IEnumerable<TItem>> ChunkInternal<TItem>(this IEnumerable<TItem> source, int size)
+        {
+            var index = 0;
+            var enumerated = source.ToArray();
+            while (index < enumerated.Length)
+            {
+                yield return enumerated.Skip(index).Take(size);
+                index += size;
+            }
+        }
+
+        /// <inheritdoc cref="FirstOr{TItem}(IEnumerable{TItem}, Func{TItem, bool}, TItem)" />
+        public static TItem FirstOr<TItem>(this IEnumerable<TItem> source, TItem fallbackValue)
+            => source.FirstOr(_ => true, fallbackValue);
+
+        /// <inheritdoc cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
+        public static TItem FirstOr<TItem>(this IEnumerable<TItem> source, Func<TItem, bool> predicate, TItem fallbackValue)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+
+            var result = source.FirstOrDefault(predicate);
+            return Equals(result, default(TItem)) ? fallbackValue : result;
+        }
+
+        /// <inheritdoc cref="LastOr{TItem}(IEnumerable{TItem}, Func{TItem, bool}, TItem)" />
+        public static TItem LastOr<TItem>(this IEnumerable<TItem> source, TItem fallbackValue)
+            => source.FirstOr(_ => true, fallbackValue);
+
+        /// <inheritdoc cref="Enumerable.LastOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
+        public static TItem LastOr<TItem>(this IEnumerable<TItem> source, Func<TItem, bool> predicate, TItem fallbackValue)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+
+            var result = source.LastOrDefault(predicate);
+            return Equals(result, default(TItem)) ? fallbackValue : result;
+        }
+
+        /// <inheritdoc cref="SingleOr{TItem}(IEnumerable{TItem}, Func{TItem, bool}, TItem)" />
+        public static TItem SingleOr<TItem>(this IEnumerable<TItem> source, TItem fallbackValue)
+            => source.SingleOr(_ => true, fallbackValue);
+
+        /// <inheritdoc cref="Enumerable.SingleOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
+        public static TItem SingleOr<TItem>(this IEnumerable<TItem> source, Func<TItem, bool> predicate, TItem fallbackValue)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+
+            var result = source.SingleOrDefault(predicate);
+            return Equals(result, default(TItem)) ? fallbackValue : result;
+        }
     }
 }

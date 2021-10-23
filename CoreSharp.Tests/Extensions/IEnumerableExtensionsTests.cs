@@ -938,7 +938,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _sourceNull.StartsWith(_sourceEmpty);
 
-            //Asssert 
+            //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -948,7 +948,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _sourceEmpty.StartsWith(_sourceNull);
 
-            //Asssert 
+            //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -962,7 +962,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             var result = source.StartsWith(sequence);
 
-            //Asssert 
+            //Assert 
             result.Should().BeTrue();
         }
 
@@ -976,7 +976,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             var result = source.StartsWith(sequence);
 
-            //Asssert 
+            //Assert 
             result.Should().BeFalse();
         }
 
@@ -986,7 +986,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _sourceNull.EndsWith(_sourceEmpty);
 
-            //Asssert 
+            //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -996,7 +996,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _sourceEmpty.EndsWith(_sourceNull);
 
-            //Asssert 
+            //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -1010,7 +1010,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             var result = source.EndsWith(sequence);
 
-            //Asssert 
+            //Assert 
             result.Should().BeTrue();
         }
 
@@ -1024,8 +1024,221 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             var result = source.EndsWith(sequence);
 
-            //Asssert 
+            //Assert 
             result.Should().BeFalse();
+        }
+
+        [Test]
+        public void Chunk_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.Chunk(1);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Chunk_SizeIsLessThanOne_ThrowArgumentOutOfRangeException()
+        {
+            //Act 
+            Action action = () => _sourceEmpty.Chunk(0);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        }
+
+        [Test]
+        public void Chunk_WhenCalled_SplitSourceIntoChunks()
+        {
+            //Arrange
+            var source = new[] { 1, 1, 2, 2, 3, 3 }.AsEnumerable();
+            const int Size = 2;
+            var expected = new[]
+            {
+                new [] { 1, 1 }.AsEnumerable(),
+                new [] { 2, 2 }.AsEnumerable(),
+                new [] { 3, 3 }.AsEnumerable()
+            };
+
+            //Act 
+            var result = source.Chunk(Size).ToArray();
+
+            //Assert
+            result.Should().HaveCount(expected.Length);
+            for (var i = 0; i < result.Length; i++)
+                result[i].Should().Equal(expected[i]);
+        }
+
+        [Test]
+        public void FirstOr_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.FirstOr(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void FirstOr_ItemsFound_ReturnFirst()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+
+            //Act 
+            var result = source.FirstOr(d => d.Id == 2, null);
+
+            //Assert 
+            result.Id.Should().Be(2);
+            result.Name.Should().Be("2-1");
+        }
+
+        [Test]
+        public void FirstOr_ItemsNotFound_ReturnFallbackValue()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+            var fallbackValue = new DummyClass(-1, "Fallback");
+
+            //Act 
+            var result = source.FirstOr(d => d.Id == -2, fallbackValue);
+
+            //Assert 
+            result.Id.Should().Be(fallbackValue.Id);
+            result.Name.Should().Be(fallbackValue.Name);
+        }
+
+        [Test]
+        public void LastOr_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.LastOr(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void LastOr_ItemsFound_ReturnLast()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+
+            //Act 
+            var result = source.LastOr(d => d.Id == 2, null);
+
+            //Assert 
+            result.Id.Should().Be(2);
+            result.Name.Should().Be("2-2");
+        }
+
+        [Test]
+        public void LastOr_ItemsNotFound_ReturnFallbackValue()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+            var fallbackValue = new DummyClass(-1, "Fallback");
+
+            //Act 
+            var result = source.LastOr(d => d.Id == -2, fallbackValue);
+
+            //Assert 
+            result.Id.Should().Be(fallbackValue.Id);
+            result.Name.Should().Be(fallbackValue.Name);
+        }
+
+        [Test]
+        public void SingleOr_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.SingleOr(null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void SingleOr_ItemFound_ReturnSingle()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2"),
+                new DummyClass(3, "3")
+            };
+
+            //Act 
+            var result = source.SingleOr(d => d.Id == 2, null);
+
+            //Assert 
+            result.Id.Should().Be(2);
+            result.Name.Should().Be("2");
+        }
+
+        [Test]
+        public void SingleOr_ItemsFound_ReturnSingle()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+
+            //Act 
+            Action action = () => source.SingleOr(d => d.Id == 2, null);
+
+            //Assert 
+            action.Should().ThrowExactly<InvalidOperationException>();
+        }
+
+        [Test]
+        public void SingleOr_ItemNotFound_ReturnFallbackValue()
+        {
+            //Arrange
+            var source = new[]
+            {
+                new DummyClass(1, "1"),
+                new DummyClass(2, "2-1"),
+                new DummyClass(2, "2-2"),
+                new DummyClass(3, "3")
+            };
+            var fallbackValue = new DummyClass(-1, "Fallback");
+
+            //Act 
+            var result = source.SingleOr(d => d.Id == -2, fallbackValue);
+
+            //Assert 
+            result.Id.Should().Be(fallbackValue.Id);
+            result.Name.Should().Be(fallbackValue.Name);
         }
     }
 }

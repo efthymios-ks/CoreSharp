@@ -12,13 +12,13 @@ namespace CoreSharp.Extensions.Tests
     public class StreamExtensionsTests
     {
         //Fields
-        private readonly Stream StreamNull = null;
+        private readonly Stream _streamNull = null;
 
         [Test]
         public void ToEntity_OptionsIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StreamNull.ToEntity<DummyClass>();
+            Action action = () => _streamNull.ToEntity<DummyClass>();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

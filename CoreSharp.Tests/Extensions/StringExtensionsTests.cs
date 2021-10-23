@@ -79,7 +79,7 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_InputIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StringNull.SplitChunks(2);
+            Action action = () => StringNull.Chunk(2);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -91,7 +91,7 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_ChunckSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
         {
             //Act
-            Action action = () => StringEmpty.SplitChunks(chunkSize);
+            Action action = () => StringEmpty.Chunk(chunkSize);
 
             //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -101,11 +101,12 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_WhenCalled_SplitInputInChunks()
         {
             //Arrange 
-            const string input = "12345";
+            const string Input = "12345";
+            const int Size = 2;
             var expected = new[] { "12", "34", "5" };
 
             //Act
-            var result = input.SplitChunks(2);
+            var result = Input.Chunk(Size);
 
             //Assert
             result.Should().Equal(expected);

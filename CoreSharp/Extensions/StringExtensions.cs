@@ -42,29 +42,11 @@ namespace CoreSharp.Extensions
             return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
         }
 
-        /// <summary>
-        /// Split text into fixed-length chunks.
-        /// </summary>
-        public static IEnumerable<string> SplitChunks(this string input, int chunkSize)
+        /// <inheritdoc cref="IEnumerableExtensions.Chunk{TItem}(IEnumerable{TItem}, int)"/>
+        public static IEnumerable<string> Chunk(this string input, int size)
         {
-            _ = input ?? throw new ArgumentNullException(nameof(input));
-            if (chunkSize < 1)
-                throw new ArgumentOutOfRangeException(nameof(chunkSize), $"{nameof(chunkSize)} has to be greater than 0.");
-
-            return input.SplitChunksInternal(chunkSize);
-        }
-
-        private static IEnumerable<string> SplitChunksInternal(this string input, int chunkSize)
-        {
-            var index = 0;
-
-            while ((index + chunkSize) < input.Length)
-            {
-                yield return input.Substring(index, chunkSize);
-                index += chunkSize;
-            }
-
-            yield return input[index..];
+            var chunks = input.Chunk<char>(size);
+            return chunks.Select(c => new string(c.ToArray()));
         }
 
         /// <summary>
