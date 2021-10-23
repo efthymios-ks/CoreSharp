@@ -179,9 +179,10 @@ namespace CoreSharp.Extensions
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            return typeof(TEntity)
-                .GetProperties(flags)
-                .ToDictionary(p => p.Name, p => p.GetValue(entity));
+            return entity
+                    .GetType()
+                    .GetProperties(flags)
+                    .ToDictionary(p => p.Name, p => p.GetValue(entity));
         }
 
 #pragma warning disable IDE0060 // Remove unused parameter
