@@ -31,12 +31,11 @@ namespace CoreSharp.Extensions
 
             if (!stream.CanRead)
                 throw new NotSupportedException($"{nameof(stream)} is not readable.");
-            else if (stream.Position > 0 && !stream.CanSeek)
-                throw new NotSupportedException($"{nameof(stream)} is not seekable.");
 
             try
             {
-                stream.Position = 0;
+                if (stream.CanSeek)
+                    stream.Position = 0;
                 var serializer = JsonSerializer.Create(settings);
                 using var streamReader = new StreamReader(stream);
                 using var jsonReader = new JsonTextReader(streamReader);
@@ -45,6 +44,11 @@ namespace CoreSharp.Extensions
             catch
             {
                 return null;
+            }
+            finally
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
             }
         }
     }

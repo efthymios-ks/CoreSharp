@@ -16,11 +16,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.0.10</Version>
-        <PackageReleaseNotes>-Code clean-up.
--Refactored GetAttributes() extensions.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.10.0</AssemblyVersion>
-        <FileVersion>1.0.10.0</FileVersion>
+        <Version>1.0.11</Version>
+        <PackageReleaseNotes>-Bug fixes.</PackageReleaseNotes>
+        <AssemblyVersion>1.0.11.0</AssemblyVersion>
+        <FileVersion>1.0.11.0</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,6 +32,10 @@
         <DocumentationFile>C:\Users\Efthymios\Desktop\efthymios-ks\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
         <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="CoreSharp.xml" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
