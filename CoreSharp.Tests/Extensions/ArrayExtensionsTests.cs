@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
-using System;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -39,7 +39,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetRow_WhenCalled_ReturnRow()
         {
             //Arrange
-            var source = new int[2, 2]
+            var source = new[,]
             {
                 { 1, 2 },
                 { 3, 4 }
@@ -82,7 +82,7 @@ namespace CoreSharp.Extensions.Tests
         public void GetColumn_WhenCalled_ReturnRow()
         {
             //Arrange
-            var source = new int[2, 2]
+            var source = new[,]
             {
                 { 1, 2 },
                 { 3, 4 }

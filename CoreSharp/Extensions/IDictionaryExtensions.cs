@@ -75,7 +75,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Attempts to update the specifed key in dictionary, if exists.
+        /// Attempts to update the specified key in dictionary, if exists.
         /// <code>
         /// dictionary.TryUpdate("key1", (key, value) => value + 5);
         /// </code>
@@ -98,11 +98,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
-            => source.AddOrUpdate(key, value, (_, __) => value);
+            => source.AddOrUpdate(key, value, (_, _) => value);
 
         /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, TValue updateValue)
-            => source.AddOrUpdate(key, addValue, (_, __) => updateValue);
+            => source.AddOrUpdate(key, addValue, (_, _) => updateValue);
 
         /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TValue, TValue> updateAction)
@@ -176,13 +176,13 @@ namespace CoreSharp.Extensions
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             var pairs = parameters
-                //Unfolder inner lists 
+                //Unfold inner lists 
                 .SelectMany(p =>
                 {
                     var innerParameters = new List<KeyValuePair<string, TValue>>();
 
                     //If value is list 
-                    if (p.Value is IEnumerable values && p.Value is not string)
+                    if (p.Value is IEnumerable values and not string)
                     {
                         foreach (var value in values)
                             innerParameters.Add(new KeyValuePair<string, TValue>(p.Key, (TValue)value));

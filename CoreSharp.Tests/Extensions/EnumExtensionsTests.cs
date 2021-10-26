@@ -11,39 +11,39 @@ namespace CoreSharp.Extensions.Tests
         public void GetDisplayName_WhenCalled_ReturnEnumDisplayAttribute()
         {
             //Arrange 
-            const DummyEnum Value = DummyEnum.Option1;
-            const string Expected = "Option 1 Name";
+            const DummyEnum value = DummyEnum.Option1;
+            const string expected = "Option 1 Name";
 
             //Act 
-            var result = Value.GetDisplayName();
+            var result = value.GetDisplayName();
 
-            result.Should().Be(Expected);
+            result.Should().Be(expected);
         }
 
         [Test]
         public void GetDisplayShortName_WhenCalled_ReturnEnumDisplayAttribute()
         {
             //Arrange 
-            const DummyEnum Value = DummyEnum.Option1;
-            const string Expected = "Option 1 ShortName";
+            const DummyEnum value = DummyEnum.Option1;
+            const string expected = "Option 1 ShortName";
 
             //Act 
-            var result = Value.GetDisplayShortName();
+            var result = value.GetDisplayShortName();
 
-            result.Should().Be(Expected);
+            result.Should().Be(expected);
         }
 
         [Test]
         public void GetDisplayDescription_WhenCalled_ReturnEnumDisplayAttribute()
         {
             //Arrange 
-            const DummyEnum Value = DummyEnum.Option1;
-            const string Expected = "Option 1 Description";
+            const DummyEnum value = DummyEnum.Option1;
+            const string expected = "Option 1 Description";
 
             //Act 
-            var result = Value.GetDisplayDescription();
+            var result = value.GetDisplayDescription();
 
-            result.Should().Be(Expected);
+            result.Should().Be(expected);
         }
     }
 }

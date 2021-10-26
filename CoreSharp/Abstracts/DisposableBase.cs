@@ -52,7 +52,10 @@ namespace CoreSharp.Abstracts
 
                     CleanUpNativeResources();
                 }
-                catch { }
+                catch
+                {
+                    // Ignored
+                }
             }
         }
 

@@ -73,13 +73,13 @@ namespace CoreSharp.Extensions
             if (size < 1)
                 throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} has to be at least 1.");
 
-            const string Seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const string seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var result = new char[size];
 
-            for (int i = 0; i < result.Length; i++)
+            for (var i = 0; i < result.Length; i++)
             {
-                var randomIndex = random.Next(Seed.Length);
-                result[i] = Seed[randomIndex];
+                var randomIndex = random.Next(seed.Length);
+                result[i] = seed[randomIndex];
             }
 
             return new string(result);
@@ -91,15 +91,14 @@ namespace CoreSharp.Extensions
         public static bool ChanceGreaterThan(this Random random, double percentage, bool includeEnd = true)
         {
             _ = random ?? throw new ArgumentNullException(nameof(random));
-            if (percentage < 0 || percentage > 100)
+            if (percentage is < 0 or > 100)
                 throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
 
             var chance = random.NextDouble(0, 100);
 
             if (includeEnd)
                 return chance >= percentage;
-            else
-                return chance > percentage;
+            return chance > percentage;
         }
 
         /// <summary>
@@ -108,15 +107,14 @@ namespace CoreSharp.Extensions
         public static bool ChanceLowerThan(this Random random, double percentage, bool includeEnd = true)
         {
             _ = random ?? throw new ArgumentNullException(nameof(random));
-            if (percentage < 0 || percentage > 100)
+            if (percentage is < 0 or > 100)
                 throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
 
             var chance = random.NextDouble(0, 100);
 
             if (includeEnd)
                 return chance <= percentage;
-            else
-                return chance < percentage;
+            return chance < percentage;
         }
 
         /// <summary>
@@ -147,14 +145,12 @@ namespace CoreSharp.Extensions
             _ = random ?? throw new ArgumentNullException(nameof(random));
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            for (var currentIndex = 0; currentIndex < (source.Count - 1); currentIndex++)
+            for (var currentIndex = 0; currentIndex < source.Count - 1; currentIndex++)
             {
                 var randomIndex = random.Next(currentIndex, source.Count);
 
                 //Swap 
-                var temp = source[currentIndex];
-                source[currentIndex] = source[randomIndex];
-                source[randomIndex] = temp;
+                (source[currentIndex], source[randomIndex]) = (source[randomIndex], source[currentIndex]);
             }
         }
     }

@@ -82,7 +82,7 @@ namespace CoreSharp.Extensions.Tests
         public void ConvertAll_WhenCalled_ReturnConvertedValues()
         {
             //Arrange
-            var source = new int[]
+            var source = new[]
             {
                 1,
                 2,
@@ -241,8 +241,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
-            var expected = new HashSet<int>()
-            { 1, 2, 3, 4 };
+            var expected = new HashSet<int> { 1, 2, 3, 4 };
 
             //Act 
             var result = source.ToHashSet();
@@ -326,7 +325,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange 
             var source = new[] { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
             var sequence = new[] { 1, -2, 3, -4 };
-            var expected = new[] { 1, 3, 3, 3, };
+            var expected = new[] { 1, 3, 3, 3};
 
             //Act 
             var result = source.TakeSkip(sequence);
@@ -458,7 +457,7 @@ namespace CoreSharp.Extensions.Tests
             var result = outer.Flatten();
 
             //Assert 
-            result.Should().Equals(expected);
+            result.Should().Equal(expected);
         }
 
         [Test]
@@ -503,7 +502,7 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceNull.ForEach(d => d.Id.ToString());
+            Action action = () => _sourceNull.ForEach(_ => {});
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -685,7 +684,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void GetPages_WhenCalled_ReturnItemGroupsByPageIndex()
         {
-            var source = new int[] { 1, 2, 3, 4, 5 };
+            var source = new[] { 1, 2, 3, 4, 5 };
             const int pageSize = 2;
             const int expectedCount = 3;
             var group1 = new[] { 1, 2 };
@@ -693,10 +692,10 @@ namespace CoreSharp.Extensions.Tests
             var group3 = new[] { 5 };
 
             //Act 
-            var result = source.GetPages(pageSize);
-            var result1 = result.ElementAt(0);
-            var result2 = result.ElementAt(1);
-            var result3 = result.ElementAt(2);
+            var result = source.GetPages(pageSize).ToArray();
+            var result1 = result[0];
+            var result2 = result[1];
+            var result3 = result[2];
 
             //Assert 
             result.Should().HaveCount(expectedCount);
@@ -752,10 +751,10 @@ namespace CoreSharp.Extensions.Tests
         public void ToCsv_SourceIsNull_IncludeHeaderIsFalse_ReturnCsvWithoutHeader()
         {
             //Arrange
-            var source = new List<DummyClass>()
+            var source = new List<DummyClass>
             {
-                new DummyClass(1, "Black"),
-                new DummyClass(2, "White")
+                new(1, "Black"),
+                new(2, "White")
             };
             var expected = $"1,Black{Environment.NewLine}2,White{Environment.NewLine}";
 
@@ -796,9 +795,9 @@ namespace CoreSharp.Extensions.Tests
                 new DummyClass(1),
                 new DummyClass(2),
                 new DummyClass(2),
-                new DummyClass(3),
+                new DummyClass(3)
             };
-            var expected = new Dictionary<int, int>()
+            var expected = new Dictionary<int, int>
             {
                 { 1, 2 },
                 { 2, 2 }
@@ -819,7 +818,7 @@ namespace CoreSharp.Extensions.Tests
             {
                 1, 1, 2, 2, 3
             };
-            var expected = new Dictionary<int, int>()
+            var expected = new Dictionary<int, int>
             {
                 { 1, 2 },
                 { 2, 2 }
@@ -862,7 +861,7 @@ namespace CoreSharp.Extensions.Tests
                 new DummyClass(1),
                 new DummyClass(2),
                 new DummyClass(2),
-                new DummyClass(3),
+                new DummyClass(3)
             };
 
             //Act 
@@ -907,7 +906,7 @@ namespace CoreSharp.Extensions.Tests
                 new DummyClass(1, "Black"),
                 new DummyClass(2, "White")
             };
-            var expected = new DataTable(typeof(DummyClass).Name);
+            var expected = new DataTable(nameof(DummyClass));
             expected.Columns.Add(nameof(DummyClass.Id), typeof(int));
             expected.Columns.Add(nameof(DummyClass.Name), typeof(string));
             expected.Rows.Add(1, "Black");
@@ -1053,7 +1052,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var source = new[] { 1, 1, 2, 2, 3, 3 }.AsEnumerable();
-            const int Size = 2;
+            const int size = 2;
             var expected = new[]
             {
                 new [] { 1, 1 }.AsEnumerable(),
@@ -1062,7 +1061,7 @@ namespace CoreSharp.Extensions.Tests
             };
 
             //Act 
-            var result = source.Chunk(Size).ToArray();
+            var result = source.Chunk(size).ToArray();
 
             //Assert
             result.Should().HaveCount(expected.Length);

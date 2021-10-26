@@ -64,9 +64,9 @@ namespace CoreSharp.Extensions.Tests
             table.Rows.Add(2, "Black");
 
             //Act 
-            var result = table.ToEntities<DummyClass>(false);
-            var item1 = result.ElementAt(0);
-            var item2 = result.ElementAt(1);
+            var result = table.ToEntities<DummyClass>().ToArray(); 
+            var item1 = result[0];
+            var item2 = result[1];
 
             //Assert
             result.Should().HaveCount(2);
@@ -87,9 +87,9 @@ namespace CoreSharp.Extensions.Tests
             table.Rows.Add(2, "Black");
 
             //Act 
-            var result = table.ToEntities<DummyClass>(true);
-            var item1 = result.ElementAt(0);
-            var item2 = result.ElementAt(1);
+            var result = table.ToEntities<DummyClass>(true).ToArray(); 
+            var item1 = result[0];
+            var item2 = result[1];
 
             //Assert
             result.Should().HaveCount(2);

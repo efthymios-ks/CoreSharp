@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsFalse_ReturnQueryStringWithValuesAsIs()
         {
             //Arrange
-            var parameters = new NameValueCollection()
+            var parameters = new NameValueCollection
             {
                 { "name", "Efthymios Koktsidis" },
                 { "color", "Black" },
@@ -46,17 +46,16 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsTrue_ReturnQueryStringWithEncodedValues()
         {
             //Arrange
-            var parameters = new NameValueCollection()
+            var parameters = new NameValueCollection
             {
                 { "name", "Efthymios Koktsidis" },
                 { "color", "Black" },
                 { "count", "10" }
             };
-            const bool encode = true;
             const string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
 
             //Act
-            var result = parameters.ToUrlQueryString(encode);
+            var result = parameters.ToUrlQueryString();
 
             //Assert
             result.Should().Be(expected);

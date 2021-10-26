@@ -10,10 +10,10 @@ namespace CoreSharp.Enums
         Seconds = 2,
         Minutes = 4,
         Hours = 8,
+        Time = Hours | Minutes | Seconds | Milliseconds,
         Days = 16,
         Months = 32,
         Years = 64,
-        Time = Hours | Minutes | Seconds | Milliseconds,
         Date = Years | Months | Days
     }
 }

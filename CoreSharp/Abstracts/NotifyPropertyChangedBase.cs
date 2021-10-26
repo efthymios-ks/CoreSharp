@@ -20,15 +20,11 @@ namespace CoreSharp.Abstracts
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
-            {
                 return false;
-            }
-            else
-            {
-                field = value;
-                OnPropertyChanged(propertyName);
-                return true;
-            }
+
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

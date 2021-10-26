@@ -36,8 +36,8 @@ namespace CoreSharp.Extensions
             _ = input ?? throw new ArgumentNullException(nameof(input));
 
             var formattedControls = new Dictionary<string, string>();
-            foreach (var control in AsciiControls.Dictionary)
-                formattedControls.Add($"{control.Value}", $"{openBracket}{control.Key}{closeBracket}");
+            foreach (var (key, value) in AsciiControls.Dictionary)
+                formattedControls.Add($"{value}", $"{openBracket}{key}{closeBracket}");
 
             return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
         }
@@ -129,14 +129,12 @@ namespace CoreSharp.Extensions
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
-            if (length <= input.Length)
+            if (length > input.Length)
+                return input;
+            else
             {
                 var start = input.Length - length;
                 return input.Substring(start, length);
-            }
-            else
-            {
-                return input;
             }
         }
 
@@ -354,8 +352,8 @@ namespace CoreSharp.Extensions
             _ = input ?? throw new ArgumentNullException(nameof(input));
             _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
 
-            foreach (var pair in dictionary)
-                input = input.Replace(pair.Key, $"{pair.Value}");
+            foreach (var (key, value) in dictionary)
+                input = input.Replace(key, $"{value}");
 
             return input;
         }
@@ -541,33 +539,28 @@ namespace CoreSharp.Extensions
             input ??= string.Empty;
             input = input.ToLowerInvariant().Trim();
 
-            int? intInput = input.ToIntCI();
-
             if (bool.TryParse(input, out var result))
-            {
                 return result;
-            }
-            else
+
+            var intInput = input.ToIntCI();
+            return intInput switch
             {
-                return intInput switch
+                //1 or 0 
+                1 => true,
+                0 => false,
+                _ => input switch
                 {
-                    //1 or 0 
-                    1 => true,
-                    0 => false,
-                    _ => input switch
-                    {
-                        //true or false 
-                        "true" => true,
-                        "false" => false,
+                    //true or false 
+                    "true" => true,
+                    "false" => false,
 
-                        //Yes or no 
-                        "yes" => true,
-                        "no" => false,
+                    //Yes or no 
+                    "yes" => true,
+                    "no" => false,
 
-                        _ => null
-                    }
-                };
-            }
+                    _ => null
+                }
+            };
         }
 
         /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>

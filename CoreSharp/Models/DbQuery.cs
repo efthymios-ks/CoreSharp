@@ -17,7 +17,7 @@ namespace CoreSharp.Models
         //Fields 
         private readonly DbConnection _connection;
         private readonly DbTransaction _transaction;
-        private int _timeoutSeconds = 0;
+        private int _timeoutSeconds;
 
         //Constructors 
         public DbQuery(DbConnection connection)
@@ -96,36 +96,36 @@ namespace CoreSharp.Models
         /// <inheritdoc cref="DbCommand.ExecuteNonQuery"/>
         public int ExecuteNonQuery(string query)
         {
-            Task<int> action() => ExecuteNonQueryAsync(query);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<int> Action() => ExecuteNonQueryAsync(query);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteNonQueryAsync(CancellationToken)"/>
         public async Task<int> ExecuteNonQueryAsync(string query, CancellationToken cancellationToken = default)
         {
-            using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await GetCommandAsync(query, cancellationToken);
             return await command.ExecuteNonQueryAsync(cancellationToken);
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteScalar"/>
         public T ExecuteScalar<T>(string query)
         {
-            Task<T> action() => ExecuteScalarAsync<T>(query);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<T> Action() => ExecuteScalarAsync<T>(query);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteScalarAsync(CancellationToken)"/>
         public async Task<T> ExecuteScalarAsync<T>(string query, CancellationToken cancellationToken = default)
         {
-            using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await GetCommandAsync(query, cancellationToken);
             return (T)await command.ExecuteScalarAsync(cancellationToken);
         }
 
         /// <inheritdoc cref="FillAsync(string, DataTable, CancellationToken)"/>
         public int Fill(string query, DataTable table)
         {
-            Task<int> action() => FillAsync(query, table);
-            return Task.Run(action).GetAwaiter().GetResult();
+            Task<int> Action() => FillAsync(query, table);
+            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DataTable.Load(IDataReader)"/>
@@ -133,7 +133,7 @@ namespace CoreSharp.Models
         {
             _ = table ?? throw new ArgumentNullException(nameof(table));
 
-            using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await GetCommandAsync(query, cancellationToken);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             table.Load(reader);
             return table.Rows.Count;
@@ -179,13 +179,14 @@ namespace CoreSharp.Models
             _ = set ?? throw new ArgumentNullException(nameof(set));
             _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
 
-            using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await GetCommandAsync(query, cancellationToken);
             var adapter = _connection.CreateDataAdapter();
             try
             {
                 adapter.SelectCommand = command;
-                if (tableMappings?.Any() is true)
-                    adapter.TableMappings.AddRange(tableMappings?.ToArray());
+                var tableMappingsArray = tableMappings?.ToArray();
+                if (tableMappingsArray?.Any() is true)
+                    adapter.TableMappings.AddRange(tableMappingsArray);
 
                 return await Task.Run(() => adapter.Fill(set), cancellationToken);
             }

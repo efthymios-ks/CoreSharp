@@ -89,7 +89,7 @@ namespace CoreSharp.Extensions
                     typeof(DateTimeOffset),
                     typeof(Guid)
                 };
-                return allowedTypes.Any(t => Equals(t, type));
+                return allowedTypes.Any(t => t == type);
             }
         }
 

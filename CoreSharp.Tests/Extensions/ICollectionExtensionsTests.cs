@@ -41,9 +41,9 @@ namespace CoreSharp.Extensions.Tests
         public void AddRange_WhenCalled_AddItemsToCollection()
         {
             //Arrange
-            ICollection<int> source = new Collection<int>() { 1, 2, 3 };
+            ICollection<int> source = new Collection<int> { 1, 2, 3 };
             var items = new[] { 4, 5, 6 };
-            var expected = new Collection<int>() { 1, 2, 3, 4, 5, 6 };
+            var expected = new Collection<int> { 1, 2, 3, 4, 5, 6 };
 
             //Act
             source.AddRange(items);

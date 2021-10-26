@@ -18,6 +18,7 @@ namespace CoreSharp.Models.Newtonsoft.Settings
         }
 
         //Properties
-        public static PrimitiveOnlyJsonSettings Instance => _instance ??= new PrimitiveOnlyJsonSettings();
+        public static PrimitiveOnlyJsonSettings Instance
+            => _instance ??= new PrimitiveOnlyJsonSettings();
     }
 }

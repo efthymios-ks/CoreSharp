@@ -1,8 +1,8 @@
-﻿using CoreSharp.Tests.Dummies;
+﻿using System;
+using System.Data;
+using CoreSharp.Tests.Dummies;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Data;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -95,7 +95,7 @@ namespace CoreSharp.Extensions.Tests
             var row = table.Rows.Add(1, "Red");
 
             //Act 
-            var result = row.ToEntity<DummyClass>(false);
+            var result = row.ToEntity<DummyClass>();
 
             //Assert
             result.Id.Should().Be(1);

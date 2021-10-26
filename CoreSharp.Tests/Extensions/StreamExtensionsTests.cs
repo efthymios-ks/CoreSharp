@@ -29,7 +29,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var dummy = new DummyClass(1, "Black");
-            using var stream = new MemoryStream();
+            await using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, dummy);
 
             //Act

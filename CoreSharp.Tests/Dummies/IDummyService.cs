@@ -2,6 +2,5 @@
 {
     internal interface IDummyService
     {
-        void Call();
     }
 }

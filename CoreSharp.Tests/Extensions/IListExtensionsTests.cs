@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions.Tests
         public void Fill_WhenCalled_FillListWithSameValue()
         {
             //Arrange
-            IList<int> source = new List<int>() { 1, 2, 3 };
+            IList<int> source = new List<int> { 1, 2, 3 };
             IList<int> expected = new List<int> { 0, 0, 0 };
 
             //Act
@@ -64,8 +64,8 @@ namespace CoreSharp.Extensions.Tests
         public void Remove_WhenCalled_RemoveMatchingItemsAndReturnCount()
         {
             //Arrange  
-            var source = new List<int>() { 0, 1, 0, 2, 0, 3 };
-            var expectedSource = new List<int>() { 1, 2, 3 };
+            var source = new List<int> { 0, 1, 0, 2, 0, 3 };
+            var expectedSource = new List<int> { 1, 2, 3 };
             const int expectedCount = 3;
 
             //Act
@@ -115,8 +115,8 @@ namespace CoreSharp.Extensions.Tests
         public void InsertRange_WhenCalled_InsertValuesToGivenPosition()
         {
             //Arrange
-            var source = new List<int>() { 0, 1, 4, 5 };
-            var expected = new List<int>() { 0, 1, 2, 3, 4, 5 };
+            var source = new List<int> { 0, 1, 4, 5 };
+            var expected = new List<int> { 0, 1, 2, 3, 4, 5 };
 
             //Act
             source.InsertRange(2, 2, 3);

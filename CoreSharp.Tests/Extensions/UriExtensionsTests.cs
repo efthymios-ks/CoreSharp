@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange
             const string url = "https://example.com/?name=efthymios&color=black";
             var uri = new Uri(url);
-            var expected = new Dictionary<string, string>()
+            var expected = new Dictionary<string, string>
             {
                 { "name", "efthymios" },
                 { "color", "black" }
@@ -56,7 +56,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange
             const string url = "https://example.com/route#name=efthymios&color=black";
             var uri = new Uri(url);
-            var expected = new Dictionary<string, string>()
+            var expected = new Dictionary<string, string>
             {
                 { "name", "efthymios" },
                 { "color", "black" }

@@ -68,8 +68,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
 
             //Act 
             var added = _dictionary.TryAdd("1", 1);
@@ -84,8 +84,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected.Add("4", 4);
 
             //Act 
@@ -111,8 +111,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
 
             //Act 
             var result = _dictionary.TryRemove("-1", out _);
@@ -127,8 +127,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, i) in _dictionary)
+                expected.Add(key, i);
             expected.Remove("3");
 
             //Act 
@@ -168,8 +168,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
 
             //Act 
             var result = _dictionary.TryUpdate("-1", 100);
@@ -184,8 +184,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected["1"] = 100;
 
             //Act 
@@ -201,12 +201,9 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
-            static int UpdateAction(string _, int value)
-            {
-                return value = 2;
-            }
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
+            static int UpdateAction(string _, int __) => 2;
 
             expected["1"] = 2;
 
@@ -246,8 +243,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected.Add("4", 4);
 
             //Act 
@@ -263,8 +260,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected["3"] = 300;
 
             //Act 
@@ -280,8 +277,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected["3"] = 300;
 
             //Act 
@@ -307,8 +304,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
 
             //Act 
             var result = _dictionary.GetOrAdd("1", 100);
@@ -323,8 +320,8 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             var expected = new Dictionary<string, int>();
-            foreach (var entry in _dictionary)
-                expected.Add(entry.Key, entry.Value);
+            foreach (var (key, value) in _dictionary)
+                expected.Add(key, value);
             expected.Add("4", 4);
 
             //Act 
@@ -400,7 +397,7 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsFalse_ReturnQueryStringWithValuesAsIs()
         {
             //Arrange
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>
             {
                 { "name", "Efthymios Koktsidis" },
                 { "color", "Black" },
@@ -420,17 +417,16 @@ namespace CoreSharp.Extensions.Tests
         public void ToUrlQueryString_EncodeIsTrue_ReturnQueryStringWithEncodedValues()
         {
             //Arrange
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>
             {
                 { "name", "Efthymios Koktsidis" },
                 { "color", "Black" },
                 { "count", 10 }
             };
-            const bool encode = true;
             const string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
 
             //Act
-            var result = parameters.ToUrlQueryString(encode);
+            var result = parameters.ToUrlQueryString();
 
             //Assert
             result.Should().Be(expected);

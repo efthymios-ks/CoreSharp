@@ -69,13 +69,13 @@
         </member>
         <member name="T:CoreSharp.Enums.CurrencyNegativePattern">
             <summary>
-            Enum used with NumberFormatInfo.CurrencyNegativePattern. 
-            Just cast to int. 
+            Enum used with NumberFormatInfo.CurrencyNegativePattern.
+            Just cast to int.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.CurrencyNegativePattern.ParenthesisCurrencyNumber">
             <summary>
-            ($n) 
+            ($n)
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.CurrencyNegativePattern.SignCurrencyNumber">
@@ -246,8 +246,8 @@
         </member>
         <member name="T:CoreSharp.Enums.NumberNegativePattern">
             <summary>
-            Enum used with NumberFormatInfo.NumberNegativePattern. 
-            Just cast to int. 
+            Enum used with NumberFormatInfo.NumberNegativePattern.
+            Just cast to int.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.NumberNegativePattern.ParenthesisNumber">
@@ -726,7 +726,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.IDictionaryExtensions.TryUpdate``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``0,``1,``1})">
             <summary>
-            Attempts to update the specifed key in dictionary, if exists.
+            Attempts to update the specified key in dictionary, if exists.
             <code>
             dictionary.TryUpdate("key1", (key, value) => value + 5);
             </code>
@@ -977,6 +977,32 @@
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.FilterFlexible``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.String},System.String)">
             <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.FilterFlexible``1(System.Linq.IQueryable{``0},System.Func{``0,System.String},System.String)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Chunk``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Split the elements of a sequence into chunks of size at most size.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ChunkInternal``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.Chunk``1(System.Collections.Generic.IEnumerable{``0},System.Int32)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.FirstOr``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.FirstOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.FirstOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)">
+            <inheritdoc cref="M:System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.LastOr``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.LastOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.LastOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)">
+            <inheritdoc cref="M:System.Linq.Enumerable.LastOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.SingleOr``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.SingleOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.SingleOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)">
+            <inheritdoc cref="M:System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>>
         </member>
         <member name="T:CoreSharp.Extensions.IListExtensions">
             <summary>
@@ -1430,10 +1456,8 @@
             Replace each ASCII control character with its corresponding abbreviation.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.StringExtensions.SplitChunks(System.String,System.Int32)">
-            <summary>
-            Split text into fixed-length chunks.
-            </summary>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Chunk(System.String,System.Int32)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.Chunk``1(System.Collections.Generic.IEnumerable{``0},System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.PadCenter(System.String,System.Int32,System.Char)">
             <summary>
@@ -2073,7 +2097,7 @@
         </member>
         <member name="T:CoreSharp.Utilities.Enum">
             <summary>
-            Enum utilitie.
+            Enum utilities.
             </summary>
         </member>
         <member name="M:CoreSharp.Utilities.Enum.GetValues``1">

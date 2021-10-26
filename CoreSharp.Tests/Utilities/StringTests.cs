@@ -8,11 +8,11 @@ namespace CoreSharp.Utilities.Tests
     public class StringTests
     {
         [Test]
-        public void FirstNotEmpty_WhenCalled_ReturbFirstNotEmpty()
+        public void FirstNotEmpty_WhenCalled_ReturnFirstNotEmpty()
         {
             //Arrange 
             var emptyValues = new[] { null, string.Empty, "", " " };
-            var expected = "1";
+            const string expected = "1";
             var values = emptyValues.Append(expected).Concat(emptyValues);
 
             //Act 

@@ -42,7 +42,7 @@ namespace CoreSharp.Sources
         /// <summary>
         /// List with ASCII control characters and their abbreviations.
         /// </summary>
-        internal static readonly IDictionary<string, char> Dictionary = new Dictionary<string, char>()
+        internal static readonly IDictionary<string, char> Dictionary = new Dictionary<string, char>
         {
             { nameof(NUL), NUL },
             { nameof(SOH), SOH },

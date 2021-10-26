@@ -63,13 +63,13 @@ namespace CoreSharp.Extensions.Tests
         public void FormatAsciiControls_WhenCalled_ReplaceAsciiControlCharsAndReturn()
         {
             //Arrange
-            var SOH = Convert.ToChar(1);
-            var EOT = Convert.ToChar(4);
-            var input = $"{SOH}_Hello_{EOT}";
+            var soh = Convert.ToChar(1);
+            var eot = Convert.ToChar(4);
+            var input = $"{soh}_Hello_{eot}";
             const string expected = "<SOH>_Hello_<EOT>";
 
             //Act
-            var result = input.FormatAsciiControls('<', '>');
+            var result = input.FormatAsciiControls();
 
             //Assert
             result.Should().Be(expected);
@@ -88,7 +88,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(0)]
         [TestCase(-1)]
-        public void SplitChunks_ChunckSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
+        public void SplitChunks_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
         {
             //Act
             Action action = () => StringEmpty.Chunk(chunkSize);
@@ -101,12 +101,12 @@ namespace CoreSharp.Extensions.Tests
         public void SplitChunks_WhenCalled_SplitInputInChunks()
         {
             //Arrange 
-            const string Input = "12345";
-            const int Size = 2;
+            const string input = "12345";
+            const int size = 2;
             var expected = new[] { "12", "34", "5" };
 
             //Act
-            var result = Input.Chunk(Size);
+            var result = input.Chunk(size);
 
             //Assert
             result.Should().Equal(expected);
@@ -137,12 +137,11 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             const string input = "123";
-            const char padCharacter = ' ';
             const int totalWidth = 7;
             const string expected = "  123  ";
 
             //Act
-            var result = input.PadCenter(totalWidth, padCharacter);
+            var result = input.PadCenter(totalWidth);
 
             //Assert
             result.Should().Be(expected);
@@ -592,7 +591,7 @@ namespace CoreSharp.Extensions.Tests
 
         [Test]
         [TestCase("1-2-3", "-", "123")]
-        public void Erase_WhenCalled_EraseAllOccurencesOfGivenValue(string input, string value, string expected)
+        public void Erase_WhenCalled_EraseAllOccurrencesOfGivenValue(string input, string value, string expected)
         {
             //Act 
             var result = input.Erase(value);
@@ -753,7 +752,7 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange
             const string input = "Key1, Key2, Key3";
-            var dictionary = new Dictionary<string, int>()
+            var dictionary = new Dictionary<string, int>
             {
                 { "Key1", 1 },
                 { "Key2", 2 },

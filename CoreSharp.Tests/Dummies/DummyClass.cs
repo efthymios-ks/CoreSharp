@@ -6,26 +6,20 @@ namespace CoreSharp.Tests.Dummies
     internal class DummyClass
     {
         //Constructors 
-        public DummyClass() : this(default, default)
+        public DummyClass() : this(default)
         {
         }
 
-        public DummyClass(int id) : this(id, default)
-        {
-        }
-
-        public DummyClass(int id, string name)
+        public DummyClass(int id, string name = default)
         {
             Id = id;
             Name = name;
         }
 
-        //Properties
-        public static DummyClass Null => null;
-
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => ToString();
+        private string DebuggerDisplay 
+            => ToString();
 
         public int Id { get; set; }
 

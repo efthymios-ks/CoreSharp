@@ -4,7 +4,7 @@ using System.Linq;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Enum utilitie.
+    /// Enum utilities.
     /// </summary>
     public static class Enum
     {

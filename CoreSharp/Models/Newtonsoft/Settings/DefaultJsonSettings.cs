@@ -18,6 +18,7 @@ namespace CoreSharp.Models.Newtonsoft.Settings
         }
 
         //Properties
-        public static DefaultJsonSettings Instance => _instance ??= new DefaultJsonSettings();
+        public static DefaultJsonSettings Instance
+            => _instance ??= new DefaultJsonSettings();
     }
 }

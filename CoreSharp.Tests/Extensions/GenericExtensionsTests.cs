@@ -106,7 +106,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange 
             var item = new DummyClass(1, "Red");
             const string expected = @"{""Id"":1,""Name"":""Red""}";
-            var settings = new JsonSerializerSettings()
+            var settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None
             };
@@ -271,7 +271,7 @@ namespace CoreSharp.Extensions.Tests
         [TestCase(0, true)]
         [TestCase(1, false)]
         [TestCase(default(int), true)]
-        public void IsDefault_WhenCalled_ReturnTrueIfInptHasDefaultTypeValue(int input, bool expected)
+        public void IsDefault_WhenCalled_ReturnTrueIfInputHasDefaultTypeValue(int input, bool expected)
         {
             //Act
             var result = input.IsDefault();

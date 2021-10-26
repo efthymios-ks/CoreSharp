@@ -1,31 +1,11 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests
 {
     [TestFixture]
     public class UlongExtensionsTests
     {
-        public static void ToComputerSize_FormatIsNull_ThrowArgumentNullException()
-        {
-            //Action
-            Action action = () => 1ul.ToComputerSize(null, CultureInfo.InvariantCulture);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        public static void ToComputerSize_FormatProviderIsNull_ThrowArgumentNullException()
-        {
-            //Action
-            Action action = () => 1ul.ToComputerSize("{0}", null);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
         [Test]
         [TestCase(0ul, "0B")]
         [TestCase(512ul, "512B")]

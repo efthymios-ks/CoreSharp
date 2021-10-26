@@ -12,7 +12,8 @@ namespace CoreSharp.Models.Newtonsoft.Resolvers
         private static WritableOnlyPropertiesResolver _instance;
 
         //Properties
-        public static WritableOnlyPropertiesResolver Instance => _instance ??= new WritableOnlyPropertiesResolver();
+        public static WritableOnlyPropertiesResolver Instance
+            => _instance ??= new WritableOnlyPropertiesResolver();
 
         //Methods
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)

@@ -154,8 +154,7 @@ namespace CoreSharp.Extensions
 
             if (source is IList<T> list)
                 return new Collection<T>(list);
-            else
-                return new Collection<T>(source.ToList());
+            return new Collection<T>(source.ToList());
         }
 
         /// <summary>

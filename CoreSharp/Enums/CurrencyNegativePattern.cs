@@ -1,13 +1,13 @@
 ﻿namespace CoreSharp.Enums
 {
     /// <summary>
-    /// Enum used with NumberFormatInfo.CurrencyNegativePattern. 
-    /// Just cast to int. 
+    /// Enum used with NumberFormatInfo.CurrencyNegativePattern.
+    /// Just cast to int.
     /// </summary>
-    public enum CurrencyNegativePattern : int
+    public enum CurrencyNegativePattern
     {
         /// <summary>
-        /// ($n) 
+        /// ($n)
         /// </summary>
         ParenthesisCurrencyNumber = 0,
 

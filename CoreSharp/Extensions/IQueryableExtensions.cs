@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions
 
                 builder.Append(escapedChar);
 
-                if (i < (characters.Length - 1))
+                if (i < characters.Length - 1)
                     builder.Append(".*");
             }
             var pattern = $"{builder}";

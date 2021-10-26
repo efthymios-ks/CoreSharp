@@ -42,11 +42,11 @@ namespace CoreSharp.Extensions.Tests
         public void Sort_WhenCalled_SortByGivenKey()
         {
             //Arrange
-            var source = new List<DummyClass>()
+            var source = new List<DummyClass>
             {
-                new DummyClass(3),
-                new DummyClass(1),
-                new DummyClass(2)
+                new(3),
+                new(1),
+                new(2)
             };
             var expected = source.ToList().OrderBy(i => i.Id);
 

@@ -57,26 +57,22 @@ namespace CoreSharp.Models
                     return true;
                 }
 
-                //If value given 
-                else
-                {
-                    //Parse to decimal? (cause it can fit all numeric types) 
-                    var tempValue = ParseValue(input);
+                //Parse to decimal? (cause it can fit all numeric types) 
+                var tempValue = ParseValue(input);
 
-                    //Validate
-                    if (tempValue is null)
-                        throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TValue).GetNullableBaseType().FullName}.");
+                //Validate
+                if (tempValue is null)
+                    throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TValue).GetNullableBaseType().FullName}.");
 
-                    //Format to string... 
-                    input = FormatValue(tempValue);
+                //Format to string... 
+                input = FormatValue(tempValue);
 
-                    //...and parse back to decimal? to keep formatting or rounding 
-                    tempValue = ParseValue(input);
+                //...and parse back to decimal? to keep formatting or rounding 
+                tempValue = ParseValue(input);
 
-                    //Finally convert to required type 
-                    value = tempValue.ChangeType<TValue>(_cultureInfo);
-                    return true;
-                }
+                //Finally convert to required type 
+                value = tempValue.ChangeType<TValue>(_cultureInfo);
+                return true;
             }
             catch
             {
@@ -100,18 +96,14 @@ namespace CoreSharp.Models
             if (isValuePercentage)
                 input = input.Replace(_cultureInfo.NumberFormat.PercentSymbol, string.Empty);
 
-            if (decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out var result))
-            {
-                //Divide by 100, since `ToString("P")` format specifier multiplies by 100 
-                if (_isFormatPercentage || isValuePercentage)
-                    return result / 100;
-                else
-                    return result;
-            }
-            else
-            {
+            if (!decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out var result))
                 return default;
-            }
+
+            //Divide by 100, since `ToString("P")` format specifier multiplies by 100 
+            if (_isFormatPercentage || isValuePercentage)
+                return result / 100;
+
+            return result;
         }
 
         /// <summary>

@@ -26,9 +26,9 @@ namespace CoreSharp.Utilities
             var builder = new StringBuilder();
 
             //Connect 
-            foreach (object segment in segments)
+            foreach (var segment in segments)
             {
-                string trimmed = $"/{segment}".Trim();
+                var trimmed = $"/{segment}".Trim();
                 builder.Append(trimmed);
             }
             builder.Append('/');
@@ -64,10 +64,7 @@ namespace CoreSharp.Utilities
             baseUrl = baseUrl.Trim(trimChars);
             query = query.Trim(trimChars);
 
-            if (string.IsNullOrWhiteSpace(query))
-                return baseUrl;
-            else
-                return $"{baseUrl}/?{query}";
+            return string.IsNullOrWhiteSpace(query) ? baseUrl : $"{baseUrl}/?{query}";
         }
     }
 }

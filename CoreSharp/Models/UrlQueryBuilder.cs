@@ -19,26 +19,38 @@ namespace CoreSharp.Models
         //Basic 
         public void Add<TValue>(string key, TValue value)
         {
-            var type = typeof(TValue);
-
             if (value is null)
                 return;
-            else if (value is DateTime dateTimeValue)
-                Add(key, dateTimeValue);
-            else if (value is DateTimeOffset dateTimeOffsetValue)
-                Add(key, dateTimeOffsetValue);
-            else if (value is TimeSpan timeSpanValue)
-                Add(key, timeSpanValue);
-            else if (value is string stringValue && !string.IsNullOrWhiteSpace(stringValue))
-                InternalAdd(key, stringValue.Trim());
-            else if (value is IEnumerable enumerable)
-                Add(key, enumerable);
-            else if (value is IEnumerable<object> enumerableObject)
-                Add(key, enumerableObject);
-            else if (type.IsClass && value is not object)
-                Add(((object)value).GetPropertiesDictionary());
-            else
-                InternalAdd(key, value);
+
+            var type = typeof(TValue);
+            switch (value)
+            {
+                case DateTime dateTimeValue:
+                    Add(key, dateTimeValue);
+                    break;
+                case DateTimeOffset dateTimeOffsetValue:
+                    Add(key, dateTimeOffsetValue);
+                    break;
+                case TimeSpan timeSpanValue:
+                    Add(key, timeSpanValue);
+                    break;
+                case string stringValue when !string.IsNullOrWhiteSpace(stringValue):
+                    InternalAdd(key, stringValue.Trim());
+                    break;
+                case IEnumerable enumerable:
+                    Add(key, enumerable);
+                    break;
+                default:
+                    {
+                        if (value is IEnumerable<object> enumerableObject)
+                            Add(key, enumerableObject);
+                        else if (type.IsClass && value is not object)
+                            Add(((object)value).GetPropertiesDictionary());
+                        else
+                            InternalAdd(key, value);
+                        break;
+                    }
+            }
         }
 
         /// <summary>

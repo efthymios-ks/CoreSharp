@@ -1,8 +1,8 @@
 ﻿namespace CoreSharp.Enums
 {
     /// <summary>
-    /// Enum used with NumberFormatInfo.NumberNegativePattern. 
-    /// Just cast to int. 
+    /// Enum used with NumberFormatInfo.NumberNegativePattern.
+    /// Just cast to int.
     /// </summary>
     public enum NumberNegativePattern
     {

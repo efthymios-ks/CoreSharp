@@ -160,7 +160,7 @@ namespace CoreSharp.Extensions.Tests
         public void Shuffle_RngIsNull_ThrowArgumentNullException()
         {
             //Arrange
-            var source = new List<int>() { 1, 2, 3, 4, 5 };
+            var source = new List<int> { 1, 2, 3, 4, 5 };
 
             //Act 
             Action action = () => _rngNull.Shuffle(source);
@@ -184,7 +184,7 @@ namespace CoreSharp.Extensions.Tests
         public void Shuffle_WhenCalled_ShufflesList(int sampleCount)
         {
             //Arrange
-            var original = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            var original = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             var shuffled = original.ToList();
 
             //Act 

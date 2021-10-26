@@ -41,7 +41,6 @@ namespace CoreSharp.Extensions
             var result = new TEntity();
             var impliedType = typeof(TEntity);
             var properties = impliedType.GetProperties();
-            var fields = impliedType.GetFields();
 
             //DataTable setup 
             var columnNames = row.GetColumnNames().ToArray();
@@ -63,7 +62,6 @@ namespace CoreSharp.Extensions
                 var propertyIsNullable = property.PropertyType.IsValueType && (Nullable.GetUnderlyingType(property.PropertyType) is not null);
                 var propertyIsEnum = property.PropertyType.IsEnum;
                 var isSameType = property.PropertyType == value.GetType();
-                var valueIsAssignable = property.PropertyType.IsInstanceOfType(value);
 
                 /*
                     With the following checks, 

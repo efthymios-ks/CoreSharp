@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -19,24 +17,6 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
-        }
-
-        public static void ToMetricSize_FormatIsNull_ThrowArgumentNullException()
-        {
-            //Action
-            Action action = () => 1.0.ToMetricSize(null, CultureInfo.InvariantCulture);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        public static void ToMetricSize_FormatProviderIsNull_ThrowArgumentNullException()
-        {
-            //Action
-            Action action = () => 1.0.ToMetricSize("{0}", null);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]

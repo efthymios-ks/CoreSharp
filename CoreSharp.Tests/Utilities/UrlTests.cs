@@ -13,7 +13,7 @@ namespace CoreSharp.Utilities.Tests
         {
             //Arrange
             const string baseUrl = null;
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 { "name", "efthymios" },
                 { "color", "black" }
@@ -45,19 +45,19 @@ namespace CoreSharp.Utilities.Tests
         {
             //Arrange
             const string baseUrl = "https://example.com/";
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>
             {
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
             };
-            const bool Encode = false;
-            const string Expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
+            const bool encode = false;
+            const string expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
 
             //Act
-            var result = Url.Build(baseUrl, parameters, Encode);
+            var result = Url.Build(baseUrl, parameters, encode);
 
             //Assert
-            result.Should().Be(Expected);
+            result.Should().Be(expected);
         }
 
         [Test]
@@ -65,16 +65,15 @@ namespace CoreSharp.Utilities.Tests
         {
             //Arrange
             const string baseUrl = "https://example.com/";
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>
             {
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
-            };
-            const bool encode = true;
+            }; 
             const string expected = "https://example.com/?name=Efthymios+Koktsidis&count=10";
 
             //Act
-            var result = Url.Build(baseUrl, parameters, encode);
+            var result = Url.Build(baseUrl, parameters);
 
             //Assert
             result.Should().Be(expected);

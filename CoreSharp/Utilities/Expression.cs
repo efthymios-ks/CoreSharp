@@ -16,8 +16,7 @@ namespace CoreSharp.Utilities
         {
             _ = memberSelector ?? throw new ArgumentNullException(nameof(memberSelector));
 
-            var memberExpression = memberSelector.Body as MemberExpression;
-            if (memberExpression is not null)
+            if (memberSelector.Body is MemberExpression memberExpression)
                 return memberExpression.Member;
             else
                 throw new ArgumentException($"{memberSelector} does not point to a valid member.", nameof(memberSelector));

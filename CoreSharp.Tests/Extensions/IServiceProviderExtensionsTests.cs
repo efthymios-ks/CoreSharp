@@ -10,23 +10,23 @@ namespace CoreSharp.Extensions.Tests
     public class IServiceProviderExtensionsTests
     {
         //Fields
-        private Mock<IServiceProvider> serviceProviderMock;
+        private Mock<IServiceProvider> _serviceProviderMock;
 
         //Methods 
         [SetUp]
         public void SetUp()
         {
-            serviceProviderMock = new Mock<IServiceProvider>();
+            _serviceProviderMock = new Mock<IServiceProvider>();
         }
 
         [Test]
         public void GetService_ServiceNotFound_ReturnNull()
         {
             //Arrange 
-            serviceProviderMock
+            _serviceProviderMock
                 .Setup(sp => sp.GetService(typeof(IDummyService)))
                 .Returns(null);
-            var serviceProvider = serviceProviderMock.Object;
+            var serviceProvider = _serviceProviderMock.Object;
 
             //Act
             var result = serviceProvider.GetService<IDummyService>();
@@ -40,10 +40,10 @@ namespace CoreSharp.Extensions.Tests
         {
             //Arrange 
             var service = new DummyService();
-            serviceProviderMock
+            _serviceProviderMock
                 .Setup(sp => sp.GetService(typeof(IDummyService)))
                 .Returns(service);
-            var serviceProvider = serviceProviderMock.Object;
+            var serviceProvider = _serviceProviderMock.Object;
 
             //Act
             var result = serviceProvider.GetService<IDummyService>();

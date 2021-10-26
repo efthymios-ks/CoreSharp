@@ -66,7 +66,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddParameter_WhenCalled_AddsAndReturnSameTypeDbParameterWithValues()
         {
-            //Arrang 
+            //Arrange 
             const string name = "{name}";
             const string value = "Efthymios";
 
