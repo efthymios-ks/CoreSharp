@@ -1155,67 +1155,6 @@
             </example>
             </summary>
         </member>
-        <member name="T:CoreSharp.Extensions.IServiceCollectionExtensions">
-            <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> extensions.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)">
-            <summary>
-            Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.
-            If single implementation is found, then it is registered regardless.
-            If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered.
-            If multiple implementations are found and none has a proper name, then none is registered.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
-            <summary>
-            Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.
-            If single implementation is found, then it is registered regardless.
-            If multiple implementations are found, only the one with the `I{Name}Service` and `{Name}Service` convention is registered.
-            If multiple implementations are found and none has a proper name, then none is registered.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAllRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
-            <summary>
-            Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly.
-            If single implementation is found, then it is registered regardless.
-            If multiple implementations are found, only the one with the `I{Name}Repository` and `{Name}Repository` convention is registered.
-            If multiple implementations are found and none has a proper name, then none is registered.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.RegisterAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly,System.String)">
-            <summary>
-            Register all `Interface Contract` + `Concrete Implementation` combos found in given assembly based on given class.
-            If single implementation is found, then it is registered regardless.
-            If multiple implementations are found, only the one with the `I{Name}{Suffix}` and `{Name}{Suffix}` convention is registered.
-            If multiple implementations are found and none has a proper name, then none is registered.
-            </summary>
-        </member>
         <member name="T:CoreSharp.Extensions.IServiceProviderExtensions">
             <summary>
             <see cref="T:System.IServiceProvider"/> extensions.
