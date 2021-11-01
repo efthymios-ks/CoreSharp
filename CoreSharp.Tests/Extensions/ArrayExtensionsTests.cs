@@ -1,6 +1,7 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -8,11 +9,13 @@ namespace CoreSharp.Extensions.Tests
     public class ArrayExtensionsTests
     {
         //Fields
-        private readonly int[,] _sourceNull = null;
+        private readonly int[,] _sourceNull;
 
         [Test]
         public void GetRow_SourceIsNull_ThrowArgumentNullException()
         {
+            var culture = CultureInfo.CurrentCulture;
+
             //Act
             Action action = () => _sourceNull.GetRow(0);
 

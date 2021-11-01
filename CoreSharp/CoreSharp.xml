@@ -69,7 +69,7 @@
         </member>
         <member name="T:CoreSharp.Enums.CurrencyNegativePattern">
             <summary>
-            Enum used with NumberFormatInfo.CurrencyNegativePattern.
+            <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.CurrencyNegativePattern"/>.
             Just cast to int.
             </summary>
         </member>
@@ -155,8 +155,8 @@
         </member>
         <member name="T:CoreSharp.Enums.CurrencyPositivePattern">
             <summary>
-            Enum used with NumberFormatInfo.CurrencyPositivePattern. 
-            Just cast to int. 
+            <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.CurrencyPositivePattern"/>.
+            Just cast to int.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.CurrencyPositivePattern.CurrencyNumber">
@@ -246,7 +246,7 @@
         </member>
         <member name="T:CoreSharp.Enums.NumberNegativePattern">
             <summary>
-            Enum used with NumberFormatInfo.NumberNegativePattern.
+            <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.NumberNegativePattern"/>.
             Just cast to int.
             </summary>
         </member>
@@ -1218,6 +1218,21 @@
         <member name="M:CoreSharp.Extensions.NumberFormatInfoExtensions.SetNumberNegativePattern(System.Globalization.NumberFormatInfo,CoreSharp.Enums.NumberNegativePattern)">
             <summary>
             Map given <see cref="T:CoreSharp.Enums.NumberNegativePattern"/> to <see cref="P:System.Globalization.NumberFormatInfo.NumberNegativePattern"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.NumberFormatInfoExtensions.GetCurrencyPositivePattern(System.Globalization.NumberFormatInfo)">
+            <summary>
+            Map given <see cref="P:System.Globalization.NumberFormatInfo.CurrencyPositivePattern"/> to <see cref="T:CoreSharp.Enums.CurrencyPositivePattern"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.NumberFormatInfoExtensions.GetCurrencyNegativePattern(System.Globalization.NumberFormatInfo)">
+            <summary>
+            Map given <see cref="P:System.Globalization.NumberFormatInfo.CurrencyNegativePattern"/> to <see cref="T:CoreSharp.Enums.CurrencyNegativePattern"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.NumberFormatInfoExtensions.GetNumberNegativePattern(System.Globalization.NumberFormatInfo)">
+            <summary>
+            Map given <see cref="P:System.Globalization.NumberFormatInfo.NumberNegativePattern"/> to <see cref="T:CoreSharp.Enums.NumberNegativePattern"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.ObjectExtensions">

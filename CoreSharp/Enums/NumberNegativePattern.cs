@@ -1,7 +1,10 @@
-﻿namespace CoreSharp.Enums
+﻿using System;
+using System.Globalization;
+
+namespace CoreSharp.Enums
 {
     /// <summary>
-    /// Enum used with NumberFormatInfo.NumberNegativePattern.
+    /// <see cref="Enum"/> used with <see cref="NumberFormatInfo.NumberNegativePattern"/>.
     /// Just cast to int.
     /// </summary>
     public enum NumberNegativePattern

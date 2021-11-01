@@ -44,5 +44,35 @@ namespace CoreSharp.Extensions
 
             return info;
         }
+
+        /// <summary>
+        /// Map given <see cref="NumberFormatInfo.CurrencyPositivePattern"/> to <see cref="CurrencyPositivePattern"/>.
+        /// </summary>
+        public static CurrencyPositivePattern GetCurrencyPositivePattern(this NumberFormatInfo info)
+        {
+            _ = info ?? throw new ArgumentNullException(nameof(info));
+
+            return (CurrencyPositivePattern)info.CurrencyPositivePattern;
+        }
+
+        /// <summary>
+        /// Map given <see cref="NumberFormatInfo.CurrencyNegativePattern"/> to <see cref="CurrencyNegativePattern"/>.
+        /// </summary>
+        public static CurrencyNegativePattern GetCurrencyNegativePattern(this NumberFormatInfo info)
+        {
+            _ = info ?? throw new ArgumentNullException(nameof(info));
+
+            return (CurrencyNegativePattern)info.CurrencyNegativePattern;
+        }
+
+        /// <summary>
+        /// Map given <see cref="NumberFormatInfo.NumberNegativePattern"/> to <see cref="NumberNegativePattern"/>.
+        /// </summary>
+        public static NumberNegativePattern GetNumberNegativePattern(this NumberFormatInfo info)
+        {
+            _ = info ?? throw new ArgumentNullException(nameof(info));
+
+            return (NumberNegativePattern)info.NumberNegativePattern;
+        }
     }
 }

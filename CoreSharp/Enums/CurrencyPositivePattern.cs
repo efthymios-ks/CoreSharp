@@ -1,8 +1,11 @@
-﻿namespace CoreSharp.Enums
+﻿using System;
+using System.Globalization;
+
+namespace CoreSharp.Enums
 {
     /// <summary>
-    /// Enum used with NumberFormatInfo.CurrencyPositivePattern. 
-    /// Just cast to int. 
+    /// <see cref="Enum"/> used with <see cref="NumberFormatInfo.CurrencyPositivePattern"/>.
+    /// Just cast to int.
     /// </summary>
     public enum CurrencyPositivePattern
     {
