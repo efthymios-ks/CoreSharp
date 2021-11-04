@@ -1695,6 +1695,12 @@
             Chain calls <see cref="M:System.Threading.Tasks.Task`1.GetAwaiter"/> and <see cref="M:System.Runtime.CompilerServices.TaskAwaiter.GetResult"/>
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.WithAggregatedException(System.Threading.Tasks.Task)">
+            <summary>
+            Best used in conjuction with <see cref="M:System.Threading.Tasks.Task.WaitAll(System.Threading.Tasks.Task[])"/>
+            to aggregate all inner exceptions into a single <see cref="T:System.AggregateException"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.TcpClientExtensions">
             <summary>
             <see cref="T:System.Net.Sockets.TcpClient"/> extensions.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
@@ -16,6 +17,33 @@ namespace CoreSharp.Extensions
         {
             _ = task ?? throw new ArgumentNullException(nameof(task));
             return task.GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Best used in conjuction with <see cref="Task.WaitAll(Task[])"/>
+        /// to aggregate all inner exceptions into a single <see cref="AggregateException"/>.
+        /// </summary>
+        public static async Task WithAggregatedException(this Task task)
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            static Task ContinuationFunction(Task t)
+            {
+                if (!t.IsFaulted)
+                    return t;
+                else if (t.Exception is not AggregateException aggregateException)
+                    return t;
+                else if (aggregateException.InnerExceptions.Count > 1 || aggregateException.InnerException is AggregateException)
+                    return Task.FromException(aggregateException.Flatten());
+                else
+                    return t;
+            }
+
+            await task.ContinueWith(
+                ContinuationFunction,
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default).Unwrap();
         }
     }
 }
