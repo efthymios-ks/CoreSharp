@@ -2160,5 +2160,16 @@
             Build url from base url and parameters.
             </summary>
         </member>
+        <member name="T:CoreSharp.Utilities.ValueTaskX">
+            <summary>
+            <see cref="T:System.Threading.Tasks.ValueTask"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.ValueTask})">
+            <inheritdoc cref="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Threading.Tasks.ValueTask[])"/>
+        </member>
+        <member name="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Threading.Tasks.ValueTask[])">
+            <inheritdoc cref="M:System.Threading.Tasks.Task.WhenAll(System.Threading.Tasks.Task[])"/>
+        </member>
     </members>
 </doc>

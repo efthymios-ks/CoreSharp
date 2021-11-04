@@ -29,14 +29,17 @@ namespace CoreSharp.Extensions
 
             static Task ContinuationFunction(Task t)
             {
+                static bool HasInnerExceptions(AggregateException exception)
+                    => exception?.InnerException is AggregateException || exception.InnerExceptions.Count > 1;
+
                 if (!t.IsFaulted)
                     return t;
                 else if (t.Exception is not AggregateException aggregateException)
                     return t;
-                else if (aggregateException.InnerExceptions.Count > 1 || aggregateException.InnerException is AggregateException)
-                    return Task.FromException(aggregateException.Flatten());
-                else
+                else if (!HasInnerExceptions(aggregateException))
                     return t;
+                else
+                    return Task.FromException(aggregateException.Flatten());
             }
 
             await task.ContinueWith(
