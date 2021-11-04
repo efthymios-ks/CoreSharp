@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return Url.GetParameters(uri.Query);
+            return UriX.GetParameters(uri.Query);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         {
             _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return Url.GetParameters(uri.Fragment.TrimStart('#'));
+            return UriX.GetParameters(uri.Fragment.TrimStart('#'));
         }
     }
 }

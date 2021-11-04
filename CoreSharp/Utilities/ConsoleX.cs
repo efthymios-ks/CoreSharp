@@ -4,7 +4,7 @@ using System.Globalization;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Extended console functions.
+    /// <see cref="Console"/> utilities.
     /// </summary>
     public static class ConsoleX
     {

@@ -4,9 +4,9 @@ using System.Linq;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// String utilities.
+    /// <see cref="string"/> utilities.
     /// </summary>
-    public static class String
+    public static class StringX
     {
         /// <inheritdoc cref="FirstNotEmpty(string[])"/>
         public static string FirstNotEmpty(IEnumerable<string> values)

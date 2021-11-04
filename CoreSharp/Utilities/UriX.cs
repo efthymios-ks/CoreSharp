@@ -8,7 +8,10 @@ using System.Web;
 
 namespace CoreSharp.Utilities
 {
-    public static class Url
+    /// <summary>
+    /// <see cref="Uri"/> utilities.
+    /// </summary>
+    public static class UriX
     {
         /// <summary>
         /// Combines url segments.

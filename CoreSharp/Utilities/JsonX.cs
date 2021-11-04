@@ -3,7 +3,10 @@ using System.Text.RegularExpressions;
 
 namespace CoreSharp.Utilities
 {
-    public static class Json
+    /// <summary>
+    /// Json utilities.
+    /// </summary>
+    public static class JsonX
     {
         /// <summary>
         /// Check if string is an empty json.

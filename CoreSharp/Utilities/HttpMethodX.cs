@@ -4,7 +4,10 @@ using System.Net.Http;
 
 namespace CoreSharp.Utilities
 {
-    public static class Http
+    /// <summary>
+    /// <see cref="HttpMethod"/> related utilities.
+    /// </summary>
+    public static class HttpMethodX
     {
         /// <inheritdoc cref="GetRestMethod(string)"/>
         public static RestMethod GetRestMethod(HttpMethod method)

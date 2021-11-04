@@ -4,14 +4,14 @@ using System.Net;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// IPAddress utilities.
+    /// <see cref="IPAddress"/> utilities.
     /// </summary>
-    public static class IPAddress
+    public static class IPAddressX
     {
         /// <summary>
         /// Get current machines ip collection.
         /// </summary>
-        public static IEnumerable<System.Net.IPAddress> GetCurrentIpCollection()
+        public static IEnumerable<IPAddress> GetCurrentIpCollection()
         {
             var hostName = Dns.GetHostName();
             var iphe = Dns.GetHostEntry(hostName);

@@ -1902,7 +1902,7 @@
         </member>
         <member name="T:CoreSharp.Models.HttpResponseException">
             <summary>
-            Simple HttpResponseMessage exception.
+            Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> exception.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.TryParseValue(System.String,`0@)">
@@ -1969,7 +1969,7 @@
         </member>
         <member name="T:CoreSharp.Utilities.ConsoleX">
             <summary>
-            Extended console functions.
+            <see cref="T:System.Console"/> utilities.
             </summary>
         </member>
         <member name="M:CoreSharp.Utilities.ConsoleX.ClearLine">
@@ -2039,86 +2039,101 @@
             Log message with timestamp.
             </summary>
         </member>
-        <member name="T:CoreSharp.Utilities.Directory">
+        <member name="T:CoreSharp.Utilities.DirectoryX">
             <summary>
-            Directory utilities.
+            <see cref="T:System.IO.Directory"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Directory.Open(System.String)">
+        <member name="M:CoreSharp.Utilities.DirectoryX.Open(System.String)">
             <summary>
             Open directory with explorer.exe.
             </summary>
         </member>
-        <member name="T:CoreSharp.Utilities.Enum">
+        <member name="T:CoreSharp.Utilities.EnumX">
             <summary>
-            Enum utilities.
+            <see cref="T:System.Enum"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Enum.GetValues``1">
+        <member name="M:CoreSharp.Utilities.EnumX.GetValues``1">
             <summary>
             Get enum values.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Enum.GetDictionary``1">
+        <member name="M:CoreSharp.Utilities.EnumX.GetDictionary``1">
             <summary>
             Get enum dictionary (Text-Value).
             </summary>
         </member>
-        <member name="T:CoreSharp.Utilities.Expression">
+        <member name="T:CoreSharp.Utilities.ExpressionX">
             <summary>
             <see cref="T:System.Linq.Expressions.Expression"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Expression.GetMemberInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+        <member name="M:CoreSharp.Utilities.ExpressionX.GetMemberInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <summary>
             Get <see cref="T:System.Reflection.MemberInfo"/> from given <see cref="T:System.Linq.Expressions.Expression`1"/> selector.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Http.GetRestMethod(System.Net.Http.HttpMethod)">
-            <inheritdoc cref="M:CoreSharp.Utilities.Http.GetRestMethod(System.String)"/>
+        <member name="T:CoreSharp.Utilities.HttpMethodX">
+            <summary>
+            <see cref="T:System.Net.Http.HttpMethod"/> related utilities.
+            </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Http.GetRestMethod(System.String)">
+        <member name="M:CoreSharp.Utilities.HttpMethodX.GetRestMethod(System.Net.Http.HttpMethod)">
+            <inheritdoc cref="M:CoreSharp.Utilities.HttpMethodX.GetRestMethod(System.String)"/>
+        </member>
+        <member name="M:CoreSharp.Utilities.HttpMethodX.GetRestMethod(System.String)">
             <summary>
             Get RestMethod from HttpMethod.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Http.GetHttpMethod(CoreSharp.Enums.RestMethod)">
-            <inheritdoc cref="M:CoreSharp.Utilities.Http.GetHttpMethod(System.String)"/>
+        <member name="M:CoreSharp.Utilities.HttpMethodX.GetHttpMethod(CoreSharp.Enums.RestMethod)">
+            <inheritdoc cref="M:CoreSharp.Utilities.HttpMethodX.GetHttpMethod(System.String)"/>
         </member>
-        <member name="M:CoreSharp.Utilities.Http.GetHttpMethod(System.String)">
+        <member name="M:CoreSharp.Utilities.HttpMethodX.GetHttpMethod(System.String)">
             <summary>
             Get HttpMethod from string name.
             </summary>
         </member>
-        <member name="T:CoreSharp.Utilities.IPAddress">
+        <member name="T:CoreSharp.Utilities.IPAddressX">
             <summary>
-            IPAddress utilities.
+            <see cref="T:System.Net.IPAddress"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.IPAddress.GetCurrentIpCollection">
+        <member name="M:CoreSharp.Utilities.IPAddressX.GetCurrentIpCollection">
             <summary>
             Get current machines ip collection.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Json.IsEmpty(System.String)">
+        <member name="T:CoreSharp.Utilities.JsonX">
+            <summary>
+            Json utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.JsonX.IsEmpty(System.String)">
             <summary>
             Check if string is an empty json.
             </summary>
         </member>
-        <member name="T:CoreSharp.Utilities.String">
+        <member name="T:CoreSharp.Utilities.StringX">
             <summary>
-            String utilities.
+            <see cref="T:System.String"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.String.FirstNotEmpty(System.Collections.Generic.IEnumerable{System.String})">
-            <inheritdoc cref="M:CoreSharp.Utilities.String.FirstNotEmpty(System.String[])"/>
+        <member name="M:CoreSharp.Utilities.StringX.FirstNotEmpty(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc cref="M:CoreSharp.Utilities.StringX.FirstNotEmpty(System.String[])"/>
         </member>
-        <member name="M:CoreSharp.Utilities.String.FirstNotEmpty(System.String[])">
+        <member name="M:CoreSharp.Utilities.StringX.FirstNotEmpty(System.String[])">
             <summary>
             Return first value not null or whitespace.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Url.JoinSegments(System.Object[])">
+        <member name="T:CoreSharp.Utilities.UriX">
+            <summary>
+            <see cref="T:System.Uri"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.UriX.JoinSegments(System.Object[])">
             <summary>
             Combines url segments.
             <example>
@@ -2129,12 +2144,12 @@
             </example>
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Url.GetParameters(System.String)">
+        <member name="M:CoreSharp.Utilities.UriX.GetParameters(System.String)">
             <summary>
             Extract uri parameters.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.Url.Build``1(System.String,System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
+        <member name="M:CoreSharp.Utilities.UriX.Build``1(System.String,System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
             <summary>
             Build url from base url and parameters.
             </summary>

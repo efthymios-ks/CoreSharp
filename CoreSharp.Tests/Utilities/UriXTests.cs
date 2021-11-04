@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace CoreSharp.Utilities.Tests
 {
     [TestFixture]
-    public class UrlTests
+    public class UriXTests
     {
         [Test]
         public void Build_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
@@ -20,7 +20,7 @@ namespace CoreSharp.Utilities.Tests
             };
 
             //Act
-            Action action = () => Url.Build(baseUrl, parameters);
+            Action action = () => UriX.Build(baseUrl, parameters);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -34,7 +34,7 @@ namespace CoreSharp.Utilities.Tests
             IDictionary<string, string> parameters = null;
 
             //Act
-            Action action = () => Url.Build(baseUrl, parameters);
+            Action action = () => UriX.Build(baseUrl, parameters);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -54,7 +54,7 @@ namespace CoreSharp.Utilities.Tests
             const string expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
 
             //Act
-            var result = Url.Build(baseUrl, parameters, encode);
+            var result = UriX.Build(baseUrl, parameters, encode);
 
             //Assert
             result.Should().Be(expected);
@@ -69,11 +69,11 @@ namespace CoreSharp.Utilities.Tests
             {
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
-            }; 
+            };
             const string expected = "https://example.com/?name=Efthymios+Koktsidis&count=10";
 
             //Act
-            var result = Url.Build(baseUrl, parameters);
+            var result = UriX.Build(baseUrl, parameters);
 
             //Assert
             result.Should().Be(expected);

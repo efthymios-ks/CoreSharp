@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace CoreSharp.Utilities.Tests
 {
     [TestFixture]
-    public class JsonTests
+    public class JsonXTests
     {
         [Test]
         [TestCase(null, true)]
@@ -16,7 +16,7 @@ namespace CoreSharp.Utilities.Tests
         public void IsEmptyJsonTest(string input, bool expected)
         {
             //Assert
-            var result = Json.IsEmpty(input);
+            var result = JsonX.IsEmpty(input);
 
             //Assert
             result.Should().Be(expected);

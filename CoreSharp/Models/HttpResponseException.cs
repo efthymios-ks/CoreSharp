@@ -8,9 +8,7 @@ namespace CoreSharp.Models
     /// <summary>
     /// Simple <see cref="HttpResponseMessage"/> exception.
     /// </summary>
-#pragma warning disable RCS1194 // Implement exception constructors.
     public class HttpResponseException : Exception
-#pragma warning restore RCS1194 // Implement exception constructors.
     {
         //Constructors
         public HttpResponseException(
@@ -47,7 +45,7 @@ namespace CoreSharp.Models
 
         public override string ToString()
         {
-            if (Json.IsEmpty(ResponseContent))
+            if (JsonX.IsEmpty(ResponseContent))
                 return ResponseStatus;
             else
                 return ResponseStatus + Environment.NewLine + ResponseContent;

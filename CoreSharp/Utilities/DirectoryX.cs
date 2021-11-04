@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics;
+using System.IO;
 
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// Directory utilities.
+    /// <see cref="Directory"/> utilities.
     /// </summary>
-    public static class Directory
+    public static class DirectoryX
     {
         /// <summary>
         /// Open directory with explorer.exe.

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace CoreSharp.Utilities.Tests
 {
     [TestFixture]
-    public class EnumTests
+    public class EnumXTests
     {
         [Test]
         public void GetValues_WhenCalled_ReturnEnumValues()
@@ -15,7 +15,7 @@ namespace CoreSharp.Utilities.Tests
             var values = new[] { DummyEnum.Option1, DummyEnum.Option2, DummyEnum.Option3 };
 
             //Act 
-            var result = Enum.GetValues<DummyEnum>();
+            var result = EnumX.GetValues<DummyEnum>();
 
             //Assert
             result.Should().Equal(values);
@@ -33,7 +33,7 @@ namespace CoreSharp.Utilities.Tests
             };
 
             //Act 
-            var result = Enum.GetDictionary<DummyEnum>();
+            var result = EnumX.GetDictionary<DummyEnum>();
 
             //Assert
             result.Should().Equal(dictionary);

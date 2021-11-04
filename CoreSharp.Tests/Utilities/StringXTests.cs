@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreSharp.Utilities.Tests
 {
     [TestFixture]
-    public class StringTests
+    public class StringXTests
     {
         [Test]
         public void FirstNotEmpty_WhenCalled_ReturnFirstNotEmpty()
@@ -16,7 +16,7 @@ namespace CoreSharp.Utilities.Tests
             var values = emptyValues.Append(expected).Concat(emptyValues);
 
             //Act 
-            var result = String.FirstNotEmpty(values);
+            var result = StringX.FirstNotEmpty(values);
 
             //Assert 
             result.Should().Be(expected);

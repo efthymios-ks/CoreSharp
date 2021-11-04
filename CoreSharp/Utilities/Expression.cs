@@ -5,9 +5,9 @@ using System.Reflection;
 namespace CoreSharp.Utilities
 {
     /// <summary>
-    /// <see cref="System.Linq.Expressions.Expression"/> utilities.
+    /// <see cref="Expression"/> utilities.
     /// </summary>
-    public static class Expression
+    public static class ExpressionX
     {
         /// <summary>
         /// Get <see cref="MemberInfo"/> from given <see cref="Expression{TDelegate}"/> selector.

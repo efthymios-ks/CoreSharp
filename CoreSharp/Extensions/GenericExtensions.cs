@@ -1,4 +1,5 @@
 ﻿using CoreSharp.Models.Newtonsoft.Settings;
+using CoreSharp.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -191,7 +192,7 @@ namespace CoreSharp.Extensions
         public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
 #pragma warning restore RCS1175 // Unused this parameter.
 #pragma warning restore IDE0060 // Remove unused parameter
-            => Utilities.Expression.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
+            => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>
         public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
