@@ -10,12 +10,12 @@ namespace CoreSharp.Utilities
     /// </summary>
     public static class ValueTaskX
     {
-        /// <inheritdoc cref="WithAll(ValueTask[])"/>
-        public static async Task WithAll(IEnumerable<ValueTask> valueTasks)
-            => await WithAll(valueTasks?.ToArray());
+        /// <inheritdoc cref="WhenAll(ValueTask[])"/>
+        public static async Task WhenAll(IEnumerable<ValueTask> valueTasks)
+            => await WhenAll(valueTasks?.ToArray());
 
         /// <inheritdoc cref="Task.WhenAll(Task[])"/>
-        public static async Task WithAll(params ValueTask[] valueTasks)
+        public static async Task WhenAll(params ValueTask[] valueTasks)
         {
             _ = valueTasks ?? throw new ArgumentNullException(nameof(valueTasks));
 

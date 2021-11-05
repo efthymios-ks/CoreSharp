@@ -81,10 +81,9 @@ namespace CoreSharp.Extensions
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            //Else compare string
             var jsonLeft = JsonConvert.SerializeObject(left, settings);
             var jsonRight = JsonConvert.SerializeObject(right, settings);
-            return string.Equals(jsonLeft, jsonRight);
+            return jsonLeft == jsonRight;
         }
 
         /// <summary>
