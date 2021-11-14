@@ -21,9 +21,9 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Best used in conjuction with <see cref="Task.WaitAll(Task[])"/>
-        /// to aggregate all inner exceptions into a single <see cref="AggregateException"/>.
+        /// to aggregate all inner <see cref="Exception" /> into a single <see cref="AggregateException"/>.
         /// </summary>
-        public static async Task WithAggregatedException(this Task task)
+        public static async Task WithAggregateException(this Task task)
         {
             _ = task ?? throw new ArgumentNullException(nameof(task));
 

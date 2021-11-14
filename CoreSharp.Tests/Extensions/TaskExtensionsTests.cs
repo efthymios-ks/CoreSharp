@@ -12,11 +12,11 @@ namespace CoreSharp.Extensions.Tests
         private static Task<TValue> GetValueAsync<TValue>(TValue value)
             => Task.FromResult(value);
 
-        private static Task GetExceptionAsync(Exception ex)
-            => Task.FromException(ex);
+        private static Task GetExceptionAsync(Exception exception)
+            => Task.FromException(exception);
 
         [Test]
-        public async Task WithAggregatedException_WhenAllSuccessfull_ReturnResponses()
+        public async Task WithAggregateException_WhenAllSuccessfull_ReturnResponses()
         {
             //Arrange
             const int value1 = 1;
@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions.Tests
             var task2 = GetValueAsync(value2);
 
             //Act
-            await Task.WhenAll(task1, task2).WithAggregatedException();
+            await Task.WhenAll(task1, task2).WithAggregateException();
 
             //Assert 
             task1.Result.Should().Be(value1);
@@ -33,7 +33,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public async Task WithAggregatedException_WhenExceptionsOccure_ReturnAggregateException()
+        public async Task WithAggregateException_WhenExceptionsOccure_ReturnAggregateException()
         {
             //Arrange 
             var exception1 = new ArgumentException("1");
@@ -42,7 +42,7 @@ namespace CoreSharp.Extensions.Tests
             var task2 = GetExceptionAsync(exception2);
 
             //Act
-            Func<Task> action = async () => await Task.WhenAll(task1, task2).WithAggregatedException();
+            Func<Task> action = async () => await Task.WhenAll(task1, task2).WithAggregateException();
 
             //Assert 
             var assertion = await action.Should().ThrowExactlyAsync<AggregateException>();
