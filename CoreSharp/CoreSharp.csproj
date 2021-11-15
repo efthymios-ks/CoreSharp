@@ -16,10 +16,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.0.12</Version>
+        <Version>1.0.13</Version>
         <PackageReleaseNotes>-Added more extensions.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.12.0</AssemblyVersion>
-        <FileVersion>1.0.12.0</FileVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

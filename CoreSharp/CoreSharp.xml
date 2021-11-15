@@ -1695,10 +1695,10 @@
             Chain calls <see cref="M:System.Threading.Tasks.Task`1.GetAwaiter"/> and <see cref="M:System.Runtime.CompilerServices.TaskAwaiter.GetResult"/>
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.TaskExtensions.WithAggregatedException(System.Threading.Tasks.Task)">
+        <member name="M:CoreSharp.Extensions.TaskExtensions.WithAggregateException(System.Threading.Tasks.Task)">
             <summary>
             Best used in conjuction with <see cref="M:System.Threading.Tasks.Task.WaitAll(System.Threading.Tasks.Task[])"/>
-            to aggregate all inner exceptions into a single <see cref="T:System.AggregateException"/>.
+            to aggregate all inner <see cref="T:System.Exception" /> into a single <see cref="T:System.AggregateException"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.TcpClientExtensions">
@@ -1764,6 +1764,11 @@
         <member name="M:CoreSharp.Extensions.TypeExtensions.GetAttribute``1(System.Type)">
             <summary>
             Get specific <see cref="T:System.Attribute"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TypeExtensions.GetDirectInterfaces(System.Type)">
+            <summary>
+            Get top-level interfaces excluding nested ones.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.UlongExtensions">
@@ -2165,10 +2170,10 @@
             <see cref="T:System.Threading.Tasks.ValueTask"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.ValueTask})">
-            <inheritdoc cref="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Threading.Tasks.ValueTask[])"/>
+        <member name="M:CoreSharp.Utilities.ValueTaskX.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.ValueTask})">
+            <inheritdoc cref="M:CoreSharp.Utilities.ValueTaskX.WhenAll(System.Threading.Tasks.ValueTask[])"/>
         </member>
-        <member name="M:CoreSharp.Utilities.ValueTaskX.WithAll(System.Threading.Tasks.ValueTask[])">
+        <member name="M:CoreSharp.Utilities.ValueTaskX.WhenAll(System.Threading.Tasks.ValueTask[])">
             <inheritdoc cref="M:System.Threading.Tasks.Task.WhenAll(System.Threading.Tasks.Task[])"/>
         </member>
     </members>

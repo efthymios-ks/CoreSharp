@@ -115,5 +115,26 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static TAttribute GetAttribute<TAttribute>(this Type type) where TAttribute : Attribute
             => type.GetAttributes<TAttribute>()?.FirstOrDefault();
+
+        /// <summary>
+        /// Get top-level interfaces excluding nested ones.
+        /// </summary>
+        public static IEnumerable<Type> GetDirectInterfaces(this Type type)
+        {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            var topLevelInterfaces = new HashSet<Type>();
+            var nestedInterfaces = new HashSet<Type>();
+
+            foreach (var topLevelInterface in type.GetInterfaces())
+            {
+                topLevelInterfaces.Add(topLevelInterface);
+
+                foreach (var nestedInterface in topLevelInterface.GetDirectInterfaces())
+                    nestedInterfaces.Add(nestedInterface);
+            }
+
+            return topLevelInterfaces.Except(nestedInterfaces);
+        }
     }
 }
