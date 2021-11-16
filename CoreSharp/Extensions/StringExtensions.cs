@@ -375,7 +375,7 @@ namespace CoreSharp.Extensions
             => input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly int.TryParse resulting to int.
+        /// User-friendly <see cref="int.TryParse(string?, NumberStyles, IFormatProvider?, out int)"/> resulting to <see cref="int"/>.
         /// </summary>
         public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -431,7 +431,7 @@ namespace CoreSharp.Extensions
             => input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly short.TryParse resulting to short.
+        /// User-friendly <see cref="short.TryParse(string?, NumberStyles, IFormatProvider?, out short)"/> resulting to <see cref="short"/>.
         /// </summary>
         public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -460,7 +460,7 @@ namespace CoreSharp.Extensions
             => input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly float.TryParse resulting to float.
+        /// User-friendly <see cref="float.TryParse(string?, NumberStyles, IFormatProvider?, out float)"/> resulting to <see cref="float"/>.
         /// </summary>
         public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -489,7 +489,7 @@ namespace CoreSharp.Extensions
             => input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly double.TryParse resulting to double.
+        /// User-friendly <see cref="double.TryParse(string?, NumberStyles, IFormatProvider?, out double)"/> resulting to <see cref="double"/>.
         /// </summary>
         public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -518,7 +518,7 @@ namespace CoreSharp.Extensions
             => input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// User-friendly decimal.TryParse resulting to decimal.
+        /// User-friendly <see cref="decimal.TryParse(string?, NumberStyles, IFormatProvider?, out decimal)"/> resulting to <see cref="decimal"/>.
         /// </summary>
         public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
         {
@@ -531,7 +531,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Convert string to bool.
+        /// Convert <see cref="string"/> to <see cref="bool"/>.
         /// Can convert "true/false", "1/0" and "yes/no" strings.
         /// </summary>
         public static bool? ToBool(this string input)
@@ -584,7 +584,7 @@ namespace CoreSharp.Extensions
            => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
 
         /// <summary>
-        /// User-friendly DateTime.TryParse resulting to DateTime.
+        /// User-friendly <see cref="DateTime.TryParseExact(string?, string?, IFormatProvider?, DateTimeStyles, out DateTime)"/> resulting to <see cref="DateTime"/>.
         /// </summary>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
         {
@@ -602,7 +602,7 @@ namespace CoreSharp.Extensions
             => input?.ToGuid("D");
 
         /// <summary>
-        /// User-friendly Guid.TryParseExact resulting to Guid.
+        /// User-friendly <see cref="Guid.TryParseExact(string?, string?, out Guid)"/> resulting to <see cref="Guid"/>.
         /// </summary>
         public static Guid? ToGuid(this string input, string format)
         {

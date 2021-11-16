@@ -18,7 +18,7 @@ namespace CoreSharp.Tests.Dummies
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay 
+        private string DebuggerDisplay
             => ToString();
 
         public int Id { get; set; }
@@ -26,8 +26,6 @@ namespace CoreSharp.Tests.Dummies
         public string Name { get; set; }
 
         public override string ToString()
-        {
-            return $"Id={Id}, Name={Name}";
-        }
+            => $"Id={Id}, Name={Name}";
     }
 }

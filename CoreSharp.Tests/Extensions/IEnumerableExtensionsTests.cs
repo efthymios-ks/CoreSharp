@@ -325,7 +325,7 @@ namespace CoreSharp.Extensions.Tests
             //Arrange 
             var source = new[] { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
             var sequence = new[] { 1, -2, 3, -4 };
-            var expected = new[] { 1, 3, 3, 3};
+            var expected = new[] { 1, 3, 3, 3 };
 
             //Act 
             var result = source.TakeSkip(sequence);
@@ -502,7 +502,7 @@ namespace CoreSharp.Extensions.Tests
         public void ForEach_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceNull.ForEach(_ => {});
+            Action action = () => _sourceNull.ForEach(_ => { });
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -1238,6 +1238,49 @@ namespace CoreSharp.Extensions.Tests
             //Assert 
             result.Id.Should().Be(fallbackValue.Id);
             result.Name.Should().Be(fallbackValue.Name);
+        }
+
+        [Test]
+        public void Map_SourceIsEmpty_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.Map(_ => { });
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Map_MapFunctionIsEmpty_ThrowArgumentNullException()
+        {
+            //Arrange
+            Action<DummyClass> mapFunction = null;
+
+            //Act 
+            Action action = () => _sourceEmpty.Map(mapFunction);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Map_WhenCalled_MapAndReturnItems()
+        {
+            //Arrange
+            var source = new[]
+            {
+                //Id = Index 
+                new DummyClass(0),
+                new DummyClass(1)
+            };
+
+            //Act 
+            var result = source.Map((item, index) => item.Name = $"{index}");
+
+            //Assert 
+            result.Should().HaveCount(2);
+            foreach (var item in result)
+                $"{item.Id}".Should().Be(item.Name);
         }
     }
 }

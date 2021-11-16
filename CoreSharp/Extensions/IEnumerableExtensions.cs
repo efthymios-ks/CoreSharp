@@ -111,7 +111,8 @@ namespace CoreSharp.Extensions
             => source.StringJoin(" ", string.Empty, formatProvider);
 
         /// <summary>
-        /// String.Join collection of items using custom separator, String.Format and FormatProvider.
+        /// Concatenates the elements of a specified array or the members of a collection,
+        /// using the specified separator between each element or member.
         /// </summary>
         public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
         {
@@ -322,9 +323,9 @@ namespace CoreSharp.Extensions
             var sourceArray = source.ToArray();
 
             //Group by page index 
-            return sourceArray.GroupBy(i =>
+            return sourceArray.GroupBy(item =>
             {
-                var itemIndex = Array.IndexOf(sourceArray, i);
+                var itemIndex = Array.IndexOf(sourceArray, item);
                 var pageIndex = itemIndex / pageSize;
                 return pageIndex;
             });
@@ -533,6 +534,32 @@ namespace CoreSharp.Extensions
 
             var result = source.SingleOrDefault(predicate);
             return Equals(result, default(TItem)) ? fallbackValue : result;
+        }
+
+        /// <inheritdoc cref="Map{TItem}(IEnumerable{TItem}, Action{TItem, int})"/>>
+        public static IEnumerable<TItem> Map<TItem>(this IEnumerable<TItem> source, Action<TItem> mapFunction)
+            where TItem : class
+        {
+            _ = mapFunction ?? throw new ArgumentNullException(nameof(mapFunction));
+
+            return source.Map((item, _) => mapFunction(item));
+        }
+
+        /// <summary>
+        /// Format collection items with given expression.
+        /// </summary>
+        public static IEnumerable<TItem> Map<TItem>(this IEnumerable<TItem> source, Action<TItem, int> indexedMapFunction)
+            where TItem : class
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = indexedMapFunction ?? throw new ArgumentNullException(nameof(indexedMapFunction));
+
+            var index = 0;
+            return source.Select(item =>
+            {
+                indexedMapFunction(item, index++);
+                return item;
+            }).ToArray();
         }
     }
 }

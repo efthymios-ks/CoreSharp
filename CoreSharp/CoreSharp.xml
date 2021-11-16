@@ -1004,6 +1004,14 @@
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.SingleOr``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},``0)">
             <inheritdoc cref="M:System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>>
         </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Map``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.Map``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})"/>>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Map``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})">
+            <summary>
+            Format collection items with given expression.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.IListExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.IList`1"/> extensions.
