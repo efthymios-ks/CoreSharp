@@ -992,5 +992,57 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void Or_LeftIsNull_ReturnRight()
+        {
+            //Arrange
+            const string stringValue = "1";
+
+            //Act
+            var result = StringNull.Or(stringValue);
+
+            //Assert
+            result.Should().Be(stringValue);
+        }
+
+        [Test]
+        public void Or_LeftIsEmpty_ReturnRight()
+        {
+            //Arrange
+            const string stringValue = "1";
+
+            //Act
+            var result = StringEmpty.Or(stringValue);
+
+            //Assert
+            result.Should().Be(stringValue);
+        }
+
+        [Test]
+        public void Or_RightIsNull_ReturnLeft()
+        {
+            //Arrange
+            const string stringValue = "1";
+
+            //Act
+            var result = stringValue.Or(StringNull);
+
+            //Assert
+            result.Should().Be(stringValue);
+        }
+
+        [Test]
+        public void Or_RightIsEmpty_ReturnLeft()
+        {
+            //Arrange
+            const string stringValue = "1";
+
+            //Act
+            var result = stringValue.Or(StringEmpty);
+
+            //Assert
+            result.Should().Be(stringValue);
+        }
     }
 }

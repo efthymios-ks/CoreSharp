@@ -131,11 +131,9 @@ namespace CoreSharp.Extensions
 
             if (length > input.Length)
                 return input;
-            else
-            {
-                var start = input.Length - length;
-                return input.Substring(start, length);
-            }
+
+            var start = input.Length - length;
+            return input.Substring(start, length);
         }
 
         /// <inheritdoc cref="Mid(string, int, int)"/>
@@ -613,5 +611,11 @@ namespace CoreSharp.Extensions
             else
                 return null;
         }
+
+        /// <summary>
+        /// Return the one that is not <see cref="string.IsNullOrEmpty(string?)"/>.
+        /// </summary>
+        public static string Or(this string left, string right)
+            => !string.IsNullOrEmpty(left) ? left : right;
     }
 }

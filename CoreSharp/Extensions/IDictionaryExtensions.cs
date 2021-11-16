@@ -32,10 +32,8 @@ namespace CoreSharp.Extensions
                 source.Add(key, value);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <inheritdoc cref="TryRemove{TKey, TValue}(IDictionary{TKey, TValue}, TKey, out TValue)"/>
@@ -56,10 +54,8 @@ namespace CoreSharp.Extensions
                 source.Remove(key);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
@@ -90,10 +86,8 @@ namespace CoreSharp.Extensions
                 source[key] = updateAction(key, source[key]);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>

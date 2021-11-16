@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CoreSharp.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CoreSharp.Utilities
@@ -16,6 +17,6 @@ namespace CoreSharp.Utilities
         /// Return first value not null or whitespace.
         /// </summary>
         public static string FirstNotEmpty(params string[] values)
-            => values?.FirstOrDefault(v => !string.IsNullOrWhiteSpace(v));
+            => values?.Aggregate((accumulated, next) => accumulated.Or(next));
     }
 }

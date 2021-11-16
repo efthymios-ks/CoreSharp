@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
 
@@ -11,7 +12,7 @@ namespace CoreSharp.Utilities.Tests
         public void FirstNotEmpty_WhenCalled_ReturnFirstNotEmpty()
         {
             //Arrange 
-            var emptyValues = new[] { null, string.Empty, "", " " };
+            var emptyValues = new[] { null, string.Empty, "" };
             const string expected = "1";
             var values = emptyValues.Append(expected).Concat(emptyValues);
 

@@ -672,8 +672,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.HttpResponseMessageExtensions.EnsureSuccessAsync(System.Net.Http.HttpResponseMessage)">
             <summary>
-            Ensure http response was successful using <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode"/>.
-            Throws <see cref="T:CoreSharp.Models.HttpResponseException"/> if not, including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> and <see cref="P:System.Net.Http.HttpResponseMessage.Content"/>.
+            Ensure <see cref="T:System.Net.Http.HttpResponseMessage" /> was successful using <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode" />.
+            Throws <see cref="T:CoreSharp.Models.HttpResponseException" /> if not, including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode" /> and <see cref="P:System.Net.Http.HttpResponseMessage.Content" />.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.ICollectionExtensions">
@@ -835,7 +835,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StringJoin``1(System.Collections.Generic.IEnumerable{``0},System.String,System.String,System.IFormatProvider)">
             <summary>
-            String.Join collection of items using custom separator, String.Format and FormatProvider.
+            Concatenates the elements of a specified array or the members of a collection,
+            using the specified separator between each element or member.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})">
@@ -1573,7 +1574,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToInt(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
             <summary>
-            User-friendly int.TryParse resulting to int.
+            User-friendly <see cref="M:System.Int32.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Int32@)"/> resulting to <see cref="T:System.Int32"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToLong(System.String)">
@@ -1605,7 +1606,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToShort(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
             <summary>
-            User-friendly short.TryParse resulting to short.
+            User-friendly <see cref="M:System.Int16.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Int16@)"/> resulting to <see cref="T:System.Int16"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToFloat(System.String)">
@@ -1622,7 +1623,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToFloat(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
             <summary>
-            User-friendly float.TryParse resulting to float.
+            User-friendly <see cref="M:System.Single.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Single@)"/> resulting to <see cref="T:System.Single"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToDouble(System.String)">
@@ -1639,7 +1640,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToDouble(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
             <summary>
-            User-friendly double.TryParse resulting to double.
+            User-friendly <see cref="M:System.Double.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Double@)"/> resulting to <see cref="T:System.Double"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToDecimal(System.String)">
@@ -1656,12 +1657,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToDecimal(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
             <summary>
-            User-friendly decimal.TryParse resulting to decimal.
+            User-friendly <see cref="M:System.Decimal.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,System.Decimal@)"/> resulting to <see cref="T:System.Decimal"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToBool(System.String)">
             <summary>
-            Convert string to bool.
+            Convert <see cref="T:System.String"/> to <see cref="T:System.Boolean"/>.
             Can convert "true/false", "1/0" and "yes/no" strings.
             </summary>
         </member>
@@ -1682,7 +1683,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToDateTime(System.String,System.String,System.Globalization.DateTimeStyles,System.IFormatProvider)">
             <summary>
-            User-friendly DateTime.TryParse resulting to DateTime.
+            User-friendly <see cref="M:System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime@)"/> resulting to <see cref="T:System.DateTime"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToGuid(System.String)">
@@ -1690,7 +1691,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToGuid(System.String,System.String)">
             <summary>
-            User-friendly Guid.TryParseExact resulting to Guid.
+            User-friendly <see cref="M:System.Guid.TryParseExact(System.String,System.String,System.Guid@)"/> resulting to <see cref="T:System.Guid"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.Or(System.String,System.String)">
+            <summary>
+            Return the one that is not <see cref="M:System.String.IsNullOrEmpty(System.String)"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.TaskExtensions">
