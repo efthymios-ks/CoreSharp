@@ -76,7 +76,7 @@ namespace CoreSharp.Extensions
                     .GetResult();
 
         /// <summary>
-        /// Chain calls <see cref="DbConnection.OpenAsync(System.Threading.CancellationToken)"/> and <see cref="DbConnection.CloseAsync"/>.
+        /// Chain calls <see cref="DbConnection.OpenAsync(CancellationToken)"/> and <see cref="DbConnection.CloseAsync"/>.
         /// </summary>
         public static async Task<bool> IsAvailableAsync(this DbConnection connection, CancellationToken cancellationToken = default)
         {

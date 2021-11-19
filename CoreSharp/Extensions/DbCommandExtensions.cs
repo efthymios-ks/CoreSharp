@@ -8,7 +8,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class DbCommandExtensions
     {
-        /// <inheritdoc cref="DbCommand.CreateDbParameter"/>
+        /// <inheritdoc cref="DbCommand.CreateParameter"/>
         public static DbParameter CreateParameter(this DbCommand command, string name, object value)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
