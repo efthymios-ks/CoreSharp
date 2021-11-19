@@ -48,5 +48,34 @@ namespace CoreSharp.Extensions
                 TaskContinuationOptions.ExecuteSynchronously,
                 TaskScheduler.Default).Unwrap();
         }
+
+        /// <inheritdoc cref="TimeoutAfter{TResult}(Task{TResult}, TimeSpan)" />
+        public static async Task TimeoutAfter(this Task task, TimeSpan timeout)
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            var genericTask = Task.Run(async () =>
+            {
+                await task;
+                return true;
+            });
+            await task.TimeoutAfter(timeout);
+        }
+
+        /// <summary>
+        /// Run a <see cref="Task"/> within a given time frame.
+        /// </summary>
+        /// <exception cref="TimeoutException">When then given task is not completed within the specified time frame.</exception>
+        public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            var timeoutTask = Task.Delay(timeout);
+            var completedTask = await Task.WhenAny(task, timeoutTask);
+            if (completedTask == task)
+                return await task;
+            else
+                throw new TimeoutException();
+        }
     }
 }
