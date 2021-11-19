@@ -20,8 +20,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Best used in conjuction with <see cref="Task.WaitAll(Task[])"/>
-        /// to aggregate all inner <see cref="Exception" /> into a single <see cref="AggregateException"/>.
+        /// Aggregates all inner <see cref="Exception" />(s) into a single <see cref="AggregateException"/>.
+        /// Best used in conjuction with <see cref="Task.WaitAll(Task[])"/>.
         /// </summary>
         public static async Task WithAggregateException(this Task task)
         {
@@ -29,15 +29,15 @@ namespace CoreSharp.Extensions
 
             static Task ContinuationFunction(Task t)
             {
-                static bool HasInnerExceptions(AggregateException exception)
-                    => exception?.InnerException is AggregateException || exception.InnerExceptions.Count > 1;
+                //static bool HasInnerExceptions(AggregateException exception)
+                //    => exception?.InnerException is AggregateException || exception.InnerExceptions.Count > 1;
 
                 if (!t.IsFaulted)
                     return t;
                 else if (t.Exception is not AggregateException aggregateException)
                     return t;
-                else if (!HasInnerExceptions(aggregateException))
-                    return t;
+                //else if (!HasInnerExceptions(aggregateException))
+                //    return t;
                 else
                     return Task.FromException(aggregateException.Flatten());
             }
