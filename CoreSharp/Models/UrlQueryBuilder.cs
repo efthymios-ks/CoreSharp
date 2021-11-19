@@ -41,15 +41,13 @@ namespace CoreSharp.Models
                     Add(key, enumerable);
                     break;
                 default:
-                    {
-                        if (value is IEnumerable<object> enumerableObject)
-                            Add(key, enumerableObject);
-                        else if (type.IsClass && value is not object)
-                            Add(((object)value).GetPropertiesDictionary());
-                        else
-                            InternalAdd(key, value);
-                        break;
-                    }
+                    if (value is IEnumerable<object> enumerableObject)
+                        Add(key, enumerableObject);
+                    else if (type.IsClass && value is not object)
+                        Add(((object)value).GetPropertiesDictionary());
+                    else
+                        InternalAdd(key, value);
+                    break;
             }
         }
 
@@ -62,6 +60,17 @@ namespace CoreSharp.Models
 
             foreach (var pair in dictionary)
                 Add(pair.Key, pair.Value);
+        }
+
+        /// <summary>
+        /// Split item into properties and add one-by-one.
+        /// </summary>
+        public void Add<TItem>(TItem item) where TItem : class
+        {
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+
+            var properties = item.GetPropertiesDictionary();
+            Add(properties);
         }
 
         //Type-specific 

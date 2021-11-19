@@ -73,7 +73,7 @@ namespace CoreSharp.Models
             Parameters.Add(parameter);
         }
 
-        private async Task<DbCommand> GetCommandAsync(string query, CancellationToken cancellationToken = default)
+        private async Task<DbCommand> BuildDbCommandAsync(string query, CancellationToken cancellationToken = default)
         {
             //Open connection
             if (!_connection.IsOpen())
@@ -87,7 +87,7 @@ namespace CoreSharp.Models
             command.CommandType = QueryType;
             command.CommandText = query;
 
-            if (Parameters.Any() is true)
+            if (Parameters.Any())
                 command.Parameters.AddRange(Parameters.ToArray());
 
             return command;
@@ -103,7 +103,7 @@ namespace CoreSharp.Models
         /// <inheritdoc cref="DbCommand.ExecuteNonQueryAsync(CancellationToken)"/>
         public async Task<int> ExecuteNonQueryAsync(string query, CancellationToken cancellationToken = default)
         {
-            await using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await BuildDbCommandAsync(query, cancellationToken);
             return await command.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -117,7 +117,7 @@ namespace CoreSharp.Models
         /// <inheritdoc cref="DbCommand.ExecuteScalarAsync(CancellationToken)"/>
         public async Task<T> ExecuteScalarAsync<T>(string query, CancellationToken cancellationToken = default)
         {
-            await using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await BuildDbCommandAsync(query, cancellationToken);
             return (T)await command.ExecuteScalarAsync(cancellationToken);
         }
 
@@ -133,7 +133,7 @@ namespace CoreSharp.Models
         {
             _ = table ?? throw new ArgumentNullException(nameof(table));
 
-            await using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await BuildDbCommandAsync(query, cancellationToken);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             table.Load(reader);
             return table.Rows.Count;
@@ -166,12 +166,7 @@ namespace CoreSharp.Models
 
         /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
         public async Task<int> FillAsync(string query, DataSet set, params DataTableMapping[] tableMappings)
-        {
-            _ = set ?? throw new ArgumentNullException(nameof(set));
-            _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
-
-            return await FillAsync(query, set, tableMappings as IEnumerable<DataTableMapping>);
-        }
+            => await FillAsync(query, set, tableMappings, CancellationToken.None);
 
         /// <inheritdoc cref="DbDataAdapter.Fill(DataSet)"/>
         public async Task<int> FillAsync(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
@@ -179,7 +174,7 @@ namespace CoreSharp.Models
             _ = set ?? throw new ArgumentNullException(nameof(set));
             _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
 
-            await using var command = await GetCommandAsync(query, cancellationToken);
+            await using var command = await BuildDbCommandAsync(query, cancellationToken);
             var adapter = _connection.CreateDataAdapter();
             try
             {
@@ -192,8 +187,10 @@ namespace CoreSharp.Models
             }
             finally
             {
-                if (adapter is IDisposable disposable)
-                    disposable?.Dispose();
+                if (adapter is IAsyncDisposable asyncDisposable)
+                    await asyncDisposable.DisposeAsync();
+                else if (adapter is IDisposable disposable)
+                    disposable.Dispose();
             }
         }
     }

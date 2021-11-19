@@ -7,9 +7,7 @@ using System.Linq;
 namespace CoreSharp.Models
 {
     //TODO: Add unit tests
-    /// <summary>
-    /// Simple IGrouping implementation.
-    /// </summary>
+    /// <inheritdoc cref="IGrouping{TKey, TElement}" />
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
     {
@@ -22,6 +20,9 @@ namespace CoreSharp.Models
         {
             Key = key;
             _source = source ?? throw new ArgumentNullException(nameof(source));
+
+            //Mutate once 
+            _source = _source.ToArray();
         }
 
         //Properties 
@@ -31,10 +32,13 @@ namespace CoreSharp.Models
         public TKey Key { get; }
 
         //Methods 
-        public override string ToString() => $"{Key} ({this.Count()})";
+        public override string ToString()
+            => $"{Key} ({this.Count()})";
 
-        public virtual IEnumerator<TElement> GetEnumerator() => _source.GetEnumerator();
+        public virtual IEnumerator<TElement> GetEnumerator()
+            => _source.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }

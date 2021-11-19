@@ -1,67 +1,70 @@
-﻿namespace CoreSharp.Enums
+﻿using System;
+
+namespace CoreSharp.Enums
 {
     /// <summary>
-    /// Month enum. 
+    /// Month <see cref="Enum"/>.
+    /// Can be cast to <see cref="int"/>.
     /// </summary>
     public enum Month
     {
         /// <summary>
-        /// January. 
+        /// January.
         /// </summary>
         January = 1,
 
         /// <summary>
-        /// February. 
+        /// February.
         /// </summary>
         February = 2,
 
         /// <summary>
-        /// March. 
+        /// March.
         /// </summary>
         March = 3,
 
         /// <summary>
-        /// April. 
+        /// April.
         /// </summary>
         April = 4,
 
         /// <summary>
-        /// May. 
+        /// May.
         /// </summary>
         May = 5,
 
         /// <summary>
-        /// June. 
+        /// June.
         /// </summary>
         June = 6,
 
         /// <summary>
-        /// July. 
+        /// July.
         /// </summary>
         July = 7,
 
         /// <summary>
-        /// August. 
+        /// August.
         /// </summary>
         August = 8,
 
         /// <summary>
-        /// September. 
+        /// September.
         /// </summary>
         September = 9,
 
         /// <summary>
-        /// October. 
+        /// October.
         /// </summary>
         October = 10,
 
         /// <summary>
-        /// November. 
+        /// November.
         /// </summary>
         November = 11,
 
         /// <summary>
-        /// December. 
+        /// December.
         /// </summary>
         December = 12
     }

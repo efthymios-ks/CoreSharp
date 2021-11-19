@@ -5,7 +5,7 @@ namespace CoreSharp.Enums
 {
     /// <summary>
     /// <see cref="Enum"/> used with <see cref="NumberFormatInfo.CurrencyPositivePattern"/>.
-    /// Just cast to int.
+    /// Can be cast to <see cref="int"/>.
     /// </summary>
     public enum CurrencyPositivePattern
     {

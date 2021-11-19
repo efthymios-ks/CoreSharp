@@ -1,10 +1,11 @@
 ﻿using System;
+using System.IO;
 
 namespace CoreSharp.Abstracts
 {
     /// <summary>
-    /// Automatic and safe Disposing.
-    /// Just override the two CleanUp methods.
+    /// Automatic and safe disposing.
+    /// Just override the two clean-up methods.
     /// </summary>
     public abstract class DisposableBase : IDisposable
     {
@@ -34,7 +35,7 @@ namespace CoreSharp.Abstracts
 
         /// <summary>
         /// Helper method to call from two locations.
-        /// The actually Disposal is performed here.
+        /// The actually disposal is performed here.
         /// </summary>
         private void DisposeNativeResources(bool disposeManagedResources)
         {
@@ -54,20 +55,19 @@ namespace CoreSharp.Abstracts
                 }
                 catch
                 {
-                    // Ignored
                 }
             }
         }
 
         /// <summary>
         /// Clean up managed resources.
-        /// Handles, Streams and other IDisposables.
+        /// Handles, <see cref="Stream"/> and other <see cref="IDisposable"/>.
         /// </summary>
         protected abstract void CleanUpManagedResources();
 
         /// <summary>
         /// Clean up native resources, lists and set large fields to null.
-        /// Usually fields and properties set in Constructor.
+        /// Usually fields and properties set in constructor.
         /// </summary>
         protected abstract void CleanUpNativeResources();
     }
