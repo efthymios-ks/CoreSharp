@@ -65,7 +65,7 @@ namespace CoreSharp.Models
         /// <summary>
         /// Split item into properties and add one-by-one.
         /// </summary>
-        public void Add<TItem>(TItem item) where TItem : class
+        public void Parse<TItem>(TItem item) where TItem : class
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
 
