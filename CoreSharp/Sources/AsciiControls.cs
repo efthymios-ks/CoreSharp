@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace CoreSharp.Sources
 {
@@ -38,44 +40,15 @@ namespace CoreSharp.Sources
         internal static char GS => Convert.ToChar(29);
         internal static char RS => Convert.ToChar(30);
         internal static char US => Convert.ToChar(31);
+        private static IDictionary<string, char> _dictionary;
 
         /// <summary>
         /// List with ASCII control characters and their abbreviations.
         /// </summary>
-        internal static readonly IDictionary<string, char> Dictionary = new Dictionary<string, char>
-        {
-            { nameof(NUL), NUL },
-            { nameof(SOH), SOH },
-            { nameof(STX), STX },
-            { nameof(ETX), ETX },
-            { nameof(EOT), EOT },
-            { nameof(ENQ), ENQ },
-            { nameof(ACK), ACK },
-            { nameof(BEL), BEL },
-            { nameof(BS), BS },
-            { nameof(TAB), TAB },
-            { nameof(LF), LF },
-            { nameof(VT), VT },
-            { nameof(FF), FF },
-            { nameof(CR), CR },
-            { nameof(SO), SO },
-            { nameof(SI), SI },
-            { nameof(DLE), DLE },
-            { nameof(DC1), DC1 },
-            { nameof(DC2), DC2 },
-            { nameof(DC3), DC3 },
-            { nameof(DC4), DC4 },
-            { nameof(NAK), NAK },
-            { nameof(SYN), SYN },
-            { nameof(ETB), ETB },
-            { nameof(CAN), CAN },
-            { nameof(EM), EM },
-            { nameof(SUB), SUB },
-            { nameof(ESC), ESC },
-            { nameof(FS), FS },
-            { nameof(GS), GS },
-            { nameof(RS), RS },
-            { nameof(US), US }
-        };
+        internal static IDictionary<string, char> Dictionary
+            => _dictionary ??= typeof(AsciiControls)
+                                .GetProperties(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                                .Where(p => p.PropertyType == typeof(char))
+                                .ToDictionary(p => p.Name, p => (char)p.GetValue(null));
     }
 }
