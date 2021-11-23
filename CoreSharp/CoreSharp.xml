@@ -6,8 +6,8 @@
     <members>
         <member name="T:CoreSharp.Abstracts.DisposableBase">
             <summary>
-            Automatic and safe Disposing.
-            Just override the two CleanUp methods.
+            Automatic and safe disposing.
+            Just override the two clean-up methods.
             </summary>
         </member>
         <member name="M:CoreSharp.Abstracts.DisposableBase.Finalize">
@@ -24,19 +24,19 @@
         <member name="M:CoreSharp.Abstracts.DisposableBase.DisposeNativeResources(System.Boolean)">
             <summary>
             Helper method to call from two locations.
-            The actually Disposal is performed here.
+            The actually disposal is performed here.
             </summary>
         </member>
         <member name="M:CoreSharp.Abstracts.DisposableBase.CleanUpManagedResources">
             <summary>
             Clean up managed resources.
-            Handles, Streams and other IDisposables.
+            Handles, <see cref="T:System.IO.Stream"/> and other <see cref="T:System.IDisposable"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Abstracts.DisposableBase.CleanUpNativeResources">
             <summary>
             Clean up native resources, lists and set large fields to null.
-            Usually fields and properties set in Constructor.
+            Usually fields and properties set in constructor.
             </summary>
         </member>
         <member name="T:CoreSharp.Abstracts.NotifyPropertyChangedBase">
@@ -70,7 +70,7 @@
         <member name="T:CoreSharp.Enums.CurrencyNegativePattern">
             <summary>
             <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.CurrencyNegativePattern"/>.
-            Just cast to int.
+            Can be cast to <see cref="T:System.Int32"/>.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.CurrencyNegativePattern.ParenthesisCurrencyNumber">
@@ -156,7 +156,7 @@
         <member name="T:CoreSharp.Enums.CurrencyPositivePattern">
             <summary>
             <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.CurrencyPositivePattern"/>.
-            Just cast to int.
+            Can be cast to <see cref="T:System.Int32"/>.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.CurrencyPositivePattern.CurrencyNumber">
@@ -181,73 +181,74 @@
         </member>
         <member name="T:CoreSharp.Enums.Month">
             <summary>
-            Month enum. 
+            Month <see cref="T:System.Enum"/>.
+            Can be cast to <see cref="T:System.Int32"/>.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.January">
             <summary>
-            January. 
+            January.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.February">
             <summary>
-            February. 
+            February.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.March">
             <summary>
-            March. 
+            March.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.April">
             <summary>
-            April. 
+            April.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.May">
             <summary>
-            May. 
+            May.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.June">
             <summary>
-            June. 
+            June.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.July">
             <summary>
-            July. 
+            July.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.August">
             <summary>
-            August. 
+            August.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.September">
             <summary>
-            September. 
+            September.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.October">
             <summary>
-            October. 
+            October.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.November">
             <summary>
-            November. 
+            November.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.Month.December">
             <summary>
-            December. 
+            December.
             </summary>
         </member>
         <member name="T:CoreSharp.Enums.NumberNegativePattern">
             <summary>
             <see cref="T:System.Enum"/> used with <see cref="P:System.Globalization.NumberFormatInfo.NumberNegativePattern"/>.
-            Just cast to int.
+            Can be cast to <see cref="T:System.Int32"/>.
             </summary>
         </member>
         <member name="F:CoreSharp.Enums.NumberNegativePattern.ParenthesisNumber">
@@ -394,7 +395,7 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DbCommandExtensions.CreateParameter(System.Data.Common.DbCommand,System.String,System.Object)">
-            <inheritdoc cref="M:System.Data.Common.DbCommand.CreateDbParameter"/>
+            <inheritdoc cref="M:System.Data.Common.DbCommand.CreateParameter"/>
         </member>
         <member name="M:CoreSharp.Extensions.DbCommandExtensions.AddParameterWithValue(System.Data.Common.DbCommand,System.String,System.Object)">
             <inheritdoc cref="M:System.Data.Common.DbParameterCollection.Add(System.Object)"/>
@@ -1711,9 +1712,18 @@
         </member>
         <member name="M:CoreSharp.Extensions.TaskExtensions.WithAggregateException(System.Threading.Tasks.Task)">
             <summary>
-            Best used in conjuction with <see cref="M:System.Threading.Tasks.Task.WaitAll(System.Threading.Tasks.Task[])"/>
-            to aggregate all inner <see cref="T:System.Exception" /> into a single <see cref="T:System.AggregateException"/>.
+            Aggregates all inner <see cref="T:System.Exception" />(s) into a single <see cref="T:System.AggregateException"/>.
+            Best used in conjuction with <see cref="M:System.Threading.Tasks.Task.WaitAll(System.Threading.Tasks.Task[])"/>.
             </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.TimeoutAfter(System.Threading.Tasks.Task,System.TimeSpan)">
+            <inheritdoc cref="M:CoreSharp.Extensions.TaskExtensions.TimeoutAfter``1(System.Threading.Tasks.Task{``0},System.TimeSpan)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.TimeoutAfter``1(System.Threading.Tasks.Task{``0},System.TimeSpan)">
+            <summary>
+            Run a <see cref="T:System.Threading.Tasks.Task"/> within a given time frame.
+            </summary>
+            <exception cref="T:System.TimeoutException">When then given task is not completed within the specified time frame.</exception>
         </member>
         <member name="T:CoreSharp.Extensions.TcpClientExtensions">
             <summary>
@@ -1851,9 +1861,9 @@
             Filter XElement collection on children predicate.
             </summary>
         </member>
-        <member name="T:CoreSharp.Models.Comparers.DirectoryInfoComparer">
+        <member name="T:CoreSharp.Models.Comparers.FileCountComparer">
             <summary>
-            Compare DirectoryInfo using their file count.
+            Compare <see cref="T:System.IO.DirectoryInfo"/> using their file count.
             </summary>
         </member>
         <member name="T:CoreSharp.Models.DbQuery">
@@ -1921,9 +1931,7 @@
             <inheritdoc cref="M:System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet)"/>
         </member>
         <member name="T:CoreSharp.Models.Grouping`2">
-            <summary>
-            Simple IGrouping implementation.
-            </summary>
+            <inheritdoc cref="T:System.Linq.IGrouping`2" />
         </member>
         <member name="T:CoreSharp.Models.HttpResponseException">
             <summary>
@@ -1962,6 +1970,11 @@
             Add <see cref="T:System.Collections.Generic.IDictionary`2"/>.
             </summary>
         </member>
+        <member name="M:CoreSharp.Models.UrlQueryBuilder.Parse``1(``0)">
+            <summary>
+            Split item into properties and add one-by-one.
+            </summary>
+        </member>
         <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.DateTime)">
             <summary>
             Add <see cref="T:System.DateTime"/> and format with "s" specifier.
@@ -1987,7 +2000,7 @@
             Add <see cref="T:System.Collections.IEnumerable"/>.
             </summary>
         </member>
-        <member name="F:CoreSharp.Sources.AsciiControls.Dictionary">
+        <member name="P:CoreSharp.Sources.AsciiControls.Dictionary">
             <summary>
             List with ASCII control characters and their abbreviations.
             </summary>
