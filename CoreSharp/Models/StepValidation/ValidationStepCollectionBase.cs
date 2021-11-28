@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CoreSharp.Models.StepValidation
 {
-    public abstract class StepsValidationListBase : ICollection<ValidationStep>
+    public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
     {
         //Fields 
         private readonly SortedList<int, ValidationStep> _source = new();

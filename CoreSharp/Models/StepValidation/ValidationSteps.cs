@@ -6,10 +6,10 @@ using System.Linq;
 namespace CoreSharp.Models.StepValidation
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class StepsValidator : StepsValidationListBase
+    public class ValidationSteps : ValidationStepCollectionBase
     {
         //Constructors
-        public StepsValidator(IEnumerable<ValidationStep> steps, bool sequentialValidation = true) : this(sequentialValidation)
+        public ValidationSteps(IEnumerable<ValidationStep> steps, bool sequentialValidation = true) : this(sequentialValidation)
         {
             _ = steps ?? throw new ArgumentNullException(nameof(steps));
 
@@ -17,7 +17,7 @@ namespace CoreSharp.Models.StepValidation
                 Add(step);
         }
 
-        public StepsValidator(bool sequentialValidation = true)
+        public ValidationSteps(bool sequentialValidation = true)
         {
             SequentialValidation = sequentialValidation;
         }
