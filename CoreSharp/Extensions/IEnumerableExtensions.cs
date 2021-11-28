@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
@@ -347,32 +350,42 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Converts collection to csv.
+        /// Convert collection of items to csv <see cref="Stream"/>.
         /// </summary>
-        public static string ToCsv<T>(this IEnumerable<T> source, char separator = ',', bool includeHeader = true)
+        public static async Task<Stream> ToCsvStream<TEntity>(
+            this IEnumerable<TEntity> source,
+            char separator = ',',
+            bool includeHeader = true,
+            Encoding encoding = null,
+            CancellationToken cancellationToken = default)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
+            encoding ??= Encoding.UTF8;
 
-            var builder = new StringBuilder();
-            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var stream = new MemoryStream();
+            var streamWriter = new StreamWriter(stream, encoding);
 
-            //Add property names to header 
+            //Add headers 
             if (includeHeader)
             {
                 var names = properties?.Select(p => p.Name);
-                var row = string.Join(separator, names);
-                builder.AppendLine(row);
+                var row = string.Join(separator, names).AsMemory();
+                await streamWriter.WriteLineAsync(row, cancellationToken);
             }
 
             //Add values 
             foreach (var item in source)
             {
                 var values = properties?.Select(p => p.GetValue(item));
-                var row = string.Join(separator, values);
-                builder.AppendLine(row);
+                var row = string.Join(separator, values).AsMemory();
+                await streamWriter.WriteLineAsync(row, cancellationToken);
             }
 
-            return builder.ToString();
+            streamWriter.Flush();
+            stream.Position = 0;
+
+            return stream;
         }
 
         /// <inheritdoc cref="GetDuplicates{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>

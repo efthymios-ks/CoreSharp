@@ -2,6 +2,9 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
@@ -50,6 +53,35 @@ namespace CoreSharp.Extensions
                 if (stream.CanSeek)
                     stream.Position = 0;
             }
+        }
+
+        /// <summary>
+        /// Write <see cref="Stream"/> to physical file.
+        /// </summary>
+        public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = 81920, CancellationToken cancellationToken = default)
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentNullException(nameof(filePath));
+
+            if (stream.CanSeek)
+                stream.Position = 0;
+            await using var fileStream = File.OpenWrite(filePath);
+            await stream.CopyToAsync(fileStream, bufferSize, cancellationToken);
+        }
+
+        /// <summary>
+        /// Read <see cref="Stream"/> to <see cref="string"/>.
+        /// </summary>
+        public static async Task<string> ToStringAsync(this Stream stream, Encoding encoding = null)
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+            encoding ??= Encoding.UTF8;
+
+            if (stream.CanSeek)
+                stream.Position = 0;
+            var reader = new StreamReader(stream, encoding);
+            return await reader.ReadToEndAsync();
         }
     }
 }
