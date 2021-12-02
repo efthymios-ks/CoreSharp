@@ -688,6 +688,14 @@
         <member name="M:CoreSharp.Extensions.ICollectionExtensions.AddRange``1(System.Collections.Generic.ICollection{``0},``0[])">
             <inheritdoc cref="M:System.Collections.Generic.List`1.AddRange(System.Collections.Generic.IEnumerable{`0})"/>
         </member>
+        <member name="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``1(System.Collections.Generic.ICollection{``0},``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``2(System.Collections.Generic.ICollection{``0},``0,System.Func{``0,``1})"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``2(System.Collections.Generic.ICollection{``0},``0,System.Func{``0,``1})">
+            <summary>
+            Add item in collection only if not already existing.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.IComparableExtensions">
             <summary>
             <see cref="T:System.IComparable"/> extensions.
@@ -929,9 +937,9 @@
             Check if source contains all given items.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToCsv``1(System.Collections.Generic.IEnumerable{``0},System.Char,System.Boolean)">
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToCsvStream``1(System.Collections.Generic.IEnumerable{``0},System.Char,System.Boolean,System.Text.Encoding,System.Threading.CancellationToken)">
             <summary>
-            Converts collection to csv.
+            Convert collection of items to csv <see cref="T:System.IO.Stream"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetDuplicates``1(System.Collections.Generic.IEnumerable{``0})">
@@ -1387,6 +1395,16 @@
         <member name="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Parse <see cref="T:System.IO.Stream"/> json to entity.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.ToFileAsync(System.IO.Stream,System.String,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Write <see cref="T:System.IO.Stream"/> to physical file.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.ToStringAsync(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Read <see cref="T:System.IO.Stream"/> to <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.StringBuilderExtensions">
@@ -1963,6 +1981,12 @@
         <member name="T:CoreSharp.Models.SerialPortSettings">
             <summary>
             Short SerialPort settings class.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Models.StepValidation.ValidationSteps.SequentialValidation">
+            <summary>
+            Steps have to be sequantially valid.
+            If Step-1 is not valid, then Step-2 cannot be valid as well.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.UrlQueryBuilder.Add``1(System.Collections.Generic.IDictionary{System.String,``0})">

@@ -738,34 +738,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToCsv_SourceIsNull_ThrowArgumentNullException()
-        {
-            //Act 
-            Action action = () => _sourceNull.ToCsv();
-
-            //Assert 
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void ToCsv_SourceIsNull_IncludeHeaderIsFalse_ReturnCsvWithoutHeader()
-        {
-            //Arrange
-            var source = new List<DummyClass>
-            {
-                new(1, "Black"),
-                new(2, "White")
-            };
-            var expected = $"1,Black{Environment.NewLine}2,White{Environment.NewLine}";
-
-            //Act 
-            var result = source.ToCsv(',', false);
-
-            //Assert 
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Test]
         public void GetDuplicates_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
