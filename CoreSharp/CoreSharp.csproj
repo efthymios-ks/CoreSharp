@@ -16,8 +16,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.1.0</Version>
-        <PackageReleaseNotes>-Added more extensions.</PackageReleaseNotes>
+        <Version>1.1.1</Version>
+        <PackageReleaseNotes>-Models, Newtonsoft, Converters, Added `UtcDateTimeConvert`.
+-Code clean-up</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
