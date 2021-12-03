@@ -19,8 +19,8 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = items ?? throw new ArgumentNullException(nameof(items));
 
-            foreach (var value in items)
-                source.Add(value);
+            foreach (var item in items)
+                source.Add(item);
         }
 
         /// <inheritdoc cref="TryAdd{TItem, TKey}(ICollection{TItem}, TItem, Func{TItem, TKey})"/>

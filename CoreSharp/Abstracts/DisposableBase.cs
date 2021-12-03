@@ -36,6 +36,7 @@ namespace CoreSharp.Abstracts
         /// <summary>
         /// Helper method to call from two locations.
         /// The actually disposal is performed here.
+        /// The actual disposal is performed here.
         /// </summary>
         private void DisposeNativeResources(bool disposeManagedResources)
         {

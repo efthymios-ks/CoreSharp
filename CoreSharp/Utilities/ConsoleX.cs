@@ -42,12 +42,14 @@ namespace CoreSharp.Utilities
         /// <summary>
         /// Wait for enter.
         /// </summary>
-        public static void WaitForEnter() => Console.ReadLine();
+        public static void WaitForEnter()
+            => Console.ReadLine();
 
         /// <summary>
         /// New line.
         /// </summary>
-        public static void NewLine() => WriteLine();
+        public static void NewLine()
+            => WriteLine();
 
         /// <inheritdoc cref="Write(string)"/>
         public static void Write(object input)
@@ -70,7 +72,8 @@ namespace CoreSharp.Utilities
         /// <summary>
         /// Write data.
         /// </summary>
-        public static void Write(string message) => Console.Write(message);
+        public static void Write(string message)
+            => Console.Write(message);
 
         /// <inheritdoc cref="WriteLine(string)"/>
         public static void WriteLine(object input)

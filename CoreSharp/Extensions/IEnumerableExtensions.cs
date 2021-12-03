@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -138,8 +139,17 @@ namespace CoreSharp.Extensions
             return source.ToHashSet(comparer);
         }
 
+        /// <inheritdoc cref="ToHashSet{T}(IEnumerable{T}, IEqualityComparer{T})"/>
+        public static HashSet<TItem> ToHashSet<TItem, TKey>(this IEnumerable<TItem> source, Func<TItem, TKey> keySelector)
+        {
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
+            var comparer = new KeyEqualityComparer<TItem, TKey>(keySelector);
+            return source.ToHashSet(comparer);
+        }
+
         /// <summary>
-        /// Create a HashSet from an IEnumerable.
+        /// Create a <see cref="HashSet{T}"/> from an <see cref="IEnumerable{T}"/>.
         /// </summary>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
         {
@@ -150,7 +160,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Create a Collection from an IEnumerable.
+        /// Create a <see cref="Collection{T}"/> from an <see cref="IEnumerable{T}"/>.
         /// </summary>
         public static Collection<T> ToCollection<T>(this IEnumerable<T> source)
         {
@@ -158,17 +168,18 @@ namespace CoreSharp.Extensions
 
             if (source is IList<T> list)
                 return new Collection<T>(list);
-            return new Collection<T>(source.ToList());
+            else
+                return new Collection<T>(source.ToList());
         }
 
         /// <summary>
-        /// Create a ObservableCollection from an IEnumerable.
+        /// Create a <see cref="ObservableCollection{T}"/> from an <see cref="ObservableCollection{T}"/>.
         /// </summary>
-        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> source)
+        public static ObservableCollection<TItem> ToObservableCollection<TItem>(this IEnumerable<TItem> source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            return new ObservableCollection<T>(source);
+            return new ObservableCollection<TItem>(source);
         }
 
         /// <summary>
