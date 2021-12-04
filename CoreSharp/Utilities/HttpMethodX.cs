@@ -14,7 +14,7 @@ namespace CoreSharp.Utilities
             => GetRestMethod(method?.Method);
 
         /// <summary>
-        /// Get RestMethod from HttpMethod.
+        /// Get <see cref="RestMethod" /> from <see cref="string" /> method.
         /// </summary>
         public static RestMethod GetRestMethod(string methodName)
         {
@@ -32,6 +32,10 @@ namespace CoreSharp.Utilities
                 return RestMethod.Patch;
             else if (methodName.Contains("delete"))
                 return RestMethod.Delete;
+            else if (methodName.Contains("head"))
+                return RestMethod.Head;
+            else if (methodName.Contains("options"))
+                return RestMethod.Options;
             else
                 throw new ArgumentOutOfRangeException(nameof(methodName));
         }
@@ -41,16 +45,19 @@ namespace CoreSharp.Utilities
             => GetHttpMethod($"{method}");
 
         /// <summary>
-        /// Get HttpMethod from string name.
+        /// Get <see cref="HttpMethod"/> from <see cref="string" /> name.
         /// </summary>
-        public static HttpMethod GetHttpMethod(string methodName) => GetRestMethod(methodName) switch
-        {
-            RestMethod.Get => HttpMethod.Get,
-            RestMethod.Post => HttpMethod.Post,
-            RestMethod.Put => HttpMethod.Put,
-            RestMethod.Patch => HttpMethod.Patch,
-            RestMethod.Delete => HttpMethod.Delete,
-            _ => throw new ArgumentOutOfRangeException(nameof(methodName))
-        };
+        public static HttpMethod GetHttpMethod(string methodName)
+            => GetRestMethod(methodName) switch
+            {
+                RestMethod.Get => HttpMethod.Get,
+                RestMethod.Post => HttpMethod.Post,
+                RestMethod.Put => HttpMethod.Put,
+                RestMethod.Patch => HttpMethod.Patch,
+                RestMethod.Delete => HttpMethod.Delete,
+                RestMethod.Head => HttpMethod.Head,
+                RestMethod.Options => HttpMethod.Options,
+                _ => throw new ArgumentOutOfRangeException(nameof(methodName))
+            };
     }
 }

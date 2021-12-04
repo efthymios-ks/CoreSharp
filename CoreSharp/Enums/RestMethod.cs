@@ -6,6 +6,8 @@
         Post,
         Put,
         Patch,
-        Delete
+        Delete,
+        Head,
+        Options
     }
 }
