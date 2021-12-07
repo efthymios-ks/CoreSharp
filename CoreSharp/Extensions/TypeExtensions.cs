@@ -136,5 +136,16 @@ namespace CoreSharp.Extensions
 
             return topLevelInterfaces.Except(nestedInterfaces);
         }
+
+        /// <summary>
+        /// Runtime equivalent of default(T).
+        /// </summary>
+        public static object GetDefault(this Type type)
+        {
+            if (type.IsValueType)
+                return Activator.CreateInstance(type);
+            else
+                return null;
+        }
     }
 }
