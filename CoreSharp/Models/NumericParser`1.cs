@@ -35,13 +35,13 @@ namespace CoreSharp.Models
                 throw new ArgumentException($"{nameof(TValue)} ({typeof(TValue).FullName}) is not a numeric type.");
 
             _cultureInfo = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
-            _format = format;
-            _isFormatPercentage = Regex.IsMatch(_format ?? string.Empty, @"^[pP]\d+$");
+            _format = format ?? string.Empty;
+            _isFormatPercentage = Regex.IsMatch(_format, @"^[pP]\d+$");
         }
 
         //Methods
         /// <summary>
-        /// Parse and convert string input to TValue.
+        /// Parse and convert <see cref="string"/> input to <see cref="decimal"/>.
         /// If fails to do so, value remains untouched.
         /// </summary>
         public bool TryParseValue(string input, ref TValue value)
@@ -82,7 +82,7 @@ namespace CoreSharp.Models
         }
 
         /// <summary>
-        /// Parse value to decimal?.
+        /// Parse value to <see cref="decimal"/>.
         /// Handles any type and format.
         /// </summary>
         private decimal? ParseValue(string input)
@@ -106,14 +106,14 @@ namespace CoreSharp.Models
             return result;
         }
 
-        /// <summary>
-        /// Format TValue to string.
-        /// </summary>
-        public string FormatValue(TValue value) => FormatValue(value.ChangeType<decimal?>(_cultureInfo));
+        /// <inheritdoc cref="FormatValue(decimal?)"/>
+        public string FormatValue(TValue value)
+            => FormatValue(value.ChangeType<decimal?>(_cultureInfo));
 
         /// <summary>
-        /// Format decimal? to string.
+        /// Format <see cref="string"/>.
         /// </summary>
-        private string FormatValue(decimal? value) => value?.ToString(_format, _cultureInfo);
+        private string FormatValue(decimal? value)
+            => value?.ToString(_format, _cultureInfo);
     }
 }
