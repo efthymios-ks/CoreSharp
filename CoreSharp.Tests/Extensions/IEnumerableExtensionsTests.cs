@@ -622,7 +622,7 @@ namespace CoreSharp.Extensions.Tests
             const int pageSize = 0;
 
             //Act 
-            Action action = () => _sourceNull.GetPage(pageIndex, pageSize);
+            Action action = () => _sourceNull.Paginate(pageIndex, pageSize);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -637,7 +637,7 @@ namespace CoreSharp.Extensions.Tests
             var source = new int[itemCount];
 
             //Act 
-            Action action = () => source.GetPage(pageIndex, pageSize);
+            Action action = () => source.Paginate(pageIndex, pageSize);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
@@ -653,7 +653,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { 3, 4 };
 
             //Act 
-            var result = source.GetPage(pageIndex, pageSize);
+            var result = source.Paginate(pageIndex, pageSize);
 
             //Assert 
             result.Should().Equal(expected);

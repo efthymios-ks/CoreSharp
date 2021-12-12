@@ -320,9 +320,9 @@ namespace CoreSharp.Extensions
             return sourceKeys.Contains(itemKey);
         }
 
-        /// <inheritdoc cref="IQueryableExtensions.QueryPage{T}(IQueryable{T}, int, int)"/>
-        public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageIndex, int pageSize)
-            => (source?.AsQueryable()).QueryPage(pageIndex, pageSize);
+        /// <inheritdoc cref="IQueryableExtensions.Paginate{T}(IQueryable{T}, int, int)"/>
+        public static IEnumerable<T> Paginate<T>(this IEnumerable<T> source, int pageNumber, int pageSize)
+            => (source?.AsQueryable()).Paginate(pageNumber, pageSize);
 
         /// <summary>
         /// Paginate collection on given size and group them by Group.Key = Page.Index.

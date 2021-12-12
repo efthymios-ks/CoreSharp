@@ -1,7 +1,11 @@
-﻿using System;
+﻿using CoreSharp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
@@ -10,18 +14,39 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class IQueryableExtensions
     {
-        /// <summary>
-        /// Paginate collection on given size and return page of given index.
-        /// </summary>
-        public static IQueryable<T> QueryPage<T>(this IQueryable<T> source, int pageIndex, int pageSize)
+        /// <inheritdoc cref="PaginateAsync{TEntity}(IQueryable{TEntity}, int, int, CancellationToken)"/>
+        public static IQueryable<T> Paginate<T>(this IQueryable<T> source, int pageNumber, int pageSize)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
-            if (pageIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(pageIndex), $"{nameof(pageIndex)} has to be positive.");
+            if (pageNumber < 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
-            return source.Skip(pageIndex * pageSize).Take(pageSize);
+            return source.Skip(pageNumber * pageSize).Take(pageSize);
+        }
+
+        /// <summary>
+        /// Paginate collection on given size and return page of given index.
+        /// </summary>
+        public static async Task<Page<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> source, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            if (pageNumber < 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
+            if (pageSize <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
+
+            var items = await source.Paginate(pageNumber, pageSize).ToArrayAsync(cancellationToken);
+            var totalItems = await source.CountAsync(cancellationToken);
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            return new(items)
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = totalPages
+            };
         }
 
         /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
