@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions
     public static class UriExtensions
     {
         /// <summary>
-        /// Get url query parameters to dictionary.
+        /// Get <see cref="Uri.Query"/> parameters.
         /// </summary>
         public static IDictionary<string, string> GetQueryParameters(this Uri uri)
         {
@@ -20,7 +20,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Get url fragment parameters to dictionary.
+        /// Get <see cref="Uri.Fragment"/> parameters.
         /// </summary>
         public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
         {
