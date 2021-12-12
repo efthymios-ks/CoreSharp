@@ -1,6 +1,7 @@
 ﻿using CoreSharp.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,31 +16,46 @@ namespace CoreSharp.Extensions
     public static class IQueryableExtensions
     {
         /// <inheritdoc cref="PaginateAsync{TEntity}(IQueryable{TEntity}, int, int, CancellationToken)"/>
-        public static IQueryable<T> Paginate<T>(this IQueryable<T> source, int pageNumber, int pageSize)
+        public static IQueryable<T> Paginate<T>(this IQueryable<T> query, int pageNumber, int pageSize)
         {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = query ?? throw new ArgumentNullException(nameof(query));
             if (pageNumber < 0)
                 throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
-            return source.Skip(pageNumber * pageSize).Take(pageSize);
+            return query.Skip(pageNumber * pageSize).Take(pageSize);
         }
 
         /// <summary>
         /// Paginate collection on given size and return page of given index.
         /// </summary>
-        public static async Task<Page<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> source, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public static async Task<Page<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> query, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
+            //Validate args 
+            _ = query ?? throw new ArgumentNullException(nameof(query));
             if (pageNumber < 0)
                 throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
             if (pageSize <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
-            var items = await source.Paginate(pageNumber, pageSize).ToArrayAsync(cancellationToken);
-            var totalItems = await source.CountAsync(cancellationToken);
+            //Calculate and paginate 
+            var pagedQuery = query.Paginate(pageNumber, pageSize);
+            TEntity[] items;
+            int totalItems;
+            if (query is IAsyncEnumerable<TEntity>)
+            {
+                items = await pagedQuery.ToArrayAsync(cancellationToken);
+                totalItems = await query.CountAsync(cancellationToken);
+            }
+            else
+            {
+                items = pagedQuery.ToArray();
+                totalItems = query.Count();
+            }
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            //Return
             return new(items)
             {
                 PageNumber = pageNumber,
@@ -50,8 +66,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
-        public static IQueryable<string> FilterFlexible(this IQueryable<string> source, string filter)
-            => source.FilterFlexible(i => i, filter);
+        public static IQueryable<string> FilterFlexible(this IQueryable<string> query, string filter)
+            => query.FilterFlexible(i => i, filter);
 
         /// <summary>
         /// Filter source by given value.
@@ -64,10 +80,10 @@ namespace CoreSharp.Extensions
         /// </code>
         /// </example>
         /// </summary>
-        public static IQueryable<TItem> FilterFlexible<TItem>(this IQueryable<TItem> source, Func<TItem, string> propertySelector, string filter)
+        public static IQueryable<TItem> FilterFlexible<TItem>(this IQueryable<TItem> query, Func<TItem, string> propertySelector, string filter)
         {
             //Argument validation 
-            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = query ?? throw new ArgumentNullException(nameof(query));
             _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
             filter ??= string.Empty;
 
@@ -99,7 +115,7 @@ namespace CoreSharp.Extensions
             var regex = new Regex(pattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
             //Filter 
-            return source.Where(i => regex.IsMatch(propertySelector(i)));
+            return query.Where(i => regex.IsMatch(propertySelector(i)));
         }
     }
 }

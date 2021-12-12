@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -57,6 +58,56 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert 
             result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void PaginateAsync_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            const int pageNumber = 0;
+            const int pageSize = 0;
+
+            //Act
+            Func<Task> action = async () => await _sourceNull.PaginateAsync(pageNumber, pageSize);
+
+            //Assert
+            action.Should().ThrowExactlyAsync<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(5, -1, 1)]
+        [TestCase(5, 1, -1)]
+        public void PaginateAsync_PageArgsIsOutOfRange_ThrowArgumentNullException(int sourceCount, int pageNumber, int pageSize)
+        {
+            //Arrange
+            var source = new int[sourceCount].AsQueryable();
+
+            //Act 
+            Func<Task> action = async () => await _sourceNull.PaginateAsync(pageNumber, pageSize);
+
+            //Assert 
+            action.Should().ThrowExactlyAsync<ArgumentOutOfRangeException>();
+        }
+
+        [Test]
+        public void PaginateAsync_WhenCalled_ReturnItemPage()
+        {
+            //Arrange
+            var source = new[] { 1, 2, 3, 4, 5 }.AsQueryable();
+            var sourceCount = source.Count();
+            const int pageNumber = 1;
+            const int pageSize = 2;
+            var expected = new[] { 3, 4 }.AsQueryable();
+
+            //Act 
+            var result = source.PaginateAsync(pageNumber, pageSize).GetAwaiter().GetResult();
+
+            //Assert
+            result.Should().Equal(expected);
+            result.PageNumber.Should().Be(pageNumber);
+            result.PageSize.Should().Be(pageSize);
+            result.TotalItems.Should().Be(sourceCount);
+            result.TotalPages.Should().Be((int)Math.Ceiling((double)sourceCount / pageSize));
         }
 
         [Test]

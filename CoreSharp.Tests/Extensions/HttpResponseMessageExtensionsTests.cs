@@ -18,7 +18,7 @@ namespace CoreSharp.Extensions.Tests
             HttpResponseMessage response = null;
 
             //Act
-            Func<Task> action = async () => await response.EnsureSuccessAsync().ConfigureAwait(false);
+            Func<Task> action = async () => await response.EnsureSuccessAsync();
 
             //Assert
             action.Should().ThrowExactlyAsync<ArgumentNullException>();
@@ -31,7 +31,7 @@ namespace CoreSharp.Extensions.Tests
             var response = new HttpResponseMessage(HttpStatusCode.OK);
 
             //Act
-            Func<Task> action = async () => await response.EnsureSuccessAsync().ConfigureAwait(false);
+            Func<Task> action = async () => await response.EnsureSuccessAsync();
 
             //Assert
             action.Should().NotThrowAsync();
@@ -49,7 +49,7 @@ namespace CoreSharp.Extensions.Tests
             };
 
             //Act
-            Func<Task> action = async () => await response.EnsureSuccessAsync().ConfigureAwait(false);
+            Func<Task> action = async () => await response.EnsureSuccessAsync();
 
             //Assert
             var exception = action.Should().ThrowExactlyAsync<HttpResponseException>().GetAwaiter().GetResult().Which;
