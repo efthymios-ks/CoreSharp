@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Models;
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 
@@ -9,14 +10,17 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class NameValueCollectionExtensions
     {
-        /// <inheritdoc cref="IDictionaryExtensions.ToUrlQueryString{TValue}(System.Collections.Generic.IDictionary{string, TValue}, bool)"/>
-        public static string ToUrlQueryString(this NameValueCollection source, bool encodeParameters = true)
+        /// <inheritdoc cref="IDictionaryExtensions.ToUrlQueryString{TValue}(System.Collections.Generic.IDictionary{string, TValue})"/>
+        public static string ToUrlQueryString(this NameValueCollection source)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            var keys = source?.AllKeys;
-            var dictionary = keys?.ToDictionary(k => k, k => source[k]);
-            return dictionary?.ToUrlQueryString(encodeParameters);
+            var dictionary = source.AllKeys.ToDictionary(key => key, key => source[key]);
+            var builder = new UrlQueryBuilder
+            {
+                dictionary
+            };
+            return builder.ToString();
         }
     }
 }

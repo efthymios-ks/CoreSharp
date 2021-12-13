@@ -55,13 +55,13 @@ namespace CoreSharp.Utilities
         /// <summary>
         /// Build url from base url and parameters.
         /// </summary>
-        public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> parameters, bool encodeParameters = true)
+        public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> parameters)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
-            var query = parameters.ToUrlQueryString(encodeParameters);
+            var query = parameters.ToUrlQueryString();
 
             var trimChars = new[] { ' ', '?', '&', '/' };
             baseUrl = baseUrl.Trim(trimChars);

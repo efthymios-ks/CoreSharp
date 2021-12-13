@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using CoreSharp.Models;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Web;
 
 namespace CoreSharp.Extensions
 {
@@ -165,48 +163,15 @@ namespace CoreSharp.Extensions
         /// Build url query string from parameters dictionary.
         /// Converts both key and value to string with default converter.
         /// </summary>
-        public static string ToUrlQueryString<TValue>(this IDictionary<string, TValue> parameters, bool encodeParameters = true)
+        public static string ToUrlQueryString<TValue>(this IDictionary<string, TValue> parameters)
         {
             _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
-            var pairs = parameters
-                //Unfold inner lists 
-                .SelectMany(p =>
-                {
-                    var innerParameters = new List<KeyValuePair<string, TValue>>();
-
-                    //If value is list 
-                    if (p.Value is IEnumerable values and not string)
-                    {
-                        foreach (var value in values)
-                            innerParameters.Add(new KeyValuePair<string, TValue>(p.Key, (TValue)value));
-                    }
-                    //If single value 
-                    else
-                    {
-                        innerParameters.Add(new KeyValuePair<string, TValue>(p.Key, p.Value));
-                    }
-
-                    return innerParameters;
-                })
-                //Filter null 
-                .Where(p => p.Value is not null)
-                //Format
-                .Select(p =>
-                {
-                    var key = p.Key;
-                    var value = Convert.ToString(p.Value, CultureInfo.InvariantCulture);
-
-                    if (encodeParameters)
-                    {
-                        key = HttpUtility.UrlEncode(key);
-                        value = HttpUtility.UrlEncode(value);
-                    }
-
-                    return $"{key}={value}".Trim();
-                });
-
-            return string.Join("&", pairs);
+            var builder = new UrlQueryBuilder
+            {
+                parameters
+            };
+            return builder.ToString();
         }
     }
 }

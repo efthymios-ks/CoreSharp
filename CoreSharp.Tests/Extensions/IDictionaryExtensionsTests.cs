@@ -394,7 +394,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToUrlQueryString_EncodeIsFalse_ReturnQueryStringWithValuesAsIs()
+        public void ToUrlQueryString_WhenCalled_ReturnQueryString()
         {
             //Arrange
             var parameters = new Dictionary<string, object>
@@ -403,27 +403,7 @@ namespace CoreSharp.Extensions.Tests
                 { "color", "Black" },
                 { "count", 10 }
             };
-            const bool encode = false;
-            const string expected = "name=Efthymios Koktsidis&color=Black&count=10";
-
-            //Act
-            var result = parameters.ToUrlQueryString(encode);
-
-            //Assert
-            result.Should().Be(expected);
-        }
-
-        [Test]
-        public void ToUrlQueryString_EncodeIsTrue_ReturnQueryStringWithEncodedValues()
-        {
-            //Arrange
-            var parameters = new Dictionary<string, object>
-            {
-                { "name", "Efthymios Koktsidis" },
-                { "color", "Black" },
-                { "count", 10 }
-            };
-            const string expected = "name=Efthymios+Koktsidis&color=Black&count=10";
+            const string expected = "?name=Efthymios%20Koktsidis&color=Black&count=10";
 
             //Act
             var result = parameters.ToUrlQueryString();

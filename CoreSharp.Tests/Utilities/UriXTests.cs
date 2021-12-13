@@ -41,7 +41,7 @@ namespace CoreSharp.Utilities.Tests
         }
 
         [Test]
-        public void Build_EncodeIsFalse_BuildAndReturnUrlWithParametersAsIs()
+        public void Build_WhenCalled_ReturnQueryString()
         {
             //Arrange
             const string baseUrl = "https://example.com/";
@@ -50,27 +50,7 @@ namespace CoreSharp.Utilities.Tests
                 { "name", "Efthymios Koktsidis" },
                 { "count", 10 }
             };
-            const bool encode = false;
-            const string expected = "https://example.com/?name=Efthymios Koktsidis&count=10";
-
-            //Act
-            var result = UriX.Build(baseUrl, parameters, encode);
-
-            //Assert
-            result.Should().Be(expected);
-        }
-
-        [Test]
-        public void Build_EncodeIsTrue_BuildAndReturnUrlWithEncodedParameters()
-        {
-            //Arrange
-            const string baseUrl = "https://example.com/";
-            var parameters = new Dictionary<string, object>
-            {
-                { "name", "Efthymios Koktsidis" },
-                { "count", 10 }
-            };
-            const string expected = "https://example.com/?name=Efthymios+Koktsidis&count=10";
+            const string expected = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
 
             //Act
             var result = UriX.Build(baseUrl, parameters);

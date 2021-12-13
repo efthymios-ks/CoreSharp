@@ -25,6 +25,7 @@
             <summary>
             Helper method to call from two locations.
             The actually disposal is performed here.
+            The actual disposal is performed here.
             </summary>
         </member>
         <member name="M:CoreSharp.Abstracts.DisposableBase.CleanUpManagedResources">
@@ -290,6 +291,14 @@
             <summary>
             Get column from 2D array.
             </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.AssemblyNameExtensions">
+            <summary>
+            <see cref="T:System.Reflection.AssemblyName"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.AssemblyNameExtensions.GetAssembly(System.Reflection.AssemblyName)">
+            <inheritdoc cref="M:System.Reflection.Assembly.Load(System.Reflection.AssemblyName)"/>
         </member>
         <member name="T:CoreSharp.Extensions.ByteExtensions">
             <summary>
@@ -776,7 +785,7 @@
             Returns given value occurrences in dictionary.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0})">
             <summary>
             Build url query string from parameters dictionary.
             Converts both key and value to string with default converter.
@@ -851,19 +860,22 @@
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})">
             <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/>
         </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/>
+        </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
             <summary>
-            Create a HashSet from an IEnumerable.
+            Create a <see cref="T:System.Collections.Generic.HashSet`1"/> from an <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToCollection``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Create a Collection from an IEnumerable.
+            Create a <see cref="T:System.Collections.ObjectModel.Collection`1"/> from an <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToObservableCollection``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Create a ObservableCollection from an IEnumerable.
+            Create a <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> from an <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.TakeSkip``1(System.Collections.Generic.IEnumerable{``0},System.Int32[])">
@@ -921,8 +933,8 @@
             Check if source contains a specific item, using a key for equality comparison.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPage``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.QueryPage``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Paginate``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.Paginate``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPages``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
             <summary>
@@ -1152,7 +1164,10 @@
             <see cref="T:System.Linq.IQueryable`1"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IQueryableExtensions.QueryPage``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)">
+        <member name="M:CoreSharp.Extensions.IQueryableExtensions.Paginate``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IQueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Paginate collection on given size and return page of given index.
             </summary>
@@ -1215,8 +1230,8 @@
             <see cref="T:System.Collections.Specialized.NameValueCollection"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.NameValueCollectionExtensions.ToUrlQueryString(System.Collections.Specialized.NameValueCollection,System.Boolean)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)"/>
+        <member name="M:CoreSharp.Extensions.NameValueCollectionExtensions.ToUrlQueryString(System.Collections.Specialized.NameValueCollection)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0})"/>
         </member>
         <member name="T:CoreSharp.Extensions.NumberFormatInfoExtensions">
             <summary>
@@ -1813,6 +1828,11 @@
             Get top-level interfaces excluding nested ones.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.TypeExtensions.GetDefault(System.Type)">
+            <summary>
+            Runtime equivalent of default(T).
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.UlongExtensions">
             <summary>
             <see cref="T:System.UInt64"/> extensions.
@@ -1842,12 +1862,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.UriExtensions.GetQueryParameters(System.Uri)">
             <summary>
-            Get url query parameters to dictionary.
+            Get <see cref="P:System.Uri.Query"/> parameters.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.UriExtensions.GetFragmentParameters(System.Uri)">
             <summary>
-            Get url fragment parameters to dictionary.
+            Get <see cref="P:System.Uri.Fragment"/> parameters.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.XDocumentExtensions">
@@ -1958,29 +1978,27 @@
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.TryParseValue(System.String,`0@)">
             <summary>
-            Parse and convert string input to TValue.
+            Parse and convert <see cref="T:System.String"/> input to <see cref="T:System.Decimal"/>.
             If fails to do so, value remains untouched.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.ParseValue(System.String)">
             <summary>
-            Parse value to decimal?.
+            Parse value to <see cref="T:System.Decimal"/>.
             Handles any type and format.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.FormatValue(`0)">
-            <summary>
-            Format TValue to string.
-            </summary>
+            <inheritdoc cref="M:CoreSharp.Models.NumericParser`1.FormatValue(System.Nullable{System.Decimal})"/>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.FormatValue(System.Nullable{System.Decimal})">
             <summary>
-            Format decimal? to string.
+            Format <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Models.SerialPortSettings">
             <summary>
-            Short SerialPort settings class.
+            Short <see cref="T:System.IO.Ports.SerialPort"/> settings class.
             </summary>
         </member>
         <member name="P:CoreSharp.Models.StepValidation.ValidationSteps.SequentialValidation">
@@ -2136,6 +2154,20 @@
             Get <see cref="T:System.Reflection.MemberInfo"/> from given <see cref="T:System.Linq.Expressions.Expression`1"/> selector.
             </summary>
         </member>
+        <member name="T:CoreSharp.Utilities.HashSetX">
+            <summary>
+            <see cref="T:System.Collections.Generic.HashSet`1"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Func{``0,``1})">
+            <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Collections.Generic.IEqualityComparer{`0})" />
+        </member>
+        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Int32,System.Func{``0,``1})">
+            <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})" />
+        </member>
+        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEqualityComparer{`0})" />
+        </member>
         <member name="T:CoreSharp.Utilities.HttpMethodX">
             <summary>
             <see cref="T:System.Net.Http.HttpMethod"/> related utilities.
@@ -2146,7 +2178,7 @@
         </member>
         <member name="M:CoreSharp.Utilities.HttpMethodX.GetRestMethod(System.String)">
             <summary>
-            Get RestMethod from HttpMethod.
+            Get <see cref="T:CoreSharp.Enums.RestMethod" /> from <see cref="T:System.String" /> method.
             </summary>
         </member>
         <member name="M:CoreSharp.Utilities.HttpMethodX.GetHttpMethod(CoreSharp.Enums.RestMethod)">
@@ -2154,7 +2186,7 @@
         </member>
         <member name="M:CoreSharp.Utilities.HttpMethodX.GetHttpMethod(System.String)">
             <summary>
-            Get HttpMethod from string name.
+            Get <see cref="T:System.Net.Http.HttpMethod"/> from <see cref="T:System.String" /> name.
             </summary>
         </member>
         <member name="T:CoreSharp.Utilities.IPAddressX">
@@ -2211,7 +2243,7 @@
             Extract uri parameters.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.UriX.Build``1(System.String,System.Collections.Generic.IDictionary{System.String,``0},System.Boolean)">
+        <member name="M:CoreSharp.Utilities.UriX.Build``1(System.String,System.Collections.Generic.IDictionary{System.String,``0})">
             <summary>
             Build url from base url and parameters.
             </summary>
