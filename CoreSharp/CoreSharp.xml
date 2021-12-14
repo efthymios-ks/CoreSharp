@@ -1445,7 +1445,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.Truncate(System.String,System.Int32)">
             <summary>
-            Truncates string.
+            Truncates <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.FormatAsciiControls(System.String,System.Char,System.Char)">
@@ -1803,9 +1803,10 @@
             <see cref="P:System.Type.IsPrimitive"/>,
             <see cref="T:System.String"/>,
             <see cref="T:System.Decimal"/>,
+            <see cref="T:System.Guid"/>,
+            <see cref="T:System.TimeSpan"/>,
             <see cref="T:System.DateTime"/>,
-            <see cref="T:System.DateTimeOffset"/>,
-            <see cref="T:System.Guid"/>.
+            <see cref="T:System.DateTimeOffset"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.TypeExtensions.GetNullableBaseType(System.Type)">
@@ -1827,6 +1828,9 @@
             <summary>
             Get top-level interfaces excluding nested ones.
             </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TypeExtensions.GetDefault``1(System.Type)">
+            <inheritdoc cref="M:CoreSharp.Extensions.TypeExtensions.GetDefault(System.Type)"/>
         </member>
         <member name="M:CoreSharp.Extensions.TypeExtensions.GetDefault(System.Type)">
             <summary>

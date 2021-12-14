@@ -20,7 +20,7 @@ namespace CoreSharp.Models.Newtonsoft.Resolvers
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var properties = base.CreateProperties(type, memberSerialization);
-            return properties.Where(j => j.PropertyType.IsExtendedPrimitive()).ToList();
+            return properties.Where(j => j.PropertyType.IsPrimitiveExtended()).ToList();
         }
     }
 }

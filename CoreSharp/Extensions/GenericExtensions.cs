@@ -123,7 +123,7 @@ namespace CoreSharp.Extensions
                     var rightValue = property.GetValue(right);
 
                     //If primitive, just compare 
-                    if (property.PropertyType.IsExtendedPrimitive())
+                    if (property.PropertyType.IsPrimitiveExtended())
                     {
                         if (!Equals(leftValue, rightValue))
                             return false;

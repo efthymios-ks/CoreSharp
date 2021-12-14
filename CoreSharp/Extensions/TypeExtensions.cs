@@ -67,30 +67,28 @@ namespace CoreSharp.Extensions
         /// <see cref="Type.IsPrimitive"/>,
         /// <see cref="string"/>,
         /// <see cref="decimal"/>,
+        /// <see cref="Guid"/>,
+        /// <see cref="TimeSpan"/>,
         /// <see cref="DateTime"/>,
-        /// <see cref="DateTimeOffset"/>,
-        /// <see cref="Guid"/>.
+        /// <see cref="DateTimeOffset"/>.
         /// </summary>
-        public static bool IsExtendedPrimitive(this Type type)
+        public static bool IsPrimitiveExtended(this Type type)
         {
             var baseType = Nullable.GetUnderlyingType(type) ?? type;
 
             if (baseType.IsPrimitive)
-            {
                 return true;
-            }
-            else
+
+            var allowedTypes = new[]
             {
-                var allowedTypes = new[]
-                {
-                    typeof(string),
-                    typeof(decimal),
-                    typeof(DateTime),
-                    typeof(DateTimeOffset),
-                    typeof(Guid)
-                };
-                return allowedTypes.Any(t => t == type);
-            }
+                typeof(string),
+                typeof(decimal),
+                typeof(Guid),
+                typeof(TimeSpan),
+                typeof(DateTime),
+                typeof(DateTimeOffset)
+            };
+            return allowedTypes.Any(t => t == type);
         }
 
         //TODO: Add unit tests
@@ -136,6 +134,10 @@ namespace CoreSharp.Extensions
 
             return topLevelInterfaces.Except(nestedInterfaces);
         }
+
+        /// <inheritdoc cref="GetDefault(Type)"/>
+        public static TValue GetDefault<TValue>(this Type type)
+            => (TValue)type.GetDefault();
 
         /// <summary>
         /// Runtime equivalent of default(T).

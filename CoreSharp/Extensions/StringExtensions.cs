@@ -16,7 +16,7 @@ namespace CoreSharp.Extensions
     public static class StringExtensions
     {
         /// <summary>
-        /// Truncates string.
+        /// Truncates <see cref="string"/>.
         /// </summary>
         public static string Truncate(this string input, int length)
         {
@@ -358,7 +358,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
         public static int? ToInt(this string input)
-            => input.ToInt(NumberStyles.None);
+            => input.ToInt(NumberStyles.Number);
 
         /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
         public static int? ToInt(this string input, NumberStyles numberStyles)
@@ -366,11 +366,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
         public static int? ToInt(this string input, IFormatProvider formatProvider)
-            => input.ToInt(NumberStyles.None, formatProvider);
+            => input.ToInt(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
         public static int? ToIntCI(this string input)
-            => input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToInt(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly <see cref="int.TryParse(string?, NumberStyles, IFormatProvider?, out int)"/> resulting to <see cref="int"/>.
@@ -387,7 +387,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLong(this string input)
-            => input.ToLong(NumberStyles.None);
+            => input.ToLong(NumberStyles.Number);
 
         /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLong(this string input, NumberStyles numberStyles)
@@ -395,11 +395,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLong(this string input, IFormatProvider formatProvider)
-            => input.ToLong(NumberStyles.None, formatProvider);
+            => input.ToLong(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLongCI(this string input)
-            => input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToLong(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
         public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
@@ -414,7 +414,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
         public static short? ToShort(this string input)
-            => input.ToShort(NumberStyles.None);
+            => input.ToShort(NumberStyles.Number);
 
         /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
         public static short? ToShort(this string input, NumberStyles numberStyles)
@@ -422,11 +422,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
         public static short? ToShort(this string input, IFormatProvider formatProvider)
-            => input.ToShort(NumberStyles.None, formatProvider);
+            => input.ToShort(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
         public static short? ToShortCI(this string input)
-            => input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToShort(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly <see cref="short.TryParse(string?, NumberStyles, IFormatProvider?, out short)"/> resulting to <see cref="short"/>.
@@ -443,7 +443,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
         public static float? ToFloat(this string input)
-            => input.ToFloat(NumberStyles.None);
+            => input.ToFloat(NumberStyles.Number);
 
         /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
         public static float? ToFloat(this string input, NumberStyles numberStyles)
@@ -451,11 +451,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
         public static float? ToFloat(this string input, IFormatProvider formatProvider)
-            => input.ToFloat(NumberStyles.None, formatProvider);
+            => input.ToFloat(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
         public static float? ToFloatCI(this string input)
-            => input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToFloat(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly <see cref="float.TryParse(string?, NumberStyles, IFormatProvider?, out float)"/> resulting to <see cref="float"/>.
@@ -472,7 +472,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
         public static double? ToDouble(this string input)
-            => input.ToDouble(NumberStyles.None);
+            => input.ToDouble(NumberStyles.Number);
 
         /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
         public static double? ToDouble(this string input, NumberStyles numberStyles)
@@ -480,11 +480,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
         public static double? ToDouble(this string input, IFormatProvider formatProvider)
-            => input.ToDouble(NumberStyles.None, formatProvider);
+            => input.ToDouble(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
         public static double? ToDoubleCI(this string input)
-            => input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToDouble(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly <see cref="double.TryParse(string?, NumberStyles, IFormatProvider?, out double)"/> resulting to <see cref="double"/>.
@@ -501,7 +501,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
         public static decimal? ToDecimal(this string input)
-            => input.ToDecimal(NumberStyles.None);
+            => input.ToDecimal(NumberStyles.Number);
 
         /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
         public static decimal? ToDecimal(this string input, NumberStyles numberStyles)
@@ -509,11 +509,11 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
         public static decimal? ToDecimal(this string input, IFormatProvider formatProvider)
-            => input.ToDecimal(NumberStyles.None, formatProvider);
+            => input.ToDecimal(NumberStyles.Number, formatProvider);
 
         /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
         public static decimal? ToDecimalCI(this string input)
-            => input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
+            => input.ToDecimal(NumberStyles.Number, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// User-friendly <see cref="decimal.TryParse(string?, NumberStyles, IFormatProvider?, out decimal)"/> resulting to <see cref="decimal"/>.
@@ -540,8 +540,8 @@ namespace CoreSharp.Extensions
             if (bool.TryParse(input, out var result))
                 return result;
 
-            var intInput = input.ToIntCI();
-            return intInput switch
+            var inputAsInt = input.ToIntCI();
+            return inputAsInt switch
             {
                 //1 or 0 
                 1 => true,
@@ -566,8 +566,8 @@ namespace CoreSharp.Extensions
            => input.ToDateTime(dateTimeFormat, DateTimeStyles.None);
 
         /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
-        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle)
-         => input.ToDateTime(dateTimeFormat, dateTimeStyle, CultureInfo.CurrentCulture);
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyles)
+         => input.ToDateTime(dateTimeFormat, dateTimeStyles, CultureInfo.CurrentCulture);
 
         /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
         public static DateTime? ToDateTime(this string input, string dateTimeFormat, IFormatProvider formatProvider)
@@ -584,12 +584,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// User-friendly <see cref="DateTime.TryParseExact(string?, string?, IFormatProvider?, DateTimeStyles, out DateTime)"/> resulting to <see cref="DateTime"/>.
         /// </summary>
-        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyle, IFormatProvider formatProvider)
+        public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyles, IFormatProvider formatProvider)
         {
             _ = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
             _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-            if (DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyle, out var result))
+            if (DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyles, out var result))
                 return result;
             else
                 return null;
