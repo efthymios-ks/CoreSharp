@@ -16,14 +16,14 @@ namespace CoreSharp.Extensions.Tests
 
         //Methods
         [Test]
-        public void Paginate_SourceIsNull_ThrowArgumentNullException()
+        public void GetPage_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange
             const int pageNumber = 0;
             const int pageSize = 0;
 
             //Act 
-            Action action = () => _sourceNull.Paginate(pageNumber, pageSize);
+            Action action = () => _sourceNull.GetPage(pageNumber, pageSize);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -32,20 +32,20 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(5, -1, 1)]
         [TestCase(5, 1, -1)]
-        public void Paginate_PageArgsIsOutOfRange_ThrowArgumentNullException(int sourceCount, int pageNumber, int pageSize)
+        public void GetPage_PageArgsIsOutOfRange_ThrowArgumentNullException(int sourceCount, int pageNumber, int pageSize)
         {
             //Arrange
             var source = new int[sourceCount].AsQueryable();
 
             //Act 
-            Action action = () => source.Paginate(pageNumber, pageSize);
+            Action action = () => source.GetPage(pageNumber, pageSize);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
         [Test]
-        public void Paginate_WhenCalled_ReturnItemPage()
+        public void GetPage_WhenCalled_ReturnItemPage()
         {
             //Arrange
             var source = new[] { 1, 2, 3, 4, 5 }.AsQueryable();
@@ -54,21 +54,21 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { 3, 4 }.AsQueryable();
 
             //Act 
-            var result = source.Paginate(pageIndex, pageSize);
+            var result = source.GetPage(pageIndex, pageSize);
 
             //Assert 
             result.Should().Equal(expected);
         }
 
         [Test]
-        public void PaginateAsync_SourceIsNull_ThrowArgumentNullException()
+        public void GetPageAsync_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange
             const int pageNumber = 0;
             const int pageSize = 0;
 
             //Act
-            Func<Task> action = async () => await _sourceNull.PaginateAsync(pageNumber, pageSize);
+            Func<Task> action = async () => await _sourceNull.GetPageAsync(pageNumber, pageSize);
 
             //Assert
             action.Should().ThrowExactlyAsync<ArgumentNullException>();
@@ -77,20 +77,20 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(5, -1, 1)]
         [TestCase(5, 1, -1)]
-        public void PaginateAsync_PageArgsIsOutOfRange_ThrowArgumentNullException(int sourceCount, int pageNumber, int pageSize)
+        public void GetPageAsync_PageArgsIsOutOfRange_ThrowArgumentNullException(int sourceCount, int pageNumber, int pageSize)
         {
             //Arrange
             var source = new int[sourceCount].AsQueryable();
 
             //Act 
-            Func<Task> action = async () => await _sourceNull.PaginateAsync(pageNumber, pageSize);
+            Func<Task> action = async () => await _sourceNull.GetPageAsync(pageNumber, pageSize);
 
             //Assert 
             action.Should().ThrowExactlyAsync<ArgumentOutOfRangeException>();
         }
 
         [Test]
-        public void PaginateAsync_WhenCalled_ReturnItemPage()
+        public void GetPageAsync_WhenCalled_ReturnItemPage()
         {
             //Arrange
             var source = new[] { 1, 2, 3, 4, 5 }.AsQueryable();
@@ -100,7 +100,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { 3, 4 }.AsQueryable();
 
             //Act 
-            var result = source.PaginateAsync(pageNumber, pageSize).GetAwaiter().GetResult();
+            var result = source.GetPageAsync(pageNumber, pageSize).GetAwaiter().GetResult();
 
             //Assert
             result.Should().Equal(expected);

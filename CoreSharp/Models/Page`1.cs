@@ -11,45 +11,30 @@ namespace CoreSharp.Models
         //Fields
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IEnumerable<TEntity> _items;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly int _pageNumber;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly int _pageSize;
 
         //Constructors
-        public Page(IEnumerable<TEntity> items)
-            => _items = items ?? throw new ArgumentNullException(nameof(items));
+        public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TEntity> items)
+        {
+            if (pageNumber < 0)
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
+            if (pageSize < 1)
+                throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
+
+            PageNumber = pageNumber;
+            PageSize = pageSize;
+            TotalItems = totalItems;
+            TotalPages = totalPages;
+            _items = items ?? throw new ArgumentNullException(nameof(items));
+        }
 
         //Properties
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay
             => ToString();
-
-        public int PageNumber
-        {
-            get => _pageNumber;
-            init
-            {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException(nameof(PageNumber), $"{nameof(PageNumber)} has to be positive.");
-                _pageNumber = value;
-            }
-        }
-
-        public int PageSize
-        {
-            get => _pageSize;
-            init
-            {
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException(nameof(PageSize), $"{nameof(PageSize)} has to be positive and non-zero.");
-                _pageSize = value;
-            }
-        }
-
-        public int TotalItems { get; init; }
-
-        public int TotalPages { get; init; }
+        public int PageNumber { get; }
+        public int PageSize { get; }
+        public int TotalItems { get; }
+        public int TotalPages { get; }
 
         //Methods
         public override string ToString()

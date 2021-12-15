@@ -15,8 +15,8 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class IQueryableExtensions
     {
-        /// <inheritdoc cref="PaginateAsync{TEntity}(IQueryable{TEntity}, int, int, CancellationToken)"/>
-        public static IQueryable<T> Paginate<T>(this IQueryable<T> query, int pageNumber, int pageSize)
+        /// <inheritdoc cref="GetPageAsync{TEntity}(IQueryable{TEntity}, int, int, CancellationToken)"/>
+        public static IQueryable<T> GetPage<T>(this IQueryable<T> query, int pageNumber, int pageSize)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
             if (pageNumber < 0)
@@ -28,9 +28,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Paginate collection on given size and return page of given index.
+        /// Paginate collection on given size and return page of given number.
         /// </summary>
-        public static async Task<Page<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> query, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public static async Task<Page<TEntity>> GetPageAsync<TEntity>(this IQueryable<TEntity> query, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             //Validate args 
             _ = query ?? throw new ArgumentNullException(nameof(query));
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
             //Calculate and paginate 
-            var pagedQuery = query.Paginate(pageNumber, pageSize);
+            var pagedQuery = query.GetPage(pageNumber, pageSize);
             TEntity[] items;
             int totalItems;
             if (query is IAsyncEnumerable<TEntity>)
@@ -56,13 +56,7 @@ namespace CoreSharp.Extensions
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             //Return
-            return new(items)
-            {
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                TotalItems = totalItems,
-                TotalPages = totalPages
-            };
+            return new(pageNumber, pageSize, totalItems, totalPages, items);
         }
 
         /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
