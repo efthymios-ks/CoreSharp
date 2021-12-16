@@ -12,12 +12,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Deletes all files from directory.
         /// </summary>
-        public static void Clear(this DirectoryInfo input, bool recursive = false)
+        public static void Clear(this DirectoryInfo directory, bool recursive = false)
         {
-            Array.ForEach(input.GetFiles(), i => i.Delete());
+            Array.ForEach(directory.GetFiles(), i => i.Delete());
 
             if (recursive)
-                Array.ForEach(input.GetDirectories(), i => i.Delete(true));
+                Array.ForEach(directory.GetDirectories(), i => i.Delete(true));
         }
     }
 }

@@ -1,32 +1,25 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace CoreSharp.Abstracts
 {
-    /// <summary>
-    /// Automatic and safe disposing.
-    /// Just override the two clean-up methods.
-    /// </summary>
+    /// <inheritdoc cref="IDisposable"/>
     public abstract class DisposableBase : IDisposable
     {
         //Fields
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object _lock = new();
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool _disposed;
 
         //Constructors
-        /// <summary>
-        /// Deconstructor.
-        /// </summary>
         ~DisposableBase()
         {
             DisposeNativeResources(false);
         }
 
         //Methods
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing,
-        /// releasing, or resetting unmanaged resources.
-        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);

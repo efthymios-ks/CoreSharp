@@ -934,7 +934,7 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Paginate``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.Paginate``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
+            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.GetPage``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPages``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
             <summary>
@@ -1164,12 +1164,12 @@
             <see cref="T:System.Linq.IQueryable`1"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.IQueryableExtensions.Paginate``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)"/>
+        <member name="M:CoreSharp.Extensions.IQueryableExtensions.GetPage``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.GetPageAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.IQueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:CoreSharp.Extensions.IQueryableExtensions.GetPageAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
-            Paginate collection on given size and return page of given index.
+            Paginate collection on given size and return page of given number.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IQueryableExtensions.FilterFlexible(System.Linq.IQueryable{System.String},System.String)">
@@ -1797,7 +1797,7 @@
             Check if given <see cref="T:System.Type"/> is <see cref="T:System.DateTime"/> or <see cref="T:System.DateTimeOffset"/>.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.TypeExtensions.IsExtendedPrimitive(System.Type)">
+        <member name="M:CoreSharp.Extensions.TypeExtensions.IsPrimitiveExtended(System.Type)">
             <summary>
             Checks for
             <see cref="P:System.Type.IsPrimitive"/>,

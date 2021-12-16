@@ -15,7 +15,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
     /// Client for NamedPipe communication.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class NamedPipeClient : DisposableBase
+    internal sealed class NamedPipeClient : DisposableBase
     {
         //Fields 
         private readonly NamedPipeClientStream _pipe;
@@ -94,30 +94,8 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
             Terminate();
         }
 
-        public int Send(string data)
-        {
-            return Send(data, Encoding.UTF8);
-        }
-
-        public int Send(string text, Encoding encoding)
-        {
-            return SendAsync(text, encoding).GetAwaiter().GetResult();
-        }
-
-        public int Send(IEnumerable<byte> data)
-        {
-            return Send(data?.ToArray());
-        }
-
-        public int Send(params byte[] data)
-        {
-            return SendAsync(data).GetAwaiter().GetResult();
-        }
-
         public async Task<int> SendAsync(string text)
-        {
-            return await SendAsync(text, Encoding.UTF8).ConfigureAwait(false);
-        }
+            => await SendAsync(text, Encoding.UTF8);
 
         public async Task<int> SendAsync(string text, Encoding encoding)
         {
@@ -125,13 +103,11 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
             _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
             var data = encoding.GetBytes(text);
-            return await SendAsync(data).ConfigureAwait(false);
+            return await SendAsync(data);
         }
 
         public async Task<int> SendAsync(IEnumerable<byte> data)
-        {
-            return await SendAsync(data?.ToArray()).ConfigureAwait(false);
-        }
+            => await SendAsync(data?.ToArray());
 
         public async Task<int> SendAsync(params byte[] data)
         {
@@ -141,8 +117,8 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
             else if (!_pipe.CanWrite)
                 throw new NotSupportedException("Current pipe does not support write operations.");
 
-            await _pipe.WriteAsync(data.AsMemory(0, data.Length)).ConfigureAwait(false);
-            await _pipe.FlushAsync().ConfigureAwait(false);
+            await _pipe.WriteAsync(data.AsMemory(0, data.Length));
+            await _pipe.FlushAsync();
             OnDataSent(data);
             return data.Length;
         }
@@ -195,7 +171,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
 
             try
             {
-                await (_pipe?.FlushAsync()).ConfigureAwait(false);
+                await _pipe?.FlushAsync();
                 _pipe?.WaitForPipeDrain();
                 _pipe?.Close();
             }

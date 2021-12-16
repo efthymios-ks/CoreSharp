@@ -8,9 +8,7 @@ namespace CoreSharp.Abstracts.Http
     {
         //Constructors
         protected HttpMiddlewareBase(RequestDelegate next)
-        {
-            Next = next ?? throw new ArgumentNullException(nameof(next));
-        }
+            => Next = next ?? throw new ArgumentNullException(nameof(next));
 
         //Properties
         public RequestDelegate Next { get; }

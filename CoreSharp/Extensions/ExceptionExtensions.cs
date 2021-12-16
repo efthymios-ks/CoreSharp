@@ -25,7 +25,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return unfolded list of exceptions including nested ones.
+        /// Return unfolded list of <see cref="Exception"/> including nested ones.
         /// </summary>
         public static IEnumerable<Exception> Flatten(this Exception exception)
         {

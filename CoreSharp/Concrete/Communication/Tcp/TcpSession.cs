@@ -11,7 +11,7 @@ using System.Text;
 namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class TcpSession : DisposableBase
+    internal sealed class TcpSession : DisposableBase
     {
         //Fields 
         private readonly TcpServer _server;

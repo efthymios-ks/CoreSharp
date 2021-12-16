@@ -75,7 +75,7 @@ namespace CoreSharp.Extensions
             => left.JsonEquals(right, DefaultJsonSettings.Instance);
 
         /// <summary>
-        /// Compares two objects by converting them to json (string).
+        /// Compares two <see cref="object"/> by converting them to json (<see cref="string"/>).
         /// </summary>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
         {
@@ -104,7 +104,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Compares two objects using reflection and public properties.
+        /// Compares two <see cref="object"/> using reflection and public properties.
         /// </summary>
         public static bool ReflectionEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
         {
@@ -153,7 +153,7 @@ namespace CoreSharp.Extensions
             => input.Equals(default(T));
 
         /// <summary>
-        /// Serialize to XDocument.
+        /// Serialize to <see cref="XDocument"/>.
         /// </summary>
         public static XDocument ToXDocument<T>(this T input) where T : class
         {

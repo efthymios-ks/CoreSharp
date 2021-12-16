@@ -2,13 +2,11 @@
 
 namespace CoreSharp.Concrete.Communication.Tcp
 {
-    public class SessionStartedEventArgs : SessionEventArgs
+    internal class SessionStartedEventArgs : SessionEventArgs
     {
         //Constructors 
         public SessionStartedEventArgs(TcpSession session) : base(session?.ServerEndPoint, session?.SessionEndPoint)
-        {
-            Session = session ?? throw new ArgumentNullException(nameof(session));
-        }
+            => Session = session ?? throw new ArgumentNullException(nameof(session));
 
         //Properties 
         public TcpSession Session { get; }

@@ -3,7 +3,7 @@ using System.Net;
 
 namespace CoreSharp.Concrete.Communication.Tcp
 {
-    public class SessionEventArgs : EventArgs
+    internal class SessionEventArgs : EventArgs
     {
         //Constructor
         public SessionEventArgs(IPEndPoint serverEndPoint, IPEndPoint sessionEndPoint)

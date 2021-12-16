@@ -3,13 +3,11 @@ using System.Net;
 
 namespace CoreSharp.Concrete.Communication.Tcp
 {
-    public class SessionDataTransferredEventArgs : DataTransferredEventArgs
+    internal class SessionDataTransferredEventArgs : DataTransferredEventArgs
     {
         //Constructors 
         public SessionDataTransferredEventArgs(TcpSession session, byte[] data) : base(data)
-        {
-            Session = session ?? throw new ArgumentNullException(nameof(session));
-        }
+            => Session = session ?? throw new ArgumentNullException(nameof(session));
 
         //Properties 
         public TcpSession Session { get; }

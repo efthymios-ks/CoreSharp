@@ -15,15 +15,15 @@ namespace CoreSharp.Extensions
         {
             _ = memberExpression ?? throw new ArgumentNullException(nameof(memberExpression));
 
-            static string NameSelector(Expression e)
+            static string NameSelector(Expression expression)
             {
-                return e.NodeType switch
+                return expression.NodeType switch
                 {
-                    ExpressionType.Parameter => (e as ParameterExpression)?.Name,
-                    ExpressionType.MemberAccess => (e as MemberExpression)?.Member?.Name,
-                    ExpressionType.Call => (e as MethodCallExpression)?.Method?.Name,
-                    ExpressionType.Convert or ExpressionType.ConvertChecked => NameSelector((e as UnaryExpression)?.Operand),
-                    ExpressionType.Invoke => NameSelector(((InvocationExpression)e).Expression),
+                    ExpressionType.Parameter => (expression as ParameterExpression)?.Name,
+                    ExpressionType.MemberAccess => (expression as MemberExpression)?.Member?.Name,
+                    ExpressionType.Call => (expression as MethodCallExpression)?.Method?.Name,
+                    ExpressionType.Convert or ExpressionType.ConvertChecked => NameSelector((expression as UnaryExpression)?.Operand),
+                    ExpressionType.Invoke => NameSelector(((InvocationExpression)expression).Expression),
                     ExpressionType.ArrayLength => nameof(Array.Length),
                     _ => throw new ArgumentException("Expression is not a proper member selector.", nameof(memberExpression))
                 };

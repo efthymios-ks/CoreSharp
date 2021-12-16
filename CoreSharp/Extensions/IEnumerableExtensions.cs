@@ -184,16 +184,13 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Take/Skip items in a given order.
-        /// Positive Chunk value means take.
-        /// Negative Chunk value means skips.
-        /// </summary>
-        /// <example>
-        /// In this sample we Take(2), then Skip(3), then Take(1).
+        /// Positive chunk value means take.
+        /// Negative chunk value means skip.
         /// <code>
         /// var source = GetSource();
         /// var sequence = source.TakeSkip(2, -3, 1);
         /// </code>
-        /// </example>
+        /// </summary>
         public static IEnumerable<T> TakeSkip<T>(this IEnumerable<T> source, params int[] sequence)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -222,28 +219,26 @@ namespace CoreSharp.Extensions
             return result;
         }
 
-        /// <summary>
-        /// LINQ Except(), using a key for equality comparison.
-        /// </summary>
-        public static IEnumerable<TEntity> Except<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
+        /// <inheritdoc cref="Enumerable.Except{TSource}(IEnumerable{TSource}, IEnumerable{TSource}, IEqualityComparer{TSource}?)"/>
+        public static IEnumerable<TEntity> Except<TEntity, TKey>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TKey> keySelector)
         {
             _ = left ?? throw new ArgumentNullException(nameof(left));
             _ = right ?? throw new ArgumentNullException(nameof(right));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            return left.Where(l => !right.Any(r => keySelector(r).Equals(keySelector(l))));
+            var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
+            return left.Except(right, equalityComparer);
         }
 
-        /// <summary>
-        /// LINQ Intersect(), using a key for equality comparison.
-        /// </summary>
-        public static IEnumerable<TEntity> Intersect<TEntity, TProperty>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TProperty> keySelector)
+        /// <inheritdoc cref="Enumerable.Intersect{TSource}(IEnumerable{TSource}, IEnumerable{TSource}, IEqualityComparer{TSource}?)"/>
+        public static IEnumerable<TEntity> Intersect<TEntity, TKey>(this IEnumerable<TEntity> left, IEnumerable<TEntity> right, Func<TEntity, TKey> keySelector)
         {
             _ = left ?? throw new ArgumentNullException(nameof(left));
             _ = right ?? throw new ArgumentNullException(nameof(right));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            return left.Where(l => right.Any(r => keySelector(r).Equals(keySelector(l))));
+            var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
+            return left.Intersect(right, equalityComparer);
         }
 
         /// <summary>
@@ -306,22 +301,19 @@ namespace CoreSharp.Extensions
             return source.ToArray();
         }
 
-        /// <summary>
-        /// Check if source contains a specific item, using a key for equality comparison.
-        /// </summary>
-        public static bool Contains<TEntity, TProperty>(this IEnumerable<TEntity> source, TEntity item, Func<TEntity, TProperty> keySelector)
+        /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource, IEqualityComparer{TSource}?)"/>
+        public static bool Contains<TEntity, TKey>(this IEnumerable<TEntity> source, TEntity item, Func<TEntity, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = item ?? throw new ArgumentNullException(nameof(item));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            var itemKey = keySelector(item);
-            var sourceKeys = source.Select(i => keySelector(i));
-            return sourceKeys.Contains(itemKey);
+            var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
+            return source.Contains(item, equalityComparer);
         }
 
         /// <inheritdoc cref="IQueryableExtensions.GetPage{T}(IQueryable{T}, int, int)"/>
-        public static IEnumerable<T> Paginate<T>(this IEnumerable<T> source, int pageNumber, int pageSize)
+        public static IEnumerable<T> GetPage<T>(this IEnumerable<T> source, int pageNumber, int pageSize)
             => (source?.AsQueryable()).GetPage(pageNumber, pageSize);
 
         /// <summary>
@@ -340,8 +332,7 @@ namespace CoreSharp.Extensions
             return sourceArray.GroupBy(item =>
             {
                 var itemIndex = Array.IndexOf(sourceArray, item);
-                var pageIndex = itemIndex / pageSize;
-                return pageIndex;
+                return itemIndex / pageSize; //PageNumber 
             });
         }
 
@@ -434,7 +425,7 @@ namespace CoreSharp.Extensions
             => source.ToDataTable(typeof(TEntity).Name);
 
         /// <summary>
-        /// Convert collection of entities to DataTable.
+        /// Convert collection of entities to <see cref="DataTable"/>.
         /// </summary>
         public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source, string tableName) where TEntity : class
         {

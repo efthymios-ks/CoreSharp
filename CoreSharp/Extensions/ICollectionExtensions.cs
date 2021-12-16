@@ -41,11 +41,9 @@ namespace CoreSharp.Extensions
 
             if (sourceKeys.Contains(itemKey))
                 return false;
-            else
-            {
-                source.Add(item);
-                return true;
-            }
+
+            source.Add(item);
+            return true;
         }
     }
 }

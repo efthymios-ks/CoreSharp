@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions
     public static class ExpandoObjectExtensions
     {
         /// <summary>
-        /// Convert to dictionary.
+        /// Convert to <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
         public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
         {

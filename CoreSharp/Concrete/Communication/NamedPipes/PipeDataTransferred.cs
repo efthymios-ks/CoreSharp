@@ -3,13 +3,11 @@ using System.IO.Pipes;
 
 namespace CoreSharp.Concrete.Communication.NamedPipes
 {
-    public class PipeDataTransferred : DataTransferredEventArgs
+    internal class PipeDataTransferred : DataTransferredEventArgs
     {
         //Constructors 
         public PipeDataTransferred(NamedPipeServerStream pipe, byte[] data) : base(data)
-        {
-            Pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
-        }
+            => Pipe = pipe ?? throw new ArgumentNullException(nameof(pipe));
 
         //Properties
         public NamedPipeServerStream Pipe { get; }

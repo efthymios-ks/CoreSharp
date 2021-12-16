@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Models.Pages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

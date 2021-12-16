@@ -12,7 +12,7 @@ using System.Timers;
 namespace CoreSharp.Concrete.Communication.Tcp
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class TcpClient : DisposableBase
+    internal sealed class TcpClient : DisposableBase
     {
         //Fields 
         private Socket _socket;
@@ -89,9 +89,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         ~TcpClient()
-        {
-            Dispose();
-        }
+            => Dispose();
 
         //Events 
         public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;

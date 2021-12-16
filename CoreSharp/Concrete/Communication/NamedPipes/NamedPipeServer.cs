@@ -15,7 +15,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
     /// Server for NamedPipe communication.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public sealed class NamedPipeServer : DisposableBase
+    internal sealed class NamedPipeServer : DisposableBase
     {
         //Fields 
         private bool _isStarted;
@@ -33,9 +33,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
         }
 
         ~NamedPipeServer()
-        {
-            Dispose();
-        }
+            => Dispose();
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -148,7 +146,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
 
         public async Task MulticastAsync(string text)
         {
-            await MulticastAsync(text, Encoding.UTF8).ConfigureAwait(false);
+            await MulticastAsync(text, Encoding.UTF8);
         }
 
         public async Task MulticastAsync(string text, Encoding encoding)
@@ -157,12 +155,12 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
             _ = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
             var data = encoding.GetBytes(text);
-            await MulticastAsync(data).ConfigureAwait(false);
+            await MulticastAsync(data);
         }
 
         public async Task MulticastAsync(IEnumerable<byte> data)
         {
-            await MulticastAsync(data?.ToArray()).ConfigureAwait(false);
+            await MulticastAsync(data?.ToArray());
         }
 
         public async Task MulticastAsync(params byte[] data)
@@ -173,8 +171,8 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
 
             foreach (var pipe in ConnectedPipes)
             {
-                await pipe.WriteAsync(data.AsMemory(0, data.Length)).ConfigureAwait(false);
-                await pipe.FlushAsync().ConfigureAwait(false);
+                await pipe.WriteAsync(data.AsMemory(0, data.Length));
+                await pipe.FlushAsync();
                 OnDataSent(pipe, data);
             }
         }
@@ -242,7 +240,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
 
             try
             {
-                await (pipe?.FlushAsync()).ConfigureAwait(false);
+                await pipe?.FlushAsync();
                 pipe?.WaitForPipeDrain();
                 if (pipe.IsConnected)
                     pipe?.Disconnect();

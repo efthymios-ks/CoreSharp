@@ -11,18 +11,18 @@ namespace CoreSharp.Extensions
     public static class DataTableExtensions
     {
         /// <summary>
-        /// Get DataTable column names.
+        /// Get <see cref="DataTable"/> <see cref="DataColumn.ColumnName"/> list.
         /// </summary>
         public static IEnumerable<string> GetColumnNames(this DataTable table)
         {
             _ = table ?? throw new ArgumentNullException(nameof(table));
 
             var columns = table.Columns.Cast<DataColumn>();
-            return columns.Select(x => x.ColumnName);
+            return columns.Select(c => c.ColumnName);
         }
 
         /// <summary>
-        /// Map DataTable values to TEntity collection.
+        /// Map <see cref="DataTable"/> values to TEntity collection.
         /// </summary>
         public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
         {
