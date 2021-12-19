@@ -626,17 +626,17 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToEntity_OptionsIsNull_ThrowArgumentNullException()
+        public void FromJson_OptionsIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => StringEmpty.ToEntity<DummyClass>(null);
+            Action action = () => StringEmpty.FromJson<DummyClass>(null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void ToEntity_WhenCalled_MapItemPropertiesAndReturnTrue()
+        public void FromJson_WhenCalled_MapItemPropertiesAndReturnTrue()
         {
             //Arrange
             const int id = 1;
@@ -647,7 +647,7 @@ namespace CoreSharp.Extensions.Tests
                 .Replace("{name}", name);
 
             //Act
-            var result = json.ToEntity<DummyClass>();
+            var result = json.FromJson<DummyClass>();
 
             //Assert  
             result.Id.Should().Be(id);

@@ -15,17 +15,17 @@ namespace CoreSharp.Extensions.Tests
         private readonly Stream _streamNull = null;
 
         [Test]
-        public void ToEntity_OptionsIsNull_ThrowArgumentNullException()
+        public void FromJson_OptionsIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => _streamNull.ToEntity<DummyClass>();
+            Action action = () => _streamNull.FromJson<DummyClass>();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public async Task ToEntity_WhenCalled_MapItemPropertiesAndReturnTrue()
+        public async Task FromJson_WhenCalled_MapItemPropertiesAndReturnTrue()
         {
             //Arrange
             var dummy = new DummyClass(1, "Black");
@@ -33,7 +33,7 @@ namespace CoreSharp.Extensions.Tests
             await JsonSerializer.SerializeAsync(stream, dummy);
 
             //Act
-            var result = stream.ToEntity<DummyClass>();
+            var result = stream.FromJson<DummyClass>();
 
             //Assert 
             result.Id.Should().Be(dummy.Id);

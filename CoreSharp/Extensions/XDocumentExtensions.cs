@@ -15,13 +15,13 @@ namespace CoreSharp.Extensions
     public static class XDocumentExtensions
     {
         /// <inheritdoc cref="XmlSerializer.Deserialize(XmlReader)"/>
-        public static T Deserialize<T>(this XDocument document)
+        public static TEntity To<TEntity>(this XDocument document)
         {
             _ = document ?? throw new ArgumentNullException(nameof(document));
 
-            var xmlSerializer = new XmlSerializer(typeof(T));
+            var xmlSerializer = new XmlSerializer(typeof(TEntity));
             using var reader = document.Root?.CreateReader();
-            return (T)xmlSerializer.Deserialize(reader!);
+            return (TEntity)xmlSerializer.Deserialize(reader!);
         }
 
         /// <summary>

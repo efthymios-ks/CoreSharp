@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace CoreSharp.Extensions
 {
@@ -288,22 +289,20 @@ namespace CoreSharp.Extensions
             return input;
         }
 
-        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
-        public static TEntity ToEntity<TEntity>(this string json) where TEntity : class
-            => json.ToEntity(typeof(TEntity)) as TEntity;
+        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this string json) where TEntity : class
+            => json.FromJson(typeof(TEntity)) as TEntity;
 
-        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
-        public static object ToEntity(this string json, Type entityType)
-            => json.ToEntity(entityType, DefaultJsonSettings.Instance);
+        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
+        public static object FromJson(this string json, Type entityType)
+            => json.FromJson(entityType, DefaultJsonSettings.Instance);
 
-        /// <inheritdoc cref="ToEntity(string, Type, JsonSerializerSettings)"/>
-        public static TEntity ToEntity<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
-           => json.ToEntity(typeof(TEntity), settings) as TEntity;
+        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
+           => json.FromJson(typeof(TEntity), settings) as TEntity;
 
-        /// <summary>
-        /// Parse json to entity.
-        /// </summary>
-        public static object ToEntity(this string json, Type entityType, JsonSerializerSettings settings)
+        /// <inheritdoc cref="JsonConvert.DeserializeObject(string, Type?, JsonSerializerSettings?)" />
+        public static object FromJson(this string json, Type entityType, JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
@@ -317,8 +316,12 @@ namespace CoreSharp.Extensions
             }
         }
 
+        /// <inheritdoc cref="XDocumentExtensions.To{TEntity}(XDocument)" />
+        public static TEntity FromXml<TEntity>(this string xml) where TEntity : class
+            => XDocument.Parse(xml).To<TEntity>();
+
         /// <summary>
-        /// Parse json to ToExpandoObject.
+        /// Convert json to <see cref="ExpandoObject"/>.
         /// </summary>
         public static dynamic ToExpandoObject(this string json)
         {

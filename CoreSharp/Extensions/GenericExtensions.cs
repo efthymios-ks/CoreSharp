@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -152,20 +153,22 @@ namespace CoreSharp.Extensions
         public static bool IsDefault<T>(this T input) where T : struct
             => input.Equals(default(T));
 
-        /// <summary>
-        /// Serialize to <see cref="XDocument"/>.
-        /// </summary>
-        public static XDocument ToXDocument<T>(this T input) where T : class
+        /// <inheritdoc cref="XmlSerializer.Serialize(XmlWriter, object?)" />
+        public static XDocument ToXDocument<TEntity>(this TEntity entity) where TEntity : class
         {
-            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            var serializer = new XmlSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof(TEntity));
             var document = new XDocument();
             using var writer = document.CreateWriter();
-            serializer.Serialize(writer, input);
+            serializer.Serialize(writer, entity);
 
             return document;
         }
+
+        /// <inheritdoc cref="ToXDocument{TEntity}(TEntity)" />
+        public static string ToXml<TEntity>(this TEntity entity) where TEntity : class
+            => entity.ToXDocument().ToString();
 
         /// <inheritdoc cref="GetPropertiesDictionary{TEntity}(TEntity, BindingFlags)"/>
         public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity) where TEntity : class
