@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CoreSharp.Extensions
 {
@@ -22,7 +23,8 @@ namespace CoreSharp.Extensions
             => stream.FromJson(entityType, DefaultJsonSettings.Instance);
 
         /// <inheritdoc cref="FromJson(Stream, Type, JsonSerializerSettings)"/>
-        public static TEntity FromJson<TEntity>(this Stream stream, JsonSerializerSettings settings) where TEntity : class
+        public static TEntity FromJson<TEntity>(this Stream stream, JsonSerializerSettings settings)
+            where TEntity : class
            => stream.FromJson(typeof(TEntity), settings) as TEntity;
 
         /// <inheritdoc cref="JsonSerializer.Deserialize(JsonReader, Type?)" />
@@ -42,6 +44,34 @@ namespace CoreSharp.Extensions
                 using var streamReader = new StreamReader(stream);
                 using var jsonReader = new JsonTextReader(streamReader);
                 return serializer.Deserialize(jsonReader, entityType);
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
+            }
+        }
+
+        /// <inheritdoc cref="XDocumentExtensions.To{TEntity}(XDocument)" />
+        public static async Task<TEntity> FromXmlAsync<TEntity>(this Stream stream, CancellationToken cancellationToken = default)
+            where TEntity : class
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+
+            if (!stream.CanRead)
+                throw new NotSupportedException($"{nameof(stream)} is not readable.");
+
+            try
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
+
+                var document = await XDocument.LoadAsync(stream, LoadOptions.None, cancellationToken);
+                return document.To<TEntity>();
             }
             catch
             {

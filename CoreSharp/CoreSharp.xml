@@ -5,21 +5,7 @@
     </assembly>
     <members>
         <member name="T:CoreSharp.Abstracts.DisposableBase">
-            <summary>
-            Automatic and safe disposing.
-            Just override the two clean-up methods.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Abstracts.DisposableBase.Finalize">
-            <summary>
-            Deconstructor.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Abstracts.DisposableBase.Dispose">
-            <summary>
-            Performs application-defined tasks associated with freeing,
-            releasing, or resetting unmanaged resources.
-            </summary>
+            <inheritdoc cref="T:System.IDisposable"/>
         </member>
         <member name="M:CoreSharp.Abstracts.DisposableBase.DisposeNativeResources(System.Boolean)">
             <summary>
@@ -315,17 +301,17 @@
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnNames(System.Data.DataRow)">
             <summary>
-            Get DataRow column names.
+            Get <see cref="T:System.Data.DataRow"/> <see cref="P:System.Data.DataColumn.Namespace"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnValues(System.Data.DataRow)">
             <summary>
-            Get DataRow column values.
+            Get <see cref="T:System.Data.DataRow"/> column values.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.ToEntity``1(System.Data.DataRow,System.Boolean)">
             <summary>
-            Map DataRow values to TEntity.
+            Map <see cref="T:System.Data.DataRow"/> values to TEntity.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.DataTableExtensions">
@@ -335,12 +321,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.DataTableExtensions.GetColumnNames(System.Data.DataTable)">
             <summary>
-            Get DataTable column names.
+            Get <see cref="T:System.Data.DataTable"/> <see cref="P:System.Data.DataColumn.ColumnName"/> list.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DataTableExtensions.ToEntities``1(System.Data.DataTable,System.Boolean)">
             <summary>
-            Map DataTable values to TEntity collection.
+            Map <see cref="T:System.Data.DataTable"/> values to TEntity collection.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.DateTimeExtensions">
@@ -542,7 +528,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.ExceptionExtensions.Flatten(System.Exception)">
             <summary>
-            Return unfolded list of exceptions including nested ones.
+            Return unfolded list of <see cref="T:System.Exception"/> including nested ones.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.ExpandoObjectExtensions">
@@ -552,7 +538,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.ExpandoObjectExtensions.ToDictionary(System.Dynamic.ExpandoObject)">
             <summary>
-            Convert to dictionary.
+            Convert to <see cref="T:System.Collections.Generic.IDictionary`2"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.ExpandoObjectExtensions.GetValue``1(System.Dynamic.ExpandoObject,System.String)">
@@ -619,7 +605,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
-            Compares two objects by converting them to json (string).
+            Compares two <see cref="T:System.Object"/> by converting them to json (<see cref="T:System.String"/>).
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ReflectionClone``1(``0)">
@@ -629,7 +615,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ReflectionEquals``1(``0,``0)">
             <summary>
-            Compares two objects using reflection and public properties.
+            Compares two <see cref="T:System.Object"/> using reflection and public properties.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.IsNull``1(``0)">
@@ -644,9 +630,10 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToXDocument``1(``0)">
-            <summary>
-            Serialize to XDocument.
-            </summary>
+            <inheritdoc cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.Xml.XmlWriter,System.Object)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToXml``1(``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToXDocument``1(``0)" />
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0,System.Reflection.BindingFlags)"/>
@@ -673,6 +660,39 @@
         <member name="M:CoreSharp.Extensions.GuidExtensions.IsNullOrEmpty(System.Guid)">
             <summary>
             Compare given value with <see cref="F:System.Guid.Empty"/>.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.HttpContentExtensions">
+            <summary>
+            <see cref="T:System.Net.Http.HttpContent"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContentExtensions.GetContentType(System.Net.Http.HttpContent)">
+            <inheritdoc cref="M:CoreSharp.Extensions.HttpContentHeadersExtensions.GetContentType(System.Net.Http.Headers.HttpContentHeaders)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContentExtensions.DeserializeAsync``1(System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <summary>
+            Check <see cref="P:System.Net.Http.HttpContent.Headers"/>
+            for <see cref="F:Microsoft.Net.Http.Headers.HeaderNames.ContentType"/>
+            and map accordingly.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContentExtensions.FromJsonAsync``1(System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContentExtensions.FromXmlAsync``1(System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="T:CoreSharp.Extensions.HttpContentHeadersExtensions">
+            <summary>
+            <see cref="T:System.Net.Http.Headers.HttpContentHeaders"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContentHeadersExtensions.GetContentType(System.Net.Http.Headers.HttpContentHeaders)">
+            <summary>
+            Extract <see cref="T:System.Net.Mime.ContentType"/> using
+            <see cref="F:Microsoft.Net.Http.Headers.HeaderNames.ContentType"/> header.
+            If any.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.HttpResponseMessageExtensions">
@@ -881,26 +901,19 @@
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.TakeSkip``1(System.Collections.Generic.IEnumerable{``0},System.Int32[])">
             <summary>
             Take/Skip items in a given order.
-            Positive Chunk value means take.
-            Negative Chunk value means skips.
-            </summary>
-            <example>
-            In this sample we Take(2), then Skip(3), then Take(1).
+            Positive chunk value means take.
+            Negative chunk value means skip.
             <code>
             var source = GetSource();
             var sequence = source.TakeSkip(2, -3, 1);
             </code>
-            </example>
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Except``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
-            <summary>
-            LINQ Except(), using a key for equality comparison.
-            </summary>
+            <inheritdoc cref="M:System.Linq.Enumerable.Except``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Intersect``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
-            <summary>
-            LINQ Intersect(), using a key for equality comparison.
-            </summary>
+            <inheritdoc cref="M:System.Linq.Enumerable.Intersect``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Flatten``1(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{``0}})">
             <summary>
@@ -929,11 +942,9 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Contains``2(System.Collections.Generic.IEnumerable{``0},``0,System.Func{``0,``1})">
-            <summary>
-            Check if source contains a specific item, using a key for equality comparison.
-            </summary>
+            <inheritdoc cref="M:System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0,System.Collections.Generic.IEqualityComparer{``0})"/>
         </member>
-        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Paginate``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPage``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
             <inheritdoc cref="M:CoreSharp.Extensions.IQueryableExtensions.GetPage``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.GetPages``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
@@ -975,7 +986,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ToDataTable``1(System.Collections.Generic.IEnumerable{``0},System.String)">
             <summary>
-            Convert collection of entities to DataTable.
+            Convert collection of entities to <see cref="T:System.Data.DataTable"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.StartsWith``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
@@ -1398,19 +1409,20 @@
             <see cref="T:System.IO.Stream"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.StreamExtensions.ToEntity``1(System.IO.Stream)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StreamExtensions.ToEntity``1(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StreamExtensions.ToEntity(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
-            <summary>
-            Parse <see cref="T:System.IO.Stream"/> json to entity.
-            </summary>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
+            <inheritdoc cref="M:Newtonsoft.Json.JsonSerializer.Deserialize(Newtonsoft.Json.JsonReader,System.Type)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)" />
         </member>
         <member name="M:CoreSharp.Extensions.StreamExtensions.ToFileAsync(System.IO.Stream,System.String,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -1565,23 +1577,24 @@
             Trim with null check.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.StringExtensions.ToEntity``1(System.String)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.ToEntity(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson``1(System.String)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StringExtensions.ToEntity(System.String,System.Type)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.ToEntity(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StringExtensions.ToEntity``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
-            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.ToEntity(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.StringExtensions.ToEntity(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
-            <summary>
-            Parse json to entity.
-            </summary>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
+            <inheritdoc cref="M:Newtonsoft.Json.JsonConvert.DeserializeObject(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)" />
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromXml``1(System.String)">
+            <inheritdoc cref="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)" />
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToExpandoObject(System.String)">
             <summary>
-            Parse json to ToExpandoObject.
+            Convert json to <see cref="T:System.Dynamic.ExpandoObject"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.GetLines(System.String,System.StringSplitOptions)">
@@ -1879,7 +1892,7 @@
             <see cref="T:System.Xml.Linq.XDocument"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.XDocumentExtensions.Deserialize``1(System.Xml.Linq.XDocument)">
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)">
             <inheritdoc cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.Xml.XmlReader)"/>
         </member>
         <member name="M:CoreSharp.Extensions.XDocumentExtensions.GetElements(System.Xml.Linq.XDocument,System.String[])">

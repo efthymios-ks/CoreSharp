@@ -51,13 +51,13 @@ namespace CoreSharp.Extensions
             return stream.FromJson<TResponse>();
         }
 
-        /// <inheritdoc cref="StringExtensions.FromXml{TEntity}(string)"/>
+        /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
         public static async Task<TResponse> FromXmlAsync<TResponse>(this HttpContent httpContent, CancellationToken cancellationToken = default) where TResponse : class
         {
             _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
 
-            var xml = await httpContent.ReadAsStringAsync(cancellationToken);
-            return xml.FromXml<TResponse>();
+            using var stream = await httpContent.ReadAsStreamAsync(cancellationToken);
+            return await stream.FromXmlAsync<TResponse>(cancellationToken);
         }
     }
 }
