@@ -278,6 +278,18 @@
             Get column from 2D array.
             </summary>
         </member>
+        <member name="T:CoreSharp.Extensions.AssemblyExtensions">
+            <summary>
+            <see cref="T:System.Reflection.Assembly"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.AssemblyExtensions.LoadReferencedAssemblies(System.Reflection.Assembly)">
+            <summary>
+            Loads all referenced <see cref="T:System.Reflection.Assembly"/> list
+            using <see cref="M:System.Reflection.Assembly.GetReferencedAssemblies"/>
+            and <see cref="M:System.Reflection.Assembly.Load(System.Reflection.AssemblyName)"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.AssemblyNameExtensions">
             <summary>
             <see cref="T:System.Reflection.AssemblyName"/> extensions.
