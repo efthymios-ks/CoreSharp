@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Xml;
+using System.Threading;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -14,7 +15,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class XDocumentExtensions
     {
-        /// <inheritdoc cref="XmlSerializer.Deserialize(XmlReader)"/>
+        /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
         public static TEntity To<TEntity>(this XDocument document)
         {
             _ = document ?? throw new ArgumentNullException(nameof(document));

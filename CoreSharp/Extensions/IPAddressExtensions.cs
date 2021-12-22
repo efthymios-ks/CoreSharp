@@ -10,10 +10,6 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class IPAddressExtensions
     {
-        /// <inheritdoc cref="PingAsync(IPAddress, int)"/>
-        public static bool Ping(this IPAddress address, int timeoutMillis = 5000)
-            => address.PingAsync(timeoutMillis).GetAwaiter().GetResult();
-
         /// <inheritdoc cref="Ping.SendPingAsync(string, int)"/>
         public static async Task<bool> PingAsync(this IPAddress address, int timeoutMillis = 5000)
         {

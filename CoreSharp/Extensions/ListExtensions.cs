@@ -8,7 +8,9 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class ListExtensions
     {
-        /// <inheritdoc cref="List{T}.Sort(IComparer{T}?)" />
+        /// <summary>
+        /// Sorts the elements in the <see cref="List{T}"/>.
+        /// </summary>
         public static void Sort<TEntity, TKey>(this List<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));

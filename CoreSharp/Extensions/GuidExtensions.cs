@@ -12,7 +12,8 @@ namespace CoreSharp.Extensions
             => (guid ?? Guid.Empty).IsNullOrEmpty();
 
         /// <summary>
-        /// Compare given value with <see cref="Guid.Empty"/>.
+        /// Indicates whether the specified <see cref="Guid"/> is
+        /// null or an empty <see cref="Guid.Empty"/>.
         /// </summary>
         public static bool IsNullOrEmpty(this Guid guid)
             => guid == Guid.Empty;

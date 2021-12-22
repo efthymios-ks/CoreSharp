@@ -26,6 +26,9 @@
             Usually fields and properties set in constructor.
             </summary>
         </member>
+        <member name="T:CoreSharp.Abstracts.Http.HttpMiddlewareBase">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Http.IMiddleware" />
+        </member>
         <member name="T:CoreSharp.Abstracts.NotifyPropertyChangedBase">
             <inheritdoc cref="T:System.ComponentModel.INotifyPropertyChanged" />
         </member>
@@ -313,7 +316,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnNames(System.Data.DataRow)">
             <summary>
-            Get <see cref="T:System.Data.DataRow"/> <see cref="P:System.Data.DataColumn.Namespace"/>.
+            Get <see cref="P:System.Data.DataColumn.Namespace"/>
+            from <see cref="T:System.Data.DataRow"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.GetColumnValues(System.Data.DataRow)">
@@ -323,7 +327,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.DataRowExtensions.ToEntity``1(System.Data.DataRow,System.Boolean)">
             <summary>
-            Map <see cref="T:System.Data.DataRow"/> values to TEntity.
+            Map <see cref="T:System.Data.DataRow"/> values to provided type.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.DataTableExtensions">
@@ -333,12 +337,13 @@
         </member>
         <member name="M:CoreSharp.Extensions.DataTableExtensions.GetColumnNames(System.Data.DataTable)">
             <summary>
-            Get <see cref="T:System.Data.DataTable"/> <see cref="P:System.Data.DataColumn.ColumnName"/> list.
+            Get <see cref="P:System.Data.DataColumn.ColumnName"/> list
+            from <see cref="T:System.Data.DataTable"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DataTableExtensions.ToEntities``1(System.Data.DataTable,System.Boolean)">
             <summary>
-            Map <see cref="T:System.Data.DataTable"/> values to TEntity collection.
+            Map <see cref="T:System.Data.DataTable"/> values provided type collection.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.DateTimeExtensions">
@@ -353,35 +358,38 @@
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.HasExpired(System.DateTime,System.TimeSpan)">
             <summary>
-            Check if specific TimeSpan has passed since a DateTime.
+            Check if specific <see cref="T:System.TimeSpan"/> has passed
+            starting from provided <see cref="T:System.DateTime"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.IsWeekend(System.DateTime)">
             <summary>
-            Check if date is in a weekend.
+            Check if <see cref="T:System.DateTime"/> is in a weekend.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.IsInLeapYear(System.DateTime)">
             <summary>
-            Check if date is in a leap year.
+            Check if <see cref="T:System.DateTime"/> is in a leap year.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.Trim(System.DateTime,CoreSharp.Enums.DateTimeParts)">
             <summary>
-            Trim part of DateTime.
-            </summary>
+            Trim part of <see cref="T:System.DateTime"/>.
             <example>
+            <code>
             var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds);
+            </code>
             </example>
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.ToStringSortable(System.DateTime)">
             <summary>
-            Convert DateTime to sortable format using "u" specifier.
+            Convert <see cref="T:System.DateTime"/> to sortable format using "u" specifier.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.ToStringSortableUtc(System.DateTime)">
             <summary>
-            Convert DateTime to UTC sortable format using "ο" specifier.
+            Convert <see cref="T:System.DateTime"/> to UTC sortable format using "ο" specifier.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.ToShortDateString(System.DateTime,System.Globalization.CultureInfo)">
@@ -418,12 +426,6 @@
         <member name="M:CoreSharp.Extensions.DbConnectionExtensions.CreateParameter(System.Data.Common.DbConnection,System.String,System.Object)">
             <inheritdoc cref="M:CoreSharp.Extensions.DbProviderFactoryExtensions.CreateParameter(System.Data.Common.DbProviderFactory,System.String,System.Object)" />
         </member>
-        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransaction(System.Data.Common.DbConnection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection,System.Data.IsolationLevel)" />
-        </member>
-        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransaction(System.Data.Common.DbConnection,System.Data.IsolationLevel)">
-            <inheritdoc cref="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection,System.Data.IsolationLevel)" />
-        </member>
         <member name="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection)">
             <inheritdoc cref="M:CoreSharp.Extensions.DbConnectionExtensions.OpenTransactionAsync(System.Data.Common.DbConnection,System.Data.IsolationLevel)" />
         </member>
@@ -436,9 +438,6 @@
             <summary>
             Check <see cref="P:System.Data.Common.DbConnection.State"/> for <see cref="F:System.Data.ConnectionState.Open"/>.
             </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.DbConnectionExtensions.IsAvailable(System.Data.Common.DbConnection)">
-            <inheritdoc cref="M:CoreSharp.Extensions.DbConnectionExtensions.IsAvailableAsync(System.Data.Common.DbConnection,System.Threading.CancellationToken)" />
         </member>
         <member name="M:CoreSharp.Extensions.DbConnectionExtensions.IsAvailableAsync(System.Data.Common.DbConnection,System.Threading.CancellationToken)">
             <summary>
@@ -535,7 +534,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.ExceptionExtensions.FlattenMessages(System.Exception)">
             <summary>
-            Get all messages, including nested exceptions.
+            Get all <see cref="P:System.Exception.Message"/>,
+            including nested <see cref="T:System.Exception"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.ExceptionExtensions.Flatten(System.Exception)">
@@ -590,18 +590,20 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,System.Collections.Generic.IEnumerable{``0})">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])"/>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
-            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])"/>
-        </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])">
-            <inheritdoc cref="M:System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0)"/>>
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Determines whether a sequence contains the specified element.
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
-            Serialize object to json.
+            Serialize the specified object to JSON.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0)">
@@ -609,7 +611,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
-            Perform a deep copy using Json serialization.
+            Perform a deep copy using json serialization.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0)">
@@ -617,7 +619,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
-            Compares two <see cref="T:System.Object"/> by converting them to json (<see cref="T:System.String"/>).
+            Compares two <see cref="T:System.Object"/> by converting them to JSON (<see cref="T:System.String"/>).
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ReflectionClone``1(``0)">
@@ -642,7 +644,9 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToXDocument``1(``0)">
-            <inheritdoc cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.Xml.XmlWriter,System.Object)" />
+            <summary>
+            Serializes an object into an XML document.
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToXml``1(``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToXDocument``1(``0)" />
@@ -652,7 +656,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.GetPropertiesDictionary``1(``0,System.Reflection.BindingFlags)">
             <summary>
-            Convert  item to <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Convert item properties to <see cref="T:System.Collections.Generic.IDictionary`2"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.GetAttributes``3(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -671,7 +675,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.GuidExtensions.IsNullOrEmpty(System.Guid)">
             <summary>
-            Compare given value with <see cref="F:System.Guid.Empty"/>.
+            Indicates whether the specified <see cref="T:System.Guid"/> is
+            null or an empty <see cref="F:System.Guid.Empty"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.HttpContentExtensions">
@@ -714,8 +719,11 @@
         </member>
         <member name="M:CoreSharp.Extensions.HttpResponseMessageExtensions.EnsureSuccessAsync(System.Net.Http.HttpResponseMessage)">
             <summary>
-            Ensure <see cref="T:System.Net.Http.HttpResponseMessage" /> was successful using <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode" />.
-            Throws <see cref="T:CoreSharp.Models.HttpResponseException" /> if not, including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode" /> and <see cref="P:System.Net.Http.HttpResponseMessage.Content" />.
+            Ensure <see cref="T:System.Net.Http.HttpResponseMessage" /> was successful using
+            <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode" />.
+            Throws <see cref="T:CoreSharp.Models.HttpResponseException" /> if not,
+            including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode" />
+            and <see cref="P:System.Net.Http.HttpResponseMessage.Content" />.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.ICollectionExtensions">
@@ -727,14 +735,17 @@
             <inheritdoc cref="M:CoreSharp.Extensions.ICollectionExtensions.AddRange``1(System.Collections.Generic.ICollection{``0},``0[])"/>
         </member>
         <member name="M:CoreSharp.Extensions.ICollectionExtensions.AddRange``1(System.Collections.Generic.ICollection{``0},``0[])">
-            <inheritdoc cref="M:System.Collections.Generic.List`1.AddRange(System.Collections.Generic.IEnumerable{`0})"/>
+            <summary>
+            Adds the elements to the end
+            of the provided <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``1(System.Collections.Generic.ICollection{``0},``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``2(System.Collections.Generic.ICollection{``0},``0,System.Func{``0,``1})"/>
         </member>
         <member name="M:CoreSharp.Extensions.ICollectionExtensions.TryAdd``2(System.Collections.Generic.ICollection{``0},``0,System.Func{``0,``1})">
             <summary>
-            Add item in collection only if not already existing.
+            Add item in <see cref="T:System.Collections.Generic.ICollection`1"/> only if not already existing.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IComparableExtensions">
@@ -809,18 +820,19 @@
         </member>
         <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToEnumerable``2(System.Collections.Generic.IDictionary{``0,``1})">
             <summary>
-            Converts dictionary to KeyValuePair enumerable.
+            Converts <see cref="T:System.Collections.Generic.IDictionary`2"/> to
+            <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:System.Collections.Generic.KeyValuePair`2"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ContainsValue``2(System.Collections.Generic.IDictionary{``0,``1},``1)">
             <summary>
-            Returns given value occurrences in dictionary.
+            Returns given value occurrences in <see cref="T:System.Collections.Generic.IDictionary`2"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToUrlQueryString``1(System.Collections.Generic.IDictionary{System.String,``0})">
             <summary>
             Build url query string from parameters dictionary.
-            Converts both key and value to string with default converter.
+            Converts both key and value to <see cref="T:System.String"/> with default converter.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IEnumerableExtensions">
@@ -840,12 +852,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.OrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Return empty collection if source is null.
+            Return <see cref="M:System.Linq.Enumerable.Empty``1"/> if source is null.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.ConvertAll``1(System.Collections.IEnumerable)">
             <summary>
-            Convert items to given type.
+            Convert items to provided type.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Exclude``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
@@ -1064,7 +1076,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.IListExtensions.Fill``1(System.Collections.Generic.IList{``0},``0)">
             <summary>
-            Fill list with given value.
+            Fill <see cref="T:System.Collections.Generic.IList`1"/> with given value.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IListExtensions.Remove``1(System.Collections.Generic.IList{``0},System.Func{``0,System.Boolean})">
@@ -1090,83 +1102,80 @@
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.January(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in January in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in January in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.February(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in February in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in February in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.March(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in March in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in March in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.April(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in April in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in April in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.May(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in May in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in May in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.June(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in June in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in June in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.July(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in July in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in July in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.August(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in August in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/>in August in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.September(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in September in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in September in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.October(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in October in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in October in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.November(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day
-            in November in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the specified
+            <see cref="P:System.DateTime.Day"/> in November in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.IntExtensions.December(System.Int32,System.Int32)">
             <summary>
-            Returns a <see cref="T:System.DateTime"/> representing the specified day in
-            December in the specified year.
+            Returns a <see cref="T:System.DateTime"/> representing the
+            specified in December in the specified <see cref="P:System.DateTime.Year"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IPAddressExtensions">
             <summary>
             <see cref="T:System.Net.IPAddress"/> extensions.
             </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IPAddressExtensions.Ping(System.Net.IPAddress,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IPAddressExtensions.PingAsync(System.Net.IPAddress,System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.IPAddressExtensions.PingAsync(System.Net.IPAddress,System.Int32)">
             <inheritdoc cref="M:System.Net.NetworkInformation.Ping.SendPingAsync(System.String,System.Int32)"/>
@@ -1175,9 +1184,6 @@
             <summary>
             <see cref="T:System.Net.IPEndPoint"/> extensions.
             </summary>
-        </member>
-        <member name="M:CoreSharp.Extensions.IPEndPointExtensions.Ping(System.Net.IPEndPoint,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.IPEndPointExtensions.PingAsync(System.Net.IPEndPoint,System.Int32)"/>
         </member>
         <member name="M:CoreSharp.Extensions.IPEndPointExtensions.PingAsync(System.Net.IPEndPoint,System.Int32)">
             <inheritdoc cref="M:CoreSharp.Extensions.IPAddressExtensions.PingAsync(System.Net.IPAddress,System.Int32)"/>
@@ -1235,7 +1241,9 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.ListExtensions.Sort``2(System.Collections.Generic.List{``0},System.Func{``0,``1})">
-            <inheritdoc cref="M:System.Collections.Generic.List`1.Sort(System.Collections.Generic.IComparer{`0})" />
+            <summary>
+            Sorts the elements in the <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
         </member>
         <member name="T:CoreSharp.Extensions.MemberInfoExtensions">
             <summary>
@@ -1296,10 +1304,10 @@
             <see cref="T:System.Object"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.ObjectExtensions.AsOrDefault``1(System.Object)">
-            <inheritdoc cref="M:CoreSharp.Extensions.ObjectExtensions.AsOrDefault``1(System.Object,``0)"/>
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.GetVaue``1(System.Object)">
+            <inheritdoc cref="M:CoreSharp.Extensions.ObjectExtensions.GetValueOr``1(System.Object,``0)"/>
         </member>
-        <member name="M:CoreSharp.Extensions.ObjectExtensions.AsOrDefault``1(System.Object,``0)">
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.GetValueOr``1(System.Object,``0)">
             <summary>
             Try casting input to given type and
             return default if null or of different type.
@@ -1431,10 +1439,16 @@
             <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
-            <inheritdoc cref="M:Newtonsoft.Json.JsonSerializer.Deserialize(Newtonsoft.Json.JsonReader,System.Type)" />
+            <summary>
+            Parses the text representing a JSON object
+            into an instance of the type specified.
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)">
-            <inheritdoc cref="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)" />
+            <summary>
+            Parses the text representing an XML document
+            into an instance of the type specified.
+            </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StreamExtensions.ToFileAsync(System.IO.Stream,System.String,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -1534,7 +1548,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.EqualsAnyCI(System.String,System.String[])">
             <summary>
-            Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            Check if given input equals to any of
+            the given values <see cref="F:System.StringComparison.InvariantCultureIgnoreCase"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.StartsWithAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -1542,7 +1557,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.StartsWithAnyCI(System.String,System.String[])">
             <summary>
-            Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            Check if given input starts with any of
+            the given values <see cref="F:System.StringComparison.InvariantCultureIgnoreCase"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.EndsWithAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -1550,7 +1566,8 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.EndsWithAnyCI(System.String,System.String[])">
             <summary>
-            Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+            Check if given input ends with any of
+            the given values <see cref="F:System.StringComparison.InvariantCultureIgnoreCase"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ContainsAnyCI(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -1558,22 +1575,19 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ContainsAnyCI(System.String,System.String[])">
             <summary>
-            Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
+            Check if given input contains any of
+            the given values <see cref="F:System.StringComparison.InvariantCultureIgnoreCase"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.IsNullOrEmpty(System.String)">
-            <summary>
-            Check if input is null or empty.
-            </summary>
+            <inheritdoc cref="M:System.String.IsNullOrEmpty(System.String)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.IsNullOrWhiteSpace(System.String)">
-            <summary>
-            Check if input is null or whitespace.
-            </summary>
+            <inheritdoc cref="M:System.String.IsNullOrWhiteSpace(System.String)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.Reverse(System.String)">
             <summary>
-            Reverse a string.
+            Reverse a <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.Erase(System.String,System.Char)">
@@ -1581,7 +1595,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.Erase(System.String,System.String)">
             <summary>
-            Erase given value from string.
+            Erase given value from <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.SafeTrim(System.String,System.Char[])">
@@ -1599,14 +1613,14 @@
             <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
-            <inheritdoc cref="M:Newtonsoft.Json.JsonConvert.DeserializeObject(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)" />
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.FromXml``1(System.String)">
-            <inheritdoc cref="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)" />
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.ToExpandoObject(System.String)">
             <summary>
-            Convert json to <see cref="T:System.Dynamic.ExpandoObject"/>.
+            Convert JSON to <see cref="T:System.Dynamic.ExpandoObject"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.GetLines(System.String,System.StringSplitOptions)">
@@ -1788,9 +1802,6 @@
             <see cref="T:System.Net.Sockets.TcpClient"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.TcpClientExtensions.IsConnected(System.Net.Sockets.TcpClient,System.Int32)">
-            <inheritdoc cref="M:CoreSharp.Extensions.TcpClientExtensions.IsConnectedAsync(System.Net.Sockets.TcpClient,System.Int32)"/>
-        </member>
         <member name="M:CoreSharp.Extensions.TcpClientExtensions.IsConnectedAsync(System.Net.Sockets.TcpClient,System.Int32)">
             <inheritdoc cref="M:CoreSharp.Extensions.SocketExtensions.IsConnected(System.Net.Sockets.Socket,System.Int32)"/>
         </member>
@@ -1905,7 +1916,7 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)">
-            <inheritdoc cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.Xml.XmlReader)"/>
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)"/>
         </member>
         <member name="M:CoreSharp.Extensions.XDocumentExtensions.GetElements(System.Xml.Linq.XDocument,System.String[])">
             <summary>
@@ -2003,6 +2014,13 @@
         <member name="T:CoreSharp.Models.HttpResponseException">
             <summary>
             Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> exception.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.HttpResponseException.ParseAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
+            <summary>
+            Create new instance of <see cref="T:CoreSharp.Models.HttpResponseException"/>
+            using a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            Does not dispose <see cref="T:System.Net.Http.HttpResponseMessage"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.TryParseValue(System.String,`0@)">

@@ -8,7 +8,8 @@ namespace CoreSharp.Extensions
     public static class IServiceProviderExtensions
     {
         /// <inheritdoc cref="IServiceProvider.GetService(Type)"/>
-        public static TService GetService<TService>(this IServiceProvider serviceProvider) where TService : class
+        public static TService GetService<TService>(this IServiceProvider serviceProvider)
+            where TService : class
         {
             _ = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 

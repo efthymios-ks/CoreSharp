@@ -31,17 +31,6 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" />
-        public static DbTransaction OpenTransaction(this DbConnection connection)
-            => connection.OpenTransaction(IsolationLevel.ReadCommitted);
-
-        /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" />
-        public static DbTransaction OpenTransaction(this DbConnection connection, IsolationLevel isolationLevel)
-            => connection
-                .OpenTransactionAsync(isolationLevel)
-                .GetAwaiter()
-                .GetResult();
-
-        /// <inheritdoc cref="OpenTransactionAsync(DbConnection, IsolationLevel)" />
         public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection)
             => await connection.OpenTransactionAsync(IsolationLevel.ReadCommitted);
 
@@ -67,13 +56,6 @@ namespace CoreSharp.Extensions
 
             return connection.State.HasFlag(ConnectionState.Open);
         }
-
-        /// <inheritdoc cref="IsAvailableAsync(DbConnection, CancellationToken)" />
-        public static bool IsAvailable(this DbConnection connection)
-            => connection
-                    .IsAvailableAsync()
-                    .GetAwaiter()
-                    .GetResult();
 
         /// <summary>
         /// Chain calls <see cref="DbConnection.OpenAsync(CancellationToken)"/> and <see cref="DbConnection.CloseAsync"/>.

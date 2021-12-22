@@ -74,16 +74,6 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void OpenTransaction_ConnectionIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _connectionNull.OpenTransaction();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
         public void IsOpen_ConnectionIsNull_ThrowArgumentNullException()
         {
             //Act

@@ -17,7 +17,8 @@ namespace CoreSharp.Extensions
             => DateTime.Now.Subtract(from);
 
         /// <summary>
-        /// Check if specific TimeSpan has passed since a DateTime.
+        /// Check if specific <see cref="TimeSpan"/> has passed
+        /// starting from provided <see cref="DateTime"/>.
         /// </summary>
         public static bool HasExpired(this DateTime from, TimeSpan duration)
         {
@@ -26,7 +27,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if date is in a weekend.
+        /// Check if <see cref="DateTime"/> is in a weekend.
         /// </summary>
         public static bool IsWeekend(this DateTime date)
         {
@@ -39,16 +40,18 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Check if date is in a leap year.
+        /// Check if <see cref="DateTime"/> is in a leap year.
         /// </summary>
         public static bool IsInLeapYear(this DateTime date) => DateTime.IsLeapYear(date.Year);
 
         /// <summary>
-        /// Trim part of DateTime.
-        /// </summary>
+        /// Trim part of <see cref="DateTime"/>.
         /// <example>
+        /// <code>
         /// var date = DateTime.Now.Trim(DateTimePrecision.Milliseconds | DateTimePrecision.Seconds);
+        /// </code>
         /// </example>
+        /// </summary>
         public static DateTime Trim(this DateTime date, DateTimeParts parts)
         {
             if (parts.HasFlag(DateTimeParts.Milliseconds))
@@ -76,13 +79,13 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Convert DateTime to sortable format using "u" specifier.
+        /// Convert <see cref="DateTime"/> to sortable format using "u" specifier.
         /// </summary>
         public static string ToStringSortable(this DateTime date)
             => date.ToString("u", CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// Convert DateTime to UTC sortable format using "ο" specifier.
+        /// Convert <see cref="DateTime"/> to UTC sortable format using "ο" specifier.
         /// </summary>
         public static string ToStringSortableUtc(this DateTime date)
             => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);

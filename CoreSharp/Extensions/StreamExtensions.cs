@@ -27,7 +27,10 @@ namespace CoreSharp.Extensions
             where TEntity : class
            => stream.FromJson(typeof(TEntity), settings) as TEntity;
 
-        /// <inheritdoc cref="JsonSerializer.Deserialize(JsonReader, Type?)" />
+        /// <summary>
+        /// Parses the text representing a JSON object
+        /// into an instance of the type specified.
+        /// </summary>
         public static object FromJson(this Stream stream, Type entityType, JsonSerializerSettings settings)
         {
             _ = stream ?? throw new ArgumentNullException(nameof(stream));
@@ -56,7 +59,10 @@ namespace CoreSharp.Extensions
             }
         }
 
-        /// <inheritdoc cref="XDocumentExtensions.To{TEntity}(XDocument)" />
+        /// <summary>
+        /// Parses the text representing an XML document
+        /// into an instance of the type specified.
+        /// </summary>
         public static async Task<TEntity> FromXmlAsync<TEntity>(this Stream stream, CancellationToken cancellationToken = default)
             where TEntity : class
         {

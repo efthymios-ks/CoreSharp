@@ -11,7 +11,8 @@ namespace CoreSharp.Extensions
     public static class DataRowExtensions
     {
         /// <summary>
-        /// Get <see cref="DataRow"/> <see cref="DataColumn.Namespace"/>.
+        /// Get <see cref="DataColumn.Namespace"/>
+        /// from <see cref="DataRow"/>.
         /// </summary>
         public static IEnumerable<string> GetColumnNames(this DataRow row)
         {
@@ -31,7 +32,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Map <see cref="DataRow"/> values to TEntity.
+        /// Map <see cref="DataRow"/> values to provided type.
         /// </summary>
         public static TEntity ToEntity<TEntity>(this DataRow row, bool ignoreCase = false) where TEntity : new()
         {

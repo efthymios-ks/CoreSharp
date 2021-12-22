@@ -8,18 +8,17 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class ObjectExtensions
     {
-        /// <inheritdoc cref="AsOrDefault{T}(object, T)"/>
-        public static T AsOrDefault<T>(this object input)
-            => input.AsOrDefault(default(T));
+        /// <inheritdoc cref="GetValueOr{T}(object, T)"/>
+        public static T GetVaue<T>(this object input)
+            => input.GetValueOr(default(T));
 
         /// <summary>
         /// Try casting input to given type and
         /// return default if null or of different type.
         /// </summary>
-        public static T AsOrDefault<T>(this object input, T defaultValue)
+        public static T GetValueOr<T>(this object input, T defaultValue)
             => input is T value ? value : defaultValue;
 
-        //TODO: Add unit tests 
         /// <inheritdoc cref="ChangeType{TResult}(object, CultureInfo)"/>
         public static TResult ChangeType<TResult>(this object value)
             => value.ChangeType<TResult>(CultureInfo.CurrentCulture);

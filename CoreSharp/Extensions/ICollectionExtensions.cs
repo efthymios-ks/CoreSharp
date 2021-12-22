@@ -13,7 +13,10 @@ namespace CoreSharp.Extensions
         public static void AddRange<TItem>(this ICollection<TItem> source, IEnumerable<TItem> items)
             => source.AddRange(items?.ToArray());
 
-        /// <inheritdoc cref="List{T}.AddRange(IEnumerable{T})"/>
+        /// <summary>
+        /// Adds the elements to the end
+        /// of the provided <see cref="ICollection{T}"/>.
+        /// </summary>
         public static void AddRange<TItem>(this ICollection<TItem> source, params TItem[] items)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -28,7 +31,7 @@ namespace CoreSharp.Extensions
             => source.TryAdd(item, i => i);
 
         /// <summary>
-        /// Add item in collection only if not already existing.
+        /// Add item in <see cref="ICollection{T}"/> only if not already existing.
         /// </summary>
         public static bool TryAdd<TItem, TKey>(this ICollection<TItem> source, TItem item, Func<TItem, TKey> keySelector)
         {

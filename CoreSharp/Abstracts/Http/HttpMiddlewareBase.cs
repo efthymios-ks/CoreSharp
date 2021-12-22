@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace CoreSharp.Abstracts.Http
 {
+    /// <inheritdoc cref="IMiddleware" />
     public abstract class HttpMiddlewareBase
     {
         //Constructors

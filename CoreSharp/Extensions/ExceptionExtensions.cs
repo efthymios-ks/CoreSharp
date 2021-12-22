@@ -10,7 +10,8 @@ namespace CoreSharp.Extensions
     public static class ExceptionExtensions
     {
         /// <summary>
-        /// Get all messages, including nested exceptions.
+        /// Get all <see cref="Exception.Message"/>,
+        /// including nested <see cref="Exception"/>.
         /// </summary>
         public static string FlattenMessages(this Exception exception)
         {

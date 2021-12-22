@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CoreSharp.Models
 {
@@ -10,20 +11,7 @@ namespace CoreSharp.Models
     /// </summary>
     public class HttpResponseException : Exception
     {
-        //Constructors
-        public HttpResponseException(
-            HttpRequestMessage request,
-            HttpResponseMessage response,
-            Exception innerException = null)
-            : this(
-                request.RequestUri?.AbsoluteUri,
-                request.Method.Method,
-                response.StatusCode,
-                response.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
-                innerException)
-        {
-        }
-
+        //Constructors 
         public HttpResponseException(
             string requestUrl,
             string requestMethod,
@@ -43,12 +31,31 @@ namespace CoreSharp.Models
         public string ResponseContent => Message;
         public string ResponseStatus => $"{RequestMethod} > {RequestUrl} > {(int)ResponseStatusCode} {ResponseStatusCode}";
 
+        //Methods
         public override string ToString()
         {
             if (JsonX.IsEmpty(ResponseContent))
                 return ResponseStatus;
             else
                 return ResponseStatus + Environment.NewLine + ResponseContent;
+        }
+
+        /// <summary>
+        /// Create new instance of <see cref="HttpResponseException"/>
+        /// using a <see cref="HttpResponseMessage"/>.
+        /// Does not dispose <see cref="HttpResponseMessage"/>.
+        /// </summary>
+        public static async Task<HttpResponseException> ParseAsync(HttpResponseMessage response, Exception exception = null)
+        {
+            _ = response ?? throw new ArgumentNullException(nameof(response));
+
+            var request = response.RequestMessage;
+
+            var requestUrl = request?.RequestUri?.AbsoluteUri;
+            var requestMethod = $"{nameof(HttpMethod)}.{request?.Method.Method}";
+            var responseStatus = response.StatusCode;
+            var responseContent = await response.Content?.ReadAsStringAsync();
+            return new(requestUrl, requestMethod, responseStatus, responseContent, exception);
         }
     }
 }

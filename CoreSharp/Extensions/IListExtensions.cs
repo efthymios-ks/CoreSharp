@@ -10,20 +10,20 @@ namespace CoreSharp.Extensions
     public static class IListExtensions
     {
         /// <summary>
-        /// Fill list with given value.
+        /// Fill <see cref="IList{T}"/> with given value.
         /// </summary>
-        public static void Fill<T>(this IList<T> source, T value)
+        public static void Fill<TItem>(this IList<TItem> source, TItem item)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
             for (var i = 0; i < source.Count; i++)
-                source[i] = value;
+                source[i] = item;
         }
 
         /// <summary>
         /// Remove all occurrences of items that match given expression.
         /// </summary>
-        public static int Remove<T>(this IList<T> source, Func<T, bool> removeExpression)
+        public static int Remove<TItem>(this IList<TItem> source, Func<TItem, bool> removeExpression)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = removeExpression ?? throw new ArgumentNullException(nameof(removeExpression));
@@ -31,21 +31,21 @@ namespace CoreSharp.Extensions
             var count = 0;
             while (source.Any(removeExpression))
             {
-                var item = source.FirstOrDefault(removeExpression);
-                source.Remove(item);
+                var occurence = source.FirstOrDefault(removeExpression);
+                source.Remove(occurence);
                 count++;
             }
             return count;
         }
 
         /// <inheritdoc cref="InsertRange{T}(IList{T}, int, T[])"/>
-        public static void InsertRange<T>(this IList<T> source, int index, IEnumerable<T> values)
+        public static void InsertRange<TItem>(this IList<TItem> source, int index, IEnumerable<TItem> values)
             => source.InsertRange(index, values?.ToArray());
 
         /// <summary>
         /// Insert range in given position.
         /// </summary>
-        public static void InsertRange<T>(this IList<T> source, int index, params T[] values)
+        public static void InsertRange<TItem>(this IList<TItem> source, int index, params TItem[] values)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = values ?? throw new ArgumentNullException(nameof(values));

@@ -11,8 +11,11 @@ namespace CoreSharp.Extensions
     public static class HttpResponseMessageExtensions
     {
         /// <summary>
-        /// Ensure <see cref="HttpResponseMessage" /> was successful using <see cref="HttpResponseMessage.IsSuccessStatusCode" />.
-        /// Throws <see cref="HttpResponseException" /> if not, including <see cref="HttpResponseMessage.StatusCode" /> and <see cref="HttpResponseMessage.Content" />.
+        /// Ensure <see cref="HttpResponseMessage" /> was successful using
+        /// <see cref="HttpResponseMessage.IsSuccessStatusCode" />.
+        /// Throws <see cref="HttpResponseException" /> if not,
+        /// including <see cref="HttpResponseMessage.StatusCode" />
+        /// and <see cref="HttpResponseMessage.Content" />.
         /// </summary>
         public static async Task EnsureSuccessAsync(this HttpResponseMessage response)
         {
@@ -21,13 +24,9 @@ namespace CoreSharp.Extensions
             if (response.IsSuccessStatusCode)
                 return;
 
-            var requestUrl = response.RequestMessage?.RequestUri?.AbsoluteUri;
-            var requestMethod = $"{nameof(HttpMethod)}.{response.RequestMessage?.Method?.Method}";
-            var responseStatus = response.StatusCode;
-            var responseContent = await response.Content?.ReadAsStringAsync();
+            var exception = await HttpResponseException.ParseAsync(response);
             response.Content?.Dispose();
-
-            throw new HttpResponseException(requestUrl, requestMethod, responseStatus, responseContent);
+            throw exception;
         }
     }
 }

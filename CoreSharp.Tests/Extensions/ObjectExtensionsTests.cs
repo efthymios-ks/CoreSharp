@@ -8,52 +8,52 @@ namespace CoreSharp.Extensions.Tests
     public class ObjectExtensionsTests
     {
         [Test]
-        public void AsOrDefault_InputIsNull_ReturnDefault()
+        public void GetValueOr_InputIsNull_ReturnDefault()
         {
             //Arrange
             object input = null;
 
             //Action
-            var result = input.AsOrDefault<int>();
+            var result = input.GetVaue<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void AsOrDefault_InputIsDbNull_ReturnDefault()
+        public void GetValueOr_InputIsDbNull_ReturnDefault()
         {
             //Arrange
             object input = DBNull.Value;
 
             //Action
-            var result = input.AsOrDefault<int>();
+            var result = input.GetVaue<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void AsOrDefault_InputTypeDiffers_ReturnDefault()
+        public void GetValueOr_InputTypeDiffers_ReturnDefault()
         {
             //Arrange
             object input = "1";
 
             //Action
-            var result = input.AsOrDefault<int>();
+            var result = input.GetVaue<int>();
 
             //Assert
             result.Should().Be(default);
         }
 
         [Test]
-        public void AsOrDefault_InputMissMatchAndGivenDefaultValue_ReturnGivenDefaultValue()
+        public void GetValueOr_InputMissMatchAndGivenDefaultValue_ReturnGivenDefaultValue()
         {
             //Arrange
             object input = "1";
 
             //Action
-            var result = input.AsOrDefault(2);
+            var result = input.GetValueOr(2);
 
             //Assert
             result.Should().Be(2);
@@ -66,7 +66,7 @@ namespace CoreSharp.Extensions.Tests
             object input = 1;
 
             //Action
-            var result = input.AsOrDefault<int>();
+            var result = input.GetVaue<int>();
 
             //Assert
             result.Should().Be(1);

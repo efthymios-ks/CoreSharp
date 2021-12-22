@@ -41,13 +41,13 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Return empty collection if source is null.
+        /// Return <see cref="Enumerable.Empty{TResult}"/> if source is null.
         /// </summary>
         public static IEnumerable<T> OrEmpty<T>(this IEnumerable<T> source)
             => source ?? Enumerable.Empty<T>();
 
         /// <summary>
-        /// Convert items to given type.
+        /// Convert items to provided type.
         /// </summary>
         public static IEnumerable<T> ConvertAll<T>(this IEnumerable source)
         {
@@ -79,7 +79,8 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            return source.GroupBy(keySelector).Select(i => i.FirstOrDefault());
+            return source.GroupBy(keySelector)
+                         .Select(i => i.FirstOrDefault());
         }
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>

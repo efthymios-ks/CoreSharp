@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace CoreSharp.Extensions
@@ -183,7 +185,8 @@ namespace CoreSharp.Extensions
             => input.EqualsAnyCI(values?.ToArray());
 
         /// <summary>
-        /// Check if given input equals to any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// Check if given input equals to any of
+        /// the given values <see cref="StringComparison.InvariantCultureIgnoreCase"/>.
         /// </summary>
         public static bool EqualsAnyCI(this string input, params string[] values)
         {
@@ -198,7 +201,8 @@ namespace CoreSharp.Extensions
             => input.StartsWithAnyCI(values?.ToArray());
 
         /// <summary>
-        /// Check if given input starts with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// Check if given input starts with any of
+        /// the given values <see cref="StringComparison.InvariantCultureIgnoreCase"/>.
         /// </summary>
         public static bool StartsWithAnyCI(this string input, params string[] values)
         {
@@ -213,7 +217,8 @@ namespace CoreSharp.Extensions
             => input.EndsWithAnyCI(values?.ToArray());
 
         /// <summary>
-        /// Check if given input ends with any of the given values (StringComparison.InvariantCultureIgnoreCase).
+        /// Check if given input ends with any of
+        /// the given values <see cref="StringComparison.InvariantCultureIgnoreCase"/>.
         /// </summary>
         public static bool EndsWithAnyCI(this string input, params string[] values)
         {
@@ -228,7 +233,8 @@ namespace CoreSharp.Extensions
             => input.ContainsAnyCI(values?.ToArray());
 
         /// <summary>
-        /// Check if given Input contains any of the given Values (StringComparison.InvariantCultureIgnoreCase).
+        /// Check if given input contains any of
+        /// the given values <see cref="StringComparison.InvariantCultureIgnoreCase"/>.
         /// </summary>
         public static bool ContainsAnyCI(this string input, params string[] values)
         {
@@ -238,20 +244,16 @@ namespace CoreSharp.Extensions
             return values.Any(v => input.Contains(v, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        /// <summary>
-        /// Check if input is null or empty.
-        /// </summary>
+        /// <inheritdoc cref="string.IsNullOrEmpty(string?)"/>
         public static bool IsNullOrEmpty(this string input)
             => string.IsNullOrEmpty(input);
 
-        /// <summary>
-        /// Check if input is null or whitespace.
-        /// </summary>
+        /// <inheritdoc cref="string.IsNullOrWhiteSpace(string?)"/>
         public static bool IsNullOrWhiteSpace(this string input)
             => string.IsNullOrWhiteSpace(input);
 
         /// <summary>
-        /// Reverse a string.
+        /// Reverse a <see cref="string"/>.
         /// </summary>
         public static string Reverse(this string input)
         {
@@ -267,7 +269,7 @@ namespace CoreSharp.Extensions
             => input.Erase($"{value}");
 
         /// <summary>
-        /// Erase given value from string.
+        /// Erase given value from <see cref="string"/>.
         /// </summary>
         public static string Erase(this string input, string value)
         {
@@ -301,7 +303,7 @@ namespace CoreSharp.Extensions
         public static TEntity FromJson<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
            => json.FromJson(typeof(TEntity), settings) as TEntity;
 
-        /// <inheritdoc cref="JsonConvert.DeserializeObject(string, Type?, JsonSerializerSettings?)" />
+        /// <inheritdoc cref="StreamExtensions.FromJson(Stream)"/>
         public static object FromJson(this string json, Type entityType, JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
@@ -316,12 +318,12 @@ namespace CoreSharp.Extensions
             }
         }
 
-        /// <inheritdoc cref="XDocumentExtensions.To{TEntity}(XDocument)" />
+        /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
         public static TEntity FromXml<TEntity>(this string xml) where TEntity : class
             => XDocument.Parse(xml).To<TEntity>();
 
         /// <summary>
-        /// Convert json to <see cref="ExpandoObject"/>.
+        /// Convert JSON to <see cref="ExpandoObject"/>.
         /// </summary>
         public static dynamic ToExpandoObject(this string json)
         {

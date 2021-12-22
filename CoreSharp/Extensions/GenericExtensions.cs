@@ -1,4 +1,5 @@
-﻿using CoreSharp.Models.Newtonsoft.Settings;
+﻿using CoreSharp.Models;
+using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -21,23 +21,24 @@ namespace CoreSharp.Extensions
         public static bool IsIn<T>(this T item, IEnumerable<T> source)
             => item.IsIn(source?.ToArray());
 
-        /// <inheritdoc cref="IsIn{T}(T, T[])"/>
-        public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
-        {
-            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
-
-            var itemKey = keySelector(item);
-            var sourceKeys = source?.Select(keySelector);
-            return itemKey.IsIn(sourceKeys);
-        }
-
-        /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>>
+        /// <inheritdoc cref="IsIn{TEntity, TKey}(TEntity, IEnumerable{TEntity}, Func{TEntity, TKey})"/>
         public static bool IsIn<T>(this T item, params T[] source)
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            return source.Contains(item);
+            return item.IsIn(source, i => i);
+        }
+
+        /// <summary>
+        /// Determines whether a sequence contains the specified element.
+        /// </summary>
+        public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
+        {
+            _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
+            var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
+            return source.Contains(item, equalityComparer);
         }
 
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonSerializerSettings)"/>
@@ -45,7 +46,7 @@ namespace CoreSharp.Extensions
             => entity.ToJson(DefaultJsonSettings.Instance);
 
         /// <summary>
-        /// Serialize object to json.
+        /// Serialize the specified object to JSON.
         /// </summary>
         public static string ToJson<TEntity>(this TEntity entity, JsonSerializerSettings settings) where TEntity : class
         {
@@ -60,7 +61,7 @@ namespace CoreSharp.Extensions
             => item.JsonClone(DefaultJsonSettings.Instance);
 
         /// <summary>
-        /// Perform a deep copy using Json serialization.
+        /// Perform a deep copy using json serialization.
         /// </summary>
         public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
         {
@@ -76,7 +77,7 @@ namespace CoreSharp.Extensions
             => left.JsonEquals(right, DefaultJsonSettings.Instance);
 
         /// <summary>
-        /// Compares two <see cref="object"/> by converting them to json (<see cref="string"/>).
+        /// Compares two <see cref="object"/> by converting them to JSON (<see cref="string"/>).
         /// </summary>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
         {
@@ -153,7 +154,9 @@ namespace CoreSharp.Extensions
         public static bool IsDefault<T>(this T input) where T : struct
             => input.Equals(default(T));
 
-        /// <inheritdoc cref="XmlSerializer.Serialize(XmlWriter, object?)" />
+        /// <summary>
+        /// Serializes an object into an XML document.
+        /// </summary>
         public static XDocument ToXDocument<TEntity>(this TEntity entity) where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
@@ -174,9 +177,8 @@ namespace CoreSharp.Extensions
         public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity) where TEntity : class
             => entity.GetPropertiesDictionary(BindingFlags.Public | BindingFlags.Instance);
 
-        //TODO: Add unit tests.
         /// <summary>
-        /// Convert  item to <see cref="IDictionary{TKey, TValue}"/>.
+        /// Convert item properties to <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
         public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity, BindingFlags flags) where TEntity : class
         {

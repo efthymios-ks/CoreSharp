@@ -140,7 +140,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Converts dictionary to KeyValuePair enumerable.
+        /// Converts <see cref="IDictionary{TKey, TValue}"/> to
+        /// <see cref="IEnumerable{T}"/> of <see cref="KeyValuePair{TKey, TValue}"/>.
         /// </summary>
         public static IEnumerable<KeyValuePair<TKey, TValue>> ToEnumerable<TKey, TValue>(this IDictionary<TKey, TValue> source)
         {
@@ -150,7 +151,7 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Returns given value occurrences in dictionary.
+        /// Returns given value occurrences in <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
         public static bool ContainsValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
         {
@@ -161,7 +162,7 @@ namespace CoreSharp.Extensions
 
         /// <summary>
         /// Build url query string from parameters dictionary.
-        /// Converts both key and value to string with default converter.
+        /// Converts both key and value to <see cref="string"/> with default converter.
         /// </summary>
         public static string ToUrlQueryString<TValue>(this IDictionary<string, TValue> parameters)
         {
