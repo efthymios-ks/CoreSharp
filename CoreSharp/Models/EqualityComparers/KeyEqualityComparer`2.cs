@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Models
+namespace CoreSharp.Models.EqualityComparers
 {
     public class KeyEqualityComparer<TItem, TKey> : IEqualityComparer<TItem>
     {

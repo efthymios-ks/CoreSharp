@@ -16,8 +16,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.3.3</Version>
+        <Version>1.3.4</Version>
         <PackageReleaseNotes>-Extensions, Assembly, Added `LoadReferencedAssemblies()` method.
+-Extensions, Generic, Refactored `...Equals()` methods.
 -Code clean-up.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>

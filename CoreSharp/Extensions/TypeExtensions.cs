@@ -70,16 +70,26 @@ namespace CoreSharp.Extensions
         /// <see cref="Guid"/>,
         /// <see cref="TimeSpan"/>,
         /// <see cref="DateTime"/>,
-        /// <see cref="DateTimeOffset"/>.
+        /// <see cref="DateTimeOffset"/>,
+        /// <see cref="Enum"/>.
         /// </summary>
         public static bool IsPrimitiveExtended(this Type type)
         {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            //Nullable extraction
             var baseType = Nullable.GetUnderlyingType(type) ?? type;
 
+            //Enum extraction 
+            if (baseType.IsEnum)
+                baseType = Enum.GetUnderlyingType(baseType);
+
+            //Base type check 
             if (baseType.IsPrimitive)
                 return true;
 
-            var allowedTypes = new[]
+            //Additional type check 
+            var additionalTypes = new[]
             {
                 typeof(string),
                 typeof(decimal),
@@ -88,7 +98,7 @@ namespace CoreSharp.Extensions
                 typeof(DateTime),
                 typeof(DateTimeOffset)
             };
-            return allowedTypes.Any(t => t == type);
+            return additionalTypes.Any(t => t == baseType);
         }
 
         //TODO: Add unit tests

@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Models.EqualityComparers;
 using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Utilities;
 using Newtonsoft.Json;
@@ -77,26 +77,43 @@ namespace CoreSharp.Extensions
             => left.JsonEquals(right, DefaultJsonSettings.Instance);
 
         /// <summary>
-        /// Compares two <see cref="object"/> by converting them to JSON (<see cref="string"/>).
+        /// Compares two entities using
+        /// <see cref="JsonEqualityComparer{TEntity}"/>.
         /// </summary>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            var jsonLeft = JsonConvert.SerializeObject(left, settings);
-            var jsonRight = JsonConvert.SerializeObject(right, settings);
-            return jsonLeft == jsonRight;
+            var equalityComparer = new JsonEqualityComparer<TEntity>(settings);
+            return equalityComparer.Equals(left, right);
         }
 
         /// <summary>
-        /// Perform a deep copy using reflection and public properties.
+        /// Perform a deep copy using reflection
+        /// and public, primitive properties.
+        /// Uses <see cref="TypeExtensions.IsPrimitiveExtended(Type)"/>.
         /// </summary>
-        public static TEntity ReflectionClone<TEntity>(this TEntity item) where TEntity : class, new()
+        public static TEntity PrimitiveClone<TEntity>(this TEntity item) where TEntity : class, new()
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
 
+            static bool PrimititeTypePredicate(PropertyInfo properyInfo)
+            {
+                _ = properyInfo ?? throw new ArgumentNullException(nameof(properyInfo));
+
+                if (!properyInfo.CanWrite)
+                    return false;
+                else if (!properyInfo.CanRead)
+                    return false;
+                else if (!properyInfo.PropertyType.IsPrimitiveExtended())
+                    return false;
+                else
+                    return true;
+            }
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                            .Where(PrimititeTypePredicate);
+
             var result = new TEntity();
-            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var property in properties)
             {
                 var value = property.GetValue(item);
@@ -106,38 +123,14 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Compares two <see cref="object"/> using reflection and public properties.
+        /// Compares two entities using
+        /// <see cref="PrimitiveEqualityComparer{TEntity}"/>.
         /// </summary>
-        public static bool ReflectionEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
+        public static bool PrimitiveEquals<TEntity>(this TEntity left, TEntity right)
+            where TEntity : class
         {
-            if (left is null && right is null)
-                return true;
-            else if (left is null)
-                return false;
-            else if (right is null)
-                return false;
-            else
-            {
-                var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                foreach (var property in properties)
-                {
-                    var leftValue = property.GetValue(left);
-                    var rightValue = property.GetValue(right);
-
-                    //If primitive, just compare 
-                    if (property.PropertyType.IsPrimitiveExtended())
-                    {
-                        if (!Equals(leftValue, rightValue))
-                            return false;
-                    }
-
-                    //Else recursive call 
-                    else if (!leftValue.ReflectionEquals(rightValue))
-                        return false;
-                }
-
-                return true;
-            }
+            var equalityComparer = new PrimitiveEqualityComparer<TEntity>();
+            return equalityComparer.Equals(left, right);
         }
 
         /// <inheritdoc cref="IsNull{T}(T?)"/>
