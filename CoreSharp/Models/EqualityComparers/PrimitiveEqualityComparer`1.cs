@@ -13,7 +13,7 @@ namespace CoreSharp.Models.EqualityComparers
     public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
         where TEntity : class
     {
-        //Methods
+        //Methods 
         public bool Equals(TEntity left, TEntity right)
         {
             if (left is null && right is not null)
@@ -25,20 +25,18 @@ namespace CoreSharp.Models.EqualityComparers
 
             var leftProperties = GetPrimitiveProperties(left);
             var rightProperties = GetPrimitiveProperties(right);
-
-            return DictionariesEquals(leftProperties, rightProperties);
+            var dictionaryComparer = new DictionaryEqualityComparer<string, object>();
+            return dictionaryComparer.Equals(leftProperties, rightProperties);
         }
 
-        public int GetHashCode(TEntity item)
+        public int GetHashCode(TEntity entity)
         {
-            if (item is null)
-                return 0;
+            if (entity is null)
+                return default(TEntity).GetHashCode();
 
-            var hash = new HashCode();
-            var primitiveValues = GetPrimitiveProperties(item).Select(p => p.Value);
-            foreach (var value in primitiveValues)
-                hash.Add(value);
-            return hash.ToHashCode();
+            var primitiveValues = GetPrimitiveProperties(entity).Select(p => p.Value);
+            var enumerableComparer = new EnumerableEqualityComparer<object>();
+            return enumerableComparer.GetHashCode(primitiveValues);
         }
 
         /// <inheritdoc cref="Type.IsPrimitive"/>
@@ -61,32 +59,6 @@ namespace CoreSharp.Models.EqualityComparers
                        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                        .Where(p => p.CanRead && IsTypePrimitive(p.PropertyType))
                        .ToDictionary(p => p.Name, p => p.GetValue(item));
-        }
-
-        /// <summary>
-        /// Compare two <see cref="IDictionary{TKey, TValue}"/>
-        /// for equality based on keys and values.
-        /// </summary>
-        private static bool DictionariesEquals<TValue>(IDictionary<string, TValue> leftDictionary, IDictionary<string, TValue> rightDictionary)
-        {
-            _ = leftDictionary ?? throw new ArgumentNullException(nameof(leftDictionary));
-            _ = rightDictionary ?? throw new ArgumentNullException(nameof(rightDictionary));
-
-            if (leftDictionary.Count != rightDictionary.Count)
-                return false;
-
-            foreach (var leftPair in leftDictionary)
-            {
-                //Key doesn't exist 
-                if (!rightDictionary.TryGetValue(leftPair.Key, out var rightValue))
-                    return false;
-
-                //Different value
-                if (!Equals(leftPair.Value, rightValue))
-                    return false;
-            }
-
-            return true;
         }
     }
 }

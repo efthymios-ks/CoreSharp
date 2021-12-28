@@ -30,7 +30,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.OneOf(1, 2, 3);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions.Tests
             //Act
             Action action = () => _rng.OneOf<int>(null);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -50,7 +50,7 @@ namespace CoreSharp.Extensions.Tests
             //Act
             Action action = () => _rng.OneOf<int>();
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentException>();
         }
 
@@ -60,7 +60,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.NextDouble(0, 100);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -75,7 +75,7 @@ namespace CoreSharp.Extensions.Tests
             for (var i = 0; i < samples.Length; i++)
                 samples[i] = _rng.NextDouble(minimum, maximum);
 
-            //Act
+            //Assert
             samples.Should().OnlyContain(s => s >= minimum && s <= maximum);
         }
 
@@ -85,7 +85,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.ChanceGreaterThan(50);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -97,7 +97,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rng.ChanceGreaterThan(percentage);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
@@ -107,7 +107,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.ChanceLowerThan(50);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -119,7 +119,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rng.ChanceLowerThan(percentage);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
@@ -129,7 +129,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.ChanceBetween(25, 75);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -141,7 +141,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
         }
 
@@ -152,7 +152,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentException>();
         }
 
@@ -165,7 +165,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rngNull.Shuffle(source);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -175,7 +175,7 @@ namespace CoreSharp.Extensions.Tests
             //Act 
             Action action = () => _rng.Shuffle<int>(null);
 
-            //Act
+            //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
@@ -191,7 +191,7 @@ namespace CoreSharp.Extensions.Tests
             for (var i = 0; i < sampleCount; i++)
                 _rng.Shuffle(shuffled);
 
-            //Act  
+            //Assert  
             shuffled.Should().NotEqual(original);
             shuffled.Should().OnlyContain(i => original.Any(o => o.Equals(i)));
         }

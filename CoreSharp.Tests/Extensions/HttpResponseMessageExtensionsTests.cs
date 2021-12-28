@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Models.Exceptions;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
