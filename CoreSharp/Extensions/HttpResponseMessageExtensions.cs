@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Models.Exceptions;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
