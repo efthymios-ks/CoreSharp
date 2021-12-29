@@ -77,5 +77,32 @@ namespace CoreSharp.Extensions
             else
                 throw new TimeoutException();
         }
+
+        /// <summary>
+        /// Return <see cref="Task.CompletedTask"/>
+        /// if provided <see cref="Task"/> is <see langword="null" />.
+        /// <code>
+        /// // Make sure you wrap the actual task in parenthesis.
+        /// await (stream1?.CopyToAsync(stream2)).OrDefault();
+        /// </code>
+        /// </summary>
+        public static async Task OrDefault(this Task task)
+            => await (task ?? Task.CompletedTask);
+
+        /// <inheritdoc cref="OrDefault{TResult}(Task{TResult}, TResult)"/>
+        public static async Task<TResult> OrDefault<TResult>(this Task<TResult> task)
+            => await task.OrDefault(default);
+
+        /// <summary>
+        /// Return <see cref="Task.FromResult{TResult}"/>
+        /// if provided <see cref="Task"/> is <see langword="null" />.
+        /// <code>
+        /// // Make sure you wrap the actual task in parenthesis.
+        /// var bytes = new byte[2048];
+        /// var byteCount = await (stream?.ReadAsync(bytes)).OrDefault();
+        /// </code>
+        /// </summary>
+        public static async Task<TResult> OrDefault<TResult>(this Task<TResult> task, TResult defaultValue)
+            => await (task ?? Task.FromResult(defaultValue));
     }
 }

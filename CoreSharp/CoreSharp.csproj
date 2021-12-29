@@ -16,8 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.3.6</Version>
-        <PackageReleaseNotes>-Extensions, HttpClient, Overloaded `SendAsync()` with timeout.
+        <Version>1.4.0</Version>
+        <PackageReleaseNotes>-Extensions, Tasks, Added `OrDefault()` methods.
 -Code clean-up.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
