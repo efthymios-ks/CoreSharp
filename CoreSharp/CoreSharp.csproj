@@ -16,8 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.4.0</Version>
-        <PackageReleaseNotes>-Extensions, Tasks, Added `OrDefault()` methods.
+        <Version>1.4.1</Version>
+        <PackageReleaseNotes>-Extensions, CancellationToken, Added `ToTimeoutCancellationTokenSource()` method.
 -Code clean-up.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>

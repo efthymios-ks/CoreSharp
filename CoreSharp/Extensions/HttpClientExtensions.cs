@@ -48,11 +48,7 @@ namespace CoreSharp.Extensions
             _ = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _ = httpRequestMessage ?? throw new ArgumentNullException(nameof(httpRequestMessage));
 
-            //Prepare cancellation token source 
-            using var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            if (timeout.TotalMilliseconds > 0 && timeout != Timeout.InfiniteTimeSpan)
-                cancellationTokenSource.CancelAfter(timeout);
-
+            using var cancellationTokenSource = cancellationToken.ToTimeoutCancellationTokenSource(timeout);
             try
             {
                 return await httpClient.SendAsync(httpRequestMessage, httpCompletionOption, cancellationTokenSource.Token);
