@@ -24,9 +24,8 @@ namespace CoreSharp.Extensions
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
 
-            return builder
-                .AppendFormat(formatProvider, format, arguments)
-                .AppendLine();
+            return builder.AppendFormat(formatProvider, format, arguments)
+                          .AppendLine();
         }
     }
 }

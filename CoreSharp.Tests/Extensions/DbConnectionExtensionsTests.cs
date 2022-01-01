@@ -16,9 +16,7 @@ namespace CoreSharp.Extensions.Tests
         //Methods
         [SetUp]
         public void SetUp()
-        {
-            _sqlConnection = new SqlConnection();
-        }
+            => _sqlConnection = new SqlConnection();
 
         [TearDown]
         public void TearDown()

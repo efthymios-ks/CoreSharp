@@ -15,9 +15,7 @@ namespace CoreSharp.Abstracts
 
         //Constructors
         ~DisposableBase()
-        {
-            DisposeNativeResources(false);
-        }
+            => DisposeNativeResources(false);
 
         //Methods
         public void Dispose()

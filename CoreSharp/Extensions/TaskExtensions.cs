@@ -16,6 +16,7 @@ namespace CoreSharp.Extensions
         public static TResult AwaitResult<TResult>(this Task<TResult> task)
         {
             _ = task ?? throw new ArgumentNullException(nameof(task));
+
             return task.GetAwaiter().GetResult();
         }
 
@@ -89,9 +90,9 @@ namespace CoreSharp.Extensions
         public static async Task OrDefault(this Task task)
             => await (task ?? Task.CompletedTask);
 
-        /// <inheritdoc cref="OrDefault{TResult}(Task{TResult}, TResult)"/>
+        /// <inheritdoc cref="Or{TResult}(Task{TResult}, TResult)"/>
         public static async Task<TResult> OrDefault<TResult>(this Task<TResult> task)
-            => await task.OrDefault(default);
+            => await task.Or(default);
 
         /// <summary>
         /// Return <see cref="Task.FromResult{TResult}"/>
@@ -102,7 +103,7 @@ namespace CoreSharp.Extensions
         /// var byteCount = await (stream?.ReadAsync(bytes)).OrDefault();
         /// </code>
         /// </summary>
-        public static async Task<TResult> OrDefault<TResult>(this Task<TResult> task, TResult defaultValue)
+        public static async Task<TResult> Or<TResult>(this Task<TResult> task, TResult defaultValue)
             => await (task ?? Task.FromResult(defaultValue));
     }
 }

@@ -31,10 +31,8 @@ namespace CoreSharp.Extensions
                 case TypeCode.Decimal:
                     return true;
                 case TypeCode.Object:
-                    {
-                        var baseType = Nullable.GetUnderlyingType(type);
-                        return baseType?.IsNumeric() ?? false;
-                    }
+                    var baseType = Nullable.GetUnderlyingType(type);
+                    return baseType?.IsNumeric() ?? false;
                 default:
                     return false;
             }
