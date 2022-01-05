@@ -14,7 +14,7 @@ namespace CoreSharp.Extensions.Tests
             object input = null;
 
             //Action
-            var result = input.GetVaue<int>();
+            var result = input.GetValue<int>();
 
             //Assert
             result.Should().Be(default);
@@ -27,7 +27,7 @@ namespace CoreSharp.Extensions.Tests
             object input = DBNull.Value;
 
             //Action
-            var result = input.GetVaue<int>();
+            var result = input.GetValue<int>();
 
             //Assert
             result.Should().Be(default);
@@ -40,7 +40,7 @@ namespace CoreSharp.Extensions.Tests
             object input = "1";
 
             //Action
-            var result = input.GetVaue<int>();
+            var result = input.GetValue<int>();
 
             //Assert
             result.Should().Be(default);
@@ -66,7 +66,7 @@ namespace CoreSharp.Extensions.Tests
             object input = 1;
 
             //Action
-            var result = input.GetVaue<int>();
+            var result = input.GetValue<int>();
 
             //Assert
             result.Should().Be(1);

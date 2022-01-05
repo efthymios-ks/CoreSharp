@@ -309,6 +309,41 @@
         <member name="M:CoreSharp.Extensions.ByteExtensions.Map(System.Byte,System.Byte,System.Byte,System.Byte,System.Byte)">
             <inheritdoc cref="M:CoreSharp.Extensions.DecimalExtensions.Map(System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal)"/>
         </member>
+        <member name="T:CoreSharp.Extensions.CancellationTokenExtensions">
+            <summary>
+            <see cref="T:System.Threading.CancellationToken"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.CancellationTokenExtensions.ToTimeoutCancellationTokenSource(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            <para>
+            Add timeout to provided <see cref="T:System.Threading.CancellationToken"/>.<br />
+            If given <see cref="T:System.TimeSpan"/> is negative or
+            <see cref="F:System.Threading.Timeout.Infinite"/> then it is ignored.<br />
+            Timing starts immediately after this call,
+            so it should be called right next to the
+            actual async call.
+            </para>
+            <code>
+            using var cancellationTokenSource = cancellationToken.ToTimeoutCancellationTokenSource(timeout);
+            try
+            {
+                await httpClient.SendAsync(httpRequestMessage, cancellationTokenSource.Token);
+            }
+            //Cancelled by user
+            catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+            }
+            //Timeout
+            catch (TaskCanceledException)
+            {
+            }
+            </code>
+            </summary>
+            <exception cref="T:System.Threading.Tasks.TaskSchedulerException">
+            When the timeout elapses.
+            </exception>
+        </member>
         <member name="T:CoreSharp.Extensions.DataRowExtensions">
             <summary>
             <see cref="T:System.Data.DataRow"/> extensions.
@@ -619,17 +654,21 @@
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
-            Compares two <see cref="T:System.Object"/> by converting them to JSON (<see cref="T:System.String"/>).
+            Compares two entities using
+            <see cref="T:CoreSharp.Models.EqualityComparers.JsonEqualityComparer`1"/>.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.ReflectionClone``1(``0)">
+        <member name="M:CoreSharp.Extensions.GenericExtensions.PrimitiveClone``1(``0)">
             <summary>
-            Perform a deep copy using reflection and public properties.
+            Perform a deep copy using reflection
+            and public, primitive properties.
+            Uses <see cref="M:CoreSharp.Extensions.TypeExtensions.IsPrimitiveExtended(System.Type)"/>.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.ReflectionEquals``1(``0,``0)">
+        <member name="M:CoreSharp.Extensions.GenericExtensions.PrimitiveEquals``1(``0,``0)">
             <summary>
-            Compares two <see cref="T:System.Object"/> using reflection and public properties.
+            Compares two entities using
+            <see cref="T:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.IsNull``1(``0)">
@@ -679,6 +718,39 @@
             null or an empty <see cref="F:System.Guid.Empty"/>.
             </summary>
         </member>
+        <member name="T:CoreSharp.Extensions.HashCodeExtensions">
+            <summary>
+            <see cref="T:System.HashCode"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HashCodeExtensions.AddRange``1(System.HashCode,System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="M:CoreSharp.Extensions.HashCodeExtensions.AddRange``1(System.HashCode,System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.HashCodeExtensions.AddRange``1(System.HashCode,System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Add multiple values to <see cref="T:System.HashCode"/>.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.HttpClientExtensions">
+            <summary>
+            <see cref="T:System.Net.Http.HttpClient"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.TimeSpan)">
+            <inheritdoc cref="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.TimeSpan)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.TimeSpan)">
+            <inheritdoc cref="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.TimeSpan,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.TimeSpan,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.TimeSpan,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpClientExtensions.SendAsync(System.Net.Http.HttpClient,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Send an HTTP request as an asynchronous operation
+            with given <see cref="T:System.TimeSpan"/> timeout.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.HttpContentExtensions">
             <summary>
             <see cref="T:System.Net.Http.HttpContent"/> extensions.
@@ -721,7 +793,7 @@
             <summary>
             Ensure <see cref="T:System.Net.Http.HttpResponseMessage" /> was successful using
             <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode" />.
-            Throws <see cref="T:CoreSharp.Models.HttpResponseException" /> if not,
+            Throws <see cref="T:CoreSharp.Models.Exceptions.HttpResponseException" /> if not,
             including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode" />
             and <see cref="P:System.Net.Http.HttpResponseMessage.Content" />.
             </summary>
@@ -1797,6 +1869,30 @@
             </summary>
             <exception cref="T:System.TimeoutException">When then given task is not completed within the specified time frame.</exception>
         </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.OrDefault(System.Threading.Tasks.Task)">
+            <summary>
+            Return <see cref="P:System.Threading.Tasks.Task.CompletedTask"/>
+            if provided <see cref="T:System.Threading.Tasks.Task"/> is <see langword="null" />.
+            <code>
+            // Make sure you wrap the actual task in parenthesis.
+            await (stream1?.CopyToAsync(stream2)).OrDefault();
+            </code>
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.OrDefault``1(System.Threading.Tasks.Task{``0})">
+            <inheritdoc cref="M:CoreSharp.Extensions.TaskExtensions.Or``1(System.Threading.Tasks.Task{``0},``0)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.TaskExtensions.Or``1(System.Threading.Tasks.Task{``0},``0)">
+            <summary>
+            Return <see cref="M:System.Threading.Tasks.Task.FromResult``1(``0)"/>
+            if provided <see cref="T:System.Threading.Tasks.Task"/> is <see langword="null" />.
+            <code>
+            // Make sure you wrap the actual task in parenthesis.
+            var bytes = new byte[2048];
+            var byteCount = await (stream?.ReadAsync(bytes)).OrDefault();
+            </code>
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.TcpClientExtensions">
             <summary>
             <see cref="T:System.Net.Sockets.TcpClient"/> extensions.
@@ -1842,7 +1938,8 @@
             <see cref="T:System.Guid"/>,
             <see cref="T:System.TimeSpan"/>,
             <see cref="T:System.DateTime"/>,
-            <see cref="T:System.DateTimeOffset"/>.
+            <see cref="T:System.DateTimeOffset"/>,
+            <see cref="T:System.Enum"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.TypeExtensions.GetNullableBaseType(System.Type)">
@@ -2008,19 +2105,53 @@
         <member name="M:CoreSharp.Models.DbQuery.FillAsync(System.String,System.Data.DataSet,System.Collections.Generic.IEnumerable{System.Data.Common.DataTableMapping},System.Threading.CancellationToken)">
             <inheritdoc cref="M:System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet)"/>
         </member>
-        <member name="T:CoreSharp.Models.Grouping`2">
-            <inheritdoc cref="T:System.Linq.IGrouping`2" />
+        <member name="T:CoreSharp.Models.EqualityComparers.JsonEqualityComparer`1">
+            <summary>
+            Defines methods to support the comparison of objects for equality.
+            Uses only <see cref="M:Newtonsoft.Json.JsonConvert.SerializeObject(System.Object,Newtonsoft.Json.JsonSerializerSettings)"/> for conversions
+            </summary>
         </member>
-        <member name="T:CoreSharp.Models.HttpResponseException">
+        <member name="T:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1">
+            <summary>
+            Defines methods to support the comparison of objects for equality.
+            Uses only primitive types for comparisons and hashes.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1.IsTypePrimitive(System.Type)">
+            <inheritdoc cref="P:System.Type.IsPrimitive"/>
+        </member>
+        <member name="M:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1.GetPrimitiveProperties(`0)">
+            <summary>
+            Get key-value <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            of primitive types only.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Models.Exceptions.HttpResponseException">
             <summary>
             Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> exception.
             </summary>
         </member>
-        <member name="M:CoreSharp.Models.HttpResponseException.ParseAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
+        <member name="M:CoreSharp.Models.Exceptions.HttpResponseException.ParseAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
             <summary>
-            Create new instance of <see cref="T:CoreSharp.Models.HttpResponseException"/>
+            Create new instance of <see cref="T:CoreSharp.Models.Exceptions.HttpResponseException"/>
             using a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
             Does not dispose <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Models.Grouping`2">
+            <inheritdoc cref="T:System.Linq.IGrouping`2" />
+        </member>
+        <member name="M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ToContent(System.Exception)">
+            <summary>
+            Create content tupple for given
+            <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ToHttpStatusCode(System.Exception)" -->
+        <member name="M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ExtractHttpStatusCode(System.Exception)">
+            <summary>
+            Use reflection to look for <see cref="T:System.Net.HttpStatusCode"/>
+            property in given exception.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.TryParseValue(System.String,`0@)">
@@ -2190,6 +2321,21 @@
             <summary>
             Get enum dictionary (Text-Value).
             </summary>
+        </member>
+        <member name="T:CoreSharp.Utilities.EnvironmentX">
+            <summary>
+            <see cref="T:System.Environment"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.EnvironmentX.GetAspNetCoreEnvironment">
+            <summary>
+            Get ASPNETCORE_ENVIRONMENT variable.
+            </summary> 
+        </member>
+        <member name="M:CoreSharp.Utilities.EnvironmentX.IsDevelopment">
+            <summary>
+            Checks if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
+            </summary> 
         </member>
         <member name="T:CoreSharp.Utilities.ExpressionX">
             <summary>

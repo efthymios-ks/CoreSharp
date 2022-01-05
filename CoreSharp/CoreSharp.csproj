@@ -16,9 +16,13 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.4.1</Version>
-        <PackageReleaseNotes>-Extensions, CancellationToken, Added `ToTimeoutCancellationTokenSource()` method.
--Code clean-up.</PackageReleaseNotes>
+        <Version>1.5.0</Version>
+        <PackageReleaseNotes>-Utilities, Added EnvironmentX.
+-Utilities, Added ProblemDetailsX.
+-Models, Middlewares, Added ExceptionHandleMiddleware.
+-Models, Middlewares, Added RequestLogMiddleware
+-Code clean-up.
+</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
@@ -35,14 +39,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="CoreSharp.xml" />
+        <None Remove="CoreSharp.xml" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
         <PackageReference Include="System.IO.Ports" Version="5.0.1" />
     </ItemGroup>
 

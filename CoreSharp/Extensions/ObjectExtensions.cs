@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions
     public static class ObjectExtensions
     {
         /// <inheritdoc cref="GetValueOr{T}(object, T)"/>
-        public static T GetVaue<T>(this object input)
+        public static T GetValue<T>(this object input)
             => input.GetValueOr(default(T));
 
         /// <summary>
