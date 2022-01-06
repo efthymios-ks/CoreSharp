@@ -1,4 +1,5 @@
-﻿using Microsoft.Net.Http.Headers;
+﻿using CoreSharp.Models;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,11 @@ namespace CoreSharp.Extensions
             return contentType.MediaType switch
             {
                 MediaTypeNames.Application.Json => await httpContent.FromJsonAsync<TResponse>(cancellationToken),
+                MediaTypeNamesX.Application.ProblemJson => await httpContent.FromJsonAsync<TResponse>(cancellationToken),
+
                 MediaTypeNames.Application.Xml => await httpContent.FromXmlAsync<TResponse>(cancellationToken),
+                MediaTypeNamesX.Application.ProblemXml => await httpContent.FromXmlAsync<TResponse>(cancellationToken),
+
                 _ => throw new NotSupportedException($"`{contentType.MediaType}` is not supported for automatic deserialization. Please use a more specific method."),
             };
         }

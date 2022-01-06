@@ -16,11 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.5.0</Version>
-        <PackageReleaseNotes>-Utilities, Added EnvironmentX.
--Utilities, Added ProblemDetailsX.
--Models, Middlewares, Added ExceptionHandleMiddleware.
--Models, Middlewares, Added RequestLogMiddleware
+        <Version>1.5.1</Version>
+        <PackageReleaseNotes>-Extensions, HttpContent, `DeserializeAsync()`, Added more media type names.
 -Code clean-up.
 </PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>

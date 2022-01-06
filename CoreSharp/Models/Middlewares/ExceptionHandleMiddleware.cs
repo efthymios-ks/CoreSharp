@@ -51,7 +51,7 @@ namespace CoreSharp.Models.Middlewares
             _ = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
 
             var response = httpContext.Response;
-            var problemDetails = ProblemDetailsX.Create(httpContext);
+            var problemDetails = ProblemDetailsX.New(httpContext);
             await WriteResponseAsync(response, problemDetails);
         }
 

@@ -17,8 +17,8 @@ namespace CoreSharp.Utilities
     /// </summary>
     public static class ProblemDetailsX
     {
-        /// <inheritdoc cref="Create(string, string, HttpStatusCode, string, string)"/>
-        public static ProblemDetails Create(HttpContext httpContext)
+        /// <inheritdoc cref="New(string, string, HttpStatusCode, string, string)"/>
+        public static ProblemDetails New(HttpContext httpContext)
         {
             _ = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
 
@@ -48,18 +48,18 @@ namespace CoreSharp.Utilities
                 detail = exception.StackTrace;
             }
 
-            return Create(type, title, httpStatusCode, detail, instance);
+            return New(type, title, httpStatusCode, detail, instance);
         }
 
-        /// <inheritdoc cref="Create(string, string, HttpStatusCode, string, string)"/>
-        public static ProblemDetails Create(HttpStatusCode httpStatusCode, string detail = null, string instance = null)
-            => Create(null, null, httpStatusCode, detail, instance);
+        /// <inheritdoc cref="New(string, string, HttpStatusCode, string, string)"/>
+        public static ProblemDetails New(HttpStatusCode httpStatusCode, string detail = null, string instance = null)
+            => New(null, null, httpStatusCode, detail, instance);
 
         /// <summary>
         /// Create new <see cref="ProblemDetails"/>
         /// with arguments validation for empty and null.
         /// </summary>
-        public static ProblemDetails Create(string type, string title, HttpStatusCode httpStatusCode, string detail = null, string instance = null)
+        public static ProblemDetails New(string type, string title, HttpStatusCode httpStatusCode, string detail = null, string instance = null)
         {
             if (string.IsNullOrWhiteSpace(type))
                 type = httpStatusCode.ToProblemDetailsType();
