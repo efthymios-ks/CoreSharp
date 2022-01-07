@@ -16,9 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.5.1</Version>
-        <PackageReleaseNotes>-Extensions, HttpContent, `DeserializeAsync()`, Added more media type names.
--Code clean-up.
+        <Version>1.5.2</Version>
+        <PackageReleaseNotes>-Code clean-up.
 </PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>

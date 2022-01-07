@@ -784,6 +784,18 @@
             If any.
             </summary>
         </member>
+        <member name="T:CoreSharp.Extensions.HttpContextExtensions">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.HttpContextExtensions.SetExceptionHandlerFeature(Microsoft.AspNetCore.Http.HttpContext,System.Exception)">
+            <summary>
+            Set <see cref="T:Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature"/>
+            and <see cref="T:Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature"/>
+            to given <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.HttpResponseMessageExtensions">
             <summary>
             <see cref="T:System.Net.Http.HttpResponseMessage"/> extensions.
@@ -1376,7 +1388,7 @@
             <see cref="T:System.Object"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.ObjectExtensions.GetVaue``1(System.Object)">
+        <member name="M:CoreSharp.Extensions.ObjectExtensions.GetValue``1(System.Object)">
             <inheritdoc cref="M:CoreSharp.Extensions.ObjectExtensions.GetValueOr``1(System.Object,``0)"/>
         </member>
         <member name="M:CoreSharp.Extensions.ObjectExtensions.GetValueOr``1(System.Object,``0)">
@@ -1390,6 +1402,14 @@
         </member>
         <member name="M:CoreSharp.Extensions.ObjectExtensions.ChangeType``1(System.Object,System.Globalization.CultureInfo)">
             <inheritdoc cref="M:System.Convert.ChangeType(System.Object,System.Type,System.IFormatProvider)" />
+        </member>
+        <member name="T:CoreSharp.Extensions.PropertyInfoExtensions">
+            <summary>
+            <see cref="T:System.Reflection.PropertyInfo"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.PropertyInfoExtensions.GetValue``1(System.Reflection.PropertyInfo,System.Object)">
+            <inheritdoc cref="M:System.Reflection.PropertyInfo.GetValue(System.Object)" />
         </member>
         <member name="T:CoreSharp.Extensions.RandomExtensions">
             <summary>
@@ -2131,7 +2151,7 @@
             Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> exception.
             </summary>
         </member>
-        <member name="M:CoreSharp.Models.Exceptions.HttpResponseException.ParseAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
+        <member name="M:CoreSharp.Models.Exceptions.HttpResponseException.CreateAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
             <summary>
             Create new instance of <see cref="T:CoreSharp.Models.Exceptions.HttpResponseException"/>
             using a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
@@ -2141,18 +2161,11 @@
         <member name="T:CoreSharp.Models.Grouping`2">
             <inheritdoc cref="T:System.Linq.IGrouping`2" />
         </member>
-        <member name="M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ToContent(System.Exception)">
-            <summary>
-            Create content tupple for given
-            <see cref="T:System.Exception"/>.
-            </summary>
+        <member name="T:CoreSharp.Models.MediaTypeNamesX">
+            <inheritdoc cref="T:System.Net.Mime.MediaTypeNames"/>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ToHttpStatusCode(System.Exception)" -->
-        <member name="M:CoreSharp.Models.Middlewares.ExceptionHandleMiddleware.ExtractHttpStatusCode(System.Exception)">
-            <summary>
-            Use reflection to look for <see cref="T:System.Net.HttpStatusCode"/>
-            property in given exception.
-            </summary>
+        <member name="T:CoreSharp.Models.MediaTypeNamesX.Application">
+            <inheritdoc cref="T:System.Net.Mime.MediaTypeNames.Application"/>
         </member>
         <member name="M:CoreSharp.Models.NumericParser`1.TryParseValue(System.String,`0@)">
             <summary>
@@ -2334,8 +2347,13 @@
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDevelopment">
             <summary>
-            Checks if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
+            Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
             </summary> 
+        </member>
+        <member name="M:CoreSharp.Utilities.EnvironmentX.IsDebugging">
+            <summary>
+            Check if DEBUG is defined.
+            </summary>
         </member>
         <member name="T:CoreSharp.Utilities.ExpressionX">
             <summary>
@@ -2352,13 +2370,13 @@
             <see cref="T:System.Collections.Generic.HashSet`1"/> utilities.
             </summary>
         </member>
-        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Func{``0,``1})">
+        <member name="M:CoreSharp.Utilities.HashSetX.Create``2(System.Func{``0,``1})">
             <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Collections.Generic.IEqualityComparer{`0})" />
         </member>
-        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Int32,System.Func{``0,``1})">
+        <member name="M:CoreSharp.Utilities.HashSetX.Create``2(System.Int32,System.Func{``0,``1})">
             <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})" />
         </member>
-        <member name="M:CoreSharp.Utilities.HashSetX.New``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+        <member name="M:CoreSharp.Utilities.HashSetX.Create``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
             <inheritdoc cref="M:System.Collections.Generic.HashSet`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEqualityComparer{`0})" />
         </member>
         <member name="T:CoreSharp.Utilities.HttpMethodX">
@@ -2382,6 +2400,33 @@
             Get <see cref="T:System.Net.Http.HttpMethod"/> from <see cref="T:System.String" /> name.
             </summary>
         </member>
+        <member name="T:CoreSharp.Utilities.HttpStatusCodeX">
+            <summary>
+            <see cref="T:System.Net.HttpStatusCode"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.HttpStatusCodeX.GetReferenceUrl(System.Net.HttpStatusCode)">
+            <summary>
+            Convert <see cref="T:System.Net.HttpStatusCode"/> to
+            default value for <see cref="P:Microsoft.AspNetCore.Mvc.ProblemDetails.Type"/>
+            <code>
+            // https://httpstatuses.com/500
+            var type = HttpStatusCode.InternalServerError.ToProblemDetailsType();
+            </code>
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.HttpStatusCodeX.FromException(System.Exception)">
+            <summary>
+            Translate <see cref="T:System.Exception"/>
+            to relevant <see cref="T:System.Net.HttpStatusCode"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.HttpStatusCodeX.ExtractHttpStatusCode(System.Exception)">
+            <summary>
+            Use reflection to look for the first
+            <see cref="T:System.Net.HttpStatusCode"/> property in given exception.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Utilities.IPAddressX">
             <summary>
             <see cref="T:System.Net.IPAddress"/> utilities.
@@ -2400,6 +2445,26 @@
         <member name="M:CoreSharp.Utilities.JsonX.IsEmpty(System.String)">
             <summary>
             Check if string is an empty json.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Utilities.ProblemDetailsX">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Mvc.ProblemDetails"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Mvc.ControllerBase,System.Exception)">
+            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Http.HttpContext)"/>
+        </member>
+        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Http.HttpContext)">
+            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)"/>
+        </member>
+        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.Net.HttpStatusCode,System.String,System.String)">
+            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)"/>
+        </member>
+        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)">
+            <summary>
+            Create new <see cref="T:Microsoft.AspNetCore.Mvc.ProblemDetails"/>
+            with arguments validation for empty and null.
             </summary>
         </member>
         <member name="T:CoreSharp.Utilities.StringX">

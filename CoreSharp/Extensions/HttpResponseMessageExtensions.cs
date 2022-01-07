@@ -24,7 +24,7 @@ namespace CoreSharp.Extensions
             if (response.IsSuccessStatusCode)
                 return;
 
-            var exception = await HttpResponseException.ParseAsync(response);
+            var exception = await HttpResponseException.CreateAsync(response);
             response.Content?.Dispose();
             throw exception;
         }

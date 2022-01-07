@@ -10,7 +10,7 @@ namespace CoreSharp.Utilities
     public static class HashSetX
     {
         /// <inheritdoc cref="HashSet{T}.HashSet(IEqualityComparer{T}?)" />
-        public static HashSet<TItem> New<TItem, TKey>(Func<TItem, TKey> keySelector)
+        public static HashSet<TItem> Create<TItem, TKey>(Func<TItem, TKey> keySelector)
         {
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
@@ -19,7 +19,7 @@ namespace CoreSharp.Utilities
         }
 
         /// <inheritdoc cref="HashSet{T}.HashSet(int, IEqualityComparer{T}?)" />
-        public static HashSet<TItem> New<TItem, TKey>(int capacity, Func<TItem, TKey> keySelector)
+        public static HashSet<TItem> Create<TItem, TKey>(int capacity, Func<TItem, TKey> keySelector)
         {
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
@@ -28,7 +28,7 @@ namespace CoreSharp.Utilities
         }
 
         /// <inheritdoc cref="HashSet{T}.HashSet(IEnumerable{T}, IEqualityComparer{T}?)" />
-        public static HashSet<TItem> New<TItem, TKey>(IEnumerable<TItem> source, Func<TItem, TKey> keySelector)
+        public static HashSet<TItem> Create<TItem, TKey>(IEnumerable<TItem> source, Func<TItem, TKey> keySelector)
         {
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
             _ = source ?? throw new ArgumentNullException(nameof(source));

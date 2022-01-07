@@ -45,7 +45,7 @@ namespace CoreSharp.Models.Exceptions
         /// using a <see cref="HttpResponseMessage"/>.
         /// Does not dispose <see cref="HttpResponseMessage"/>.
         /// </summary>
-        public static async Task<HttpResponseException> ParseAsync(HttpResponseMessage response, Exception exception = null)
+        public static async Task<HttpResponseException> CreateAsync(HttpResponseMessage response, Exception exception = null)
         {
             _ = response ?? throw new ArgumentNullException(nameof(response));
 

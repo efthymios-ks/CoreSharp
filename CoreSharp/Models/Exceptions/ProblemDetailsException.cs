@@ -10,17 +10,17 @@ namespace CoreSharp.Models.Exceptions
     {
         //Constructors
         public ProblemDetailsException(HttpStatusCode httpStatusCode)
-            : this(ProblemDetailsX.New(httpStatusCode))
+            : this(ProblemDetailsX.Create(httpStatusCode))
         {
         }
 
         public ProblemDetailsException(HttpContext httpContext)
-            : this(ProblemDetailsX.New(httpContext))
+            : this(ProblemDetailsX.Create(httpContext))
         {
         }
 
         public ProblemDetailsException(string type, string title, HttpStatusCode status, string detail = null, string instance = null)
-            : this(ProblemDetailsX.New(type, title, status, detail, instance))
+            : this(ProblemDetailsX.Create(type, title, status, detail, instance))
         {
         }
 

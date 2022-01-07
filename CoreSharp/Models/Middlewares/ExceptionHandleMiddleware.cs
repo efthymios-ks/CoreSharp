@@ -1,5 +1,5 @@
-﻿using CoreSharp.Utilities;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using CoreSharp.Extensions;
+using CoreSharp.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,23 +27,9 @@ namespace CoreSharp.Models.Middlewares
             }
             catch (Exception exception) when (!httpContext.Response.HasStarted)
             {
-                SetContextExceptionFeature(httpContext, exception);
+                httpContext.SetExceptionHandlerFeature(exception);
                 await HandleExceptionAsync(httpContext);
             }
-        }
-
-        private static void SetContextExceptionFeature(HttpContext httpContext, Exception exception)
-        {
-            _ = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
-            _ = exception ?? throw new ArgumentNullException(nameof(exception));
-
-            var feature = new ExceptionHandlerFeature()
-            {
-                Path = httpContext.Request.Path,
-                Error = exception
-            };
-            httpContext.Features.Set<IExceptionHandlerFeature>(feature);
-            httpContext.Features.Set<IExceptionHandlerPathFeature>(feature);
         }
 
         private static async Task HandleExceptionAsync(HttpContext httpContext)
@@ -51,7 +37,7 @@ namespace CoreSharp.Models.Middlewares
             _ = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
 
             var response = httpContext.Response;
-            var problemDetails = ProblemDetailsX.New(httpContext);
+            var problemDetails = ProblemDetailsX.Create(httpContext);
             await WriteResponseAsync(response, problemDetails);
         }
 
