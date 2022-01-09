@@ -103,11 +103,11 @@ namespace CoreSharp.Extensions.Tests
             var result = source.GetPageAsync(pageNumber, pageSize).GetAwaiter().GetResult();
 
             //Assert
-            result.Should().Equal(expected);
             result.PageNumber.Should().Be(pageNumber);
             result.PageSize.Should().Be(pageSize);
             result.TotalItems.Should().Be(sourceCount);
             result.TotalPages.Should().Be((int)Math.Ceiling((double)sourceCount / pageSize));
+            result.Items.Should().Equal(expected);
         }
 
         [Test]

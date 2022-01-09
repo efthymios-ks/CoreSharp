@@ -4,9 +4,8 @@ using System.Diagnostics;
 
 namespace CoreSharp.Models.Pages
 {
-    [global::Newtonsoft.Json.JsonObject]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class Page : IEnumerable
+    public class Page
     {
         //Constructors
         public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable items)
@@ -30,18 +29,14 @@ namespace CoreSharp.Models.Pages
         //Properties
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => ToString();
-        [global::Newtonsoft.Json.JsonProperty]
-        internal IEnumerable Items { get; }
         public int PageNumber { get; }
         public int PageSize { get; }
         public int TotalItems { get; }
         public int TotalPages { get; }
+        public IEnumerable Items { get; }
 
         //Methods
         public override string ToString()
-            => $"Page Number= {PageNumber}, Page Size={PageSize}";
-
-        public IEnumerator GetEnumerator()
-            => Items.GetEnumerator();
+            => $"{nameof(PageNumber)}={PageNumber}, {nameof(PageSize)}={PageSize}";
     }
 }

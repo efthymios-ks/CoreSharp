@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CoreSharp.Models.Pages
 {
-    public class Page<TEntity> : Page, IEnumerable<TEntity>
+    public class Page<TEntity> : Page
     {
         //Constructors
         public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TEntity> items)
@@ -11,8 +11,7 @@ namespace CoreSharp.Models.Pages
         {
         }
 
-        //Methods
-        IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
-            => Items.Cast<TEntity>().GetEnumerator();
+        //Properties
+        public new IEnumerable<TEntity> Items => (this as Page).Items.Cast<TEntity>();
     }
 }
