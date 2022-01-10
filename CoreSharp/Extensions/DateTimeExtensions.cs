@@ -10,39 +10,43 @@ namespace CoreSharp.Extensions
     public static class DateTimeExtensions
     {
         //TODO: Add mock test to `DateTime.GetElapsedTime()`. 
+        /// <inheritdoc cref="GetElapsedTime(DateTime, DateTime)"/>
+        public static TimeSpan GetElapsedTime(this DateTime endDate)
+            => endDate.GetElapsedTime(DateTime.Now);
+
         /// <summary>
-        /// Get the elapsed time since the input value.
+        /// Get the elapsed time between two <see cref="DateTime"/>
+        /// using their UTC values.
         /// </summary>
-        public static TimeSpan GetElapsedTime(this DateTime from)
-            => DateTime.Now.Subtract(from);
+        public static TimeSpan GetElapsedTime(this DateTime endDate, DateTime startDate)
+        {
+            var universalStart = startDate.ToUniversalTime();
+            var universalEnd = endDate.ToUniversalTime();
+            return universalEnd.Subtract(universalStart);
+        }
+
+        /// <inheritdoc cref="HasExpired(DateTime, DateTime, TimeSpan)"/>
+        public static bool HasExpired(this DateTime endDate, TimeSpan duration)
+            => endDate.HasExpired(DateTime.Now, duration);
 
         /// <summary>
         /// Check if specific <see cref="TimeSpan"/> has passed
         /// starting from provided <see cref="DateTime"/>.
         /// </summary>
-        public static bool HasExpired(this DateTime from, TimeSpan duration)
-        {
-            var elapsed = from.GetElapsedTime();
-            return Math.Abs(elapsed.TotalMilliseconds) > duration.TotalMilliseconds;
-        }
+        public static bool HasExpired(this DateTime endDate, DateTime startDate, TimeSpan duration)
+            => endDate.GetElapsedTime(startDate) > duration;
 
         /// <summary>
         /// Check if <see cref="DateTime"/> is in a weekend.
         /// </summary>
         public static bool IsWeekend(this DateTime date)
-        {
-            if (date.DayOfWeek == DayOfWeek.Saturday)
-                return true;
-            else if (date.DayOfWeek == DayOfWeek.Sunday)
-                return true;
-            else
-                return false;
-        }
+            => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 
         /// <summary>
         /// Check if <see cref="DateTime"/> is in a leap year.
         /// </summary>
-        public static bool IsInLeapYear(this DateTime date) => DateTime.IsLeapYear(date.Year);
+        public static bool IsInLeapYear(this DateTime date)
+            => DateTime.IsLeapYear(date.Year);
 
         /// <summary>
         /// Trim part of <see cref="DateTime"/>.

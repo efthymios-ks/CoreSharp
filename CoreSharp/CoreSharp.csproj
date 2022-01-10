@@ -16,8 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.5.3</Version>
-        <PackageReleaseNotes>-Models, Pages, Refactored.
+        <Version>1.5.4</Version>
+        <PackageReleaseNotes>-Extensions, DateTime, Refactored `GetElapsedTime()` and `HasExpired().
 -Code clean-up.
 </PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
