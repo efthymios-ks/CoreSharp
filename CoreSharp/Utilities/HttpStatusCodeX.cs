@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -13,8 +12,7 @@ namespace CoreSharp.Utilities
     public static class HttpStatusCodeX
     {
         /// <summary>
-        /// Convert <see cref="HttpStatusCode"/> to
-        /// default value for <see cref="ProblemDetails.Type"/>
+        /// Convert <see cref="HttpStatusCode"/> to reference url.
         /// <code>
         /// // https://httpstatuses.com/500
         /// var type = HttpStatusCode.InternalServerError.ToProblemDetailsType();

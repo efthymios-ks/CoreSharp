@@ -16,11 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.6.0</Version>
-        <PackageReleaseNotes>-Extensions, DateTime, Refactored `GetElapsedTime()` and `HasExpired().
--Refactored json related extensions and models.
--Code clean-up.
-</PackageReleaseNotes>
+        <Version>1.7.0</Version>
+        <PackageReleaseNotes>-Moved MVC related code to different package.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
@@ -43,8 +40,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="System.IO.Ports" Version="5.0.1" />
     </ItemGroup>
 

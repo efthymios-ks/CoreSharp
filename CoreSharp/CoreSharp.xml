@@ -2440,8 +2440,7 @@
         </member>
         <member name="M:CoreSharp.Utilities.HttpStatusCodeX.GetReferenceUrl(System.Net.HttpStatusCode)">
             <summary>
-            Convert <see cref="T:System.Net.HttpStatusCode"/> to
-            default value for <see cref="P:Microsoft.AspNetCore.Mvc.ProblemDetails.Type"/>
+            Convert <see cref="T:System.Net.HttpStatusCode"/> to reference url.
             <code>
             // https://httpstatuses.com/500
             var type = HttpStatusCode.InternalServerError.ToProblemDetailsType();
@@ -2478,26 +2477,6 @@
         <member name="M:CoreSharp.Utilities.JsonX.IsEmpty(System.String)">
             <summary>
             Check if string is an empty json.
-            </summary>
-        </member>
-        <member name="T:CoreSharp.Utilities.ProblemDetailsX">
-            <summary>
-            <see cref="T:Microsoft.AspNetCore.Mvc.ProblemDetails"/> utilities.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Mvc.ControllerBase,System.Exception)">
-            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Http.HttpContext)"/>
-        </member>
-        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(Microsoft.AspNetCore.Http.HttpContext)">
-            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.Net.HttpStatusCode,System.String,System.String)">
-            <inheritdoc cref="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)"/>
-        </member>
-        <member name="M:CoreSharp.Utilities.ProblemDetailsX.Create(System.String,System.String,System.Net.HttpStatusCode,System.String,System.String)">
-            <summary>
-            Create new <see cref="T:Microsoft.AspNetCore.Mvc.ProblemDetails"/>
-            with arguments validation for empty and null.
             </summary>
         </member>
         <member name="T:CoreSharp.Utilities.StringX">
