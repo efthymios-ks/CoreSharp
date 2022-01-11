@@ -15,9 +15,7 @@ namespace CoreSharp.Extensions.Tests
         //Methods 
         [SetUp]
         public void SetUp()
-        {
-            _serviceProviderMock = new Mock<IServiceProvider>();
-        }
+            => _serviceProviderMock = new Mock<IServiceProvider>();
 
         [Test]
         public void GetService_ServiceNotFound_ReturnNull()

@@ -35,6 +35,7 @@ namespace CoreSharp.Extensions
                 source.Remove(occurence);
                 count++;
             }
+
             return count;
         }
 

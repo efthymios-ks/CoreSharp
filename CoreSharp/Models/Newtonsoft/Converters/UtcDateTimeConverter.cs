@@ -43,7 +43,9 @@ namespace CoreSharp.EntityFramework.Models.Abstracts
 
             //Else throw 
             else
+            {
                 throw new JsonSerializationException($"Expected `{typeof(DateTime).FullName}` or `{typeof(string).FullName}`, but got `{reader.TokenType}`.");
+            }
         }
     }
 }

@@ -125,29 +125,19 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
         }
 
         public void Multicast(string text)
-        {
-            Multicast(text, Encoding.UTF8);
-        }
+            => Multicast(text, Encoding.UTF8);
 
         public void Multicast(string text, Encoding encoding)
-        {
-            MulticastAsync(text, encoding).GetAwaiter().GetResult();
-        }
+            => MulticastAsync(text, encoding).GetAwaiter().GetResult();
 
         public void Multicast(IEnumerable<byte> data)
-        {
-            Multicast(data?.ToArray());
-        }
+            => Multicast(data?.ToArray());
 
         public void Multicast(params byte[] data)
-        {
-            MulticastAsync(data).GetAwaiter().GetResult();
-        }
+            => MulticastAsync(data).GetAwaiter().GetResult();
 
         public async Task MulticastAsync(string text)
-        {
-            await MulticastAsync(text, Encoding.UTF8);
-        }
+            => await MulticastAsync(text, Encoding.UTF8);
 
         public async Task MulticastAsync(string text, Encoding encoding)
         {
@@ -159,9 +149,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
         }
 
         public async Task MulticastAsync(IEnumerable<byte> data)
-        {
-            await MulticastAsync(data?.ToArray());
-        }
+            => await MulticastAsync(data?.ToArray());
 
         public async Task MulticastAsync(params byte[] data)
         {

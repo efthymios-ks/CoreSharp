@@ -51,10 +51,10 @@ namespace CoreSharp.Extensions
                 case TypeCode.Object when type == typeof(DateTimeOffset):
                     return true;
                 case TypeCode.Object:
-                    {
-                        var baseType = Nullable.GetUnderlyingType(type);
-                        return baseType?.IsDate() ?? false;
-                    }
+                {
+                    var baseType = Nullable.GetUnderlyingType(type);
+                    return baseType?.IsDate() ?? false;
+                }
                 default:
                     return false;
             }
@@ -151,11 +151,6 @@ namespace CoreSharp.Extensions
         /// Runtime equivalent of default(T).
         /// </summary>
         public static object GetDefault(this Type type)
-        {
-            if (type.IsValueType)
-                return Activator.CreateInstance(type);
-            else
-                return null;
-        }
+            => type.IsValueType ? Activator.CreateInstance(type) : null;
     }
 }

@@ -34,6 +34,7 @@ namespace CoreSharp.Utilities
                 var trimmed = $"/{segment}".Trim();
                 builder.Append(trimmed);
             }
+
             builder.Append('/');
 
             //Build url 

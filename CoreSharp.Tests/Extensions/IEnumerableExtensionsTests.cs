@@ -895,6 +895,7 @@ namespace CoreSharp.Extensions.Tests
                 result.Columns[i].ColumnName.Should().Be(expected.Columns[i].ColumnName);
                 result.Columns[i].DataType.Should().Be(expected.Columns[i].DataType);
             }
+
             for (var rowindex = 0; rowindex < result.Rows.Count; rowindex++)
             {
                 var resultRow = result.Rows[rowindex].ItemArray;

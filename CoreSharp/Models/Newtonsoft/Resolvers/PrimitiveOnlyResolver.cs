@@ -13,7 +13,7 @@ namespace CoreSharp.Models.Newtonsoft.Resolvers
         private static PrimitiveOnlyResolver _instance;
 
         //Properties
-        public new static PrimitiveOnlyResolver Instance
+        public static new PrimitiveOnlyResolver Instance
             => _instance ??= new PrimitiveOnlyResolver();
 
         //Methods

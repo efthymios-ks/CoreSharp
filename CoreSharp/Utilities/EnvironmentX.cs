@@ -10,13 +10,13 @@ namespace CoreSharp.Utilities
         //Methods
         /// <summary>
         /// Get ASPNETCORE_ENVIRONMENT variable.
-        /// </summary> 
+        /// </summary>
         private static string GetAspNetCoreEnvironment()
             => Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
         /// <summary>
         /// Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
-        /// </summary> 
+        /// </summary>
         public static bool IsDevelopment()
             => string.Equals(GetAspNetCoreEnvironment(), "Development", StringComparison.InvariantCultureIgnoreCase);
 
@@ -24,12 +24,12 @@ namespace CoreSharp.Utilities
         /// Check if DEBUG is defined.
         /// </summary>
         public static bool IsDebugging()
-        {
+            =>
 #if DEBUG
             return true;
 #else
-            return false;
+            false;
 #endif
-        }
+
     }
 }

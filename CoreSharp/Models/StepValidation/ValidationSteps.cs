@@ -18,9 +18,7 @@ namespace CoreSharp.Models.StepValidation
         }
 
         public ValidationSteps(bool sequentialValidation = true)
-        {
-            SequentialValidation = sequentialValidation;
-        }
+            => SequentialValidation = sequentialValidation;
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -54,12 +52,15 @@ namespace CoreSharp.Models.StepValidation
                 //If there is no previous step, run current step validation 
                 if (previousStep is null)
                     return currentStep.IsValid;
+
                 //Else run recursively previous step validation and then the current step 
                 else
                     return IsStepValid(previousStep.Number) && currentStep.IsValid;
             }
             else
+            {
                 return currentStep.IsValid;
+            }
         }
 
         public string GetStepValidationMessage(int number, bool bypassValidation = false)

@@ -16,9 +16,7 @@ namespace CoreSharp.Extensions.Tests
         //Methods
         [SetUp]
         public void SetUp()
-        {
-            _builder.Clear();
-        }
+            => _builder.Clear();
 
         [Test]
         public void AppendFormatLine_BuilderIsNull_ThrowArgumentNullException()

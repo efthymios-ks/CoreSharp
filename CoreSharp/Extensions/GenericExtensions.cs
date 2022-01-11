@@ -149,6 +149,7 @@ namespace CoreSharp.Extensions
                 else
                     return true;
             }
+
             var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                             .Where(PrimititeTypePredicate);
 
@@ -158,6 +159,7 @@ namespace CoreSharp.Extensions
                 var value = property.GetValue(item);
                 property.SetValue(result, value);
             }
+
             return result;
         }
 

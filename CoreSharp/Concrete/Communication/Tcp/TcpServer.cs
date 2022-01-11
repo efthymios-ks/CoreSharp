@@ -27,7 +27,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         public IList<TcpSession> ActiveSessions { get; } = new List<TcpSession>();
         public bool IsListening
         {
-            get { return _isListening; }
+            get => _isListening;
             private set
             {
                 if (value == _isListening)
@@ -54,9 +54,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
 
         //Constructors 
         public TcpServer(int port)
-        {
-            EndPoint = new IPEndPoint(IPAddress.Any, port);
-        }
+            => EndPoint = new IPEndPoint(IPAddress.Any, port);
 
         ~TcpServer()
         {
@@ -138,9 +136,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public void Multicast(string text)
-        {
-            Multicast(text, Encoding.UTF8);
-        }
+            => Multicast(text, Encoding.UTF8);
 
         public void Multicast(string text, Encoding encoding)
         {
@@ -152,9 +148,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public void Multicast(IEnumerable<byte> data)
-        {
-            Multicast(data?.ToArray());
-        }
+            => Multicast(data?.ToArray());
 
         public void Multicast(params byte[] data)
         {
@@ -199,6 +193,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
                 _socket?.Shutdown(SocketShutdown.Both);
             }
             catch { }
+
             _socket?.Close();
             _socket?.Dispose();
         }

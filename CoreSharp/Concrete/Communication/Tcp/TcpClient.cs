@@ -173,9 +173,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public int Send(string text)
-        {
-            return Send(text, Encoding.UTF8);
-        }
+            => Send(text, Encoding.UTF8);
 
         public int Send(string text, Encoding encoding)
         {
@@ -187,9 +185,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public int Send(IEnumerable<byte> data)
-        {
-            return Send(data?.ToArray());
-        }
+            => Send(data?.ToArray());
 
         public int Send(params byte[] data)
         {
@@ -212,9 +208,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public void BeginSend(string data)
-        {
-            BeginSend(data, Encoding.UTF8);
-        }
+            => BeginSend(data, Encoding.UTF8);
 
         public void BeginSend(string data, Encoding encoding)
         {
@@ -226,9 +220,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         public void BeginSend(IEnumerable<byte> data)
-        {
-            BeginSend(data?.ToArray());
-        }
+            => BeginSend(data?.ToArray());
 
         public void BeginSend(params byte[] data)
         {
@@ -356,9 +348,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         }
 
         private void OnDataSent(IEnumerable<byte> data)
-        {
-            OnDataSent(data?.ToArray());
-        }
+            => OnDataSent(data?.ToArray());
 
         private void OnDataSent(byte[] data)
         {
@@ -443,6 +433,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
                 }
             }
             catch { }
+
             Disconnect();
             Terminate();
         }

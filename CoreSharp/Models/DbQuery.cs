@@ -21,9 +21,7 @@ namespace CoreSharp.Models
 
         //Constructors 
         public DbQuery(DbConnection connection)
-        {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
-        }
+            => _connection = connection ?? throw new ArgumentNullException(nameof(connection));
 
         public DbQuery(DbTransaction transaction)
         {

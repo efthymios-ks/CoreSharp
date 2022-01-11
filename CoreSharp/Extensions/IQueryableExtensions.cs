@@ -53,6 +53,7 @@ namespace CoreSharp.Extensions
                 items = pagedQuery.ToArray();
                 totalItems = query.Count();
             }
+
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             //Return
@@ -103,6 +104,7 @@ namespace CoreSharp.Extensions
                 if (i < characters.Length - 1)
                     builder.Append(".*");
             }
+
             var pattern = $"{builder}";
 
             //Build RegEx object 

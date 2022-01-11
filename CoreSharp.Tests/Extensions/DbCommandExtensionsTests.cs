@@ -16,9 +16,7 @@ namespace CoreSharp.Extensions.Tests
         //Methods
         [SetUp]
         public void SetUp()
-        {
-            _sqlCommand = new SqlCommand();
-        }
+            => _sqlCommand = new SqlCommand();
 
         [TearDown]
         public void TearDown()

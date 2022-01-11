@@ -38,6 +38,7 @@ namespace CoreSharp.Extensions
                 if (value != 0)
                     fields.Add($"{value}{unit}");
             }
+
             Add(timeSpan.Days, "d");
             Add(timeSpan.Hours, "h");
             Add(timeSpan.Minutes, "m");
