@@ -20,9 +20,17 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static TimeSpan GetElapsedTime(this DateTime endDate, DateTime startDate)
         {
+            static void ThrowDateTimeKindException(string paramName)
+                => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
+
+            if (endDate.Kind == DateTimeKind.Unspecified)
+                ThrowDateTimeKindException(nameof(endDate));
+            else if (startDate.Kind == DateTimeKind.Unspecified)
+                ThrowDateTimeKindException(nameof(endDate));
+
             var universalStart = startDate.ToUniversalTime();
             var universalEnd = endDate.ToUniversalTime();
-            return universalEnd.Subtract(universalStart);
+            return universalEnd - universalStart;
         }
 
         /// <inheritdoc cref="HasExpired(DateTime, DateTime, TimeSpan)"/>
