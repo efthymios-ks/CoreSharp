@@ -3,6 +3,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Text.Json;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -94,7 +95,7 @@ namespace CoreSharp.Extensions.Tests
             var item = new DummyClass();
 
             //Act
-            Action action = () => item.ToJson(null);
+            Action action = () => item.ToJson(options: null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -138,7 +139,8 @@ namespace CoreSharp.Extensions.Tests
             var item = new DummyClass();
 
             //Act
-            Action action = () => item.JsonClone(null);
+            JsonSerializerOptions options = null;
+            Action action = () => item.JsonClone(options);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();

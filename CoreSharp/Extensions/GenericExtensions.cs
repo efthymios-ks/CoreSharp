@@ -1,7 +1,6 @@
 ﻿using CoreSharp.Models.EqualityComparers;
 using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Utilities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using JsonNet = Newtonsoft.Json;
+using TextJson = System.Text.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -41,46 +42,83 @@ namespace CoreSharp.Extensions
             return source.Contains(item, equalityComparer);
         }
 
-        /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonSerializerSettings)"/>
-        public static string ToJson<TEntity>(this TEntity entity) where TEntity : class
+        /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static string ToJson<TEntity>(this TEntity entity)
+            where TEntity : class
             => entity.ToJson(DefaultJsonSettings.Instance);
+
+        /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static string ToJson<TEntity>(this TEntity entity, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            return TextJson.JsonSerializer.Serialize(entity, options);
+        }
 
         /// <summary>
         /// Serialize the specified object to JSON.
         /// </summary>
-        public static string ToJson<TEntity>(this TEntity entity, JsonSerializerSettings settings) where TEntity : class
+        public static string ToJson<TEntity>(this TEntity entity, JsonNet.JsonSerializerSettings settings)
+            where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            return JsonConvert.SerializeObject(entity, settings);
+            return JsonNet.JsonConvert.SerializeObject(entity, settings);
         }
 
-        /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonSerializerSettings)"/>
-        public static TEntity JsonClone<TEntity>(this TEntity item) where TEntity : class
+        /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity JsonClone<TEntity>(this TEntity item)
+            where TEntity : class
             => item.JsonClone(DefaultJsonSettings.Instance);
+
+        /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity JsonClone<TEntity>(this TEntity item, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+        {
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var json = TextJson.JsonSerializer.Serialize(item, options);
+            return TextJson.JsonSerializer.Deserialize<TEntity>(json, options);
+        }
 
         /// <summary>
         /// Perform a deep copy using json serialization.
         /// </summary>
-        public static TEntity JsonClone<TEntity>(this TEntity item, JsonSerializerSettings settings) where TEntity : class
+        public static TEntity JsonClone<TEntity>(this TEntity item, JsonNet.JsonSerializerSettings settings)
+            where TEntity : class
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            var json = JsonConvert.SerializeObject(item, settings);
-            return JsonConvert.DeserializeObject<TEntity>(json, settings);
+            var json = JsonNet.JsonConvert.SerializeObject(item, settings);
+            return JsonNet.JsonConvert.DeserializeObject<TEntity>(json, settings);
         }
 
-        /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonSerializerSettings)"/>
-        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right) where TEntity : class
+        /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right)
+            where TEntity : class
             => left.JsonEquals(right, DefaultJsonSettings.Instance);
+
+        /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+        {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var equalityComparer = new JsonEqualityComparer<TEntity>(options);
+            return equalityComparer.Equals(left, right);
+        }
 
         /// <summary>
         /// Compares two entities using
         /// <see cref="JsonEqualityComparer{TEntity}"/>.
         /// </summary>
-        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonSerializerSettings settings) where TEntity : class
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonNet.JsonSerializerSettings settings)
+            where TEntity : class
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
@@ -93,7 +131,8 @@ namespace CoreSharp.Extensions
         /// and public, primitive properties.
         /// Uses <see cref="TypeExtensions.IsPrimitiveExtended(Type)"/>.
         /// </summary>
-        public static TEntity PrimitiveClone<TEntity>(this TEntity item) where TEntity : class, new()
+        public static TEntity PrimitiveClone<TEntity>(this TEntity item)
+            where TEntity : class, new()
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
 
@@ -134,23 +173,27 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="IsNull{T}(T?)"/>
-        public static bool IsNull<T>(this T input) where T : class
+        public static bool IsNull<T>(this T input)
+            where T : class
             => input is null;
 
         /// <inheritdoc cref="Nullable{T}.HasValue"/>
-        public static bool IsNull<T>(this T? input) where T : struct
+        public static bool IsNull<T>(this T? input)
+            where T : struct
             => !input.HasValue;
 
         /// <summary>
         /// Check if struct has default value.
         /// </summary>
-        public static bool IsDefault<T>(this T input) where T : struct
+        public static bool IsDefault<T>(this T input)
+            where T : struct
             => input.Equals(default(T));
 
         /// <summary>
         /// Serializes an object into an XML document.
         /// </summary>
-        public static XDocument ToXDocument<TEntity>(this TEntity entity) where TEntity : class
+        public static XDocument ToXDocument<TEntity>(this TEntity entity)
+            where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
@@ -163,17 +206,20 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="ToXDocument{TEntity}(TEntity)" />
-        public static string ToXml<TEntity>(this TEntity entity) where TEntity : class
+        public static string ToXml<TEntity>(this TEntity entity)
+            where TEntity : class
             => entity.ToXDocument().ToString();
 
         /// <inheritdoc cref="GetPropertiesDictionary{TEntity}(TEntity, BindingFlags)"/>
-        public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity) where TEntity : class
+        public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity)
+            where TEntity : class
             => entity.GetPropertiesDictionary(BindingFlags.Public | BindingFlags.Instance);
 
         /// <summary>
         /// Convert item properties to <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
-        public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity, BindingFlags flags) where TEntity : class
+        public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity, BindingFlags flags)
+            where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
@@ -186,13 +232,15 @@ namespace CoreSharp.Extensions
 #pragma warning disable IDE0060 // Remove unused parameter
 #pragma warning disable RCS1175 // Unused this parameter.
         /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
-        public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
+        public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
+            where TAttribute : Attribute
 #pragma warning restore RCS1175 // Unused this parameter.
 #pragma warning restore IDE0060 // Remove unused parameter
             => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>
-        public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
+            where TAttribute : Attribute
             => item.GetAttributes<TItem, TMember, TAttribute>(memberSelector)?.FirstOrDefault();
     }
 }

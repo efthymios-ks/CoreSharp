@@ -387,11 +387,18 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.GetElapsedTime(System.DateTime)">
+            <inheritdoc cref="M:CoreSharp.Extensions.DateTimeExtensions.GetElapsedTime(System.DateTime,System.DateTime)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.GetElapsedTime(System.DateTime,System.DateTime)">
             <summary>
-            Get the elapsed time since the input value.
+            Get the elapsed time between two <see cref="T:System.DateTime"/>
+            using their UTC values.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.DateTimeExtensions.HasExpired(System.DateTime,System.TimeSpan)">
+            <inheritdoc cref="M:CoreSharp.Extensions.DateTimeExtensions.HasExpired(System.DateTime,System.DateTime,System.TimeSpan)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.DateTimeExtensions.HasExpired(System.DateTime,System.DateTime,System.TimeSpan)">
             <summary>
             Check if specific <see cref="T:System.TimeSpan"/> has passed
             starting from provided <see cref="T:System.DateTime"/>.
@@ -636,6 +643,9 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
+        </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Serialize the specified object to JSON.
@@ -644,12 +654,18 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
+        </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonClone``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Perform a deep copy using json serialization.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,System.Text.Json.JsonSerializerOptions)">
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)">
@@ -1530,6 +1546,12 @@
         <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream,Newtonsoft.Json.JsonSerializerSettings)">
             <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJsonAsync``1(System.IO.Stream,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJsonAsync(System.IO.Stream,System.Type,System.Text.Json.JsonSerializerOptions)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.FromJsonAsync(System.IO.Stream,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)"/>
+        </member>
         <member name="M:CoreSharp.Extensions.StreamExtensions.FromJson(System.IO.Stream,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Parses the text representing a JSON object
@@ -2128,7 +2150,8 @@
         <member name="T:CoreSharp.Models.EqualityComparers.JsonEqualityComparer`1">
             <summary>
             Defines methods to support the comparison of objects for equality.
-            Uses only <see cref="M:Newtonsoft.Json.JsonConvert.SerializeObject(System.Object,Newtonsoft.Json.JsonSerializerSettings)"/> for conversions
+            Uses <see cref="M:Newtonsoft.Json.JsonConvert.SerializeObject(System.Object)"/>
+            for default conversions.
             </summary>
         </member>
         <member name="T:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1">
@@ -2353,6 +2376,16 @@
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDebugging">
             <summary>
             Check if DEBUG is defined.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Utilities.ExceptionX">
+            <summary>
+            <see cref="T:System.Exception"/> utilities.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Utilities.ExceptionX.Messages">
+            <summary>
+            Reusable error messages.
             </summary>
         </member>
         <member name="T:CoreSharp.Utilities.ExpressionX">

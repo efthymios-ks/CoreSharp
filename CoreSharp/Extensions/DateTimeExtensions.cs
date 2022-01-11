@@ -42,7 +42,19 @@ namespace CoreSharp.Extensions
         /// starting from provided <see cref="DateTime"/>.
         /// </summary>
         public static bool HasExpired(this DateTime endDate, DateTime startDate, TimeSpan duration)
-            => endDate.GetElapsedTime(startDate) > duration;
+        {
+            static void ThrowDateTimeKindException(string paramName)
+                => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
+
+            if (endDate.Kind == DateTimeKind.Unspecified)
+                ThrowDateTimeKindException(nameof(endDate));
+            else if (startDate.Kind == DateTimeKind.Unspecified)
+                ThrowDateTimeKindException(nameof(endDate));
+
+            var universalStart = startDate.ToUniversalTime();
+            var universalEnd = endDate.ToUniversalTime();
+            return endDate >= universalStart.Add(duration);
+        }
 
         /// <summary>
         /// Check if <see cref="DateTime"/> is in a weekend.

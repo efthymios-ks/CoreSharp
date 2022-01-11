@@ -17,9 +17,8 @@ namespace CoreSharp.Models.Newtonsoft.Resolvers
 
         //Methods
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-        {
-            var properties = base.CreateProperties(type, memberSerialization);
-            return properties.Where(p => p.Writable).ToList();
-        }
+            => base.CreateProperties(type, memberSerialization)
+                   .Where(p => p.Writable)
+                   .ToList();
     }
 }

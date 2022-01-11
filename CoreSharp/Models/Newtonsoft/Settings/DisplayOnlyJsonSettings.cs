@@ -5,7 +5,7 @@ namespace CoreSharp.Models.Newtonsoft.Settings
     public class DisplayOnlyJsonSettings : JsonSerializerSettings
     {
         //Fields
-        private static DefaultJsonSettings _instance;
+        private static DisplayOnlyJsonSettings _instance;
 
         //Constructors
         public DisplayOnlyJsonSettings()
@@ -16,7 +16,7 @@ namespace CoreSharp.Models.Newtonsoft.Settings
         }
 
         //Properties
-        public static DefaultJsonSettings Instance
-            => _instance ??= new DefaultJsonSettings();
+        public static DisplayOnlyJsonSettings Instance
+            => _instance ??= new DisplayOnlyJsonSettings();
     }
 }

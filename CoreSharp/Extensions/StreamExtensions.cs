@@ -1,11 +1,12 @@
 ﻿using CoreSharp.Models.Newtonsoft.Settings;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using JsonNet = Newtonsoft.Json;
+using TextJson = System.Text.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -14,24 +15,57 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class StreamExtensions
     {
-        /// <inheritdoc cref="FromJson(Stream, Type, JsonSerializerSettings)"/>
-        public static TEntity FromJson<TEntity>(this Stream stream) where TEntity : class
+        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this Stream stream)
+            where TEntity : class
             => stream.FromJson(typeof(TEntity)) as TEntity;
 
-        /// <inheritdoc cref="FromJson(Stream, Type, JsonSerializerSettings)"/>
+        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
         public static object FromJson(this Stream stream, Type entityType)
             => stream.FromJson(entityType, DefaultJsonSettings.Instance);
 
-        /// <inheritdoc cref="FromJson(Stream, Type, JsonSerializerSettings)"/>
-        public static TEntity FromJson<TEntity>(this Stream stream, JsonSerializerSettings settings)
+        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this Stream stream, JsonNet.JsonSerializerSettings settings)
             where TEntity : class
            => stream.FromJson(typeof(TEntity), settings) as TEntity;
+
+        /// <inheritdoc cref="FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
+        public static async Task<TEntity> FromJsonAsync<TEntity>(this Stream stream, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+            => await stream.FromJsonAsync(typeof(TEntity), options) as TEntity;
+
+        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
+        public static async Task<object> FromJsonAsync(this Stream stream, Type entityType, TextJson.JsonSerializerOptions options)
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            if (!stream.CanRead)
+                throw new NotSupportedException($"{nameof(stream)} is not readable.");
+
+            try
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
+
+                return await TextJson.JsonSerializer.DeserializeAsync(stream, entityType, options);
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
+            }
+        }
 
         /// <summary>
         /// Parses the text representing a JSON object
         /// into an instance of the type specified.
         /// </summary>
-        public static object FromJson(this Stream stream, Type entityType, JsonSerializerSettings settings)
+        public static object FromJson(this Stream stream, Type entityType, JsonNet.JsonSerializerSettings settings)
         {
             _ = stream ?? throw new ArgumentNullException(nameof(stream));
 
@@ -43,9 +77,9 @@ namespace CoreSharp.Extensions
                 if (stream.CanSeek)
                     stream.Position = 0;
 
-                var serializer = JsonSerializer.Create(settings);
+                var serializer = JsonNet.JsonSerializer.Create(settings);
                 using var streamReader = new StreamReader(stream);
-                using var jsonReader = new JsonTextReader(streamReader);
+                using var jsonReader = new JsonNet.JsonTextReader(streamReader);
                 return serializer.Deserialize(jsonReader, entityType);
             }
             catch
