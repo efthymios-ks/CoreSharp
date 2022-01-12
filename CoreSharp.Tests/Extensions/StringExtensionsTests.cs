@@ -1,5 +1,6 @@
 ﻿using CoreSharp.Tests.Dummies;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -628,8 +629,11 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void FromJson_OptionsIsNull_ThrowArgumentNullException()
         {
+            //Assert
+            JsonSerializerSettings settings = null;
+
             //Act
-            Action action = () => StringEmpty.FromJson<DummyClass>(null);
+            Action action = () => StringEmpty.FromJson<DummyClass>(settings);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();

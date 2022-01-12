@@ -1,6 +1,7 @@
 ﻿using CoreSharp.Models.Newtonsoft.Settings;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class StreamExtensions
     {
+        //Fields
+        private const int DefaultChunkSize = 10240;
+
         /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
         public static TEntity FromJson<TEntity>(this Stream stream)
             where TEntity : class
@@ -127,7 +131,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Write <see cref="Stream"/> to physical file.
         /// </summary>
-        public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = 81920, CancellationToken cancellationToken = default)
+        public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultChunkSize, CancellationToken cancellationToken = default)
         {
             _ = stream ?? throw new ArgumentNullException(nameof(stream));
             if (string.IsNullOrWhiteSpace(filePath))
@@ -151,6 +155,60 @@ namespace CoreSharp.Extensions
                 stream.Position = 0;
             var reader = new StreamReader(stream, encoding);
             return await reader.ReadToEndAsync();
+        }
+
+        /// <inheritdoc cref="EqualsAsync(Stream, Stream, int, CancellationToken)"/>
+        public static async Task<bool> EqualsAsync(this Stream left, Stream right, CancellationToken cancellationToken = default)
+            => await left.EqualsAsync(right, DefaultChunkSize, cancellationToken);
+
+        /// <summary>
+        /// Compare two <see cref="Stream"/> in chunks.
+        /// </summary>
+        public static async Task<bool> EqualsAsync(this Stream left, Stream right, int chunkSize, CancellationToken cancellationToken = default)
+        {
+            _ = left ?? throw new ArgumentNullException(nameof(left));
+            _ = right ?? throw new ArgumentNullException(nameof(right));
+
+            try
+            {
+                //Reference equals 
+                if (left == right)
+                    return true;
+
+                //Different length
+                if (left.Length != right.Length)
+                    return false;
+
+                //Check readability 
+                static void ThrowNotReadableException(string paramName)
+                    => throw new NotSupportedException($"{paramName} is not readable.");
+                if (!left.CanRead)
+                    ThrowNotReadableException(nameof(left));
+                else if (!right.CanRead)
+                    ThrowNotReadableException(nameof(right));
+
+                //Compare chunks
+                left.Position = 0;
+                right.Position = 0;
+                for (var i = 0; i < left.Length; i += chunkSize)
+                {
+                    var leftChunk = new byte[chunkSize];
+                    var rightChunk = new byte[chunkSize];
+
+                    await left.ReadAsync(leftChunk.AsMemory(), cancellationToken);
+                    await right.ReadAsync(rightChunk.AsMemory(), cancellationToken);
+
+                    if (!leftChunk.SequenceEqual(rightChunk))
+                        return false;
+                }
+
+                return true;
+            }
+            finally
+            {
+                left.Position = 0;
+                right.Position = 0;
+            }
         }
     }
 }

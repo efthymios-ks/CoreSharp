@@ -1,6 +1,5 @@
 ﻿using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Sources;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using JsonNet = Newtonsoft.Json;
+using TextJson = System.Text.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -291,26 +292,48 @@ namespace CoreSharp.Extensions
             return input;
         }
 
-        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
-        public static TEntity FromJson<TEntity>(this string json) where TEntity : class
+        /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this string json)
+            where TEntity : class
             => json.FromJson(typeof(TEntity)) as TEntity;
 
-        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
+        /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
         public static object FromJson(this string json, Type entityType)
             => json.FromJson(entityType, DefaultJsonSettings.Instance);
 
-        /// <inheritdoc cref="FromJson(string, Type, JsonSerializerSettings)"/>
-        public static TEntity FromJson<TEntity>(this string json, JsonSerializerSettings settings) where TEntity : class
+        /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
+        public static TEntity FromJson<TEntity>(this string json, JsonNet.JsonSerializerSettings settings)
+            where TEntity : class
            => json.FromJson(typeof(TEntity), settings) as TEntity;
 
         /// <inheritdoc cref="StreamExtensions.FromJson(Stream)"/>
-        public static object FromJson(this string json, Type entityType, JsonSerializerSettings settings)
+        public static object FromJson(this string json, Type entityType, JsonNet.JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             try
             {
-                return JsonConvert.DeserializeObject(json, entityType, settings);
+                return JsonNet.JsonConvert.DeserializeObject(json, entityType, settings);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <inheritdoc cref="FromJson(string, Type, TextJson.JsonSerializerOptions)"/>
+        public static TEntity FromJson<TEntity>(this string json, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+           => json.FromJson(typeof(TEntity), options) as TEntity;
+
+        /// <inheritdoc cref="StreamExtensions.FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
+        public static object FromJson(this string json, Type entityType, TextJson.JsonSerializerOptions options)
+        {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            try
+            {
+                return TextJson.JsonSerializer.Deserialize(json, entityType, options);
             }
             catch
             {
