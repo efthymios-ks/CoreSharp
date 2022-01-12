@@ -62,5 +62,17 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        [TestCase(typeof(int?), typeof(int))]
+        [TestCase(typeof(int), typeof(int))]
+        public void GetNullableBaseType_WhenCalled_ReturnBaseType(Type inputType, Type expectedType)
+        {
+            //Act
+            var result = inputType.GetNullableBaseType();
+
+            //Assert
+            result.Should().Be(expectedType);
+        }
     }
 }

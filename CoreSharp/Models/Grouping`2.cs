@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace CoreSharp.Models
 {
-    //TODO: Add unit tests
     /// <inheritdoc cref="IGrouping{TKey, TElement}" />
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
@@ -27,7 +26,8 @@ namespace CoreSharp.Models
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => ToString();
+        private string DebuggerDisplay
+            => ToString();
 
         public TKey Key { get; }
 

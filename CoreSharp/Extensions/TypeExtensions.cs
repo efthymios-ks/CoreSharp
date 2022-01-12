@@ -99,7 +99,6 @@ namespace CoreSharp.Extensions
             return additionalTypes.Any(t => t == baseType);
         }
 
-        //TODO: Add unit tests
         /// <summary>
         /// If <see cref="Nullable{T}"/> return <see cref="Nullable.GetUnderlyingType(Type)"/>, else the provided <see cref="Type"/> itself.
         /// </summary>

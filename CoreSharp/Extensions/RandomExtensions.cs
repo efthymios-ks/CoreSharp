@@ -63,7 +63,6 @@ namespace CoreSharp.Extensions
             return random.NextString(randomSize);
         }
 
-        //TODO: Add unit tests. 
         /// <summary>
         /// Generate random string containing A-Z, a-z, 0-1.
         /// </summary>

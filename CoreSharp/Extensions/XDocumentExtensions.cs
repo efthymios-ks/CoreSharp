@@ -9,7 +9,6 @@ using System.Xml.XPath;
 
 namespace CoreSharp.Extensions
 {
-    //TODO: Add unit tests 
     /// <summary>
     /// <see cref="XDocument"/> extensions.
     /// </summary>

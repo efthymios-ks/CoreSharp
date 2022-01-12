@@ -99,5 +99,34 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(expected);
         }
+
+        [Test]
+        public void GetElapsedTime_EitherDateHasUnspecifiedKind_ThrowArgumentException()
+        {
+            //Arrange 
+            var date1 = DateTime.Now;
+            var date2 = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+
+            //Act
+            Action action = () => date1.GetElapsedTime(date2);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentException>();
+        }
+
+        [Test]
+        public void GetElapsedTime_WhenCalled_ConvertToUtcAndReturnElapsed()
+        {
+            //Arrange 
+            var endDate = DateTime.UtcNow.AddDays(1);
+            var startDate = DateTime.Now;
+            var expected = endDate.ToUniversalTime() - startDate.ToUniversalTime();
+
+            //Act
+            var result = endDate.GetElapsedTime(startDate);
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }

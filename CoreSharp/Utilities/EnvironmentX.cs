@@ -26,10 +26,9 @@ namespace CoreSharp.Utilities
         public static bool IsDebugging()
             =>
 #if DEBUG
-            return true;
+            true;
 #else
             false;
-#endif
-
+#endif 
     }
 }

@@ -3,7 +3,6 @@ using System.IO;
 
 namespace CoreSharp.Extensions
 {
-    //TODO: Add unit tests for DirectoryExtensions. 
     /// <summary>
     /// <see cref="DirectoryInfo"/> extensions.
     /// </summary>

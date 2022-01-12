@@ -9,7 +9,6 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class DateTimeExtensions
     {
-        //TODO: Add mock test to `DateTime.GetElapsedTime()`. 
         /// <inheritdoc cref="GetElapsedTime(DateTime, DateTime)"/>
         public static TimeSpan GetElapsedTime(this DateTime endDate)
             => endDate.GetElapsedTime(DateTime.Now);
