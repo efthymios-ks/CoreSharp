@@ -422,13 +422,15 @@ namespace CoreSharp.Extensions
             => source.GetDuplicates(keySelector).Count > 0;
 
         /// <inheritdoc cref="ToDataTable{T}(IEnumerable{T}, string)"/>
-        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source) where TEntity : class
+        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source)
+            where TEntity : class
             => source.ToDataTable(typeof(TEntity).Name);
 
         /// <summary>
         /// Convert collection of entities to <see cref="DataTable"/>.
         /// </summary>
-        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source, string tableName) where TEntity : class
+        public static DataTable ToDataTable<TEntity>(this IEnumerable<TEntity> source, string tableName)
+            where TEntity : class
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 

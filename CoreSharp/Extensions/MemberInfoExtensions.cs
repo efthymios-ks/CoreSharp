@@ -11,7 +11,8 @@ namespace CoreSharp.Extensions
     public static class MemberInfoExtensions
     {
         /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)" />
-        public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this MemberInfo field) where TAttribute : Attribute
+        public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this MemberInfo field)
+            where TAttribute : Attribute
         {
             _ = field ?? throw new ArgumentNullException(nameof(field));
 
@@ -19,7 +20,8 @@ namespace CoreSharp.Extensions
         }
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)" />
-        public static TAttribute GetAttribute<TAttribute>(this MemberInfo field) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TAttribute>(this MemberInfo field)
+            where TAttribute : Attribute
             => field.GetAttributes<TAttribute>()?.FirstOrDefault();
     }
 }

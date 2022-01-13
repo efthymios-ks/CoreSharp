@@ -13,7 +13,7 @@ namespace CoreSharp.Extensions
             => (timeSpan ?? TimeSpan.Zero).ToStringReadable();
 
         /// <summary>
-        /// Convert TimeSpan to human readable string.
+        /// Convert <see cref="TimeSpan"/> to human readable string.
         /// </summary>
         public static string ToStringReadable(this TimeSpan timeSpan)
         {

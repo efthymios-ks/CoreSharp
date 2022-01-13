@@ -1574,6 +1574,14 @@
             Read <see cref="T:System.IO.Stream"/> to <see cref="T:System.String"/>.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.EqualsAsync(System.IO.Stream,System.IO.Stream,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.EqualsAsync(System.IO.Stream,System.IO.Stream,System.Int32,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.EqualsAsync(System.IO.Stream,System.IO.Stream,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Compare two <see cref="T:System.IO.Stream"/> in chunks.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.StringBuilderExtensions">
             <summary>
             <see cref="T:CoreSharp.Extensions.StringBuilderExtensions"/> extensions.
@@ -1728,6 +1736,12 @@
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,Newtonsoft.Json.JsonSerializerSettings)">
             <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJson``1(System.IO.Stream)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson``1(System.String,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,System.Text.Json.JsonSerializerOptions)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.StringExtensions.FromJson(System.String,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromJsonAsync(System.IO.Stream,System.Type,System.Text.Json.JsonSerializerOptions)"/>
         </member>
         <member name="M:CoreSharp.Extensions.StringExtensions.FromXml``1(System.String)">
             <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)"/>
@@ -1953,7 +1967,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.TimeSpanExtensions.ToStringReadable(System.TimeSpan)">
             <summary>
-            Convert TimeSpan to human readable string.
+            Convert <see cref="T:System.TimeSpan"/> to human readable string.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.TypeExtensions">
@@ -2366,12 +2380,12 @@
         <member name="M:CoreSharp.Utilities.EnvironmentX.GetAspNetCoreEnvironment">
             <summary>
             Get ASPNETCORE_ENVIRONMENT variable.
-            </summary> 
+            </summary>
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDevelopment">
             <summary>
             Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
-            </summary> 
+            </summary>
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDebugging">
             <summary>

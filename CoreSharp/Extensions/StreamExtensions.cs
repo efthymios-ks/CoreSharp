@@ -46,12 +46,11 @@ namespace CoreSharp.Extensions
 
             if (!stream.CanRead)
                 throw new NotSupportedException($"{nameof(stream)} is not readable.");
+            if (stream.CanSeek)
+                stream.Position = 0;
 
             try
             {
-                if (stream.CanSeek)
-                    stream.Position = 0;
-
                 return await TextJson.JsonSerializer.DeserializeAsync(stream, entityType, options);
             }
             catch
@@ -75,12 +74,11 @@ namespace CoreSharp.Extensions
 
             if (!stream.CanRead)
                 throw new NotSupportedException($"{nameof(stream)} is not readable.");
+            if (stream.CanSeek)
+                stream.Position = 0;
 
             try
             {
-                if (stream.CanSeek)
-                    stream.Position = 0;
-
                 var serializer = JsonNet.JsonSerializer.Create(settings);
                 using var streamReader = new StreamReader(stream);
                 using var jsonReader = new JsonNet.JsonTextReader(streamReader);
@@ -108,12 +106,11 @@ namespace CoreSharp.Extensions
 
             if (!stream.CanRead)
                 throw new NotSupportedException($"{nameof(stream)} is not readable.");
+            if (stream.CanSeek)
+                stream.Position = 0;
 
             try
             {
-                if (stream.CanSeek)
-                    stream.Position = 0;
-
                 var document = await XDocument.LoadAsync(stream, LoadOptions.None, cancellationToken);
                 return document.To<TEntity>();
             }
