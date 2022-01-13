@@ -16,8 +16,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.7.0</Version>
-        <PackageReleaseNotes>-Extensions, String, Overloaded `FromJson()` method.</PackageReleaseNotes>
+        <Version>1.7.1</Version>
+        <PackageReleaseNotes>-Extensions, String, Overloaded `FromJson()` method.
+-Extensions, Type, Added `GetGenericTypeBase()` method.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

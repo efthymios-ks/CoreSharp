@@ -151,5 +151,19 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static object GetDefault(this Type type)
             => type.IsValueType ? Activator.CreateInstance(type) : null;
+
+        //TODO: Add unit tests
+        /// <summary>
+        /// Returns a <see cref="Type"/> that represents a generic type definition
+        /// from which the current generic type can be constructed.<br/>
+        /// If <see cref="Type.IsGenericType"/> is <see langword="false"/>,
+        /// the provided <see cref="Type"/> itself is returned.
+        /// </summary>
+        public static Type GetGenericTypeBase(this Type type)
+        {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+        }
     }
 }

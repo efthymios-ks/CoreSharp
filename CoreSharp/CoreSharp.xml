@@ -2026,6 +2026,14 @@
             Runtime equivalent of default(T).
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.TypeExtensions.GetGenericTypeBase(System.Type)">
+            <summary>
+            Returns a <see cref="T:System.Type"/> that represents a generic type definition
+            from which the current generic type can be constructed.<br/>
+            If <see cref="P:System.Type.IsGenericType"/> is <see langword="false"/>,
+            the provided <see cref="T:System.Type"/> itself is returned.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.UlongExtensions">
             <summary>
             <see cref="T:System.UInt64"/> extensions.
