@@ -60,7 +60,7 @@ namespace CoreSharp.Extensions
                 await task;
                 return true;
             });
-            await task.TimeoutAfter(timeout);
+            await genericTask.TimeoutAfter(timeout);
         }
 
         /// <summary>

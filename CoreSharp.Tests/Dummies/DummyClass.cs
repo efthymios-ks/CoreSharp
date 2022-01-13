@@ -3,7 +3,7 @@
 namespace CoreSharp.Tests.Dummies
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    internal class DummyClass
+    internal class DummyClass : IDummyService
     {
         //Constructors 
         public DummyClass() : this(default)

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Tests.Dummies;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 
@@ -73,6 +74,59 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expectedType);
+        }
+
+        [Test]
+        public void GetGenericTypeBase_ArgIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Type type = null;
+
+            //Act
+            Action action = () => type.GetGenericTypeBase();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(typeof(DummyClass), typeof(DummyClass))]
+        [TestCase(typeof(DummyClass<int>), typeof(DummyClass<>))]
+        public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type inputType, Type expectedType)
+        {
+            //Act
+            var result = inputType.GetGenericTypeBase();
+
+            //Assert
+            result.Should().Be(expectedType);
+        }
+
+        [Test]
+        [TestCase(null, typeof(int))]
+        [TestCase(typeof(int), null)]
+        public void GetGenericTypeBase_ArgIsNull_ThrowArgumentNullException(Type parentType, Type baseType)
+        {
+            //Act
+            Action action = () => parentType.Implements(baseType);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase(typeof(DummyClass<>), typeof(int), false, false)]
+        [TestCase(typeof(DummyClass<>), typeof(IDummyService), false, true)]
+        [TestCase(typeof(DummyClass<>), typeof(DummyClass), false, true)]
+        [TestCase(typeof(DummyClass<>), typeof(DummyClass<>), false, true)]
+        [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), false, false)]
+        [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), true, true)]
+        public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expected)
+        {
+            //Act
+            var result = parentType.Implements(baseType, useGenericBaseType);
+
+            //Assert
+            result.Should().Be(expected);
         }
     }
 }

@@ -106,6 +106,19 @@ namespace CoreSharp.Extensions
             => Nullable.GetUnderlyingType(type) ?? type;
 
         /// <summary>
+        /// Returns a <see cref="Type"/> that represents a generic type definition
+        /// from which the current generic type can be constructed.<br/>
+        /// If <see cref="Type.IsGenericType"/> is <see langword="false"/>,
+        /// the provided <see cref="Type"/> itself is returned.
+        /// </summary>
+        public static Type GetGenericTypeBase(this Type type)
+        {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+        }
+
+        /// <summary>
         /// Get list of specific <see cref="Attribute"/>.
         /// </summary>
         public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this Type type) where TAttribute : Attribute
@@ -152,18 +165,38 @@ namespace CoreSharp.Extensions
         public static object GetDefault(this Type type)
             => type.IsValueType ? Activator.CreateInstance(type) : null;
 
-        //TODO: Add unit tests
         /// <summary>
-        /// Returns a <see cref="Type"/> that represents a generic type definition
-        /// from which the current generic type can be constructed.<br/>
-        /// If <see cref="Type.IsGenericType"/> is <see langword="false"/>,
-        /// the provided <see cref="Type"/> itself is returned.
+        /// Determines whether the current <see cref="Type"/>
+        /// derives from the specified base <see cref="Type"/>.
         /// </summary>
-        public static Type GetGenericTypeBase(this Type type)
+        public static bool Implements(this Type type, Type baseType, bool useGenericBaseType = false)
         {
             _ = type ?? throw new ArgumentNullException(nameof(type));
+            _ = baseType ?? throw new ArgumentNullException(nameof(baseType));
 
-            return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+            if (useGenericBaseType)
+            {
+                if (type.IsGenericType)
+                    type = type.GetGenericTypeDefinition();
+                if (baseType.IsGenericType)
+                    baseType = baseType.GetGenericTypeDefinition();
+            }
+
+            //Same type 
+            if (type == baseType)
+                return true;
+
+            //Implement class 
+            else if (type.IsSubclassOf(baseType))
+                return true;
+
+            //Implement interface 
+            else if (baseType.IsInterface && type.GetInterface(baseType.FullName) is not null)
+                return true;
+
+            //No relation
+            else
+                return false;
         }
     }
 }
