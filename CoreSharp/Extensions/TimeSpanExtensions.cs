@@ -26,10 +26,7 @@ namespace CoreSharp.Extensions
             if (timeSpan < TimeSpan.Zero)
             {
                 fields.Add("-");
-                if (timeSpan == TimeSpan.MinValue)
-                    timeSpan = TimeSpan.MaxValue;
-                else
-                    timeSpan = timeSpan.Negate();
+                timeSpan = timeSpan == TimeSpan.MinValue ? TimeSpan.MaxValue : timeSpan.Negate();
             }
 
             //Add values 

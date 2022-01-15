@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace CoreSharp.Abstracts
@@ -12,14 +11,11 @@ namespace CoreSharp.Abstracts
 
         //Methods 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var args = new PropertyChangedEventArgs(propertyName);
-            PropertyChanged?.Invoke(this, args);
-        }
+            => PropertyChanged?.Invoke(this, new(propertyName));
 
         protected virtual bool Set<TValue>(ref TValue field, TValue value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<TValue>.Default.Equals(field, value))
+            if (Equals(field, value))
                 return false;
 
             field = value;

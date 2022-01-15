@@ -38,16 +38,10 @@ namespace CoreSharp.Abstracts
 
                 _disposed = true;
 
-                try
-                {
-                    if (disposeManagedResources)
-                        CleanUpManagedResources();
+                if (disposeManagedResources)
+                    CleanUpManagedResources();
 
-                    CleanUpNativeResources();
-                }
-                catch
-                {
-                }
+                CleanUpNativeResources();
             }
         }
 

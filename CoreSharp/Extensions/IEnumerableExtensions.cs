@@ -202,7 +202,7 @@ namespace CoreSharp.Extensions
             var sourceArray = source.ToArray();
             foreach (var chunk in sequence)
             {
-                var isTaking = (chunk > 0);
+                var isTaking = chunk > 0;
                 //bool isSkipping = !isTaking;
                 var absoluteChunk = Math.Abs(chunk);
 

@@ -20,8 +20,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentOutOfRangeException(nameof(row), $"{nameof(row)} has to be between 0 and {rowSize - 1}.");
 
             var columnSize = source.GetLength(1);
-            return Enumerable.Range(0, columnSize)
-                             .Select(c => source[row, c]);
+            return Enumerable.Range(0, columnSize).Select(c => source[row, c]);
         }
 
         /// <summary>
