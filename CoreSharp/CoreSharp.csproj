@@ -16,9 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.7.2</Version>
-        <PackageReleaseNotes>-Extensions, Type, Added `Implements()` method.
--Models, Exception, HttpResponseException, Added `DebuggerDisplay` property.
+        <Version>1.8.0</Version>
+        <PackageReleaseNotes>-Models, UrlQueryBuilder, Code clean-up.
 -Code clean-up.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
