@@ -1,5 +1,6 @@
 ﻿using CoreSharp.Utilities;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 namespace CoreSharp.Models.Exceptions
 {
     /// <summary>
-    /// Simple <see cref="HttpResponseMessage"/> exception.
+    /// Simple <see cref="HttpResponseMessage"/> <see cref="Exception"/>.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class HttpResponseException : Exception
     {
         //Constructors 
@@ -17,7 +19,8 @@ namespace CoreSharp.Models.Exceptions
             string requestMethod,
             HttpStatusCode responseStatusCode,
             string responseContent,
-            Exception innerException = null) : base(responseContent, innerException)
+            Exception innerException = null)
+            : base(responseContent, innerException)
         {
             RequestUrl = requestUrl;
             RequestMethod = requestMethod;
@@ -25,11 +28,16 @@ namespace CoreSharp.Models.Exceptions
         }
 
         //Properties 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay
+            => ResponseStatus;
         public string RequestUrl { get; }
         public string RequestMethod { get; }
         public HttpStatusCode ResponseStatusCode { get; }
-        public string ResponseContent => Message;
-        public string ResponseStatus => $"{RequestMethod} > {RequestUrl} > {(int)ResponseStatusCode} {ResponseStatusCode}";
+        public string ResponseContent
+            => Message;
+        public string ResponseStatus
+            => $"{RequestMethod} > {RequestUrl} > {(int)ResponseStatusCode} {ResponseStatusCode}";
 
         //Methods
         public override string ToString()

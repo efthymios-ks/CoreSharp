@@ -16,10 +16,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.7.1</Version>
-        <PackageReleaseNotes>-Extensions, String, Overloaded `FromJson()` method.
--Extensions, Type, Added `GetGenericTypeBase()` method.
--Extensions, Type, Added `Implements()` method.</PackageReleaseNotes>
+        <Version>1.7.2</Version>
+        <PackageReleaseNotes>-Extensions, Type, Added `Implements()` method.
+-Models, Exception, HttpResponseException, Added `DebuggerDisplay` property.
+-Code clean-up.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
