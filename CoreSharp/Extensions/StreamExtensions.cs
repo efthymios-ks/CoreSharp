@@ -112,7 +112,7 @@ namespace CoreSharp.Extensions
             try
             {
                 var document = await XDocument.LoadAsync(stream, LoadOptions.None, cancellationToken);
-                return document.To<TEntity>();
+                return document.ToEntity<TEntity>();
             }
             catch
             {

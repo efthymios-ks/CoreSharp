@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace CoreSharp.Extensions
 {
@@ -173,6 +174,32 @@ namespace CoreSharp.Extensions
                 parameters
             };
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Maps <see cref="IDictionary{TKey, TValue}"/>
+        /// to new instance of provided type.
+        /// </summary>
+        public static TEntity ToEntity<TEntity>(this IDictionary<string, object> properties)
+            where TEntity : class, new()
+        {
+            _ = properties ?? throw new ArgumentNullException(nameof(properties));
+
+            var entityTypeProperties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                                      .Where(p => p.CanWrite);
+
+            var entity = new TEntity();
+            var propertiesWithValue = properties.Where(p => p.Value is not null);
+            foreach (var (key, value) in propertiesWithValue)
+            {
+                var property = entityTypeProperties.SingleOrDefault(p => p.Name == key && p.PropertyType.IsAssignableFrom(value.GetType()));
+                if (property is null)
+                    continue;
+
+                property.SetValue(entity, value);
+            }
+
+            return entity;
         }
     }
 }

@@ -25,14 +25,16 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Map <see cref="DataTable"/> values provided type collection.
         /// </summary>
-        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table, bool ignoreCase = false) where TEntity : new()
+        public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table)
+            where TEntity : class, new()
         {
             _ = table ?? throw new ArgumentNullException(nameof(table));
 
-            return table.ToEntitiesInternal<TEntity>(ignoreCase);
+            return table.ToEntitiesInternal<TEntity>();
         }
 
-        private static IEnumerable<TEntity> ToEntitiesInternal<TEntity>(this DataTable table, bool ignoreCase) where TEntity : new()
-            => from DataRow row in table.Rows select row.ToEntity<TEntity>(ignoreCase);
+        private static IEnumerable<TEntity> ToEntitiesInternal<TEntity>(this DataTable table)
+            where TEntity : class, new()
+            => from DataRow row in table.Rows select row.ToEntity<TEntity>();
     }
 }

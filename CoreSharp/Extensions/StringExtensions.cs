@@ -343,7 +343,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
         public static TEntity FromXml<TEntity>(this string xml) where TEntity : class
-            => XDocument.Parse(xml).To<TEntity>();
+            => XDocument.Parse(xml).ToEntity<TEntity>();
 
         /// <summary>
         /// Convert JSON to <see cref="ExpandoObject"/>.

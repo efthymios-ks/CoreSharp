@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Tests.Dummies;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -410,6 +411,37 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToEntity_DictionaryIsNull_ThrowArgumentNullException()
+        {
+            //Arrange 
+            IDictionary<string, object> properties = null;
+
+            //Act 
+            Action action = () => properties.ToEntity<DummyClass>();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ToEntity_WhenCalled_MapPropertiesToEntity()
+        {
+            //Arrange 
+            var properties = new Dictionary<string, object>
+            {
+                { nameof(DummyClass.Id), 1},
+                { nameof(DummyClass.Name), "Red"},
+            };
+
+            //Act 
+            var result = properties.ToEntity<DummyClass>();
+
+            //Assert
+            result.Id.Should().Be(1);
+            result.Name.Should().Be("Red");
         }
     }
 }

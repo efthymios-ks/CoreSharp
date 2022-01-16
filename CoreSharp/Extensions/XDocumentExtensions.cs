@@ -15,7 +15,7 @@ namespace CoreSharp.Extensions
     public static class XDocumentExtensions
     {
         /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
-        public static TEntity To<TEntity>(this XDocument document)
+        public static TEntity ToEntity<TEntity>(this XDocument document)
         {
             _ = document ?? throw new ArgumentNullException(nameof(document));
 

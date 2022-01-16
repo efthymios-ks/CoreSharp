@@ -54,40 +54,17 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToEntities_IgnoreCaseIsFalse_MapCaseSensitiveColumnsToEntities()
+        public void ToEntities_WhenCalled_MapColumnsToEntities()
         {
             //Arrange  
             var table = new DataTable();
-            table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("name", typeof(string));
+            table.Columns.Add(nameof(DummyClass.Id), typeof(int));
+            table.Columns.Add(nameof(DummyClass.Name), typeof(string));
             table.Rows.Add(1, "Red");
             table.Rows.Add(2, "Black");
 
             //Act 
             var result = table.ToEntities<DummyClass>().ToArray();
-            var item1 = result[0];
-            var item2 = result[1];
-
-            //Assert
-            result.Should().HaveCount(2);
-            item1.Id.Should().Be(1);
-            item1.Name.Should().NotBe("Red");
-            item2.Id.Should().Be(2);
-            item2.Name.Should().NotBe("Black");
-        }
-
-        [Test]
-        public void ToEntities_IgnoreCaseIsTrue_MapCaseInsensitiveColumnsToEntity()
-        {
-            //Arrange  
-            var table = new DataTable();
-            table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("name", typeof(string));
-            table.Rows.Add(1, "Red");
-            table.Rows.Add(2, "Black");
-
-            //Act 
-            var result = table.ToEntities<DummyClass>(true).ToArray();
             var item1 = result[0];
             var item2 = result[1];
 
