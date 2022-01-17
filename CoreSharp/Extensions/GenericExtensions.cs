@@ -3,9 +3,12 @@ using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using JsonNet = Newtonsoft.Json;
@@ -57,9 +60,7 @@ namespace CoreSharp.Extensions
             return TextJson.JsonSerializer.Serialize(entity, options);
         }
 
-        /// <summary>
-        /// Serialize the specified object to JSON.
-        /// </summary>
+        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
         public static string ToJson<TEntity>(this TEntity entity, JsonNet.JsonSerializerSettings settings)
             where TEntity : class
         {
@@ -67,6 +68,52 @@ namespace CoreSharp.Extensions
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             return JsonNet.JsonConvert.SerializeObject(entity, settings);
+        }
+
+        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
+        public static async Task<Stream> ToJsonStreamAsync<TEntity>(this TEntity entity)
+            where TEntity : class
+            => await entity.ToJsonStreamAsync(DefaultJsonSettings.Instance);
+
+        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
+        public static async Task<Stream> ToJsonStreamAsync<TEntity>(
+            this TEntity entity,
+            TextJson.JsonSerializerOptions options,
+            CancellationToken cancellationToken = default)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var stream = new MemoryStream();
+            await TextJson.JsonSerializer.SerializeAsync(stream, entity, options, cancellationToken);
+            stream.Position = 0;
+            return stream;
+        }
+
+        /// <summary>
+        /// Serialize the specified object to JSON.
+        /// </summary>
+        public static async Task<Stream> ToJsonStreamAsync<TEntity>(
+            this TEntity entity,
+            JsonNet.JsonSerializerSettings settings,
+            CancellationToken cancellationToken = default)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
+
+            var stream = new MemoryStream();
+            var serializer = JsonNet.JsonSerializer.Create(settings);
+
+            using var streamWriter = new StreamWriter(stream, leaveOpen: true);
+            using var jsonWriter = new JsonNet.JsonTextWriter(streamWriter);
+
+            serializer.Serialize(jsonWriter, entity);
+            await jsonWriter.FlushAsync(cancellationToken);
+            stream.Position = 0;
+
+            return stream;
         }
 
         /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>

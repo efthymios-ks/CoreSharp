@@ -17,7 +17,7 @@ namespace CoreSharp.Extensions
     public static class StreamExtensions
     {
         //Fields
-        private const int DefaultChunkSize = 10240;
+        private const int DefaultBufferSize = 10240;
 
         /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
         public static TEntity FromJson<TEntity>(this Stream stream)
@@ -80,7 +80,7 @@ namespace CoreSharp.Extensions
             try
             {
                 var serializer = JsonNet.JsonSerializer.Create(settings);
-                using var streamReader = new StreamReader(stream);
+                using var streamReader = new StreamReader(stream, leaveOpen: true);
                 using var jsonReader = new JsonNet.JsonTextReader(streamReader);
                 return serializer.Deserialize(jsonReader, entityType);
             }
@@ -128,7 +128,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Write <see cref="Stream"/> to physical file.
         /// </summary>
-        public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultChunkSize, CancellationToken cancellationToken = default)
+        public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
         {
             _ = stream ?? throw new ArgumentNullException(nameof(stream));
             if (string.IsNullOrWhiteSpace(filePath))
@@ -136,6 +136,7 @@ namespace CoreSharp.Extensions
 
             if (stream.CanSeek)
                 stream.Position = 0;
+
             await using var fileStream = File.OpenWrite(filePath);
             await stream.CopyToAsync(fileStream, bufferSize, cancellationToken);
         }
@@ -150,18 +151,19 @@ namespace CoreSharp.Extensions
 
             if (stream.CanSeek)
                 stream.Position = 0;
-            var reader = new StreamReader(stream, encoding);
+
+            var reader = new StreamReader(stream, encoding, leaveOpen: true);
             return await reader.ReadToEndAsync();
         }
 
         /// <inheritdoc cref="EqualsAsync(Stream, Stream, int, CancellationToken)"/>
         public static async Task<bool> EqualsAsync(this Stream left, Stream right, CancellationToken cancellationToken = default)
-            => await left.EqualsAsync(right, DefaultChunkSize, cancellationToken);
+            => await left.EqualsAsync(right, DefaultBufferSize, cancellationToken);
 
         /// <summary>
         /// Compare two <see cref="Stream"/> in chunks.
         /// </summary>
-        public static async Task<bool> EqualsAsync(this Stream left, Stream right, int chunkSize, CancellationToken cancellationToken = default)
+        public static async Task<bool> EqualsAsync(this Stream left, Stream right, int bufferSize, CancellationToken cancellationToken = default)
         {
             _ = left ?? throw new ArgumentNullException(nameof(left));
             _ = right ?? throw new ArgumentNullException(nameof(right));
@@ -187,10 +189,10 @@ namespace CoreSharp.Extensions
                 //Compare chunks
                 left.Position = 0;
                 right.Position = 0;
-                for (var i = 0; i < left.Length; i += chunkSize)
+                for (var i = 0; i < left.Length; i += bufferSize)
                 {
-                    var leftChunk = new byte[chunkSize];
-                    var rightChunk = new byte[chunkSize];
+                    var leftChunk = new byte[bufferSize];
+                    var rightChunk = new byte[bufferSize];
 
                     await left.ReadAsync(leftChunk.AsMemory(), cancellationToken);
                     await right.ReadAsync(rightChunk.AsMemory(), cancellationToken);

@@ -360,7 +360,7 @@
             Get <see cref="T:System.Data.DataRow"/> column values.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.DataRowExtensions.ToEntity``1(System.Data.DataRow,System.Boolean)">
+        <member name="M:CoreSharp.Extensions.DataRowExtensions.ToEntity``1(System.Data.DataRow)">
             <summary>
             Map <see cref="T:System.Data.DataRow"/> values to provided type.
             </summary>
@@ -376,7 +376,7 @@
             from <see cref="T:System.Data.DataTable"/>.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.DataTableExtensions.ToEntities``1(System.Data.DataTable,System.Boolean)">
+        <member name="M:CoreSharp.Extensions.DataTableExtensions.ToEntities``1(System.Data.DataTable)">
             <summary>
             Map <see cref="T:System.Data.DataTable"/> values provided type collection.
             </summary>
@@ -647,6 +647,15 @@
             <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)"/>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.ToJson``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0,Newtonsoft.Json.JsonSerializerSettings,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0,Newtonsoft.Json.JsonSerializerSettings,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0,Newtonsoft.Json.JsonSerializerSettings,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.ToJsonStreamAsync``1(``0,Newtonsoft.Json.JsonSerializerSettings,System.Threading.CancellationToken)">
             <summary>
             Serialize the specified object to JSON.
             </summary>
@@ -933,6 +942,12 @@
             <summary>
             Build url query string from parameters dictionary.
             Converts both key and value to <see cref="T:System.String"/> with default converter.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IDictionaryExtensions.ToEntity``1(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Maps <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            to new instance of provided type.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IEnumerableExtensions">
@@ -2003,6 +2018,14 @@
             If <see cref="T:System.Nullable`1"/> return <see cref="M:System.Nullable.GetUnderlyingType(System.Type)"/>, else the provided <see cref="T:System.Type"/> itself.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.TypeExtensions.GetGenericTypeBase(System.Type)">
+            <summary>
+            Returns a <see cref="T:System.Type"/> that represents a generic type definition
+            from which the current generic type can be constructed.<br/>
+            If <see cref="P:System.Type.IsGenericType"/> is <see langword="false"/>,
+            the provided <see cref="T:System.Type"/> itself is returned.
+            </summary>
+        </member>
         <member name="M:CoreSharp.Extensions.TypeExtensions.GetAttributes``1(System.Type)">
             <summary>
             Get list of specific <see cref="T:System.Attribute"/>.
@@ -2026,12 +2049,10 @@
             Runtime equivalent of default(T).
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.TypeExtensions.GetGenericTypeBase(System.Type)">
+        <member name="M:CoreSharp.Extensions.TypeExtensions.Implements(System.Type,System.Type,System.Boolean)">
             <summary>
-            Returns a <see cref="T:System.Type"/> that represents a generic type definition
-            from which the current generic type can be constructed.<br/>
-            If <see cref="P:System.Type.IsGenericType"/> is <see langword="false"/>,
-            the provided <see cref="T:System.Type"/> itself is returned.
+            Determines whether the current <see cref="T:System.Type"/>
+            derives from the specified base <see cref="T:System.Type"/>.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.UlongExtensions">
@@ -2076,7 +2097,7 @@
             <see cref="T:System.Xml.Linq.XDocument"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.XDocumentExtensions.To``1(System.Xml.Linq.XDocument)">
+        <member name="M:CoreSharp.Extensions.XDocumentExtensions.ToEntity``1(System.Xml.Linq.XDocument)">
             <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.FromXmlAsync``1(System.IO.Stream,System.Threading.CancellationToken)"/>
         </member>
         <member name="M:CoreSharp.Extensions.XDocumentExtensions.GetElements(System.Xml.Linq.XDocument,System.String[])">
@@ -2193,7 +2214,7 @@
         </member>
         <member name="T:CoreSharp.Models.Exceptions.HttpResponseException">
             <summary>
-            Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> exception.
+            Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> <see cref="T:System.Exception"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.Exceptions.HttpResponseException.CreateAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
@@ -2266,11 +2287,6 @@
         <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.TimeSpan)">
             <summary>
             Add <see cref="T:System.TimeSpan"/> and format with "s" specifier.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Models.UrlQueryBuilder.Add``1(System.String,System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Add <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Models.UrlQueryBuilder.Add(System.String,System.Collections.IEnumerable)">
