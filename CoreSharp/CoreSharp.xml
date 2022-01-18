@@ -1597,6 +1597,15 @@
             Compare two <see cref="T:System.IO.Stream"/> in chunks.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.ToArrayAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:CoreSharp.Extensions.StreamExtensions.ToArrayAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.StreamExtensions.ToArrayAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Converts <see cref="T:System.IO.Stream"/>
+            to <see langword="byte[]"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.StringBuilderExtensions">
             <summary>
             <see cref="T:CoreSharp.Extensions.StringBuilderExtensions"/> extensions.

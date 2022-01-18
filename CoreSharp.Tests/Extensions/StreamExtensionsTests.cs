@@ -39,5 +39,29 @@ namespace CoreSharp.Extensions.Tests
             result.Id.Should().Be(dummy.Id);
             result.Name.Should().Be(dummy.Name);
         }
+
+        [Test]
+        public void ToArrayAsync_StreamIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Func<Task> action = () => _streamNull.ToArrayAsync();
+
+            //Assert
+            action.Should().ThrowExactlyAsync<ArgumentNullException>();
+        }
+
+        [Test]
+        public async Task ToArrayAsync_WhenCalled_ConvertToByteArray()
+        {
+            //Arrange
+            var byteArray = new byte[] { 1, 2, 3 };
+            await using var stream = new MemoryStream(byteArray);
+
+            //Act
+            var result = await stream.ToArrayAsync();
+
+            //Assert 
+            result.Should().Equal(byteArray);
+        }
     }
 }

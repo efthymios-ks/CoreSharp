@@ -17,7 +17,8 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
         <Version>1.8.1</Version>
-        <PackageReleaseNotes>-Extensions, Json, Added better `Stream` support.</PackageReleaseNotes>
+        <PackageReleaseNotes>-Extensions, Json, Added better `Stream` support.
+-Extensions, Stream, Added `ToArrayAsync()` method.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

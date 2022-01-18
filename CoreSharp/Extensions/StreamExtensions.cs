@@ -209,5 +209,27 @@ namespace CoreSharp.Extensions
                 right.Position = 0;
             }
         }
+
+        /// <inheritdoc cref="ToArrayAsync(Stream, int, CancellationToken)"/>
+        public static async Task<byte[]> ToArrayAsync(this Stream stream, CancellationToken cancellationToken = default)
+            => await stream.ToArrayAsync(DefaultBufferSize, cancellationToken);
+
+        /// <summary>
+        /// Converts <see cref="Stream"/>
+        /// to <see langword="byte[]"/>.
+        /// </summary>
+        public static async Task<byte[]> ToArrayAsync(this Stream stream, int bufferSize, CancellationToken cancellationToken = default)
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+
+            stream.Position = 0;
+
+            if (stream is MemoryStream internalMemoryStream)
+                return internalMemoryStream.ToArray();
+
+            await using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream, bufferSize, cancellationToken);
+            return memoryStream.ToArray();
+        }
     }
 }
