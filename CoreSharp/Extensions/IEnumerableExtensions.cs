@@ -434,12 +434,18 @@ namespace CoreSharp.Extensions
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var table = new DataTable(tableName);
+
+            if (!source.Any())
+                return table;
+
+            var properties = source.First()
+                                   .GetType()
+                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             //Create columns 
             foreach (var property in properties)
-                table.Columns.Add(property.Name, property.PropertyType);
+                table.Columns.Add(property.Name, property.PropertyType.GetNullableBaseType());
 
             //Create rows 
             foreach (var item in source)
