@@ -365,14 +365,20 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
             encoding ??= Encoding.UTF8;
 
-            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var stream = new MemoryStream();
-            var streamWriter = new StreamWriter(stream, encoding);
+
+            if (!source.Any())
+                return stream;
+
+            var properties = source.First()
+                                   .GetType()
+                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            using var streamWriter = new StreamWriter(stream, encoding: encoding, leaveOpen: true);
 
             //Add headers 
             if (includeHeader)
             {
-                var names = properties?.Select(p => p.Name);
+                var names = properties.Select(p => p.Name);
                 var row = string.Join(separator, names).AsMemory();
                 await streamWriter.WriteLineAsync(row, cancellationToken);
             }
@@ -380,12 +386,12 @@ namespace CoreSharp.Extensions
             //Add values 
             foreach (var item in source)
             {
-                var values = properties?.Select(p => p.GetValue(item));
+                var values = properties.Select(p => p.GetValue(item));
                 var row = string.Join(separator, values).AsMemory();
                 await streamWriter.WriteLineAsync(row, cancellationToken);
             }
 
-            streamWriter.Flush();
+            await streamWriter.FlushAsync();
             stream.Position = 0;
 
             return stream;

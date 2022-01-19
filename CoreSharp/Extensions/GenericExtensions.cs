@@ -27,18 +27,15 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="IsIn{TEntity, TKey}(TEntity, IEnumerable{TEntity}, Func{TEntity, TKey})"/>
         public static bool IsIn<T>(this T item, params T[] source)
-        {
-            _ = item ?? throw new ArgumentNullException(nameof(item));
-            _ = source ?? throw new ArgumentNullException(nameof(source));
-
-            return item.IsIn(source, i => i);
-        }
+            => item.IsIn(source, i => i);
 
         /// <summary>
         /// Determines whether a sequence contains the specified element.
         /// </summary>
         public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
         {
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
@@ -197,8 +194,9 @@ namespace CoreSharp.Extensions
                     return true;
             }
 
-            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                            .Where(PrimititeTypePredicate);
+            var properties = item.GetType()
+                                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                 .Where(PrimititeTypePredicate);
 
             var result = new TEntity();
             foreach (var property in properties)
@@ -246,7 +244,7 @@ namespace CoreSharp.Extensions
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            var serializer = new XmlSerializer(typeof(TEntity));
+            var serializer = new XmlSerializer(entity.GetType());
             var document = new XDocument();
             using var writer = document.CreateWriter();
             serializer.Serialize(writer, entity);
@@ -278,13 +276,11 @@ namespace CoreSharp.Extensions
                     .ToDictionary(p => p.Name, p => p.GetValue(entity));
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
 #pragma warning disable RCS1175 // Unused this parameter.
         /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
         public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
             where TAttribute : Attribute
-#pragma warning restore RCS1175 // Unused this parameter.
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore RCS1175 // Unused this parameter. 
             => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>

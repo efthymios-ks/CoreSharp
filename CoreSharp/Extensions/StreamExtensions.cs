@@ -152,7 +152,7 @@ namespace CoreSharp.Extensions
             if (stream.CanSeek)
                 stream.Position = 0;
 
-            var reader = new StreamReader(stream, encoding, leaveOpen: true);
+            using var reader = new StreamReader(stream, encoding: encoding, leaveOpen: true);
             return await reader.ReadToEndAsync();
         }
 
