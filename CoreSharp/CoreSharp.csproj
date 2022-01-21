@@ -16,8 +16,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.8.4</Version>
-        <PackageReleaseNotes>-Extensions, IServiceCollections, Fixed `AddInterfaces()` reflection searching.</PackageReleaseNotes>
+        <Version>1.8.5</Version>
+        <PackageReleaseNotes>-Extensions, AssemblyNames, Renamed `GetAssembly()` to `Load()`.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
