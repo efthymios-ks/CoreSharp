@@ -66,15 +66,17 @@ namespace CoreSharp.Extensions
             _ = interfaceBaseType ?? throw new ArgumentNullException(nameof(interfaceBaseType));
             _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
 
+            interfaceBaseType = interfaceBaseType.GetGenericTypeBase();
             if (!interfaceBaseType.IsInterface)
                 throw new ArgumentException($"{nameof(interfaceBaseType)} ({interfaceBaseType.FullName}) must be an interface.", nameof(interfaceBaseType));
 
             //Get all contracts 
-            static bool IsDirectInterface(Type type)
+            bool ImplementsBaseInterfaceDirectly(Type type)
                 => type.GetDirectInterfaces()
-                       .Any(directInterface => type.GetGenericTypeBase() == directInterface.GetGenericTypeBase());
+                       .Select(t => t.GetGenericTypeBase())
+                       .Any(t => t == interfaceBaseType);
             var unregisteredContracts = GetUnregisteredContracts(assemblies, serviceCollection);
-            var contracts = unregisteredContracts.Where(IsDirectInterface);
+            var contracts = unregisteredContracts.Where(ImplementsBaseInterfaceDirectly);
 
             //Find the proper implementation for each contract 
             foreach (var contract in contracts)
