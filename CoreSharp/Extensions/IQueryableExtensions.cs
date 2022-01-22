@@ -65,7 +65,7 @@ namespace CoreSharp.Extensions
             => query.FilterFlexible(i => i, filter);
 
         /// <summary>
-        /// Filter source by given value.
+        /// Filter source by given value.<br/>
         /// In-between characters are allowed in filtering value.
         /// <example>
         /// <code>

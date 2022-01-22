@@ -25,34 +25,29 @@ namespace CoreSharp.Extensions
         private static string InterfaceContractRegexExp
             => $"^{InterfacePrefix}{InterfaceGroupRegexExp}$";
 
-        /// <inheritdoc cref="AddInterfaces(IServiceCollection, Assembly[])"/>
-        public static IServiceCollection AddInterfaces(this IServiceCollection serviceCollection)
-            => serviceCollection.AddInterfaces(Assembly.GetEntryAssembly());
+        /// <inheritdoc cref="AddServices(IServiceCollection, Assembly[])"/>
+        public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
+            => serviceCollection.AddServices(Assembly.GetEntryAssembly());
 
-        /// <inheritdoc cref="AddInterfaces(IServiceCollection, Type, Assembly[])"/>
-        public static IServiceCollection AddInterfaces(this IServiceCollection serviceCollection, params Assembly[] assemblies)
+        /// <inheritdoc cref="AddServices(IServiceCollection, Type, Assembly[])"/>
+        public static IServiceCollection AddServices(this IServiceCollection serviceCollection, params Assembly[] assemblies)
         {
             _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
 
-            //Get all contracts 
             var interfaceNameRegex = new Regex(InterfaceGroupRegexExp);
-            var unregisteredContracts = GetUnregisteredContracts(assemblies, serviceCollection);
-            var contracts = unregisteredContracts.Where(type => interfaceNameRegex.IsMatch(type.Name));
+            var contractsWithImplementations = GetContractsWithImplementations(assemblies,
+                contract => interfaceNameRegex.IsMatch(contract.Name));
 
-            //Find the proper implementation for each contract 
-            foreach (var contract in contracts)
-            {
-                if (GetContractImplementation(contract, assemblies) is Type implementation)
-                    serviceCollection.TryAddScoped(contract, implementation);
-            }
+            foreach (var (key, value) in contractsWithImplementations)
+                serviceCollection.TryAddScoped(key, value);
 
             return serviceCollection;
         }
 
-        /// <inheritdoc cref="AddInterfaces(IServiceCollection, Type, Assembly[])"/>
-        public static IServiceCollection AddInterfaces(this IServiceCollection serviceCollection, Type interfaceBaseType)
-            => serviceCollection.AddInterfaces(interfaceBaseType, Assembly.GetEntryAssembly());
+        /// <inheritdoc cref="AddServices(IServiceCollection, Type, Assembly[])"/>
+        public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type interfaceBaseType)
+            => serviceCollection.AddServices(interfaceBaseType, Assembly.GetEntryAssembly());
 
         /// <summary>
         /// <para>Register all `interface contract` + `concrete implementation` combos found in given assemblies.</para>
@@ -60,7 +55,7 @@ namespace CoreSharp.Extensions
         /// <para>-If multiple implementations are found, only the one with the `I{InterfaceName}` and `{InterfaceName}` convention is registered.</para>
         /// <para>-If multiple implementations are found and none has a proper name, none is registered.</para>
         /// </summary>
-        public static IServiceCollection AddInterfaces(this IServiceCollection serviceCollection, Type interfaceBaseType, params Assembly[] assemblies)
+        public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type interfaceBaseType, params Assembly[] assemblies)
         {
             _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             _ = interfaceBaseType ?? throw new ArgumentNullException(nameof(interfaceBaseType));
@@ -70,45 +65,44 @@ namespace CoreSharp.Extensions
             if (!interfaceBaseType.IsInterface)
                 throw new ArgumentException($"{nameof(interfaceBaseType)} ({interfaceBaseType.FullName}) must be an interface.", nameof(interfaceBaseType));
 
-            //Get all contracts 
             bool ImplementsBaseInterfaceDirectly(Type type)
                 => type.GetDirectInterfaces()
                        .Select(t => t.GetGenericTypeBase())
                        .Any(t => t == interfaceBaseType);
-            var unregisteredContracts = GetUnregisteredContracts(assemblies, serviceCollection);
-            var contracts = unregisteredContracts.Where(ImplementsBaseInterfaceDirectly);
+            var contractsWithImplementations = GetContractsWithImplementations(assemblies, ImplementsBaseInterfaceDirectly);
 
-            //Find the proper implementation for each contract 
-            foreach (var contract in contracts)
-            {
-                if (GetContractImplementation(contract, assemblies) is Type implementation)
-                    serviceCollection.TryAddScoped(contract, implementation);
-            }
+            foreach (var (key, value) in contractsWithImplementations)
+                serviceCollection.TryAddScoped(key, value);
 
             return serviceCollection;
         }
 
-        private static IEnumerable<Type> GetUnregisteredContracts(Assembly[] assemblies, IServiceCollection serviceCollection)
+        /// <summary>
+        /// Returns a <see cref="IDictionary{TKey, TValue}"/>
+        /// with all contracts and their implementation.
+        /// </summary>
+        private static IDictionary<Type, Type> GetContractsWithImplementations(Assembly[] assemblies, Func<Type, bool> additionalInterfacePredicate = null)
         {
             _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
-            _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
+            additionalInterfacePredicate ??= _ => true;
 
-            //Get all available contracts 
-            return assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type =>
+            var dictionary = new Dictionary<Type, Type>();
+            var contracts = assemblies.SelectMany(assembly => assembly.GetTypes())
+                                      .Where(type => type.IsInterface && additionalInterfacePredicate(type));
+            foreach (var contract in contracts)
             {
-                //Not an interface, ignore 
-                if (!type.IsInterface)
-                    return false;
+                var implementation = GetContractImplementation(contract, assemblies);
+                if (implementation is not null)
+                    dictionary.Add(contract, implementation);
+            }
 
-                //Already registered, ignore 
-                else if (serviceCollection.Any(service => service.ServiceType == type))
-                    return false;
-
-                //Else take  
-                return true;
-            });
+            return dictionary;
         }
 
+        /// <summary>
+        /// Find implementation <see cref="Type"/>
+        /// for given contract <see cref="Type"/>.
+        /// </summary>
         private static Type GetContractImplementation(Type contractType, Assembly[] assemblies)
         {
             _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
@@ -117,16 +111,16 @@ namespace CoreSharp.Extensions
             //Get all implementations for given contract 
             var implementations = assemblies.SelectMany(a => a.GetTypes()).Where(t =>
             {
-                //Doesn't implement given interface, ignore 
-                if (t.GetInterface(contractType.FullName) is null)
-                    return false;
-
                 //Not a class, ignore 
-                else if (!t.IsClass)
+                if (!t.IsClass)
                     return false;
 
                 //Not a concrete class, ignore 
                 else if (t.IsAbstract)
+                    return false;
+
+                //Doesn't implement given interface, ignore 
+                else if (t.GetInterface(contractType.FullName) is null)
                     return false;
 
                 //Else take
@@ -145,22 +139,26 @@ namespace CoreSharp.Extensions
             {
                 static string TrimGenericTypeBaseName(string name)
                 {
-                    if (name.Contains('`'))
-                        name = name[..name.LastIndexOf('`')];
+                    var backtickIndex = name.IndexOf('`');
+                    if (backtickIndex > 0)
+                        name = name[..backtickIndex];
                     return name;
                 }
 
                 static string GetGenericTypeBaseName(Type type)
-                    => TrimGenericTypeBaseName(type?.Name);
+                    => TrimGenericTypeBaseName(type.Name);
 
                 //Get contract name 
-                var trimmedContractName = Regex.Match(contractType.Name, InterfaceContractRegexExp).Groups["Name"].Value;
+                var trimmedContractName = Regex.Match(contractType.Name, InterfaceContractRegexExp)
+                                               .Groups["Name"]
+                                               .Value;
                 trimmedContractName = TrimGenericTypeBaseName(trimmedContractName);
 
                 //First one with the correct name convention
                 return Array.Find(implementations, i => GetGenericTypeBaseName(i) == trimmedContractName);
             }
 
+            //None found
             return null;
         }
     }
