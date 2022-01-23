@@ -16,8 +16,9 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
-        <Version>1.8.5</Version>
-        <PackageReleaseNotes>-Models, Restructured folders.</PackageReleaseNotes>
+        <Version>1.8.7</Version>
+        <PackageReleaseNotes>-Models, Restructured folders.
+-Interfaces, Added `IService` interfaces for DI.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

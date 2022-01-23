@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CoreSharp.Interfaces.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
@@ -161,6 +162,104 @@ namespace CoreSharp.Extensions
 
             //None found
             return null;
+        }
+
+        /// <inheritdoc cref="AddMarkedServices(IServiceCollection, Assembly[])"/>>
+        public static IServiceCollection AddMarkedServices(this IServiceCollection serviceCollecton)
+           => serviceCollecton.AddMarkedServices(Assembly.GetEntryAssembly());
+
+        /// <summary>
+        /// <para>Register all services marked with one of the following:</para>
+        /// <para>-<see cref="ITransient"/> / <see cref="ITransient{TContract}"/>.</para>
+        /// <para>-<see cref="IScoped"/> / <see cref="IScoped{TContract}"/>.</para>
+        /// <para>-<see cref="ISingleton"/> / <see cref="ISingleton{TContract}"/>.</para>
+        /// </summary>
+        public static IServiceCollection AddMarkedServices(this IServiceCollection serviceCollecton, params Assembly[] assemblies)
+        {
+            _ = serviceCollecton ?? throw new ArgumentNullException(nameof(serviceCollecton));
+            _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
+
+            var implementations = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(t =>
+            {
+                //Not a class, ignore 
+                if (!t.IsClass)
+                    return false;
+
+                //Not a concrete class, ignore 
+                else if (t.IsAbstract)
+                    return false;
+
+                //Doesn't implement IService 
+                else if (t.GetInterface(typeof(IService).FullName) is null)
+                    return false;
+
+                //Else take
+                else
+                    return true;
+            });
+
+            foreach (var implementation in implementations)
+            {
+                var contract = GetServiceContract(implementation);
+                var lifetime = GetServiceLifetime(implementation);
+
+                if (contract is not null)
+                {
+                    static Type GetGenericTypeBase(Type type)
+                        => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+                    var interfaces = implementation.GetInterfaces();
+                    var actualContract = Array.Find(interfaces, c => GetGenericTypeBase(c) == GetGenericTypeBase(contract));
+
+                    // When doesn't implement the configured service.
+                    if (actualContract is null)
+                        throw new InvalidOperationException($"Service ({implementation}) does not inherit its configured contract ({contract}).");
+
+                    // When it's open generic, get type definition.
+                    // E.g. class Repository<TValue> : IRepository<TValue>, IScoped<IRepository<TValue> {}
+                    if (actualContract.FullName is null && actualContract.IsGenericType)
+                        actualContract = actualContract.GetGenericTypeDefinition();
+
+                    // When different closed generic arguments.
+                    // E.g. class Repository : IRepository<int>, IScoped<IRepository<double>> {}
+                    if (actualContract.FullName is not null && contract.FullName is not null && actualContract != contract)
+                        throw new InvalidOperationException($"Service ({implementation}) is configured with wrong generic argument(s).");
+
+                    contract = actualContract;
+                }
+                else
+                {
+                    // When no contract defined, register itself.
+                    contract = implementation;
+                }
+
+                var descriptor = new ServiceDescriptor(contract, implementation, lifetime);
+                serviceCollecton.TryAdd(descriptor);
+            }
+
+            return serviceCollecton;
+        }
+
+        private static Type GetServiceContract(Type service)
+        {
+            _ = service ?? throw new ArgumentNullException(nameof(service));
+
+            var interfaces = service.GetInterfaces();
+            var genericServiceContract = Array.Find(interfaces, i => i.IsGenericType && i.IsAssignableTo(typeof(IService)));
+            var innerContract = genericServiceContract?.GetGenericArguments()[0];
+            return innerContract;
+        }
+
+        private static ServiceLifetime GetServiceLifetime(Type service)
+        {
+            _ = service ?? throw new ArgumentNullException(nameof(service));
+
+            var lifetimesDictionary = new (Type Type, ServiceLifetime Lifetime)[]
+            {
+                ( typeof(ITransient),  ServiceLifetime.Transient ),
+                ( typeof(IScoped), ServiceLifetime.Scoped ),
+                ( typeof(ISingleton), ServiceLifetime.Singleton ),
+            };
+            return Array.Find(lifetimesDictionary, t => service.IsAssignableTo(t.Type)).Lifetime;
         }
     }
 }
