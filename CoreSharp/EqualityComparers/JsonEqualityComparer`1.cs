@@ -5,7 +5,7 @@ using System.Diagnostics;
 using JsonNet = Newtonsoft.Json;
 using TextJson = System.Text.Json;
 
-namespace CoreSharp.Models.EqualityComparers
+namespace CoreSharp.EqualityComparers
 {
     /// <summary>
     /// Defines methods to support the comparison of objects for equality.

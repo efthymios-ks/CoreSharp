@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Models.EqualityComparers
+namespace CoreSharp.EqualityComparers
 {
     public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
     {
@@ -9,7 +9,8 @@ namespace CoreSharp.Models.EqualityComparers
         private readonly IEqualityComparer<TKey> _keyComparer;
 
         //Constructors
-        public KeyEqualityComparer(Func<TEntity, TKey> keySelector) : this(keySelector, EqualityComparer<TKey>.Default)
+        public KeyEqualityComparer(Func<TEntity, TKey> keySelector)
+            : this(keySelector, EqualityComparer<TKey>.Default)
         {
         }
 

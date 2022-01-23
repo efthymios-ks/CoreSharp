@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace CoreSharp.Models.EqualityComparers
+namespace CoreSharp.EqualityComparers
 {
     /// <summary>
     /// Defines methods to support the comparison of objects for equality.

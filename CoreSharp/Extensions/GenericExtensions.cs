@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models.EqualityComparers;
+﻿using CoreSharp.EqualityComparers;
 using CoreSharp.Models.Newtonsoft.Settings;
 using CoreSharp.Utilities;
 using System;

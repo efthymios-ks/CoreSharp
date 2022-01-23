@@ -120,7 +120,8 @@ namespace CoreSharp.Extensions
                     return false;
 
                 //Doesn't implement given interface, ignore 
-                else if (t.GetInterface(contractType.FullName) is null)
+                //Type.GetInterface(string) doesn't work wiyh nested classes 
+                else if (!t.GetInterfaces().Contains(contractType))
                     return false;
 
                 //Else take

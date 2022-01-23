@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace CoreSharp.Models.EqualityComparers
+namespace CoreSharp.EqualityComparers
 {
     public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDictionary<TKey, TValue>>
     {
@@ -13,7 +13,8 @@ namespace CoreSharp.Models.EqualityComparers
         private readonly IEqualityComparer<TValue> _valueComparer;
 
         //Constructors 
-        public DictionaryEqualityComparer() : this(EqualityComparer<TKey>.Default, EqualityComparer<TValue>.Default)
+        public DictionaryEqualityComparer()
+            : this(EqualityComparer<TKey>.Default, EqualityComparer<TValue>.Default)
         {
         }
 

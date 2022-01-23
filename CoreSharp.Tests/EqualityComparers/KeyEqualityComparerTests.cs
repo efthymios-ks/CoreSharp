@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace CoreSharp.Models.EqualityComparers.Tests
+namespace CoreSharp.EqualityComparers.Tests
 {
     [TestFixture]
     public class KeyEqualityComparerTests

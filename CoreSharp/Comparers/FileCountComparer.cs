@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CoreSharp.Models.Comparers
+namespace CoreSharp.Comparers
 {
     /// <summary>
     /// Compare <see cref="DirectoryInfo"/> using their file count.

@@ -23,4 +23,8 @@
         <ProjectReference Include="..\CoreSharp\CoreSharp.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\" />
+    </ItemGroup>
+
 </Project>

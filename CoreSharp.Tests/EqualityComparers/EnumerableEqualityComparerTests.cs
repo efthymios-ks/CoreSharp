@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CoreSharp.Models.EqualityComparers.Tests
+namespace CoreSharp.EqualityComparers.Tests
 {
     [TestFixture]
     public class EnumerableEqualityComparerTests

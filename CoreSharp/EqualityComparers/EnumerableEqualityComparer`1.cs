@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace CoreSharp.Models.EqualityComparers
+namespace CoreSharp.EqualityComparers
 {
     public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable<TEntity>>
     {
@@ -13,7 +13,8 @@ namespace CoreSharp.Models.EqualityComparers
         private readonly IEqualityComparer<TEntity> _entityComparer;
 
         //Constructors 
-        public EnumerableEqualityComparer() : this(EqualityComparer<TEntity>.Default)
+        public EnumerableEqualityComparer()
+            : this(EqualityComparer<TEntity>.Default)
         {
         }
 

@@ -17,7 +17,7 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>CoreSharp</Title>
         <Version>1.8.5</Version>
-        <PackageReleaseNotes>-Extensions, IServiceCollection, Refactored `AddInterfaces()` methods.</PackageReleaseNotes>
+        <PackageReleaseNotes>-Models, Restructured folders.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

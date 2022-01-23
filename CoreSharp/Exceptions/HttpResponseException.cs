@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace CoreSharp.Models.Exceptions
+namespace CoreSharp.Exceptions
 {
     /// <summary>
     /// Simple <see cref="HttpResponseMessage"/> <see cref="Exception"/>.
