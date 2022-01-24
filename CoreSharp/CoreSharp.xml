@@ -32,6 +32,11 @@
         <member name="T:CoreSharp.Abstracts.NotifyPropertyChangedBase">
             <inheritdoc cref="T:System.ComponentModel.INotifyPropertyChanged" />
         </member>
+        <member name="T:CoreSharp.Comparers.FileCountComparer">
+            <summary>
+            Compare <see cref="T:System.IO.DirectoryInfo"/> using their file count.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Concrete.Communication.NamedPipes.NamedPipeClient">
             <summary>
             Client for NamedPipe communication.
@@ -266,6 +271,40 @@
             n -
             </summary>
         </member>
+        <member name="T:CoreSharp.EqualityComparers.JsonEqualityComparer`1">
+            <summary>
+            Defines methods to support the comparison of objects for equality.
+            Uses <see cref="M:Newtonsoft.Json.JsonConvert.SerializeObject(System.Object)"/>
+            for default conversions.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.EqualityComparers.PrimitiveEqualityComparer`1">
+            <summary>
+            Defines methods to support the comparison of objects for equality.
+            Uses only primitive types for comparisons and hashes.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.EqualityComparers.PrimitiveEqualityComparer`1.IsTypePrimitive(System.Type)">
+            <inheritdoc cref="P:System.Type.IsPrimitive"/>
+        </member>
+        <member name="M:CoreSharp.EqualityComparers.PrimitiveEqualityComparer`1.GetPrimitiveProperties(`0)">
+            <summary>
+            Get key-value <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            of primitive types only.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Exceptions.HttpResponseException">
+            <summary>
+            Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Exceptions.HttpResponseException.CreateAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
+            <summary>
+            Create new instance of <see cref="T:CoreSharp.Exceptions.HttpResponseException"/>
+            using a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            Does not dispose <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.ArrayExtensions">
             <summary>
             <see cref="T:System.Array"/> extensions.
@@ -287,6 +326,9 @@
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.AssemblyExtensions.LoadReferencedAssemblies(System.Reflection.Assembly)">
+            <inheritdoc cref="M:CoreSharp.Extensions.AssemblyExtensions.LoadReferencedAssemblies(System.Reflection.Assembly,System.Func{System.Reflection.AssemblyName,System.Boolean})"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.AssemblyExtensions.LoadReferencedAssemblies(System.Reflection.Assembly,System.Func{System.Reflection.AssemblyName,System.Boolean})">
             <summary>
             Loads all referenced <see cref="T:System.Reflection.Assembly"/> list
             using <see cref="M:System.Reflection.Assembly.GetReferencedAssemblies"/>
@@ -298,7 +340,7 @@
             <see cref="T:System.Reflection.AssemblyName"/> extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.AssemblyNameExtensions.GetAssembly(System.Reflection.AssemblyName)">
+        <member name="M:CoreSharp.Extensions.AssemblyNameExtensions.Load(System.Reflection.AssemblyName)">
             <inheritdoc cref="M:System.Reflection.Assembly.Load(System.Reflection.AssemblyName)"/>
         </member>
         <member name="T:CoreSharp.Extensions.ByteExtensions">
@@ -680,7 +722,7 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.JsonEquals``1(``0,``0,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Compares two entities using
-            <see cref="T:CoreSharp.Models.EqualityComparers.JsonEqualityComparer`1"/>.
+            <see cref="T:CoreSharp.EqualityComparers.JsonEqualityComparer`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.PrimitiveClone``1(``0)">
@@ -693,7 +735,7 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.PrimitiveEquals``1(``0,``0)">
             <summary>
             Compares two entities using
-            <see cref="T:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1"/>.
+            <see cref="T:CoreSharp.EqualityComparers.PrimitiveEqualityComparer`1"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Extensions.GenericExtensions.IsNull``1(``0)">
@@ -830,7 +872,7 @@
             <summary>
             Ensure <see cref="T:System.Net.Http.HttpResponseMessage" /> was successful using
             <see cref="P:System.Net.Http.HttpResponseMessage.IsSuccessStatusCode" />.
-            Throws <see cref="T:CoreSharp.Models.Exceptions.HttpResponseException" /> if not,
+            Throws <see cref="T:CoreSharp.Exceptions.HttpResponseException" /> if not,
             including <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode" />
             and <see cref="P:System.Net.Http.HttpResponseMessage.Content" />.
             </summary>
@@ -1321,7 +1363,7 @@
         </member>
         <member name="M:CoreSharp.Extensions.IQueryableExtensions.FilterFlexible``1(System.Linq.IQueryable{``0},System.Func{``0,System.String},System.String)">
             <summary>
-            Filter source by given value.
+            Filter source by given value.<br/>
             In-between characters are allowed in filtering value.
             <example>
             <code>
@@ -1330,6 +1372,51 @@
             var result = source.FilterFlexible(filter); // "ab", ".a.b.", "AB"
             </code>
             </example>
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Extensions.IServiceCollectionExtensions">
+            <summary>
+            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> extensions.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Reflection.Assembly[])"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Reflection.Assembly[])"/>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Reflection.Assembly[])">
+            <summary>
+            <para>Register all `interface contract` + `concrete implementation` combos found in given assemblies.</para>
+            <para>-If single implementation is found, then it is registered regardless.</para>
+            <para>-If multiple implementations are found, only the one with the `I{InterfaceName}` and `{InterfaceName}` convention is registered.</para>
+            <para>-If multiple implementations are found and none has a proper name, none is registered.</para>
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.GetContractsWithImplementations(System.Reflection.Assembly[],System.Func{System.Type,System.Boolean})">
+            <summary>
+            Returns a <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            with all contracts and their implementation.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.GetContractImplementation(System.Type,System.Reflection.Assembly[])">
+            <summary>
+            Find implementation <see cref="T:System.Type"/>
+            for given contract <see cref="T:System.Type"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddMarkedServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddMarkedServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])"/>>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddMarkedServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <summary>
+            <para>Register all services marked with one of the following:</para>
+            <para>-<see cref="T:CoreSharp.Interfaces.Services.ITransient"/> / <see cref="T:CoreSharp.Interfaces.Services.ITransient`1"/>.</para>
+            <para>-<see cref="T:CoreSharp.Interfaces.Services.IScoped"/> / <see cref="T:CoreSharp.Interfaces.Services.IScoped`1"/>.</para>
+            <para>-<see cref="T:CoreSharp.Interfaces.Services.ISingleton"/> / <see cref="T:CoreSharp.Interfaces.Services.ISingleton`1"/>.</para>
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IServiceProviderExtensions">
@@ -2130,11 +2217,6 @@
             Filter XElement collection on children predicate.
             </summary>
         </member>
-        <member name="T:CoreSharp.Models.Comparers.FileCountComparer">
-            <summary>
-            Compare <see cref="T:System.IO.DirectoryInfo"/> using their file count.
-            </summary>
-        </member>
         <member name="T:CoreSharp.Models.DbQuery">
             <summary>
             An extension to <see cref="T:System.Data.Common.DbConnection"/> to run quick actions on it.
@@ -2198,40 +2280,6 @@
         </member>
         <member name="M:CoreSharp.Models.DbQuery.FillAsync(System.String,System.Data.DataSet,System.Collections.Generic.IEnumerable{System.Data.Common.DataTableMapping},System.Threading.CancellationToken)">
             <inheritdoc cref="M:System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet)"/>
-        </member>
-        <member name="T:CoreSharp.Models.EqualityComparers.JsonEqualityComparer`1">
-            <summary>
-            Defines methods to support the comparison of objects for equality.
-            Uses <see cref="M:Newtonsoft.Json.JsonConvert.SerializeObject(System.Object)"/>
-            for default conversions.
-            </summary>
-        </member>
-        <member name="T:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1">
-            <summary>
-            Defines methods to support the comparison of objects for equality.
-            Uses only primitive types for comparisons and hashes.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1.IsTypePrimitive(System.Type)">
-            <inheritdoc cref="P:System.Type.IsPrimitive"/>
-        </member>
-        <member name="M:CoreSharp.Models.EqualityComparers.PrimitiveEqualityComparer`1.GetPrimitiveProperties(`0)">
-            <summary>
-            Get key-value <see cref="T:System.Collections.Generic.IDictionary`2"/>
-            of primitive types only.
-            </summary>
-        </member>
-        <member name="T:CoreSharp.Models.Exceptions.HttpResponseException">
-            <summary>
-            Simple <see cref="T:System.Net.Http.HttpResponseMessage"/> <see cref="T:System.Exception"/>.
-            </summary>
-        </member>
-        <member name="M:CoreSharp.Models.Exceptions.HttpResponseException.CreateAsync(System.Net.Http.HttpResponseMessage,System.Exception)">
-            <summary>
-            Create new instance of <see cref="T:CoreSharp.Models.Exceptions.HttpResponseException"/>
-            using a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
-            Does not dispose <see cref="T:System.Net.Http.HttpResponseMessage"/>.
-            </summary>
         </member>
         <member name="T:CoreSharp.Models.Grouping`2">
             <inheritdoc cref="T:System.Linq.IGrouping`2" />

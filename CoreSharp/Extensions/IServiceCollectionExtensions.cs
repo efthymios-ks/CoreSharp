@@ -26,6 +26,7 @@ namespace CoreSharp.Extensions
         private static string InterfaceContractRegexExp
             => $"^{InterfacePrefix}{InterfaceGroupRegexExp}$";
 
+        //Methods 
         /// <inheritdoc cref="AddServices(IServiceCollection, Assembly[])"/>
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
             => serviceCollection.AddServices(Assembly.GetEntryAssembly());
@@ -203,35 +204,15 @@ namespace CoreSharp.Extensions
                 var contract = GetServiceContract(implementation);
                 var lifetime = GetServiceLifetime(implementation);
 
+                // class Repository : IRepository, IScope<IRepository> 
                 if (contract is not null)
-                {
-                    static Type GetGenericTypeBase(Type type)
-                        => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-                    var interfaces = implementation.GetInterfaces();
-                    var actualContract = Array.Find(interfaces, c => GetGenericTypeBase(c) == GetGenericTypeBase(contract));
+                    contract = GetServiceActualContract(implementation, contract);
 
-                    // When doesn't implement the configured service.
-                    if (actualContract is null)
-                        throw new InvalidOperationException($"Service ({implementation}) does not inherit its configured contract ({contract}).");
-
-                    // When it's open generic, get type definition.
-                    // E.g. class Repository<TValue> : IRepository<TValue>, IScoped<IRepository<TValue> {}
-                    if (actualContract.FullName is null && actualContract.IsGenericType)
-                        actualContract = actualContract.GetGenericTypeDefinition();
-
-                    // When different closed generic arguments.
-                    // E.g. class Repository : IRepository<int>, IScoped<IRepository<double>> {}
-                    if (actualContract.FullName is not null && contract.FullName is not null && actualContract != contract)
-                        throw new InvalidOperationException($"Service ({implementation}) is configured with wrong generic argument(s).");
-
-                    contract = actualContract;
-                }
+                // class Repository : IScoped 
                 else
-                {
-                    // When no contract defined, register itself.
                     contract = implementation;
-                }
 
+                //Register
                 var descriptor = new ServiceDescriptor(contract, implementation, lifetime);
                 serviceCollecton.TryAdd(descriptor);
             }
@@ -239,27 +220,67 @@ namespace CoreSharp.Extensions
             return serviceCollecton;
         }
 
+        /// <summary>
+        /// Extract contract from provided
+        /// service implementing <see cref="IService"/>.
+        /// </summary>
         private static Type GetServiceContract(Type service)
         {
             _ = service ?? throw new ArgumentNullException(nameof(service));
 
             var interfaces = service.GetInterfaces();
-            var genericServiceContract = Array.Find(interfaces, i => i.IsGenericType && i.IsAssignableTo(typeof(IService)));
-            var innerContract = genericServiceContract?.GetGenericArguments()[0];
-            return innerContract;
+            var genericService = Array.Find(interfaces, i => i.IsGenericType && i.IsAssignableTo(typeof(IService)));
+            return genericService?.GetGenericArguments()[0];
         }
 
+        /// <summary>
+        /// Extract <see cref="ServiceLifetime"/> from provided
+        /// service using <see cref="IService"/>.
+        /// </summary>
         private static ServiceLifetime GetServiceLifetime(Type service)
         {
             _ = service ?? throw new ArgumentNullException(nameof(service));
 
             var lifetimesDictionary = new (Type Type, ServiceLifetime Lifetime)[]
             {
-                ( typeof(ITransient),  ServiceLifetime.Transient ),
-                ( typeof(IScoped), ServiceLifetime.Scoped ),
-                ( typeof(ISingleton), ServiceLifetime.Singleton ),
+                (typeof(ITransient),  ServiceLifetime.Transient),
+                (typeof(IScoped), ServiceLifetime.Scoped),
+                (typeof(ISingleton), ServiceLifetime.Singleton)
             };
             return Array.Find(lifetimesDictionary, t => service.IsAssignableTo(t.Type)).Lifetime;
+        }
+
+        /// <summary>
+        /// Get the actual service contract/interface
+        /// from a service implementation.
+        /// Applies several generic-related checks and
+        /// transformations.
+        /// </summary>
+        private static Type GetServiceActualContract(this Type serviceType, Type contractType)
+        {
+            _ = serviceType ?? throw new ArgumentNullException(nameof(serviceType));
+            _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
+
+            static Type GetGenericTypeBase(Type type)
+                        => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+            var serviceInterfaces = serviceType.GetInterfaces();
+            var actualContract = Array.Find(serviceInterfaces, i => GetGenericTypeBase(i) == GetGenericTypeBase(contractType));
+
+            // When doesn't implement the configured service.
+            if (actualContract is null)
+                throw new InvalidOperationException($"Service ({serviceType}) does not inherit its configured contract interface ({contractType}).");
+
+            // When it's open generic, get type definition.
+            // E.g. class Repository<TValue> : IRepository<TValue>, IScoped<IRepository<TValue> {}
+            if (actualContract.FullName is null && actualContract.IsGenericType)
+                actualContract = actualContract.GetGenericTypeDefinition();
+
+            // When different closed generic arguments.
+            // E.g. class Repository : IRepository<int>, IScoped<IRepository<double>> {}
+            if (actualContract.FullName is not null && contractType.FullName is not null && actualContract != contractType)
+                throw new InvalidOperationException($"Service ({serviceType}) is configured with wrong generic argument(s).");
+
+            return actualContract;
         }
     }
 }
