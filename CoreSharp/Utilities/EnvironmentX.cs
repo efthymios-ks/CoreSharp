@@ -21,6 +21,12 @@ namespace CoreSharp.Utilities
             => string.Equals(GetAspNetCoreEnvironment(), "Development", StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
+        /// Check if ASPNETCORE_ENVIRONMENT == Production.
+        /// </summary>
+        public static bool IsProduction()
+            => string.Equals(GetAspNetCoreEnvironment(), "Production", StringComparison.InvariantCultureIgnoreCase);
+
+        /// <summary>
         /// Check if DEBUG is defined.
         /// </summary>
         public static bool IsDebugging()
