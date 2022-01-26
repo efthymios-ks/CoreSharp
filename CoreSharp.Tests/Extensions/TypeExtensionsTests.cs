@@ -104,7 +104,7 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(null, typeof(int))]
         [TestCase(typeof(int), null)]
-        public void GetGenericTypeBase_ArgIsNull_ThrowArgumentNullException(Type parentType, Type baseType)
+        public void Implements_ArgIsNull_ThrowArgumentNullException(Type parentType, Type baseType)
         {
             //Act
             Action action = () => parentType.Implements(baseType);
@@ -120,7 +120,7 @@ namespace CoreSharp.Extensions.Tests
         [TestCase(typeof(DummyClass<>), typeof(DummyClass<>), false, true)]
         [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), false, false)]
         [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), true, true)]
-        public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expected)
+        public void Implements_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expected)
         {
             //Act
             var result = parentType.Implements(baseType, useGenericBaseType);

@@ -82,7 +82,7 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetColumn_WhenCalled_ReturnRow()
+        public void GetColumn_WhenCalled_ReturnColumn()
         {
             //Arrange
             var source = new[,]

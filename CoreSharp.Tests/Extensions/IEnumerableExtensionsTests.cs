@@ -103,27 +103,27 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void Exclude_SourceIsNull_ThrowArgumentNullException()
+        public void Except_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceNull.Exclude(d => d.Id == 0);
+            Action action = () => _sourceNull.Except(d => d.Id == 0);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void Exclude_FilterIsNull_ThrowArgumentNullException()
+        public void Except_FilterIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceEmpty.Exclude(null);
+            Action action = () => _sourceEmpty.Except(null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void Exclude_WhenCalled_ReturnSourceExceptFilteredItems()
+        public void Except_WhenCalled_ReturnSourceExceptFilteredItems()
         {
             //Arrange
             var item1 = new DummyClass(1);
@@ -133,7 +133,7 @@ namespace CoreSharp.Extensions.Tests
             var expected = new[] { item2, item3 };
 
             //Act  
-            var result = source.Exclude(d => d.Id == 1);
+            var result = source.Except(d => d.Id == 1);
 
             //Assert
             result.Should().Equal(expected);

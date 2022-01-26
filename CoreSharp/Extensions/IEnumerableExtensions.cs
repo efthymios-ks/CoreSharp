@@ -62,7 +62,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Exclude items from collection satisfying a condition.
         /// </summary>
-        public static IEnumerable<T> Exclude<T>(this IEnumerable<T> source, Predicate<T> filter)
+        public static IEnumerable<T> Except<T>(this IEnumerable<T> source, Predicate<T> filter)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             filter = filter ?? throw new ArgumentNullException(nameof(filter));

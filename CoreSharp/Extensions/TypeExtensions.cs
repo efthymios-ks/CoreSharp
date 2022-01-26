@@ -169,7 +169,7 @@ namespace CoreSharp.Extensions
         /// Determines whether the current <see cref="Type"/>
         /// derives from the specified base <see cref="Type"/>.
         /// </summary>
-        public static bool Implements(this Type type, Type baseType, bool useGenericBaseType = false)
+        public static bool Implements(this Type type, Type baseType, bool useGenericBaseType = true)
         {
             _ = type ?? throw new ArgumentNullException(nameof(type));
             _ = baseType ?? throw new ArgumentNullException(nameof(baseType));
@@ -194,9 +194,8 @@ namespace CoreSharp.Extensions
             else if (baseType.IsInterface && type.GetInterface(baseType.FullName) is not null)
                 return true;
 
-            //No relation
-            else
-                return false;
+            //No relation 
+            return false;
         }
     }
 }

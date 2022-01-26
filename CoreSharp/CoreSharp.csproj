@@ -18,7 +18,8 @@
         <Title>CoreSharp</Title>
         <Version>1.8.8</Version>
         <PackageReleaseNotes>-Utilities, DirectoryInfoX, Added `GetOutputFolder()` method.
--Extensions, IEnumerable, Refactored `Distinct()`.</PackageReleaseNotes>
+-Extensions, IEnumerable, Refactored `Distinct()`.
+-Extensions, IEnumerable, Refactored `Except()`.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
