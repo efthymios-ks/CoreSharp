@@ -1419,6 +1419,26 @@
             <para>-<see cref="T:CoreSharp.Interfaces.Services.ISingleton"/> / <see cref="T:CoreSharp.Interfaces.Services.ISingleton`1"/>.</para>
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.GetServiceContract(System.Type)">
+            <summary>
+            Extract contract from provided
+            service implementing <see cref="T:CoreSharp.Interfaces.Services.IService"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.GetServiceLifetime(System.Type)">
+            <summary>
+            Extract <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/> from provided
+            service using <see cref="T:CoreSharp.Interfaces.Services.IService"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.GetServiceActualContract(System.Type,System.Type)">
+            <summary>
+            Get the actual service contract/interface
+            from a service implementation.
+            Applies several generic-related checks and
+            transformations.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.IServiceProviderExtensions">
             <summary>
             <see cref="T:System.IServiceProvider"/> extensions.
@@ -2428,6 +2448,16 @@
             Log message with timestamp.
             </summary>
         </member>
+        <member name="T:CoreSharp.Utilities.DirectoryInfoX">
+            <summary>
+            <see cref="T:System.IO.DirectoryInfo"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.DirectoryInfoX.GetOutputFolder">
+            <summary>
+            Get entry's assembly output folder.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Utilities.DirectoryX">
             <summary>
             <see cref="T:System.IO.Directory"/> utilities.
@@ -2468,6 +2498,11 @@
             Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
             </summary>
         </member>
+        <member name="M:CoreSharp.Utilities.EnvironmentX.IsProduction">
+            <summary>
+            Check if ASPNETCORE_ENVIRONMENT == Production.
+            </summary>
+        </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDebugging">
             <summary>
             Check if DEBUG is defined.
@@ -2491,6 +2526,16 @@
         <member name="M:CoreSharp.Utilities.ExpressionX.GetMemberInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <summary>
             Get <see cref="T:System.Reflection.MemberInfo"/> from given <see cref="T:System.Linq.Expressions.Expression`1"/> selector.
+            </summary>
+        </member>
+        <member name="T:CoreSharp.Utilities.FileInfoX">
+            <summary>
+            <see cref="T:System.IO.FileInfo"/> utilities.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.FileInfoX.GetOutputDlls">
+            <summary>
+            Get entry's assembly output folder files.
             </summary>
         </member>
         <member name="T:CoreSharp.Utilities.HashSetX">

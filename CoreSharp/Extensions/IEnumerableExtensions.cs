@@ -70,17 +70,14 @@ namespace CoreSharp.Extensions
             return source.Where(i => !filter(i));
         }
 
-        /// <summary>
-        /// Return all distinct elements of the given source,
-        /// where "distinctness" is determined via a specified key.
-        /// </summary>
-        public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        /// <inheritdoc cref="Enumerable.Distinct{TSource}(IEnumerable{TSource})"/>
+        public static IEnumerable<TElement> Distinct<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            return source.GroupBy(keySelector)
-                         .Select(i => i.FirstOrDefault());
+            var keyEqualityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
+            return source.Distinct(keyEqualityComparer);
         }
 
         /// <inheritdoc cref="StringJoin{T}(IEnumerable{T}, string, string, IFormatProvider)"/>
