@@ -287,5 +287,16 @@ namespace CoreSharp.Extensions
         public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
             where TAttribute : Attribute
             => item.GetAttributes<TItem, TMember, TAttribute>(memberSelector)?.FirstOrDefault();
+
+        /// <summary>
+        /// Yield return item in an <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        public static IEnumerable<TEntity> Yield<TEntity>(this TEntity entity)
+        {
+            if (entity is null)
+                yield break;
+            else
+                yield return entity;
+        }
     }
 }

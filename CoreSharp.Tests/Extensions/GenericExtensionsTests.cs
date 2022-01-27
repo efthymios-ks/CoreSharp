@@ -3,6 +3,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Text.Json;
 
 namespace CoreSharp.Extensions.Tests
@@ -280,6 +281,34 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert
             result.Should().Be(expected);
+        }
+
+        [Test]
+        public void Yield_ArgIsNull_ReturnEmptyEnumerable()
+        {
+            //Arrange
+            int? value = null;
+            var expected = Enumerable.Empty<int?>();
+
+            //Act
+            var result = value.Yield();
+
+            //Assert
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void Yield_WhenCalled_ReturnEnumerable()
+        {
+            //Arrange
+            const int value = 0;
+            var expected = new[] { 0 };
+
+            //Act
+            var result = value.Yield();
+
+            //Assert
+            result.Should().Equal(expected);
         }
     }
 }
