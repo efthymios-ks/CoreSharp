@@ -771,6 +771,11 @@
         <member name="M:CoreSharp.Extensions.GenericExtensions.GetAttribute``3(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <inheritdoc cref="M:CoreSharp.Extensions.TypeExtensions.GetAttribute``1(System.Type)"/>
         </member>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.Yield``1(``0)">
+            <summary>
+            Yield return item in an <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
+            </summary>
+        </member>
         <member name="T:CoreSharp.Extensions.GuidExtensions">
             <summary>
             <see cref="T:System.Guid"/> extensions.
@@ -2492,12 +2497,17 @@
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDevelopment">
             <summary>
-            Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
+            Checks if the current host environment name is <see cref="F:Microsoft.Extensions.Hosting.EnvironmentName.Development"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Utilities.EnvironmentX.IsStaging">
+            <summary>
+            Checks if the current host environment name is <see cref="F:Microsoft.Extensions.Hosting.EnvironmentName.Staging"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsProduction">
             <summary>
-            Check if ASPNETCORE_ENVIRONMENT == Production.
+            Checks if the current host environment name is <see cref="F:Microsoft.Extensions.Hosting.EnvironmentName.Production"/>.
             </summary>
         </member>
         <member name="M:CoreSharp.Utilities.EnvironmentX.IsDebugging">

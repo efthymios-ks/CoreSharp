@@ -20,7 +20,8 @@
         <PackageReleaseNotes>-Utilities, DirectoryInfoX, Added `GetOutputFolder()` method.
 -Extensions, IEnumerable, Refactored `Distinct()`.
 -Extensions, IEnumerable, Refactored `Except()`.
--Extensions, IEnumerable, Added `Yield()` method.</PackageReleaseNotes>
+-Extensions, IEnumerable, Added `Yield()` method.
+-Utilities, EnvironmentX, Added `IsStaging()` method.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
@@ -44,6 +45,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="System.IO.Ports" Version="5.0.1" />
     </ItemGroup>

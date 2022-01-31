@@ -1,9 +1,9 @@
-﻿using CoreSharp.Extensions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Globalization;
 
-namespace CoreSharp.EntityFramework.Models.Abstracts
+namespace CoreSharp.Models.Newtonsoft.Converters
 {
     public class UtcDateTimeConverter : DateTimeConverterBase
     {
@@ -40,7 +40,10 @@ namespace CoreSharp.EntityFramework.Models.Abstracts
         private static object ReadString(JsonReader reader)
         {
             var dateAsText = $"{reader.Value}";
-            return dateAsText.ToDateTimeSortableUtc();
+            if (DateTime.TryParseExact(dateAsText, "O", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+                return result;
+            else
+                return null;
         }
 
         private static object NotReadable(JsonReader reader)

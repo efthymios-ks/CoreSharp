@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CoreSharp.Utilities
 {
@@ -15,16 +16,22 @@ namespace CoreSharp.Utilities
             => Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
         /// <summary>
-        /// Check if ASPNETCORE_ENVIRONMENT == DEVELOPMENT.
+        /// Checks if the current host environment name is <see cref="EnvironmentName.Development"/>.
         /// </summary>
         public static bool IsDevelopment()
-            => string.Equals(GetAspNetCoreEnvironment(), "Development", StringComparison.InvariantCultureIgnoreCase);
+            => string.Equals(GetAspNetCoreEnvironment(), Environments.Development, StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
-        /// Check if ASPNETCORE_ENVIRONMENT == Production.
+        /// Checks if the current host environment name is <see cref="EnvironmentName.Staging"/>.
+        /// </summary>
+        public static bool IsStaging()
+            => string.Equals(GetAspNetCoreEnvironment(), Environments.Staging, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <summary>
+        /// Checks if the current host environment name is <see cref="EnvironmentName.Production"/>.
         /// </summary>
         public static bool IsProduction()
-            => string.Equals(GetAspNetCoreEnvironment(), "Production", StringComparison.InvariantCultureIgnoreCase);
+            => string.Equals(GetAspNetCoreEnvironment(), Environments.Production, StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
         /// Check if DEBUG is defined.
