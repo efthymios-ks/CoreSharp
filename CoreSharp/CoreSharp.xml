@@ -1381,6 +1381,11 @@
             <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> extensions.
             </summary>
         </member>
+        <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.ConfigureBind``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationSection)">
+            <summary>
+            Registers and attempts to bind a particular type of <see cref="T:Microsoft.Extensions.Options.IOptions`1"/>.
+            </summary>
+        </member>
         <member name="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <inheritdoc cref="M:CoreSharp.Extensions.IServiceCollectionExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])"/>
         </member>

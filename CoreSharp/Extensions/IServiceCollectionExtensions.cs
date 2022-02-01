@@ -1,6 +1,8 @@
 ﻿using CoreSharp.Interfaces.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +29,18 @@ namespace CoreSharp.Extensions
             => $"^{InterfacePrefix}{InterfaceGroupRegexExp}$";
 
         //Methods 
+        /// <summary>
+        /// Registers and attempts to bind a particular type of <see cref="IOptions{TOptions}"/>.
+        /// </summary>
+        public static IServiceCollection ConfigureBind<TOptions>(this IServiceCollection services, IConfigurationSection section)
+            where TOptions : class
+        {
+            _ = services ?? throw new ArgumentNullException(nameof(services));
+            _ = section ?? throw new ArgumentNullException(nameof(section));
+
+            return services.Configure<TOptions>(options => section.Bind(options));
+        }
+
         /// <inheritdoc cref="AddServices(IServiceCollection, Assembly[])"/>
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
             => serviceCollection.AddServices(Assembly.GetEntryAssembly());
