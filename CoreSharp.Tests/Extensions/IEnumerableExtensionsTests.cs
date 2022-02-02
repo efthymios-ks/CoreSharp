@@ -1255,5 +1255,137 @@ namespace CoreSharp.Extensions.Tests
             foreach (var item in result)
                 $"{item.Id}".Should().Be(item.Name);
         }
+
+        [Test]
+        public void MinBy_WhenSourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.MinBy(i => i.Id);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MinBy_WhenPropertySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Func<DummyClass, int> propertySelector = null;
+
+            //Act 
+            Action action = () => _sourceEmpty.MinBy(propertySelector);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MinBy_WhenPropertyComparerIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceEmpty.MinBy(i => i.Id, null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MinBy_WhenSourceIsEmpty_ReturnDefaultForProperty()
+        {
+            //Arrange 
+            var expected = default(DummyClass);
+
+            //Act 
+            var result = _sourceEmpty.MinBy(i => i.Id);
+
+            //Assert 
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void MinBy_WhenCalled_ReturnMinByProperty()
+        {
+            //Arrange 
+            var min = new DummyClass(-2);
+            var source = new DummyClass[]
+            {
+                new (2),
+                min,
+                new (1),
+                new (-1)
+            };
+
+            //Act 
+            var result = source.MinBy(i => i.Id);
+
+            //Assert 
+            result.Should().Be(min);
+        }
+
+        [Test]
+        public void MaxBy_WhenSourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.MaxBy(i => i.Id);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MaxBy_WhenPropertySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Func<DummyClass, int> propertySelector = null;
+
+            //Act 
+            Action action = () => _sourceEmpty.MaxBy(propertySelector);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MaxBy_WhenPropertyComparerIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceEmpty.MaxBy(i => i.Id, null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void MaxBy_WhenSourceIsEmpty_ReturnDefaultForProperty()
+        {
+            //Arrange 
+            var expected = default(DummyClass);
+
+            //Act 
+            var result = _sourceEmpty.MaxBy(i => i.Id);
+
+            //Assert 
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        public void MaxBy_WhenCalled_ReturnMinByProperty()
+        {
+            //Arrange 
+            var max = new DummyClass(2);
+            var source = new DummyClass[]
+            {
+                new (-2),
+                max,
+                new (-1),
+                new (1)
+            };
+
+            //Act 
+            var result = source.MaxBy(i => i.Id);
+
+            //Assert 
+            result.Should().Be(max);
+        }
     }
 }

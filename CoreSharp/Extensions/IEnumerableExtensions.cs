@@ -588,5 +588,71 @@ namespace CoreSharp.Extensions
                 return item;
             }).ToArray();
         }
+
+        /// <inheritdoc cref="MinBy{TItem, TProperty}(IEnumerable{TItem}, Func{TItem, TProperty}, IComparer{TProperty})" />
+        public static TItem MinBy<TItem, TProperty>(this IEnumerable<TItem> source, Func<TItem, TProperty> propertySelector)
+           where TProperty : IComparable
+            => source.MinBy(propertySelector, Comparer<TProperty>.Default);
+
+        /// <summary>
+        /// Returns min item by comparing provided property.
+        /// </summary>
+        public static TItem MinBy<TItem, TProperty>(this IEnumerable<TItem> source, Func<TItem, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
+            where TProperty : IComparable
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+            _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
+
+            if (!source.Any())
+                return default;
+
+            var min = source.First();
+            var minValue = propertySelector(min);
+            foreach (var item in source.Skip(1))
+            {
+                var itemValue = propertySelector(item);
+                if (propertyComparer.Compare(itemValue, minValue) < 0)
+                {
+                    min = item;
+                    minValue = itemValue;
+                }
+            }
+
+            return min;
+        }
+
+        /// <inheritdoc cref="MaxBy{TItem, TProperty}(IEnumerable{TItem}, Func{TItem, TProperty}, IComparer{TProperty})" />
+        public static TItem MaxBy<TItem, TProperty>(this IEnumerable<TItem> source, Func<TItem, TProperty> propertySelector)
+           where TProperty : IComparable
+            => source.MaxBy(propertySelector, Comparer<TProperty>.Default);
+
+        /// <summary>
+        /// Returns max item by comparing provided property.
+        /// </summary>
+        public static TItem MaxBy<TItem, TProperty>(this IEnumerable<TItem> source, Func<TItem, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
+            where TProperty : IComparable
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+            _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
+
+            if (!source.Any())
+                return default;
+
+            var max = source.First();
+            var maxValue = propertySelector(max);
+            foreach (var item in source.Skip(1))
+            {
+                var itemValue = propertySelector(item);
+                if (propertyComparer.Compare(itemValue, maxValue) > 0)
+                {
+                    max = item;
+                    maxValue = itemValue;
+                }
+            }
+
+            return max;
+        }
     }
 }
