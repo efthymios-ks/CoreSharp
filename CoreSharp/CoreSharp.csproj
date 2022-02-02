@@ -22,7 +22,8 @@
 -Extensions, IEnumerable, Refactored `Except()`.
 -Extensions, IEnumerable, Added `Yield()` method.
 -Utilities, EnvironmentX, Added `IsStaging()` method.
--Extensions, IServiceCollection, Added `ConfigureBind()` method.</PackageReleaseNotes>
+-Extensions, IServiceCollection, Added `ConfigureBind()` method.
+-Exceptions, Added `EntityNotFoundException`.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
