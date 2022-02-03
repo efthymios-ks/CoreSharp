@@ -24,7 +24,8 @@
 -Utilities, EnvironmentX, Added `IsStaging()` method.
 -Extensions, IServiceCollection, Added `ConfigureBind()` method.
 -Exceptions, Added `EntityNotFoundException`.
--Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.</PackageReleaseNotes>
+-Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.
+-Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

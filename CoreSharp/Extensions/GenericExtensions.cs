@@ -21,25 +21,25 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class GenericExtensions
     {
-        /// <inheritdoc cref="IsIn{T}(T, T[])"/>
-        public static bool IsIn<T>(this T item, IEnumerable<T> source)
-            => item.IsIn(source?.ToArray());
+        /// <inheritdoc cref="EqualsAny{T}(T, T[])"/>
+        public static bool EqualsAny<T>(this T item, IEnumerable<T> source)
+            => item.EqualsAny(source?.ToArray());
 
-        /// <inheritdoc cref="IsIn{TEntity, TKey}(TEntity, IEnumerable{TEntity}, Func{TEntity, TKey})"/>
-        public static bool IsIn<T>(this T item, params T[] source)
-            => item.IsIn(source, i => i);
+        /// <inheritdoc cref="EqualsAny{TEntity, TKey}(TEntity, IEnumerable{TEntity}, Func{TEntity, TKey})"/>
+        public static bool EqualsAny<T>(this T item, params T[] source)
+            => item.EqualsAny(source, i => i);
 
         /// <summary>
         /// Determines whether a sequence contains the specified element.
         /// </summary>
-        public static bool IsIn<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
+        public static bool EqualsAny<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
-            return source.Contains(item, equalityComparer);
+            return source.Any(i => equalityComparer.Equals(i, item));
         }
 
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>

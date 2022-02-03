@@ -13,40 +13,40 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void IsIn_ItemIsNull_ThrowArgumentException()
+        public void EqualsAny_ItemIsNull_ThrowArgumentException()
         {
             //Arrange 
             const string item = null;
 
             //Act 
-            Action action = () => item.IsIn("1", "2");
+            Action action = () => item.EqualsAny("1", "2");
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void IsIn_SourceIsNull_ThrowArgumentNullException()
+        public void EqualsAny_SourceIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             const string item = "1";
 
             //Act 
-            Action action = () => item.IsIn(null);
+            Action action = () => item.EqualsAny(null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void IsIn_KeySelectorIsNull_ThrowArgumentNullException()
+        public void EqualsAny_KeySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange 
             const string item = "1";
             var source = new[] { "1", "2" };
 
             //Act 
-            Action action = () => item.IsIn<string, string>(source, null);
+            Action action = () => item.EqualsAny<string, string>(source, null);
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -55,10 +55,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(false, "-1", "1", "2")]
         [TestCase(true, "1", "1", "2")]
-        public void IsIn_WhenCalled_ReturnTrueIfItemInSource(bool expected, string item, params string[] source)
+        public void EqualsAny_WhenCalled_ReturnTrueIfItemInSource(bool expected, string item, params string[] source)
         {
             //Act 
-            var result = item.IsIn(source);
+            var result = item.EqualsAny(source);
 
             //Assert
             result.Should().Be(expected);
@@ -67,10 +67,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         [TestCase(false, "-1", "1", "2")]
         [TestCase(true, "1", "1", "2")]
-        public void IsIn_WhenCalledWithKeySelector_ReturnTrue(bool expected, string item, params string[] source)
+        public void EqualsAny_WhenCalledWithKeySelector_ReturnTrue(bool expected, string item, params string[] source)
         {
             //Act 
-            var result = item.IsIn(source, i => i);
+            var result = item.EqualsAny(source, i => i);
 
             //Assert
             result.Should().Be(expected);

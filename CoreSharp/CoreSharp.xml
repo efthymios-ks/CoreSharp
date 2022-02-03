@@ -671,13 +671,13 @@
             Generic extensions.
             </summary>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,System.Collections.Generic.IEnumerable{``0})">
-            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])"/>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.EqualsAny``1(``0,System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.EqualsAny``1(``0,``0[])"/>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``1(``0,``0[])">
-            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})"/>
+        <member name="M:CoreSharp.Extensions.GenericExtensions.EqualsAny``1(``0,``0[])">
+            <inheritdoc cref="M:CoreSharp.Extensions.GenericExtensions.EqualsAny``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})"/>
         </member>
-        <member name="M:CoreSharp.Extensions.GenericExtensions.IsIn``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+        <member name="M:CoreSharp.Extensions.GenericExtensions.EqualsAny``2(``0,System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
             <summary>
             Determines whether a sequence contains the specified element.
             </summary>
@@ -1226,6 +1226,22 @@
         <member name="M:CoreSharp.Extensions.IEnumerableExtensions.Map``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})">
             <summary>
             Format collection items with given expression.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.MinBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.MinBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})" />
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.MinBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})">
+            <summary>
+            Returns min item by comparing provided property.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.MaxBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <inheritdoc cref="M:CoreSharp.Extensions.IEnumerableExtensions.MaxBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})" />
+        </member>
+        <member name="M:CoreSharp.Extensions.IEnumerableExtensions.MaxBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})">
+            <summary>
+            Returns max item by comparing provided property.
             </summary>
         </member>
         <member name="T:CoreSharp.Extensions.IListExtensions">

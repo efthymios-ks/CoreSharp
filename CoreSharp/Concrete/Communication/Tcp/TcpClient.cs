@@ -34,7 +34,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
             get => _timeout;
             set
             {
-                if (value.IsIn(TimeSpan.Zero, TimeSpan.MinValue, TimeSpan.MaxValue))
+                if (value.EqualsAny(TimeSpan.Zero, TimeSpan.MinValue, TimeSpan.MaxValue))
                     throw new ArgumentOutOfRangeException(nameof(Timeout), $"{nameof(Timeout)} has to has a valid, discrete value.");
 
                 if (value == _timeout)
@@ -369,7 +369,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         private void OnError(SocketError error)
         {
             //Skip disconnect error
-            if (error.IsIn(
+            if (error.EqualsAny(
                 SocketError.ConnectionAborted,
                 SocketError.ConnectionRefused,
                 SocketError.ConnectionReset,

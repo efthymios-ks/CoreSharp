@@ -236,7 +236,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
         private void OnError(SocketError error)
         {
             //Skip disconnect error
-            if (error.IsIn(
+            if (error.EqualsAny(
                 SocketError.ConnectionAborted,
                 SocketError.ConnectionRefused,
                 SocketError.ConnectionReset,
