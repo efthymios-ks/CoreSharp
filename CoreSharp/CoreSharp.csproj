@@ -25,7 +25,8 @@
 -Extensions, IServiceCollection, Added `ConfigureBind()` method.
 -Exceptions, Added `EntityNotFoundException`.
 -Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.
--Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.</PackageReleaseNotes>
+-Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.
+-Models, Added `ShiftingStack`1`.</PackageReleaseNotes>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>

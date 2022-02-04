@@ -2358,6 +2358,62 @@
             Short <see cref="T:System.IO.Ports.SerialPort"/> settings class.
             </summary>
         </member>
+        <member name="P:CoreSharp.Models.ShiftingStack`1.MaxCapacity">
+            <summary>
+            Maximum number of items allowed in the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>.
+            If max capacity is met, then bottom items are shifted out
+            when new items are pushed on top.
+            </summary>
+        </member>
+        <member name="P:CoreSharp.Models.ShiftingStack`1.Count">
+            <summary>
+            Number of elements contained in the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.Clear">
+            <summary>
+            Removes all items.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.Contains(`0)">
+            <summary>
+            Determines whether stack contains
+            the provided item.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.Push(`0)">
+            <summary>
+            Inserts an object at the top of the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.Pop">
+            <summary>
+            Removes and returns the object at the top
+            of the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.Peek">
+            <summary>
+            Returns the object at the top of the
+            <see cref="T:CoreSharp.Models.ShiftingStack`1"/> without removing it.
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.TryPop(`0@)">
+            <summary>
+            Returns a value that indicates whether there is an object
+            at the top of the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>,
+            and if one is present, copies it to the result parameter,
+            and removes it from the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>
+            </summary>
+        </member>
+        <member name="M:CoreSharp.Models.ShiftingStack`1.TryPeek(`0@)">
+            <summary>
+            Returns a value that indicates whether there is an object
+            at the top of the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>,
+            and if one is present, copies it to the result parameter.
+            The object is not removed from the <see cref="T:CoreSharp.Models.ShiftingStack`1"/>.
+            </summary>
+        </member>
         <member name="P:CoreSharp.Models.StepValidation.ValidationSteps.SequentialValidation">
             <summary>
             Steps have to be sequantially valid.
