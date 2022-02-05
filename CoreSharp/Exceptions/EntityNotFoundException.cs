@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 
 namespace CoreSharp.Exceptions
 {
+    //TODO: Add unit tests 
     public class EntityNotFoundException : KeyNotFoundException
     {
         //Constructors
@@ -24,14 +25,17 @@ namespace CoreSharp.Exceptions
         }
 
         //Methods 
-        public static void Throw<TEntity, TKey>(Expression<Func<TEntity, TKey>> keySelector, TKey keyValue)
+        public static EntityNotFoundException Create<TEntity, TKey>(Expression<Func<TEntity, TKey>> keySelector, TKey keyValue)
         {
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             var entityType = typeof(TEntity);
             var memberName = keySelector.GetMemberName();
 
-            throw new EntityNotFoundException(entityType, memberName, keyValue);
+            return new EntityNotFoundException(entityType, memberName, keyValue);
         }
+
+        public static void Throw<TEntity, TKey>(Expression<Func<TEntity, TKey>> keySelector, TKey keyValue)
+            => throw Create(keySelector, keyValue);
     }
 }
