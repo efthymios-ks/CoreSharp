@@ -1,68 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-        <Authors>Efthymios Koktsidis</Authors>
-        <Company>Efthymios Koktsidis</Company>
-        <Copyright></Copyright>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Description>Collection of extensions, utilities and interfaces.</Description>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/efthymios-ks/CoreSharp</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/efthymios-ks/CoreSharp</RepositoryUrl>
-        <PackageTags>Utilities, Extensions, Interfaces</PackageTags>
-        <PackageIcon>icon.png</PackageIcon>
-        <RepositoryType>git</RepositoryType>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <Title>CoreSharp</Title>
-        <Version>1.8.8</Version>
-        <PackageReleaseNotes>-Utilities, DirectoryInfoX, Added `GetOutputFolder()` method.
--Extensions, IEnumerable, Refactored `Distinct()`.
--Extensions, IEnumerable, Refactored `Except()`.
--Extensions, IEnumerable, Added `Yield()` method.
--Utilities, EnvironmentX, Added `IsStaging()` method.
--Extensions, IServiceCollection, Added `ConfigureBind()` method.
--Exceptions, Added `EntityNotFoundException`.
--Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.
--Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.
--Models, Added `ShiftingStack`1`.
--Exceptions, EntityNotFound, Added `Create()` method.</PackageReleaseNotes>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>1.0.0.0</FileVersion>
-    </PropertyGroup>
+	<PropertyGroup Label="Package">
+		<TargetFramework>net5.0</TargetFramework>
+		<Authors>Efthymios Koktsidis</Authors>
+		<Company>Efthymios Koktsidis</Company>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Description>Collection of extensions, utilities and interfaces.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/efthymios-ks/CoreSharp</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/efthymios-ks/CoreSharp</RepositoryUrl>
+		<PackageTags>Utilities, Extensions, Interfaces</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
+		<RepositoryType>git</RepositoryType>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Title>CoreSharp</Title>
+		<Version>1.8.8</Version>
+		<PackageReleaseNotes>
+			-Utilities, DirectoryInfoX, Added `GetOutputFolder()` method.
+			-Extensions, IEnumerable, Refactored `Distinct()`.
+			-Extensions, IEnumerable, Refactored `Except()`.
+			-Extensions, IEnumerable, Added `Yield()` method.
+			-Utilities, EnvironmentX, Added `IsStaging()` method.
+			-Extensions, IServiceCollection, Added `ConfigureBind()` method.
+			-Exceptions, Added `EntityNotFoundException`.
+			-Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.
+			-Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.
+			-Models, Added `ShiftingStack`1`.
+			-Exceptions, EntityNotFound, Added `Create()` method.
+			-Extensions, IConfigurationSection, Added `Get()` methods.
+		</PackageReleaseNotes>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+	</PropertyGroup>
+ 
+	<ItemGroup Label="Package reference">
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
+	</ItemGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DocumentationFile>C:\repos\efthymios-ks\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
-        <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
-        <WarningsAsErrors>NU1605;</WarningsAsErrors>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <DocumentationFile>C:\repos\efthymios-ks\CoreSharp\CoreSharp\CoreSharp.xml</DocumentationFile>
-        <NoWarn>1701;1702;CS1573;CS1591;</NoWarn>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Remove="CoreSharp.xml" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="System.IO.Ports" Version="5.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="..\.editorconfig" Link=".editorconfig" />
-        <None Include="..\icon.png">
-            <Pack>True</Pack>
-            <PackagePath></PackagePath>
-        </None>
-    </ItemGroup>
+	<ItemGroup Label="Assets">
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+		<None Include="..\icon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
