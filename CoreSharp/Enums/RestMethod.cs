@@ -8,6 +8,7 @@
         Patch,
         Delete,
         Head,
-        Options
+        Options,
+        Trace
     }
 }

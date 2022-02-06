@@ -15,21 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>1.8.8</Version>
-		<PackageReleaseNotes>
-			-Utilities, DirectoryInfoX, Added `GetOutputFolder()` method.
-			-Extensions, IEnumerable, Refactored `Distinct()`.
-			-Extensions, IEnumerable, Refactored `Except()`.
-			-Extensions, IEnumerable, Added `Yield()` method.
-			-Utilities, EnvironmentX, Added `IsStaging()` method.
-			-Extensions, IServiceCollection, Added `ConfigureBind()` method.
-			-Exceptions, Added `EntityNotFoundException`.
-			-Extensions, IEnumerable, Added `MinBy()` and `MaxBy()` methods.
-			-Extensions, Generic, Renamed `IsIn()` to `EqualsAny()`.
-			-Models, Added `ShiftingStack`1`.
-			-Exceptions, EntityNotFound, Added `Create()` method.
-			-Extensions, IConfigurationSection, Added `Get()` methods.
-		</PackageReleaseNotes>
+		<Version>1.8.9</Version>
+		<PackageReleaseNotes>-Exceptions, Moved `HttpResponseException` to different package.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

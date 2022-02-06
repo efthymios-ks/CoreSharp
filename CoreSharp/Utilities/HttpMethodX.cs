@@ -22,20 +22,22 @@ namespace CoreSharp.Utilities
 
             methodName = methodName.ToLowerInvariant();
 
-            if (methodName.Contains("get"))
+            if (methodName.Contains(HttpMethod.Get.Method))
                 return RestMethod.Get;
-            else if (methodName.Contains("post"))
+            else if (methodName.Contains(HttpMethod.Post.Method))
                 return RestMethod.Post;
-            else if (methodName.Contains("put"))
+            else if (methodName.Contains(HttpMethod.Put.Method))
                 return RestMethod.Put;
-            else if (methodName.Contains("patch"))
+            else if (methodName.Contains(HttpMethod.Patch.Method))
                 return RestMethod.Patch;
-            else if (methodName.Contains("delete"))
+            else if (methodName.Contains(HttpMethod.Delete.Method))
                 return RestMethod.Delete;
-            else if (methodName.Contains("head"))
+            else if (methodName.Contains(HttpMethod.Head.Method))
                 return RestMethod.Head;
-            else if (methodName.Contains("options"))
+            else if (methodName.Contains(HttpMethod.Options.Method))
                 return RestMethod.Options;
+            else if (methodName.Contains(HttpMethod.Trace.Method))
+                return RestMethod.Trace;
             else
                 throw new ArgumentOutOfRangeException(nameof(methodName));
         }
@@ -57,6 +59,7 @@ namespace CoreSharp.Utilities
                 RestMethod.Delete => HttpMethod.Delete,
                 RestMethod.Head => HttpMethod.Head,
                 RestMethod.Options => HttpMethod.Options,
+                RestMethod.Trace => HttpMethod.Trace,
                 _ => throw new ArgumentOutOfRangeException(nameof(methodName))
             };
     }
