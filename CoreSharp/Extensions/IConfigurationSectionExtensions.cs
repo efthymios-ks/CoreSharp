@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Text.Json;
 
 namespace CoreSharp.Extensions
 {
@@ -14,7 +15,7 @@ namespace CoreSharp.Extensions
             => section.Get<TResult>(null);
 
         /// <summary>
-        /// Get the <see cref="IConfigurationSection.Value"/> 
+        /// Get the <see cref="IConfigurationSection.Value"/>
         /// and map it provided generic.
         /// </summary>
         public static TResult Get<TResult>(this IConfigurationSection section, string key)
@@ -22,8 +23,8 @@ namespace CoreSharp.Extensions
         {
             _ = section ?? throw new ArgumentNullException(nameof(section));
 
-            var jsonAsString = section.Get(key);
-            return jsonAsString.FromJson<TResult>();
+            var json = section.Get(key);
+            return JsonSerializer.Deserialize<TResult>(json);
         }
 
         /// <inheritdoc cref="Get(IConfigurationSection, string)"/>

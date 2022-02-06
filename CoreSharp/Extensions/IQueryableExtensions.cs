@@ -1,12 +1,7 @@
-﻿using CoreSharp.Models.Pages;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions
 {
@@ -15,7 +10,9 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class IQueryableExtensions
     {
-        /// <inheritdoc cref="GetPageAsync{TEntity}(IQueryable{TEntity}, int, int, CancellationToken)"/>
+        /// <summary>
+        /// Paginate collection on given size and return page of given number.
+        /// </summary>
         public static IQueryable<T> GetPage<T>(this IQueryable<T> query, int pageNumber, int pageSize)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
@@ -25,39 +22,6 @@ namespace CoreSharp.Extensions
                 throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
             return query.Skip(pageNumber * pageSize).Take(pageSize);
-        }
-
-        /// <summary>
-        /// Paginate collection on given size and return page of given number.
-        /// </summary>
-        public static async Task<Page<TEntity>> GetPageAsync<TEntity>(this IQueryable<TEntity> query, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
-        {
-            //Validate args 
-            _ = query ?? throw new ArgumentNullException(nameof(query));
-            if (pageNumber < 0)
-                throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
-            if (pageSize <= 0)
-                throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
-
-            //Calculate and paginate 
-            var pagedQuery = query.GetPage(pageNumber, pageSize);
-            TEntity[] items;
-            int totalItems;
-            if (query is IAsyncEnumerable<TEntity>)
-            {
-                items = await pagedQuery.ToArrayAsync(cancellationToken);
-                totalItems = await query.CountAsync(cancellationToken);
-            }
-            else
-            {
-                items = pagedQuery.ToArray();
-                totalItems = query.Count();
-            }
-
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-            //Return
-            return new(pageNumber, pageSize, totalItems, totalPages, items);
         }
 
         /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
