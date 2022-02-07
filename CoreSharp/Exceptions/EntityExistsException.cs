@@ -1,20 +1,19 @@
 ﻿using CoreSharp.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace CoreSharp.Exceptions
 {
-    public class EntityNotFoundException : KeyNotFoundException
+    public class EntityExistsException : Exception
     {
-        //Constructors 
-        public EntityNotFoundException(Type entityType, string propertyName, object propertyValue)
+        //Constructors
+        public EntityExistsException(Type entityType, string propertyName, object propertyValue)
             : this(entityType.Name, propertyName, propertyValue)
         {
         }
 
-        public EntityNotFoundException(string entityName, string propertyName, object propertyValue)
-            : base($"{entityName} with {propertyName}=`{propertyValue}` not found.")
+        public EntityExistsException(string entityName, string propertyName, object propertyValue)
+            : base($"{entityName} with {propertyName}=`{propertyValue}` already exists.")
         {
             EntityName = entityName;
             PropertyName = propertyName;
@@ -27,17 +26,17 @@ namespace CoreSharp.Exceptions
         public object PropertyValue { get; }
 
         //Methods 
-        public static EntityNotFoundException Create<TEntity, TKey>(Expression<Func<TEntity, TKey>> propertySelector, TKey propertyValue)
+        public static EntityExistsException Create<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> propertySelector, TProperty propertyValue)
         {
             _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
 
             var entityType = typeof(TEntity);
             var propertyName = propertySelector.GetMemberName();
 
-            return new EntityNotFoundException(entityType, propertyName, propertyValue);
+            return new EntityExistsException(entityType, propertyName, propertyValue);
         }
 
-        public static void Throw<TEntity, TKey>(Expression<Func<TEntity, TKey>> propertySelector, TKey propertyValue)
+        public static void Throw<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> propertySelector, TProperty propertyValue)
             => throw Create(propertySelector, propertyValue);
     }
 }

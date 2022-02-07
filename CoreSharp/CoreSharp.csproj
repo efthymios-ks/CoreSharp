@@ -16,7 +16,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>1.8.10</Version>
-		<PackageReleaseNotes>-Adjusted project dependencies.</PackageReleaseNotes>
+		<PackageReleaseNotes>-Exceptions, Added `EntityExistsException`.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
