@@ -16,7 +16,8 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>1.8.10</Version>
-		<PackageReleaseNotes>-Exceptions, Added `EntityExistsException`.</PackageReleaseNotes>
+		<PackageReleaseNotes>-Exceptions, Added `EntityExistsException`.
+-Models, UrlQueryBuilder, Fixed parsing issues.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

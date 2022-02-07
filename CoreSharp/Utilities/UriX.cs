@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -51,6 +52,17 @@ namespace CoreSharp.Utilities
         {
             var parameters = HttpUtility.ParseQueryString(url);
             return parameters.AllKeys.ToDictionary(k => k, k => parameters[k]);
+        }
+
+        /// <inheritdoc cref="Build{TValue}(string, IDictionary{string, TValue})"/>
+        public static string ParseAndBuild<TEntity>(string baseUrl, TEntity entity)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            var properties = entity.GetType()
+                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                   .ToDictionary(p => p.Name, p => p.GetValue(entity));
+            return Build(baseUrl, properties);
         }
 
         /// <summary>

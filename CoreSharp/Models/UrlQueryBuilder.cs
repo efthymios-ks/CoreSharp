@@ -17,6 +17,49 @@ namespace CoreSharp.Models
                 base.Add(key, Convert.ToString(value, CultureInfo.InvariantCulture));
         }
 
+        private void SwitchAdd<TValue>(string key, TValue value)
+        {
+            if (value is null)
+                return;
+
+            var type = typeof(TValue);
+            switch (value)
+            {
+                case DateTime dateTimeValue:
+                    Add(key, dateTimeValue);
+                    break;
+                case DateTimeOffset dateTimeOffsetValue:
+                    Add(key, dateTimeOffsetValue);
+                    break;
+                case TimeSpan timeSpanValue:
+                    Add(key, timeSpanValue);
+                    break;
+                case string stringValue when !string.IsNullOrWhiteSpace(stringValue):
+                    InternalAdd(key, stringValue.Trim());
+                    break;
+                case IEnumerable enumerable:
+                    Add(key, enumerable);
+                    break;
+                default:
+                    if (value is IEnumerable<object> enumerableObject)
+                    {
+                        Add(key, enumerableObject);
+                    }
+                    else if (type.IsClass && value is not object)
+                    {
+                        var properties = value.GetType()
+                                              .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                              .ToDictionary(p => p.Name, p => p.GetValue(value));
+                        Add(properties);
+                    }
+                    else
+                    {
+                        InternalAdd(key, value);
+                    }
+                    break;
+            }
+        }
+
         /// <summary>
         /// Add <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
@@ -25,7 +68,7 @@ namespace CoreSharp.Models
             _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
 
             foreach (var pair in dictionary)
-                InternalAdd(pair.Key, pair.Value);
+                SwitchAdd(pair.Key, pair.Value);
         }
 
         /// <summary>
@@ -55,10 +98,14 @@ namespace CoreSharp.Models
             => InternalAdd(key, value.ToString("s"));
 
         /// <summary>
-        /// Add <see cref="TimeSpan"/> and format with "s" specifier.
+        /// Add <see cref="TimeSpan"/> and format with "c" specifier.
         /// </summary>
         public void Add(string key, TimeSpan value)
             => InternalAdd(key, value.ToString("c"));
+
+        /// <inheritdoc cref="Add(string, IEnumerable)"/>
+        public void Add<TEntity>(string key, IEnumerable<TEntity> items)
+            => Add(key, (IEnumerable)items);
 
         /// <summary>
         /// Add <see cref="IEnumerable"/>.
