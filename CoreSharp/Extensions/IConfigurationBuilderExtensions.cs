@@ -13,11 +13,7 @@ namespace CoreSharp.Extensions
     {
         /// <inheritdoc cref="AddEmbeddedFileConfiguration(IConfigurationBuilder, Action{EmbeddedFileConfigurationOptions})"/>
         public static IConfigurationBuilder AddEmbeddedFileConfiguration(this IConfigurationBuilder builder)
-            => builder.AddEmbeddedFileConfiguration(options =>
-            {
-                options.ScanAssembly = Assembly.GetEntryAssembly();
-                options.Location = "Resources";
-            });
+            => builder.AddEmbeddedFileConfiguration(options => options.ScanAssembly = Assembly.GetEntryAssembly());
 
         /// <summary>
         /// Adds a new <see cref="IConfigurationProvider"/> layer
