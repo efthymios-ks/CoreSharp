@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class IConfigurationBuilderExtensions
     {
-        /// <inheritdoc cref="AddEmbeddedFileConfiguration(IConfigurationBuilder, Action{EmbeddedFileConfigurationOptions})"/>
+        /// <inheritdoc cref="AddEmbeddedFileConfiguration(IConfigurationBuilder, Action{EmbeddedFileConfiguration})"/>
         public static IConfigurationBuilder AddEmbeddedFileConfiguration(this IConfigurationBuilder builder)
             => builder.AddEmbeddedFileConfiguration(options => options.ScanAssembly = Assembly.GetEntryAssembly());
 
@@ -19,12 +19,12 @@ namespace CoreSharp.Extensions
         /// Adds a new <see cref="IConfigurationProvider"/> layer
         /// from <see langword="appsettings.json"/> stored as <see langword="EmbeddedResource"/> file.
         /// </summary>
-        public static IConfigurationBuilder AddEmbeddedFileConfiguration(this IConfigurationBuilder builder, Action<EmbeddedFileConfigurationOptions> configure)
+        public static IConfigurationBuilder AddEmbeddedFileConfiguration(this IConfigurationBuilder builder, Action<EmbeddedFileConfiguration> configure)
         {
             _ = builder ?? throw new ArgumentNullException(nameof(builder));
             _ = configure ?? throw new ArgumentNullException(nameof(configure));
 
-            var options = new EmbeddedFileConfigurationOptions();
+            var options = new EmbeddedFileConfiguration();
             configure(options);
             var source = new EmbeddedFileConfigurationSource(options);
             return builder.Add(source);

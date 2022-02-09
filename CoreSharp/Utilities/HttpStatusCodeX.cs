@@ -15,7 +15,7 @@ namespace CoreSharp.Utilities
         /// Convert <see cref="HttpStatusCode"/> to reference url.
         /// <code>
         /// // https://httpstatuses.com/500
-        /// var type = HttpStatusCode.InternalServerError.ToProblemDetailsType();
+        /// var type = HttpStatusCodeX.GetReferenceUrl(HttpStatusCode.InternalServerError);
         /// </code>
         /// </summary>
         public static string GetReferenceUrl(HttpStatusCode httpStatusCode)
@@ -58,8 +58,8 @@ namespace CoreSharp.Utilities
 
             //Extract from HttpResponseMessage 
             var httpResponseMessageProperty = Array.Find(properties, p => p.PropertyType == typeof(HttpResponseMessage));
-            if (httpResponseMessageProperty?.GetValue(exception) is HttpResponseMessage response)
-                return response.StatusCode;
+            if (httpResponseMessageProperty?.GetValue(exception) is HttpResponseMessage responseMessage)
+                return responseMessage.StatusCode;
 
             //None found
             return null;

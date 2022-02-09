@@ -11,10 +11,10 @@ namespace CoreSharp.ConfigurationProviders
         //Fields 
         private readonly IConfigurationBuilder _builder;
         private readonly IFileProvider _fileProvider;
-        private readonly EmbeddedFileConfigurationOptions _options;
+        private readonly EmbeddedFileConfiguration _options;
 
         //Constructors
-        public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
+        public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfiguration options)
         {
             _builder = builder ?? throw new ArgumentNullException(nameof(builder));
             _options = options ?? throw new ArgumentNullException(nameof(options));

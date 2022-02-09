@@ -2,7 +2,7 @@
 
 namespace CoreSharp.Options
 {
-    public class EmbeddedFileConfigurationOptions
+    public class EmbeddedFileConfiguration
     {
         //Properties
         public Assembly ScanAssembly { get; set; }
