@@ -19,7 +19,8 @@
 		<PackageReleaseNotes>-Exceptions, Added `EntityExistsException`.
 -Models, UrlQueryBuilder, Fixed parsing issues.
 -ConfigurationProviders, Added `EmbeddedFileConfigurationSource`.
--Extensions, Removed  IConfigurationSection.</PackageReleaseNotes>
+-Extensions, Removed  IConfigurationSection.
+-Regexs, Added IntegerRegex.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
