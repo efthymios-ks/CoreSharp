@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -65,6 +67,51 @@ namespace CoreSharp.Extensions.Tests
 
             //Assert 
             result.Should().Equal(excepted);
+        }
+
+        [Test]
+        public void GetInnermostException_ExceptionIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Exception exception = null;
+
+            //Act
+            Action action = () => exception.GetInnermostException();
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetInnermostException_ExceptionHasNoInnerValue_ReturnItself()
+        {
+            //Arrange
+            const string expectedMessage = "1";
+            var exception = new Exception(expectedMessage);
+
+            //Act
+            var result = exception.GetInnermostException();
+
+            //Assert 
+            result.Message.Should().Be(expectedMessage);
+        }
+
+        [Test]
+        public void GetInnermostException_ExceptionHasInnerValue_ReturnItself()
+        {
+            //Arrange
+            const string expectedMessage = "1";
+            var ex1 = new Exception(expectedMessage);
+            var ex2 = new Exception("2", ex1);
+            var ex3_1 = new KeyNotFoundException("3.1", ex2);
+            var ex3_2 = new InvalidDataException("3.2");
+            var ex4 = new AggregateException(ex3_1, ex3_2);
+
+            //Act
+            var result = ex4.GetInnermostException();
+
+            //Assert 
+            result.Message.Should().Be(expectedMessage);
         }
     }
 }

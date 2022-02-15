@@ -20,7 +20,8 @@
 -Models, UrlQueryBuilder, Fixed parsing issues.
 -ConfigurationProviders, Added `EmbeddedFileConfigurationSource`.
 -Extensions, Removed  IConfigurationSection.
--Regexs, Added IntegerRegex.</PackageReleaseNotes>
+-Regexs, Added IntegerRegex.
+-Extensions, Exceptions, Added `GetInnermostException()` method.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

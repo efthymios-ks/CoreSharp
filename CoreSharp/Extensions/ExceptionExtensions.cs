@@ -50,5 +50,19 @@ namespace CoreSharp.Extensions
                     yield return innerEx;
             }
         }
+
+        /// <summary>
+        /// Get innermost <see cref="Exception"/>.
+        /// Uses <see cref="Exception.InnerException"/>.
+        /// </summary>
+        public static Exception GetInnermostException(this Exception exception)
+        {
+            _ = exception ?? throw new ArgumentNullException(nameof(exception));
+
+            if (exception.InnerException is null)
+                return exception;
+            else
+                return GetInnermostException(exception.InnerException);
+        }
     }
 }
