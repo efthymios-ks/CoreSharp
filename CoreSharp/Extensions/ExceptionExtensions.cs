@@ -11,16 +11,15 @@ namespace CoreSharp.Extensions
     {
         /// <summary>
         /// Get all <see cref="Exception.Message"/>,
-        /// including nested <see cref="Exception"/>.
+        /// including nested <see cref="Exception.InnerException"/>.
         /// </summary>
-        public static string FlattenMessages(this Exception exception)
+        public static string UnwrapMessages(this Exception exception)
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
-            var exceptions = exception.Flatten();
-            var messages = exceptions
-                                .Where(e => !string.IsNullOrWhiteSpace(e.Message))
-                                .Select(e => e.Message);
+            var messages = exception.Unwrap()
+                                    .Where(ex => !string.IsNullOrWhiteSpace(ex.Message))
+                                    .Select(ex => ex.Message);
 
             return string.Join(Environment.NewLine, messages);
         }
@@ -28,26 +27,26 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Return unfolded list of <see cref="Exception"/> including nested ones.
         /// </summary>
-        public static IEnumerable<Exception> Flatten(this Exception exception)
+        public static IEnumerable<Exception> Unwrap(this Exception exception)
         {
             _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
-            return exception.FlattenInternal();
+            return exception.UnwrapInternal();
         }
 
-        private static IEnumerable<Exception> FlattenInternal(this Exception exception)
+        private static IEnumerable<Exception> UnwrapInternal(this Exception exception)
         {
             yield return exception;
 
-            if (exception is AggregateException aggregateEx)
+            if (exception is AggregateException aggregateException)
             {
-                foreach (var innerEx in aggregateEx.InnerExceptions.SelectMany(e => e.Flatten()))
-                    yield return innerEx;
+                foreach (var innerException in aggregateException.InnerExceptions.SelectMany(ex => ex.Unwrap()))
+                    yield return innerException;
             }
             else if (exception.InnerException is not null)
             {
-                foreach (var innerEx in exception.InnerException.Flatten())
-                    yield return innerEx;
+                foreach (var innerException in exception.InnerException.Unwrap())
+                    yield return innerException;
             }
         }
 

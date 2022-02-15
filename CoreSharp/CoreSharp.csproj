@@ -21,7 +21,8 @@
 -ConfigurationProviders, Added `EmbeddedFileConfigurationSource`.
 -Extensions, Removed  IConfigurationSection.
 -Regexs, Added IntegerRegex.
--Extensions, Exceptions, Added `GetInnermostException()` method.</PackageReleaseNotes>
+-Extensions, Exceptions, Added `GetInnermostException()` method.
+-Extensions, Exception, Renamed `Flatten()` to `Unwrap()`.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

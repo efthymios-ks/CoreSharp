@@ -11,20 +11,20 @@ namespace CoreSharp.Extensions.Tests
     {
         //Methods
         [Test]
-        public void FlattenMessages_ExceptionIsNull_ThrowArgumentNullException()
+        public void UnwrapMessages_ExceptionIsNull_ThrowArgumentNullException()
         {
             //Arrange
             Exception exception = null;
 
             //Act
-            Action action = () => exception.FlattenMessages();
+            Action action = () => exception.UnwrapMessages();
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void FlattenMessages_WhenCalled_ReturnAllExceptionMessages()
+        public void UnwrapMessages_WhenCalled_ReturnAllExceptionMessages()
         {
             //Arrange
             var level3Exception = new Exception("Level 3");
@@ -34,39 +34,39 @@ namespace CoreSharp.Extensions.Tests
             var expected = string.Join(Environment.NewLine, messages);
 
             //Act
-            var result = level1Exception.FlattenMessages();
+            var result = level1Exception.UnwrapMessages();
 
             //Assert 
             result.Should().Be(expected);
         }
 
         [Test]
-        public void Flatten_ExceptionIsNull_ReturnEmptyEnumerable()
+        public void Unwrap_ExceptionIsNull_ReturnEmptyEnumerable()
         {
             //Arrange
             Exception exception = null;
 
             //Act
-            Action action = () => exception.Flatten();
+            Action action = () => exception.Unwrap();
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void Flatten_WhenCalled_ReturnAllExceptionMessages()
+        public void Unwrap_WhenCalled_ReturnAllExceptionMessages()
         {
             //Arrange
-            var level3Exception = new Exception("Level 3");
-            var level2Exception = new AggregateException("Level 2", level3Exception);
-            var level1Exception = new Exception("Level 1", level2Exception);
-            var excepted = new[] { level1Exception, level2Exception, level3Exception };
+            var ex3 = new Exception("Level 3");
+            var ex2 = new AggregateException("Level 2", ex3);
+            var ex1 = new Exception("Level 1", ex2);
+            var expected = new[] { ex1, ex2, ex3 };
 
             //Act
-            var result = level1Exception.Flatten();
+            var result = ex1.Unwrap();
 
             //Assert 
-            result.Should().Equal(excepted);
+            result.Should().Equal(expected);
         }
 
         [Test]
@@ -85,23 +85,21 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void GetInnermostException_ExceptionHasNoInnerValue_ReturnItself()
         {
-            //Arrange
-            const string expectedMessage = "1";
-            var exception = new Exception(expectedMessage);
+            //Arrange 
+            var exception = new Exception();
 
             //Act
             var result = exception.GetInnermostException();
 
             //Assert 
-            result.Message.Should().Be(expectedMessage);
+            result.Should().BeSameAs(exception);
         }
 
         [Test]
         public void GetInnermostException_ExceptionHasInnerValue_ReturnItself()
         {
-            //Arrange
-            const string expectedMessage = "1";
-            var ex1 = new Exception(expectedMessage);
+            //Arrange 
+            var ex1 = new Exception("1");
             var ex2 = new Exception("2", ex1);
             var ex3_1 = new KeyNotFoundException("3.1", ex2);
             var ex3_2 = new InvalidDataException("3.2");
@@ -111,7 +109,7 @@ namespace CoreSharp.Extensions.Tests
             var result = ex4.GetInnermostException();
 
             //Assert 
-            result.Message.Should().Be(expectedMessage);
+            result.Should().BeSameAs(ex1);
         }
     }
 }
