@@ -298,5 +298,22 @@ namespace CoreSharp.Extensions
             else
                 yield return entity;
         }
+
+        /// <summary>
+        /// Get innermost field using recursion.
+        /// Stops when inner field is null.
+        /// </summary>
+        public static TEntity GetInnermostField<TEntity>(this TEntity entity, Func<TEntity, TEntity> fieldSelector)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = fieldSelector ?? throw new ArgumentNullException(nameof(fieldSelector));
+
+            var innerEnttity = fieldSelector(entity);
+            if (innerEnttity is null)
+                return entity;
+            else
+                return innerEnttity.GetInnermostField(fieldSelector);
+        }
     }
 }

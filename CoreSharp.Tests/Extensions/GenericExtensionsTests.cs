@@ -310,5 +310,45 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Equal(expected);
         }
+
+        [Test]
+        public void GetInnermostField_EntityIsNull_ThrowArgumentNullException()
+        {
+            //Arange
+            Exception exception = null;
+
+            //Act
+            Action action = () => exception.GetInnermostField(e => e.InnerException);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetInnermostField_FieldSelectorIsNull_ThrowArgumentNullException()
+        {
+            //Arange
+            var exception = new Exception();
+
+            //Act
+            Action action = () => exception.GetInnermostField(null);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetInnermostField_WhenCalled_ReturnInnermostField()
+        {
+            //Arange
+            var exception1 = new Exception("1");
+            var exception2 = new Exception("2", exception1);
+
+            //Act
+            var result = exception1.GetInnermostField(e => e.InnerException);
+
+            //Assert
+            result.Should().BeSameAs(exception1);
+        }
     }
 }
