@@ -25,7 +25,8 @@
 -Extensions, Exception, Renamed `Flatten()` to `Unwrap()`.
 -Extensions, Generic, Added `GetInnermostField()` method.
 -Observers, Added `Observer`1` and `JsonObserver`1`.
--Collections, Added `ObservableHashSet`1` and `ObservableDictionary`2`.</PackageReleaseNotes>
+-Collections, Added `ObservableHashSet`1` and `ObservableDictionary`2`.
+-Observers, Rename `IObserver`1` to `IStateObserver`1` to avoid conflicts.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

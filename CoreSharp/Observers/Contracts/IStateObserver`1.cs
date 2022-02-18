@@ -2,7 +2,7 @@
 
 namespace CoreSharp.Observers.Contracts
 {
-    public interface IObserver<TValue>
+    public interface IStateObserver<TValue>
     {
         //Properties
         TValue Value { get; set; }

@@ -8,7 +8,7 @@ namespace CoreSharp.Observers
     /// Observe a value for changes and notify
     /// using provided <see cref="IEqualityComparer{T}"/>.
     /// </summary>
-    public class Observer<TValue> : Contracts.IObserver<TValue>
+    public class StateObserver<TValue> : Contracts.IStateObserver<TValue>
     {
         //Fields 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -17,21 +17,21 @@ namespace CoreSharp.Observers
         private TValue _value;
 
         //Constructors
-        public Observer()
+        public StateObserver()
         : this(EqualityComparer<TValue>.Default)
         {
         }
 
-        public Observer(TValue initialValue)
+        public StateObserver(TValue initialValue)
         : this(initialValue, EqualityComparer<TValue>.Default)
         {
         }
 
-        public Observer(TValue initialValue, IEqualityComparer<TValue> equalityComparer)
+        public StateObserver(TValue initialValue, IEqualityComparer<TValue> equalityComparer)
         : this(equalityComparer)
             => _value = initialValue;
 
-        public Observer(IEqualityComparer<TValue> equalityComparer)
+        public StateObserver(IEqualityComparer<TValue> equalityComparer)
             => _equalityComparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
 
         //Properties

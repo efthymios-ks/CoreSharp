@@ -8,35 +8,35 @@ namespace CoreSharp.Observers
     /// Observe a value for changes and notify
     /// using json conversions.
     /// </summary>
-    public class JsonObserver<TEntity> : Observer<TEntity>
+    public class JsonStateObserver<TEntity> : StateObserver<TEntity>
     {
         //Constructors
-        public JsonObserver()
+        public JsonStateObserver()
             : base(new JsonEqualityComparer<TEntity>())
         {
         }
 
-        public JsonObserver(JsonNet.JsonSerializerSettings settings)
+        public JsonStateObserver(JsonNet.JsonSerializerSettings settings)
             : base(new JsonEqualityComparer<TEntity>(settings))
         {
         }
 
-        public JsonObserver(TextJson.JsonSerializerOptions options)
+        public JsonStateObserver(TextJson.JsonSerializerOptions options)
             : base(new JsonEqualityComparer<TEntity>(options))
         {
         }
 
-        public JsonObserver(TEntity initialValue)
+        public JsonStateObserver(TEntity initialValue)
             : base(initialValue, new JsonEqualityComparer<TEntity>())
         {
         }
 
-        public JsonObserver(TEntity initialValue, JsonNet.JsonSerializerSettings settings)
+        public JsonStateObserver(TEntity initialValue, JsonNet.JsonSerializerSettings settings)
             : base(initialValue, new JsonEqualityComparer<TEntity>(settings))
         {
         }
 
-        public JsonObserver(TEntity initialValue, TextJson.JsonSerializerOptions options)
+        public JsonStateObserver(TEntity initialValue, TextJson.JsonSerializerOptions options)
             : base(initialValue, new JsonEqualityComparer<TEntity>(options))
         {
         }
