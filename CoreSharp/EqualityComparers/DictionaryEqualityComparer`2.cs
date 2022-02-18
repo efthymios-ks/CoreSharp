@@ -27,11 +27,7 @@ namespace CoreSharp.EqualityComparers
         //Methods
         public bool Equals(IDictionary<TKey, TValue> left, IDictionary<TKey, TValue> right)
         {
-            if (left is null && right is not null)
-                return false;
-            else if (left is not null && right is null)
-                return false;
-            else if (left is null && right is null)
+            if (Equals(left, right))
                 return true;
 
             //Keys don't match

@@ -23,7 +23,8 @@
 -Regexs, Added IntegerRegex.
 -Extensions, Exceptions, Added `GetInnermostException()` method.
 -Extensions, Exception, Renamed `Flatten()` to `Unwrap()`.
--Extensions, Generic, Added `GetInnermostField()` method.</PackageReleaseNotes>
+-Extensions, Generic, Added `GetInnermostField()` method.
+-Observers, Added `Observer`1` and `JsonObserver`1`.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
