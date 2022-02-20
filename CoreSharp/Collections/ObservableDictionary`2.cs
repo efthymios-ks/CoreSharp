@@ -52,7 +52,15 @@ namespace CoreSharp.Collections
         public TValue this[TKey key]
         {
             get => _source[key];
-            set => throw new NotImplementedException();
+            set
+            {
+                var previousValue = this[key];
+                if (Equals(previousValue, value))
+                    return;
+                _source[key] = value;
+
+                OnItemUpdated(key, value);
+            }
         }
 
         public ICollection<TKey> Keys
@@ -78,6 +86,30 @@ namespace CoreSharp.Collections
             CollectionChanged?.Invoke(this, args);
         }
 
+        private void OnItemAdded(TKey key, TValue value)
+        {
+            var pair = new KeyValuePair<TKey, TValue>(key, value);
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new[] { pair });
+            OnCollectionChanged(args);
+        }
+
+        private void OnItemUpdated(TKey key, TValue value)
+        {
+            var pair = new KeyValuePair<TKey, TValue>(key, value);
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new[] { pair });
+            OnCollectionChanged(args);
+        }
+
+        private void OnItemRemoved(TKey key, TValue value)
+        {
+            var pair = new KeyValuePair<TKey, TValue>(key, value);
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new[] { pair });
+            OnCollectionChanged(args);
+        }
+
+        private void OnReset()
+            => OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
+
         public bool TryGetValue(TKey key, out TValue value)
             => _source.TryGetValue(key, out value);
 
@@ -98,7 +130,7 @@ namespace CoreSharp.Collections
             if (!_source.TryAdd(item.Key, item.Value))
                 return;
 
-            OnCollectionChanged(new(NotifyCollectionChangedAction.Add, item));
+            OnItemAdded(item.Key, item.Value);
         }
 
         public void Clear()
@@ -107,7 +139,7 @@ namespace CoreSharp.Collections
                 return;
 
             _source.Clear();
-            OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
+            OnReset();
         }
 
         public bool Remove(TKey key)
@@ -115,7 +147,7 @@ namespace CoreSharp.Collections
             if (!_source.Remove(key, out var removedValue))
                 return false;
 
-            OnCollectionChanged(new(NotifyCollectionChangedAction.Remove, removedValue));
+            OnItemRemoved(key, removedValue);
             return true;
         }
 

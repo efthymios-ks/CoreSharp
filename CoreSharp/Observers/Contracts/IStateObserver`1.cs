@@ -2,12 +2,13 @@
 
 namespace CoreSharp.Observers.Contracts
 {
-    public interface IStateObserver<TValue>
+    public interface IStateObserver<TEntity>
+        where TEntity : class
     {
         //Properties
-        TValue Value { get; set; }
+        TEntity State { get; set; }
 
         //Events 
-        event Action<TValue> ValueChanged;
+        event Action<TEntity> StateChanged;
     }
 }

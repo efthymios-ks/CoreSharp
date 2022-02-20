@@ -8,34 +8,39 @@ namespace CoreSharp.Observers
     /// Observe a value for changes and notify
     /// using provided <see cref="IEqualityComparer{T}"/>.
     /// </summary>
-    public class StateObserver<TValue> : Contracts.IStateObserver<TValue>
+    public class StateObserver<TEntity> : Contracts.IStateObserver<TEntity>
+        where TEntity : class
     {
         //Fields 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly IEqualityComparer<TValue> _equalityComparer;
+        private readonly IEqualityComparer<TEntity> _equalityComparer;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private TValue _value;
+        private TEntity _value;
 
         //Constructors
         public StateObserver()
-        : this(EqualityComparer<TValue>.Default)
+        : this(EqualityComparer<TEntity>.Default)
         {
         }
 
-        public StateObserver(TValue initialValue)
-        : this(initialValue, EqualityComparer<TValue>.Default)
+        public StateObserver(TEntity initialValue)
+        : this(initialValue, EqualityComparer<TEntity>.Default)
         {
         }
 
-        public StateObserver(TValue initialValue, IEqualityComparer<TValue> equalityComparer)
-        : this(equalityComparer)
-            => _value = initialValue;
+        public StateObserver(IEqualityComparer<TEntity> equalityComparer)
+            : this(null, equalityComparer)
+        {
+        }
 
-        public StateObserver(IEqualityComparer<TValue> equalityComparer)
-            => _equalityComparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
+        public StateObserver(TEntity initialValue, IEqualityComparer<TEntity> equalityComparer)
+        {
+            _value = initialValue;
+            _equalityComparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
+        }
 
         //Properties
-        public TValue Value
+        public TEntity State
         {
             get => _value;
             set
@@ -49,9 +54,9 @@ namespace CoreSharp.Observers
         }
 
         //Events 
-        public event Action<TValue> ValueChanged;
+        public event Action<TEntity> StateChanged;
 
-        private void OnValueChanged(TValue value)
-            => ValueChanged?.Invoke(value);
+        private void OnValueChanged(TEntity value)
+            => StateChanged?.Invoke(value);
     }
 }

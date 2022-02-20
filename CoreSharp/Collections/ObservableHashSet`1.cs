@@ -64,7 +64,7 @@ namespace CoreSharp.Collections
             if (!_source.Add(item))
                 return;
 
-            OnCollectionChanged(new(NotifyCollectionChangedAction.Add, item));
+            OnCollectionChanged(new(NotifyCollectionChangedAction.Add, new[] { item }));
         }
 
         public void Clear()
@@ -81,7 +81,7 @@ namespace CoreSharp.Collections
             if (!_source.Remove(item))
                 return false;
 
-            OnCollectionChanged(new(NotifyCollectionChangedAction.Remove, item));
+            OnCollectionChanged(new(NotifyCollectionChangedAction.Remove, new[] { item }));
             return true;
         }
 

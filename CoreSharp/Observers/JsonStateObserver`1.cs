@@ -9,6 +9,7 @@ namespace CoreSharp.Observers
     /// using json conversions.
     /// </summary>
     public class JsonStateObserver<TEntity> : StateObserver<TEntity>
+        where TEntity : class
     {
         //Constructors
         public JsonStateObserver()
