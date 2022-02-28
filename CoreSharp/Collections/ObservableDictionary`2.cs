@@ -57,9 +57,9 @@ namespace CoreSharp.Collections
                 var previousValue = this[key];
                 if (Equals(previousValue, value))
                     return;
-                _source[key] = value;
 
-                OnItemUpdated(key, value);
+                _source[key] = value;
+                OnItemUpdated(key, previousValue, value);
             }
         }
 
@@ -89,21 +89,22 @@ namespace CoreSharp.Collections
         private void OnItemAdded(TKey key, TValue value)
         {
             var pair = new KeyValuePair<TKey, TValue>(key, value);
-            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new[] { pair });
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, pair);
             OnCollectionChanged(args);
         }
 
-        private void OnItemUpdated(TKey key, TValue value)
+        private void OnItemUpdated(TKey key, TValue previousValue, TValue newValue)
         {
-            var pair = new KeyValuePair<TKey, TValue>(key, value);
-            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new[] { pair });
+            var previousPair = new KeyValuePair<TKey, TValue>(key, previousValue);
+            var newPair = new KeyValuePair<TKey, TValue>(key, newValue);
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newPair, previousPair);
             OnCollectionChanged(args);
         }
 
         private void OnItemRemoved(TKey key, TValue value)
         {
             var pair = new KeyValuePair<TKey, TValue>(key, value);
-            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new[] { pair });
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, pair);
             OnCollectionChanged(args);
         }
 
@@ -123,7 +124,7 @@ namespace CoreSharp.Collections
             => _source.CopyTo(array, arrayIndex);
 
         public void Add(TKey key, TValue value)
-            => Add(new KeyValuePair<TKey, TValue>(key, value));
+            => Add(new(key, value));
 
         public void Add(KeyValuePair<TKey, TValue> item)
         {

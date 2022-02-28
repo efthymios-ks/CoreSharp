@@ -11,7 +11,8 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get given <see cref="Attribute"/> from an <see cref="Enum"/>.
         /// </summary>
-        public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TAttribute>(this Enum value)
+            where TAttribute : Attribute
         {
             _ = value ?? throw new ArgumentNullException(nameof(value));
 
