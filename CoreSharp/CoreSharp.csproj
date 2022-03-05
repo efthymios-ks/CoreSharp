@@ -16,7 +16,8 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>5.0.1</Version>
-		<PackageReleaseNotes>-Collections, ObservableDictionary`2, Fixed `OnItemUpdated()`.</PackageReleaseNotes>
+		<PackageReleaseNotes>-Collections, ObservableDictionary`2, Fixed `OnItemUpdated()`.
+-Icon update.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
