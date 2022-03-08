@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-namespace CoreSharp.Options
+namespace CoreSharp.ConfigurationProviders
 {
-    public class EmbeddedFileConfiguration
+    public class EmbeddedFileConfigurationOptions
     {
         //Properties
         public Assembly ScanAssembly { get; set; }

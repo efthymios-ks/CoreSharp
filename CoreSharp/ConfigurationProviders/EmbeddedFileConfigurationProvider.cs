@@ -1,7 +1,7 @@
-﻿using CoreSharp.Options;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CoreSharp.ConfigurationProviders
@@ -11,10 +11,10 @@ namespace CoreSharp.ConfigurationProviders
         //Fields 
         private readonly IConfigurationBuilder _builder;
         private readonly IFileProvider _fileProvider;
-        private readonly EmbeddedFileConfiguration _options;
+        private readonly EmbeddedFileConfigurationOptions _options;
 
         //Constructors
-        public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfiguration options)
+        public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
         {
             _builder = builder ?? throw new ArgumentNullException(nameof(builder));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -28,10 +28,14 @@ namespace CoreSharp.ConfigurationProviders
         {
             Data.Clear();
 
-            AddFile(GetAppsettingsPath(_options.Location, null));
+            var locations = new HashSet<string>
+            {
+                GetAppsettingsPath(_options.Location, null),
+                GetAppsettingsPath(_options.Location, _options.Environment)
+            };
 
-            if (!string.IsNullOrWhiteSpace(_options.Environment))
-                AddFile(GetAppsettingsPath(_options.Location, _options.Environment));
+            foreach (var location in locations)
+                AddFile(location);
         }
 
         private static string GetAppsettingsPath(string location, string environmentName)
@@ -39,8 +43,9 @@ namespace CoreSharp.ConfigurationProviders
             location ??= string.Empty;
             location = location.Replace('\\', '/').Trim('/');
 
-            environmentName ??= environmentName;
-            var fileName = $"appsettings.{environmentName}.json".Replace("..", ".");
+            var fileName = string.IsNullOrWhiteSpace(environmentName)
+                            ? "appsettings.json"
+                            : $"appsettings.{environmentName}.json";
 
             return Path.Combine(location, fileName);
         }

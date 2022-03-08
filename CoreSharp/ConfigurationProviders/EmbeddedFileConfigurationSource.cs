@@ -1,5 +1,4 @@
-﻿using CoreSharp.Options;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 
 namespace CoreSharp.ConfigurationProviders
@@ -7,10 +6,10 @@ namespace CoreSharp.ConfigurationProviders
     public class EmbeddedFileConfigurationSource : IConfigurationSource
     {
         //Fields
-        private readonly EmbeddedFileConfiguration _options;
+        private readonly EmbeddedFileConfigurationOptions _options;
 
         //Constructors
-        public EmbeddedFileConfigurationSource(EmbeddedFileConfiguration options)
+        public EmbeddedFileConfigurationSource(EmbeddedFileConfigurationOptions options)
             => _options = options ?? throw new ArgumentNullException(nameof(options));
 
         //Methods
