@@ -34,6 +34,10 @@ namespace CoreSharp.Models.Pages
         public int TotalItems { get; }
         public int TotalPages { get; }
         public IEnumerable Items { get; }
+        public virtual bool HasPrevious
+            => PageNumber > 0;
+        public virtual bool HasNext
+            => PageNumber < (TotalPages - 1);
 
         //Methods
         public override string ToString()
