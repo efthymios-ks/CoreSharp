@@ -16,8 +16,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>5.0.3</Version>
-		<PackageReleaseNotes>-Models, Pages, Added `LinkedPage`1`.
--Models, Pages, Added `PageOptions`.</PackageReleaseNotes>
+		<PackageReleaseNotes>-Exceptions, EntityNotFound/EntityExists, Added `ThrowIf` method.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
