@@ -24,8 +24,12 @@ namespace CoreSharp.EqualityComparers
         //Methods
         public bool Equals(IEnumerable<TEntity> left, IEnumerable<TEntity> right)
         {
-            if (Equals(left, right))
+            //Same reference 
+            if (left == right)
                 return true;
+            //Null 
+            else if (left is null || right is null)
+                return false;
 
             //Different count 
             if (left.Count() != right.Count())

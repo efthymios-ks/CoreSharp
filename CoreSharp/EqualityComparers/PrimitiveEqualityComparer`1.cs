@@ -16,8 +16,12 @@ namespace CoreSharp.EqualityComparers
         //Methods 
         public bool Equals(TEntity left, TEntity right)
         {
-            if (Equals(left, right))
+            //Same reference 
+            if (left == right)
                 return true;
+            //Null 
+            else if (left is null || right is null)
+                return false;
 
             var leftProperties = GetPrimitiveProperties(left);
             var rightProperties = GetPrimitiveProperties(right);

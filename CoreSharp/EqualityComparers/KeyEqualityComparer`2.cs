@@ -26,8 +26,13 @@ namespace CoreSharp.EqualityComparers
         //Methods 
         public bool Equals(TEntity left, TEntity right)
         {
-            if (Equals(left, right))
+            //Same reference 
+            if (ReferenceEquals(left, right))
                 return true;
+            //Null 
+            else if (left is null || right is null)
+                return false;
+
 
             var leftKey = KeySelector(left);
             var rightKey = KeySelector(right);
