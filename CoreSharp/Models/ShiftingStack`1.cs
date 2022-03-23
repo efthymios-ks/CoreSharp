@@ -6,19 +6,19 @@ using System.Linq;
 
 namespace CoreSharp.Models
 {
-    public class ShiftingStack<TItem> : IReadOnlyCollection<TItem>
+    public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     {
         //Fields 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly IList<TItem> _source = new List<TItem>();
+        private readonly IList<TElement> _source = new List<TElement>();
 
         //Constructors
         public ShiftingStack(int maxCapacity)
-            : this(maxCapacity, Enumerable.Empty<TItem>())
+            : this(maxCapacity, Enumerable.Empty<TElement>())
         {
         }
 
-        public ShiftingStack(int maxCapacity, IEnumerable<TItem> source)
+        public ShiftingStack(int maxCapacity, IEnumerable<TElement> source)
         {
             if (maxCapacity < 1)
                 throw new ArgumentOutOfRangeException(nameof(maxCapacity));
@@ -31,14 +31,14 @@ namespace CoreSharp.Models
 
         //Properties
         /// <summary>
-        /// Maximum number of items allowed in the <see cref="ShiftingStack{TItem}"/>.
+        /// Maximum number of items allowed in the <see cref="ShiftingStack{TElement}"/>.
         /// If max capacity is met, then bottom items are shifted out
         /// when new items are pushed on top.
         /// </summary>
         public int MaxCapacity { get; }
 
         /// <summary>
-        /// Number of elements contained in the <see cref="ShiftingStack{TItem}"/>.
+        /// Number of elements contained in the <see cref="ShiftingStack{TElement}"/>.
         /// </summary>
         public int Count
             => _source.Count;
@@ -60,13 +60,13 @@ namespace CoreSharp.Models
         /// Determines whether stack contains
         /// the provided item.
         /// </summary>
-        public bool Contains(TItem item)
+        public bool Contains(TElement item)
             => _source.Contains(item);
 
         /// <summary>
-        /// Inserts an object at the top of the <see cref="ShiftingStack{TItem}"/>.
+        /// Inserts an object at the top of the <see cref="ShiftingStack{TElement}"/>.
         /// </summary>
-        public void Push(TItem item)
+        public void Push(TElement item)
         {
             if (HasMetMaxCapacity)
                 _source.RemoveAt(0);
@@ -76,23 +76,23 @@ namespace CoreSharp.Models
 
         /// <summary>
         /// Removes and returns the object at the top
-        /// of the <see cref="ShiftingStack{TItem}"/>.
+        /// of the <see cref="ShiftingStack{TElement}"/>.
         /// </summary>
-        public TItem Pop()
+        public TElement Pop()
         {
             if (!HasItems)
                 throw new InvalidOperationException("Cannot pop on empty collection.");
 
-            var item = _source.Last();
-            _source.Remove(item);
-            return item;
+            var element = _source.Last();
+            _source.Remove(element);
+            return element;
         }
 
         /// <summary>
         /// Returns the object at the top of the
-        /// <see cref="ShiftingStack{TItem}"/> without removing it.
+        /// <see cref="ShiftingStack{TElement}"/> without removing it.
         /// </summary>
-        public TItem Peek()
+        public TElement Peek()
         {
             if (!HasItems)
                 throw new InvalidOperationException("Cannot peek on empty collection.");
@@ -102,19 +102,19 @@ namespace CoreSharp.Models
 
         /// <summary>
         /// Returns a value that indicates whether there is an object
-        /// at the top of the <see cref="ShiftingStack{TItem}"/>,
+        /// at the top of the <see cref="ShiftingStack{TElement}"/>,
         /// and if one is present, copies it to the result parameter,
-        /// and removes it from the <see cref="ShiftingStack{TItem}"/>
+        /// and removes it from the <see cref="ShiftingStack{TElement}"/>
         /// </summary>
-        public bool TryPop(out TItem item)
+        public bool TryPop(out TElement element)
         {
             if (!HasItems)
             {
-                item = default;
+                element = default;
                 return false;
             }
 
-            item = Pop();
+            element = Pop();
             return true;
         }
 
@@ -124,19 +124,19 @@ namespace CoreSharp.Models
         /// and if one is present, copies it to the result parameter.
         /// The object is not removed from the <see cref="ShiftingStack{TItem}"/>.
         /// </summary>
-        public bool TryPeek(out TItem item)
+        public bool TryPeek(out TElement element)
         {
             if (!HasItems)
             {
-                item = default;
+                element = default;
                 return false;
             }
 
-            item = Peek();
+            element = Peek();
             return true;
         }
 
-        public IEnumerator<TItem> GetEnumerator()
+        public IEnumerator<TElement> GetEnumerator()
             => _source.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()

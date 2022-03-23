@@ -12,7 +12,7 @@ namespace CoreSharp.Utilities
         /// <summary>
         /// Get <see cref="MemberInfo"/> from given <see cref="Expression{TDelegate}"/> selector.
         /// </summary>
-        public static MemberInfo GetMemberInfo<TItem, TMember>(Expression<Func<TItem, TMember>> memberSelector)
+        public static MemberInfo GetMemberInfo<TElement, TMember>(Expression<Func<TElement, TMember>> memberSelector)
         {
             _ = memberSelector ?? throw new ArgumentNullException(nameof(memberSelector));
 

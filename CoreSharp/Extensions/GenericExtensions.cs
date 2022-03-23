@@ -21,25 +21,25 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class GenericExtensions
     {
-        /// <inheritdoc cref="EqualsAny{T}(T, T[])"/>
-        public static bool EqualsAny<T>(this T item, IEnumerable<T> source)
-            => item.EqualsAny(source?.ToArray());
+        /// <inheritdoc cref="EqualsAny{TElement}(TElement, TElement[])"/>
+        public static bool EqualsAny<TElement>(this TElement element, IEnumerable<TElement> source)
+            => element.EqualsAny(source?.ToArray());
 
-        /// <inheritdoc cref="EqualsAny{TEntity, TKey}(TEntity, IEnumerable{TEntity}, Func{TEntity, TKey})"/>
-        public static bool EqualsAny<T>(this T item, params T[] source)
-            => item.EqualsAny(source, i => i);
+        /// <inheritdoc cref="EqualsAny{TElement, TKey}(TElement, IEnumerable{TElement}, Func{TElement, TKey})"/>
+        public static bool EqualsAny<TElement>(this TElement element, params TElement[] source)
+            => element.EqualsAny(source, i => i);
 
         /// <summary>
         /// Determines whether a sequence contains the specified element.
         /// </summary>
-        public static bool EqualsAny<TEntity, TKey>(this TEntity item, IEnumerable<TEntity> source, Func<TEntity, TKey> keySelector)
+        public static bool EqualsAny<TElement, TKey>(this TElement element, IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
         {
-            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = element ?? throw new ArgumentNullException(nameof(element));
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-            var equalityComparer = new KeyEqualityComparer<TEntity, TKey>(keySelector);
-            return source.Any(i => equalityComparer.Equals(i, item));
+            var equalityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
+            return source.Any(i => equalityComparer.Equals(i, element));
         }
 
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
@@ -219,22 +219,22 @@ namespace CoreSharp.Extensions
             return equalityComparer.Equals(left, right);
         }
 
-        /// <inheritdoc cref="IsNull{T}(T?)"/>
-        public static bool IsNull<T>(this T input)
-            where T : class
-            => input is null;
+        /// <inheritdoc cref="IsNull{TElement}(TElement?)"/>
+        public static bool IsNull<TElement>(this TElement element)
+            where TElement : class
+            => element is null;
 
-        /// <inheritdoc cref="Nullable{T}.HasValue"/>
-        public static bool IsNull<T>(this T? input)
-            where T : struct
-            => !input.HasValue;
+        /// <inheritdoc cref="Nullable{TElement}.HasValue"/>
+        public static bool IsNull<TElement>(this TElement? element)
+            where TElement : struct
+            => !element.HasValue;
 
         /// <summary>
         /// Check if struct has default value.
         /// </summary>
-        public static bool IsDefault<T>(this T input)
-            where T : struct
-            => input.Equals(default(T));
+        public static bool IsDefault<TElement>(this TElement element)
+            where TElement : struct
+            => element.Equals(default(TElement));
 
         /// <summary>
         /// Serializes an object into an XML document.
@@ -278,25 +278,25 @@ namespace CoreSharp.Extensions
 
 #pragma warning disable RCS1175 // Unused this parameter.
         /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
-        public static IEnumerable<TAttribute> GetAttributes<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
+        public static IEnumerable<TAttribute> GetAttributes<TElement, TMember, TAttribute>(this TElement element, Expression<Func<TElement, TMember>> memberSelector)
             where TAttribute : Attribute
 #pragma warning restore RCS1175 // Unused this parameter. 
             => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>
-        public static TAttribute GetAttribute<TItem, TMember, TAttribute>(this TItem item, Expression<Func<TItem, TMember>> memberSelector)
+        public static TAttribute GetAttribute<TElement, TMember, TAttribute>(this TElement element, Expression<Func<TElement, TMember>> memberSelector)
             where TAttribute : Attribute
-            => item.GetAttributes<TItem, TMember, TAttribute>(memberSelector)?.FirstOrDefault();
+            => element.GetAttributes<TElement, TMember, TAttribute>(memberSelector)?.FirstOrDefault();
 
         /// <summary>
         /// Yield return item in an <see cref="IEnumerable{T}"/>.
         /// </summary>
-        public static IEnumerable<TEntity> Yield<TEntity>(this TEntity entity)
+        public static IEnumerable<TElement> Yield<TElement>(this TElement element)
         {
-            if (entity is null)
+            if (element is null)
                 yield break;
             else
-                yield return entity;
+                yield return element;
         }
 
         /// <summary>

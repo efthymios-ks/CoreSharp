@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// <see cref="IQueryable{T}"/> extensions.
+    /// <see cref="IQueryable{TElement}"/> extensions.
     /// </summary>
     public static class IQueryableExtensions
     {
         /// <summary>
         /// Paginate collection on given size and return page of given number.
         /// </summary>
-        public static IQueryable<T> GetPage<T>(this IQueryable<T> query, int pageNumber, int pageSize)
+        public static IQueryable<TElement> GetPage<TElement>(this IQueryable<TElement> query, int pageNumber, int pageSize)
         {
             _ = query ?? throw new ArgumentNullException(nameof(query));
             if (pageNumber < 0)
@@ -24,7 +24,7 @@ namespace CoreSharp.Extensions
             return query.Skip(pageNumber * pageSize).Take(pageSize);
         }
 
-        /// <inheritdoc cref="FilterFlexible{TItem}(IQueryable{TItem}, Func{TItem, string}, string)"/>
+        /// <inheritdoc cref="FilterFlexible{TElement}(IQueryable{TElement}, Func{TElement, string}, string)"/>
         public static IQueryable<string> FilterFlexible(this IQueryable<string> query, string filter)
             => query.FilterFlexible(i => i, filter);
 
@@ -39,7 +39,7 @@ namespace CoreSharp.Extensions
         /// </code>
         /// </example>
         /// </summary>
-        public static IQueryable<TItem> FilterFlexible<TItem>(this IQueryable<TItem> query, Func<TItem, string> propertySelector, string filter)
+        public static IQueryable<TElement> FilterFlexible<TElement>(this IQueryable<TElement> query, Func<TElement, string> propertySelector, string filter)
         {
             //Argument validation 
             _ = query ?? throw new ArgumentNullException(nameof(query));
@@ -51,7 +51,7 @@ namespace CoreSharp.Extensions
 
             //If empty, return empty 
             if (string.IsNullOrWhiteSpace(filter))
-                return Enumerable.Empty<TItem>().AsQueryable();
+                return Enumerable.Empty<TElement>().AsQueryable();
 
             //Get all characters 
             var characters = filter.ToCharArray();

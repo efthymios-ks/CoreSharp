@@ -5,14 +5,14 @@ using System.Linq;
 namespace CoreSharp.Extensions
 {
     /// <summary>
-    /// <see cref="IList{T}"/> extensions.
+    /// <see cref="IList{TElement}"/> extensions.
     /// </summary>
     public static class IListExtensions
     {
         /// <summary>
-        /// Fill <see cref="IList{T}"/> with given value.
+        /// Fill <see cref="IList{TElement}"/> with given value.
         /// </summary>
-        public static void Fill<TItem>(this IList<TItem> source, TItem item)
+        public static void Fill<TElement>(this IList<TElement> source, TElement item)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
@@ -23,7 +23,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Remove all occurrences of items that match given expression.
         /// </summary>
-        public static int Remove<TItem>(this IList<TItem> source, Func<TItem, bool> removeExpression)
+        public static int Remove<TElement>(this IList<TElement> source, Func<TElement, bool> removeExpression)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = removeExpression ?? throw new ArgumentNullException(nameof(removeExpression));
@@ -39,14 +39,14 @@ namespace CoreSharp.Extensions
             return count;
         }
 
-        /// <inheritdoc cref="InsertRange{T}(IList{T}, int, T[])"/>
-        public static void InsertRange<TItem>(this IList<TItem> source, int index, IEnumerable<TItem> values)
+        /// <inheritdoc cref="InsertRange{TElement}(IList{TElement}, int, TElement[])"/>
+        public static void InsertRange<TElement>(this IList<TElement> source, int index, IEnumerable<TElement> values)
             => source.InsertRange(index, values?.ToArray());
 
         /// <summary>
         /// Insert range in given position.
         /// </summary>
-        public static void InsertRange<TItem>(this IList<TItem> source, int index, params TItem[] values)
+        public static void InsertRange<TElement>(this IList<TElement> source, int index, params TElement[] values)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = values ?? throw new ArgumentNullException(nameof(values));

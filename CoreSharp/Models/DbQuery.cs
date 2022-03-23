@@ -106,17 +106,17 @@ namespace CoreSharp.Models
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteScalar"/>
-        public T ExecuteScalar<T>(string query)
+        public TResult ExecuteScalar<TResult>(string query)
         {
-            Task<T> Action() => ExecuteScalarAsync<T>(query);
+            Task<TResult> Action() => ExecuteScalarAsync<TResult>(query);
             return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteScalarAsync(CancellationToken)"/>
-        public async Task<T> ExecuteScalarAsync<T>(string query, CancellationToken cancellationToken = default)
+        public async Task<TResult> ExecuteScalarAsync<TResult>(string query, CancellationToken cancellationToken = default)
         {
             await using var command = await BuildDbCommandAsync(query, cancellationToken);
-            return (T)await command.ExecuteScalarAsync(cancellationToken);
+            return (TResult)await command.ExecuteScalarAsync(cancellationToken);
         }
 
         /// <inheritdoc cref="FillAsync(string, DataTable, CancellationToken)"/>

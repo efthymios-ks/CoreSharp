@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace CoreSharp.Models
 {
-    public class NumericParser<TValue>
+    public class NumericParser<TNumber>
     {
         //Fields
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -31,8 +31,8 @@ namespace CoreSharp.Models
 
         public NumericParser(string format, CultureInfo cultureInfo)
         {
-            if (!typeof(TValue).IsNumeric())
-                throw new ArgumentException($"{nameof(TValue)} ({typeof(TValue).FullName}) is not a numeric type.");
+            if (!typeof(TNumber).IsNumeric())
+                throw new ArgumentException($"{nameof(TNumber)} ({typeof(TNumber).FullName}) is not a numeric type.");
 
             _cultureInfo = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
             _format = format ?? string.Empty;
@@ -44,7 +44,7 @@ namespace CoreSharp.Models
         /// Parse and convert <see cref="string"/> input to <see cref="decimal"/>.
         /// If fails to do so, value remains untouched.
         /// </summary>
-        public bool TryParseValue(string input, ref TValue value)
+        public bool TryParseValue(string input, ref TNumber value)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace CoreSharp.Models
 
                 //Validate
                 if (tempValue is null)
-                    throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TValue).GetNullableBaseType().FullName}.");
+                    throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
                 //Format to string... 
                 input = FormatValue(tempValue);
@@ -71,7 +71,7 @@ namespace CoreSharp.Models
                 tempValue = ParseValue(input);
 
                 //Finally convert to required type 
-                value = tempValue.ChangeType<TValue>(_cultureInfo);
+                value = tempValue.ChangeType<TNumber>(_cultureInfo);
                 return true;
             }
             catch
@@ -107,7 +107,7 @@ namespace CoreSharp.Models
         }
 
         /// <inheritdoc cref="FormatValue(decimal?)"/>
-        public string FormatValue(TValue value)
+        public string FormatValue(TNumber value)
             => FormatValue(value.ChangeType<decimal?>(_cultureInfo));
 
         /// <summary>

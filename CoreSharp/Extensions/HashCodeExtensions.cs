@@ -8,20 +8,20 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class HashCodeExtensions
     {
-        /// <inheritdoc cref="AddRange{TEntity}(HashCode, IEnumerable{TEntity}, IEqualityComparer{TEntity})"/>
-        public static void AddRange<TEntity>(this HashCode hashCode, IEnumerable<TEntity> source)
-            => hashCode.AddRange(source, EqualityComparer<TEntity>.Default);
+        /// <inheritdoc cref="AddRange{TElement}(HashCode, IEnumerable{TElement}, IEqualityComparer{TElement})"/>
+        public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source)
+            => hashCode.AddRange(source, EqualityComparer<TElement>.Default);
 
         /// <summary>
         /// Add multiple values to <see cref="HashCode"/>.
         /// </summary>
-        public static void AddRange<TEntity>(this HashCode hashCode, IEnumerable<TEntity> source, IEqualityComparer<TEntity> equalityComparer)
+        public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source, IEqualityComparer<TElement> equalityComparer)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
 
-            foreach (var entity in source)
-                hashCode.Add(entity, equalityComparer);
+            foreach (var element in source)
+                hashCode.Add(element, equalityComparer);
         }
     }
 }

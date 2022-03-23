@@ -22,12 +22,12 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Try get specific value by key.
         /// </summary>
-        public static TValue GetValue<TValue>(this ExpandoObject source, string key)
+        public static TElement GetValue<TElement>(this ExpandoObject source, string key)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
             var dictionary = source.ToDictionary();
-            return (TValue)dictionary[key];
+            return (TElement)dictionary[key];
         }
     }
 }

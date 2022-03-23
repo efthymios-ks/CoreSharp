@@ -8,16 +8,16 @@ namespace CoreSharp.Extensions
     /// </summary>
     public static class ObjectExtensions
     {
-        /// <inheritdoc cref="GetValueOr{T}(object, T)"/>
-        public static T GetValue<T>(this object input)
-            => input.GetValueOr(default(T));
+        /// <inheritdoc cref="GetValueOr{TElement}(object, TElement)"/>
+        public static TElement GetValue<TElement>(this object input)
+            => input.GetValueOr(default(TElement));
 
         /// <summary>
         /// Try casting input to given type and
         /// return default if null or of different type.
         /// </summary>
-        public static T GetValueOr<T>(this object input, T defaultValue)
-            => input is T value ? value : defaultValue;
+        public static TElement GetValueOr<TElement>(this object input, TElement defaultValue)
+            => input is TElement value ? value : defaultValue;
 
         /// <inheritdoc cref="ChangeType{TResult}(object, CultureInfo)"/>
         public static TResult ChangeType<TResult>(this object value)

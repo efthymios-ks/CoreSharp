@@ -19,14 +19,14 @@ namespace CoreSharp.Extensions
             return random.Next(2) == 0;
         }
 
-        /// <inheritdoc cref="OneOf{T}(Random, T[])"/>
-        public static T OneOf<T>(this Random random, IEnumerable<T> source)
+        /// <inheritdoc cref="OneOf{TElement}(Random, TElement[])"/>
+        public static TElement OneOf<TElement>(this Random random, IEnumerable<TElement> source)
             => random.OneOf(source?.ToArray());
 
         /// <summary>
         /// Return random value from list of values.
         /// </summary>
-        public static T OneOf<T>(this Random random, params T[] source)
+        public static TElement OneOf<TElement>(this Random random, params TElement[] source)
         {
             _ = random ?? throw new ArgumentNullException(nameof(random));
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -137,9 +137,9 @@ namespace CoreSharp.Extensions
         }
 
         /// <summary>
-        /// Shuffle IList.
+        /// Shuffle <see cref="IList{TElement}"/>.
         /// </summary>
-        public static void Shuffle<T>(this Random random, IList<T> source)
+        public static void Shuffle<TElement>(this Random random, IList<TElement> source)
         {
             _ = random ?? throw new ArgumentNullException(nameof(random));
             _ = source ?? throw new ArgumentNullException(nameof(source));

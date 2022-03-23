@@ -26,13 +26,11 @@ namespace CoreSharp.Extensions
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            if (!source.ContainsKey(key))
-            {
-                source.Add(key, value);
-                return true;
-            }
+            if (source.ContainsKey(key))
+                return false;
 
-            return false;
+            source.Add(key, value);
+            return true;
         }
 
         /// <inheritdoc cref="TryRemove{TKey, TValue}(IDictionary{TKey, TValue}, TKey, out TValue)"/>
@@ -47,14 +45,12 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
             value = default;
-            if (source.ContainsKey(key))
-            {
-                value = source[key];
-                source.Remove(key);
-                return true;
-            }
+            if (!source.ContainsKey(key))
+                return false;
 
-            return false;
+            value = source[key];
+            source.Remove(key);
+            return true;
         }
 
         /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
@@ -80,13 +76,11 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
-            if (source.ContainsKey(key))
-            {
-                source[key] = updateAction(key, source[key]);
-                return true;
-            }
+            if (!source.ContainsKey(key))
+                return false;
 
-            return false;
+            source[key] = updateAction(key, source[key]);
+            return true;
         }
 
         /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
@@ -117,9 +111,9 @@ namespace CoreSharp.Extensions
             _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
             if (source.ContainsKey(key))
-                source.TryUpdate(key, updateAction);
+                source[key] = updateAction(key, source[key]);
             else
-                source.TryAdd(key, addValue);
+                source.Add(key, addValue);
 
             return source[key];
         }
@@ -136,7 +130,8 @@ namespace CoreSharp.Extensions
             _ = source ?? throw new ArgumentNullException(nameof(source));
             _ = addValue ?? throw new ArgumentNullException(nameof(addValue));
 
-            source.TryAdd(key, addValue);
+            if (!source.ContainsKey(key))
+                source.Add(key, addValue);
             return source[key];
         }
 

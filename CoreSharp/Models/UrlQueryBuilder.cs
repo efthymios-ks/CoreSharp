@@ -74,8 +74,8 @@ namespace CoreSharp.Models
         /// <summary>
         /// Split item into properties and add one-by-one.
         /// </summary>
-        public void Parse<TItem>(TItem item)
-            where TItem : class
+        public void Parse<TEntity>(TEntity item)
+            where TEntity : class
         {
             _ = item ?? throw new ArgumentNullException(nameof(item));
 
@@ -104,7 +104,7 @@ namespace CoreSharp.Models
             => InternalAdd(key, value.ToString("c"));
 
         /// <inheritdoc cref="Add(string, IEnumerable)"/>
-        public void Add<TEntity>(string key, IEnumerable<TEntity> items)
+        public void Add<TElement>(string key, IEnumerable<TElement> items)
             => Add(key, (IEnumerable)items);
 
         /// <summary>

@@ -11,10 +11,10 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Check if <see cref="IComparable"/> object is between two values.
         /// </summary>
-        public static bool IsBetween<T>(this T value, T from, T to, bool includeEnds = true)
-            where T : IComparable<T>
+        public static bool IsBetween<TElement>(this TElement value, TElement from, TElement to, bool includeEnds = true)
+            where TElement : IComparable<TElement>
         {
-            var comparer = Comparer<T>.Default;
+            var comparer = Comparer<TElement>.Default;
             var comparisonFrom = comparer.Compare(value, from);
             var comparisonTo = comparer.Compare(value, to);
 

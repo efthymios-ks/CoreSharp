@@ -2,15 +2,15 @@
 
 namespace CoreSharp.Models.Pages
 {
-    public class LinkedPage<TEntity> : Page<TEntity>
+    public class LinkedPage<TElement> : Page<TElement>
     {
         //Constructors
-        public LinkedPage(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TEntity> items)
+        public LinkedPage(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TElement> items)
             : base(pageNumber, pageSize, totalItems, totalPages, items)
         {
         }
 
-        public LinkedPage(Page<TEntity> page, string previousPage, string nextPage)
+        public LinkedPage(Page<TElement> page, string previousPage, string nextPage)
             : this(page.PageNumber, page.PageSize, page.TotalItems, page.TotalPages, page.Items)
         {
             PreviousPage = previousPage;

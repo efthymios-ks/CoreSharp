@@ -12,7 +12,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get row from 2D array.
         /// </summary>
-        public static IEnumerable<T> GetRow<T>(this T[,] source, int row)
+        public static IEnumerable<TElement> GetRow<TElement>(this TElement[,] source, int row)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             var rowSize = source.GetLength(0);
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Get column from 2D array.
         /// </summary>
-        public static IEnumerable<T> GetColumn<T>(this T[,] source, int column)
+        public static IEnumerable<TElement> GetColumn<TElement>(this TElement[,] source, int column)
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
             var columnSize = source.GetLength(1);

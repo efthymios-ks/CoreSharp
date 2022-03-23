@@ -9,11 +9,11 @@ namespace CoreSharp.Extensions
     public static class PropertyInfoExtensions
     {
         /// <inheritdoc cref="PropertyInfo.GetValue(object?)" />
-        public static TValue GetValue<TValue>(this PropertyInfo property, object item)
+        public static TElement GetValue<TElement>(this PropertyInfo property, object element)
         {
             _ = property ?? throw new ArgumentNullException(nameof(property));
 
-            return (TValue)property.GetValue(item);
+            return (TElement)property.GetValue(element);
         }
     }
 }

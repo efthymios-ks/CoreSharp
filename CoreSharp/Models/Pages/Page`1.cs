@@ -3,15 +3,16 @@ using System.Linq;
 
 namespace CoreSharp.Models.Pages
 {
-    public class Page<TEntity> : Page
+    public class Page<TElement> : Page
     {
         //Constructors
-        public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TEntity> items)
-            : base(pageNumber, pageSize, totalItems, totalPages, items)
+        public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TElement> source)
+            : base(pageNumber, pageSize, totalItems, totalPages, source)
         {
         }
 
         //Properties
-        public new IEnumerable<TEntity> Items => (this as Page).Items.Cast<TEntity>();
+        public new IEnumerable<TElement> Items
+            => (this as Page).Items.Cast<TElement>();
     }
 }
