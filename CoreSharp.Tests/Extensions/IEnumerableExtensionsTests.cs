@@ -1257,53 +1257,53 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void MinBy_WhenSourceIsNull_ThrowArgumentNullException()
+        public void Min_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceNull.MinBy(i => i.Id);
+            Action action = () => _sourceNull.Min(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MinBy_WhenPropertySelectorIsNull_ThrowArgumentNullException()
+        public void Min_PropertySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange
             Func<DummyClass, int> propertySelector = null;
 
             //Act 
-            Action action = () => _sourceEmpty.MinBy(propertySelector);
+            Action action = () => _sourceEmpty.Min(propertySelector, Comparer<int>.Default);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MinBy_WhenPropertyComparerIsNull_ThrowArgumentNullException()
+        public void Min_PropertyComparerIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceEmpty.MinBy(i => i.Id, null);
+            Action action = () => _sourceEmpty.Min(i => i.Id, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MinBy_WhenSourceIsEmpty_ReturnDefaultForProperty()
+        public void Min_SourceIsEmpty_ReturnDefaultForProperty()
         {
             //Arrange 
             var expected = default(DummyClass);
 
             //Act 
-            var result = _sourceEmpty.MinBy(i => i.Id);
+            var result = _sourceEmpty.Min(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             result.Should().Be(expected);
         }
 
         [Test]
-        public void MinBy_WhenCalled_ReturnMinByProperty()
+        public void Min_WhenCalled_ReturnMinByProperty()
         {
             //Arrange 
             var min = new DummyClass(-2);
@@ -1316,60 +1316,60 @@ namespace CoreSharp.Extensions.Tests
             };
 
             //Act 
-            var result = source.MinBy(i => i.Id);
+            var result = source.Min(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             result.Should().Be(min);
         }
 
         [Test]
-        public void MaxBy_WhenSourceIsNull_ThrowArgumentNullException()
+        public void Max_SourceIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceNull.MaxBy(i => i.Id);
+            Action action = () => _sourceNull.Max(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MaxBy_WhenPropertySelectorIsNull_ThrowArgumentNullException()
+        public void Max_PropertySelectorIsNull_ThrowArgumentNullException()
         {
             //Arrange
             Func<DummyClass, int> propertySelector = null;
 
             //Act 
-            Action action = () => _sourceEmpty.MaxBy(propertySelector);
+            Action action = () => _sourceEmpty.Max(propertySelector, Comparer<int>.Default);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MaxBy_WhenPropertyComparerIsNull_ThrowArgumentNullException()
+        public void Max_PropertyComparerIsNull_ThrowArgumentNullException()
         {
             //Act 
-            Action action = () => _sourceEmpty.MaxBy(i => i.Id, null);
+            Action action = () => _sourceEmpty.Max(i => i.Id, null);
 
             //Assert 
             action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Test]
-        public void MaxBy_WhenSourceIsEmpty_ReturnDefaultForProperty()
+        public void Max_SourceIsEmpty_ReturnDefaultForProperty()
         {
             //Arrange 
             var expected = default(DummyClass);
 
             //Act 
-            var result = _sourceEmpty.MaxBy(i => i.Id);
+            var result = _sourceEmpty.Max(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             result.Should().Be(expected);
         }
 
         [Test]
-        public void MaxBy_WhenCalled_ReturnMinByProperty()
+        public void Max_WhenCalled_ReturnMinByProperty()
         {
             //Arrange 
             var max = new DummyClass(2);
@@ -1382,10 +1382,61 @@ namespace CoreSharp.Extensions.Tests
             };
 
             //Act 
-            var result = source.MaxBy(i => i.Id);
+            var result = source.Max(i => i.Id, Comparer<int>.Default);
 
             //Assert 
             result.Should().Be(max);
+        }
+
+        [Test]
+        public void TakeWhile_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.TakeWhile(_ => true, true);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TakeWhile_PropertySelectorIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Func<DummyClass, bool> predicate = null;
+
+            //Act 
+            Action action = () => _sourceEmpty.TakeWhile(predicate, true);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TakeWhile_InclusiveIsFalse_ExcludeLast()
+        {
+            //Arrange 
+            var source = new[] { 1, 2, 3, 4 };
+            var expected = new[] { 1, 2 };
+
+            //Act 
+            var result = source.TakeWhile(i => i < 3, false);
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void TakeWhile_InclusiveIsTrue_IncludeLast()
+        {
+            //Arrange 
+            var source = new[] { 1, 2, 3, 4 };
+            var expected = new[] { 1, 2, 3 };
+
+            //Act 
+            var result = source.TakeWhile(i => i < 3, true);
+
+            //Assert 
+            result.Should().Equal(expected);
         }
     }
 }

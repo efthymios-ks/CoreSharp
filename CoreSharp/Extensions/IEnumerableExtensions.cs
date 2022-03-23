@@ -589,15 +589,10 @@ namespace CoreSharp.Extensions
             }).ToArray();
         }
 
-        /// <inheritdoc cref="MinBy{TItem, TProperty}(IEnumerable{TItem}, Func{TItem, TProperty}, IComparer{TProperty})" />
-        public static TElement MinBy<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector)
-           where TProperty : IComparable
-            => source.MinBy(propertySelector, Comparer<TProperty>.Default);
-
         /// <summary>
         /// Returns min item by comparing provided property.
         /// </summary>
-        public static TElement MinBy<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
+        public static TElement Min<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
             where TProperty : IComparable
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -622,15 +617,10 @@ namespace CoreSharp.Extensions
             return min;
         }
 
-        /// <inheritdoc cref="MaxBy{TItem, TProperty}(IEnumerable{TItem}, Func{TItem, TProperty}, IComparer{TProperty})" />
-        public static TElement MaxBy<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector)
-           where TProperty : IComparable
-            => source.MaxBy(propertySelector, Comparer<TProperty>.Default);
-
         /// <summary>
         /// Returns max item by comparing provided property.
         /// </summary>
-        public static TElement MaxBy<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
+        public static TElement Max<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
             where TProperty : IComparable
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
@@ -653,6 +643,36 @@ namespace CoreSharp.Extensions
             }
 
             return max;
+        }
+
+        /// <summary>
+        /// Returns elements from a sequence as long as a specified condition is true,
+        /// and then skips the remaining elements.
+        /// </summary>
+        public static IEnumerable<TElement> TakeWhile<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, bool inclusive)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
+
+            return source.TakeWhileInternal(predicate, inclusive);
+        }
+
+        private static IEnumerable<TElement> TakeWhileInternal<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, bool inclusive)
+        {
+            foreach (var element in source)
+            {
+                if (predicate(element))
+                {
+                    yield return element;
+                }
+                else
+                {
+                    if (inclusive)
+                        yield return element;
+
+                    yield break;
+                }
+            }
         }
     }
 }

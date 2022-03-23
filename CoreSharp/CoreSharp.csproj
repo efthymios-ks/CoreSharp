@@ -6,7 +6,9 @@
 		<Company>Efthymios Koktsidis</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>-Collection of extensions, utilities and interfaces.
--EqualityComparers, Fixed stack overflow issue.</Description>
+-EqualityComparers, Fixed stack overflow issue.
+-Added consistent names for generic variables.
+-Extensions, IEnumerable, Added `TakeWhile` overload.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/efthymios-ks/CoreSharp</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/efthymios-ks/CoreSharp</RepositoryUrl>
