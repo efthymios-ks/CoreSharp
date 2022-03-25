@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreSharp.Observers.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -8,7 +9,7 @@ namespace CoreSharp.Observers
     /// Observe a value for changes and notify
     /// using provided <see cref="IEqualityComparer{T}"/>.
     /// </summary>
-    public class StateObserver<TEntity> : Contracts.IStateObserver<TEntity>
+    public class StateObserver<TEntity> : IStateObserver<TEntity>
         where TEntity : class
     {
         //Fields 
