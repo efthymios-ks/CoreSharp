@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CoreSharp.Models.StepValidation
+namespace CoreSharp.Enumerables.Validations
 {
     public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
     {

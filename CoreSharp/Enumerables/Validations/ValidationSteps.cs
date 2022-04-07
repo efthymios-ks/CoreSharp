@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace CoreSharp.Models.StepValidation
+namespace CoreSharp.Enumerables.Validations
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ValidationSteps : ValidationStepCollectionBase

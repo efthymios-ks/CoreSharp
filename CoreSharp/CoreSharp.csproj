@@ -5,10 +5,13 @@
 		<Authors>Efthymios Koktsidis</Authors>
 		<Company>Efthymios Koktsidis</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>-Collection of extensions, utilities and interfaces.
--EqualityComparers, Fixed stack overflow issue.
--Added consistent names for generic variables.
--Extensions, IEnumerable, Added `TakeWhile` overload.</Description>
+		<Description>
+			-Collection of extensions, utilities and interfaces.
+			-EqualityComparers, Fixed stack overflow issue.
+			-Added consistent names for generic variables.
+			-Extensions, IEnumerable, Added `TakeWhile` overload.
+			-Solution, Moved collections to separate folder.
+		</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/efthymios-ks/CoreSharp</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/efthymios-ks/CoreSharp</RepositoryUrl>

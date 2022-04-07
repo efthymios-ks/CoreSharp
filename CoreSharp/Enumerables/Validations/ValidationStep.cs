@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace CoreSharp.Models.StepValidation
+namespace CoreSharp.Enumerables.Validations
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ValidationStep

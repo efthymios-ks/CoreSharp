@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace CoreSharp.Models
+namespace CoreSharp.Enumerables
 {
     public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     {

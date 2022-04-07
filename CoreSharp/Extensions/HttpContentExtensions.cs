@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models;
+﻿using CoreSharp.Constants;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System;

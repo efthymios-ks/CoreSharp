@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 
-namespace CoreSharp.Models
+namespace CoreSharp.Constants
 {
     /// <inheritdoc cref="MediaTypeNames"/>
     public static class MediaTypeNamesX

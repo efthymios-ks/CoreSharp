@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CoreSharp.Models.StepValidation
+namespace CoreSharp.Enumerables.Validations
 {
     internal class ValidationStepComparer : Comparer<ValidationStep>
     {
