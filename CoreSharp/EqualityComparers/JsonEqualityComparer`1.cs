@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models.Newtonsoft.Settings;
+﻿using CoreSharp.Json.JsonNet;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +20,7 @@ namespace CoreSharp.EqualityComparers
 
         //Constructors
         public JsonEqualityComparer()
-            : this(DefaultJsonSettings.Instance)
+            : this(JsonSettings.Default)
         {
         }
 

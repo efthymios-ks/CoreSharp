@@ -1,5 +1,5 @@
 ﻿using CoreSharp.EqualityComparers;
-using CoreSharp.Models.Newtonsoft.Settings;
+using CoreSharp.Json.JsonNet;
 using CoreSharp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
         public static string ToJson<TEntity>(this TEntity entity)
             where TEntity : class
-            => entity.ToJson(DefaultJsonSettings.Instance);
+            => entity.ToJson(JsonSettings.Default);
 
         /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
         public static string ToJson<TEntity>(this TEntity entity, TextJson.JsonSerializerOptions options)
@@ -70,7 +70,7 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
         public static async Task<Stream> ToJsonStreamAsync<TEntity>(this TEntity entity)
             where TEntity : class
-            => await entity.ToJsonStreamAsync(DefaultJsonSettings.Instance);
+            => await entity.ToJsonStreamAsync(JsonSettings.Default);
 
         /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
         public static async Task<Stream> ToJsonStreamAsync<TEntity>(
@@ -116,7 +116,7 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
         public static TEntity JsonClone<TEntity>(this TEntity item)
             where TEntity : class
-            => item.JsonClone(DefaultJsonSettings.Instance);
+            => item.JsonClone(JsonSettings.Default);
 
         /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
         public static TEntity JsonClone<TEntity>(this TEntity item, TextJson.JsonSerializerOptions options)
@@ -145,7 +145,7 @@ namespace CoreSharp.Extensions
         /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right)
             where TEntity : class
-            => left.JsonEquals(right, DefaultJsonSettings.Instance);
+            => left.JsonEquals(right, JsonSettings.Default);
 
         /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, TextJson.JsonSerializerOptions options)

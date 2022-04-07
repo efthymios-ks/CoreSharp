@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Globalization;
 
-namespace CoreSharp.Models.Newtonsoft.Converters
+namespace CoreSharp.Json.JsonNet.JsonConverters
 {
     public class UtcDateTimeConverter : DateTimeConverterBase
     {

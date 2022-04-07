@@ -1,4 +1,4 @@
-﻿using CoreSharp.Models.Newtonsoft.Settings;
+﻿using CoreSharp.Json.JsonNet;
 using System;
 using System.IO;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace CoreSharp.Extensions
 
         /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
         public static object FromJson(this Stream stream, Type entityType)
-            => stream.FromJson(entityType, DefaultJsonSettings.Instance);
+            => stream.FromJson(entityType, JsonSettings.Default);
 
         /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
         public static TEntity FromJson<TEntity>(this Stream stream, JsonNet.JsonSerializerSettings settings)

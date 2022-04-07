@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CoreSharp.Models.Newtonsoft.Resolvers
+namespace CoreSharp.Json.JsonNet.ContractResolvers
 {
     public class WritableOnlyPropertiesResolver : DefaultContractResolver
     {
