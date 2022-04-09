@@ -15,14 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.0.4</Version>
-		<PackageReleaseNotes>-EqualityComparers, Fixed stack overflow issue.
--Added consistent names for generic variables.
--Extensions, IEnumerable, Added `TakeWhile` overload.
--Solution, Moved collections to separate folder.
--Enumerables, Added `SwitchCases`.
--Refactored json related entities.
-		</PackageReleaseNotes>
+		<Version>5.0.5</Version>
+		<PackageReleaseNotes>-Json, TextJson, JsonConverters, Added UtcDateTimeJsonConverter.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

@@ -5,15 +5,22 @@ using System.Globalization;
 
 namespace CoreSharp.Json.JsonNet.JsonConverters
 {
-    public class UtcDateTimeConverter : DateTimeConverterBase
+    public class UtcDateTimeJsonConverter : DateTimeConverterBase
     {
-        //Methods 
+        //Fields
+        private const string DateFormat = "O";
+
+        //Properties
+        private static CultureInfo CultureInfo
+            => CultureInfo.InvariantCulture;
+
+        //Methods
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value is not DateTime dateTime)
                 throw new JsonSerializationException($"Expected `{typeof(DateTime).FullName}`, but got `{value.GetType().FullName}`.");
 
-            var jsonValue = dateTime.ToUniversalTime().ToString("O");
+            var jsonValue = dateTime.ToUniversalTime().ToString(DateFormat, CultureInfo);
             writer.WriteValue(jsonValue);
         }
 
@@ -40,7 +47,7 @@ namespace CoreSharp.Json.JsonNet.JsonConverters
         private static object ReadString(JsonReader reader)
         {
             var dateAsText = $"{reader.Value}";
-            if (DateTime.TryParseExact(dateAsText, "O", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+            if (DateTime.TryParseExact(dateAsText, DateFormat, CultureInfo, DateTimeStyles.None, out var result))
                 return result;
             else
                 return null;
