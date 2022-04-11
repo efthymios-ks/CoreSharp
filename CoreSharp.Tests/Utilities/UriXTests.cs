@@ -9,6 +9,29 @@ namespace CoreSharp.Utilities.Tests
     public class UriXTests
     {
         [Test]
+        public void JoinSegments_SegmentsIsNull_ThrowArgumentNullException()
+        {
+            //Act
+            Action action = () => UriX.JoinSegments(segments: null);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("http://google.com/path1/path2/", "http://google.com", "//path1//", "/path2/")]
+        [TestCase("https://google.com/path1/path2/", "https://google.com", "//path1//", "/path2/")]
+        [TestCase("https://google.com/path1/path2/", "https:///google.com//", "///path1///", "//path2//")]
+        public void JoinSegments_WhenCalled_ReturnUnifiedUrlWithTrimmedSlashes(string expected, params string[] segments)
+        {
+            //Act
+            var result = UriX.JoinSegments(segments);
+
+            //Assert 
+            result.Should().Be(expected);
+        }
+
+        [Test]
         public void Build_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
         {
             //Arrange

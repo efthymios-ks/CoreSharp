@@ -1,6 +1,4 @@
-﻿using CoreSharp.Regexs;
-using System;
-using System.Globalization;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace CoreSharp.Utilities
@@ -25,19 +23,6 @@ namespace CoreSharp.Utilities
             var escapedOccurence = Regex.Escape($"{occurence}");
             var pattern = $"{escapedOccurence}{{2,}}";
             return Regex.Replace(input, pattern, $"{occurence}");
-        }
-
-        /// <inheritdoc cref="IsInteger(string, CultureInfo)"/>
-        public static bool IsInteger(string input)
-            => IsInteger(input, CultureInfo.CurrentCulture);
-
-        /// <inheritdoc cref="IntegerRegex"/>
-        public static bool IsInteger(string input, CultureInfo cultureInfo)
-        {
-            _ = input ?? throw new ArgumentNullException(nameof(input));
-            _ = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
-
-            return new IntegerRegex(input, cultureInfo).IsMatch;
         }
     }
 }

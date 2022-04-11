@@ -30,9 +30,15 @@ namespace CoreSharp.Utilities
             var builder = new StringBuilder();
 
             //Connect 
-            foreach (var segment in segments)
+            for (var i = 0; i < segments.Length; i++)
             {
-                var trimmed = $"/{segment}".Trim();
+                var segment = segments[i];
+                var trimmed = $"{segment}".Trim();
+
+                //If first segment is absolute (e.g. https://www.page.gr), do not insert '/' 
+                if (i == 0 && Uri.IsWellFormedUriString(trimmed, UriKind.Relative))
+                    builder.Append('/');
+
                 builder.Append(trimmed);
             }
 
@@ -42,7 +48,7 @@ namespace CoreSharp.Utilities
             var url = builder.ToString();
 
             //Multiple forward-slashes to single one 
-            return Regex.Replace(url, @"\/+", "/");
+            return Regex.Replace(url, @"(?<=[^:\s])(\/+\/)+", "/");
         }
 
         /// <summary>
