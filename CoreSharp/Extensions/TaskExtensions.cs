@@ -105,5 +105,56 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static async Task<TResult> Or<TResult>(this Task<TResult> task, TResult defaultValue)
             => await (task ?? Task.FromResult(defaultValue));
+
+        /// <summary>
+        /// 'Try-catch'ing providing <see cref="Task{TResult}"/>.
+        /// Will return result if succeeds, else the exception.
+        /// Usefull for one-liners.
+        /// <code>
+        /// // Get value and error
+        /// var (value1, exception) = await GetValueAsync().TryGetAsync();
+        /// // Get value and skip error
+        /// var (value2, _) = await GetValueAsync().TryGetAsync();
+        /// </code>
+        /// </summary>
+        public async static Task<(TResult result, Exception exception)> TryGetAsync<TResult>(this Task<TResult> task)
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            try
+            {
+                var result = await task;
+                return (result, null);
+            }
+            catch (Exception exception)
+            {
+                return (default, exception);
+            }
+        }
+
+        /// <summary>
+        /// 'Try-catch'ing providing <see cref="Task"/>.
+        /// Usefull for one-liners.
+        /// <code>
+        /// // Run and get error
+        /// var exception = await PostAsync().TryRunAsync();
+        /// // Run and skip error
+        /// await PostAsync().TryRunAsync();
+        /// </code>
+        /// </summary>
+        public async static Task<Exception> TryRunAsync(this Task task)
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            try
+            {
+                await task;
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return exception;
+            }
+        }
     }
 }
