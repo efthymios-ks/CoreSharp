@@ -33,12 +33,7 @@ namespace CoreSharp.Extensions
         /// Check if collection is null or empty.
         /// </summary>
         public static bool IsNullOrEmpty<TElement>(this IEnumerable<TElement> source)
-        {
-            if (source is null)
-                return true;
-            else
-                return !source.Any();
-        }
+            => source?.Any() is not true;
 
         /// <summary>
         /// Return <see cref="Enumerable.Empty{TElement}"/> if source is null.
@@ -164,10 +159,9 @@ namespace CoreSharp.Extensions
         {
             _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            if (source is IList<TElement> list)
-                return new Collection<TElement>(list);
-            else
-                return new Collection<TElement>(source.ToList());
+            return source is IList<TElement> list
+                    ? new Collection<TElement>(list)
+                    : new Collection<TElement>(source.ToList());
         }
 
         /// <summary>
@@ -352,7 +346,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Convert collection of items to csv <see cref="Stream"/>.
         /// </summary>
-        public static async Task<Stream> ToCsvStream<TElement>(
+        public static async Task<Stream> ToCsvStreamAsync<TElement>(
             this IEnumerable<TElement> source,
             char separator = ',',
             bool includeHeader = true,
@@ -407,9 +401,9 @@ namespace CoreSharp.Extensions
             _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
             //Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
-            var duplicates = source
-                .GroupBy(keySelector)
-                .Where(g => g.Skip(1).Any());
+            var duplicates = source.GroupBy(keySelector)
+                                   .Where(g => g.Skip(1)
+                                                .Any());
 
             return duplicates.ToDictionary(d => d.Key, d => d.Count());
         }

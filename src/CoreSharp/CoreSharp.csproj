@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.0.7</Version>
-		<PackageReleaseNotes>-Utilities, Uri, Fixed `JoinSegments()` url handling.</PackageReleaseNotes>
+		<Version>5.0.9</Version>
+		<PackageReleaseNotes>-Extensions, IEnumerable, Minor naming fixes.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
