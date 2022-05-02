@@ -15,10 +15,10 @@ namespace CoreSharp.Extensions.Tests
         private const int SampleCount = 5;
 
         [Test]
-        public void CoinToss_RngIsNull_ThrowArgumentNullException()
+        public void NextBool_RngIsNull_ThrowArgumentNullException()
         {
             //Act
-            Action action = () => _rngNull.CoinToss();
+            Action action = () => _rngNull.NextBool();
 
             //Act
             action.Should().ThrowExactly<ArgumentNullException>();

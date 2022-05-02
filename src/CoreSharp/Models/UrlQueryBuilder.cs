@@ -56,6 +56,7 @@ namespace CoreSharp.Models
                     {
                         InternalAdd(key, value);
                     }
+
                     break;
             }
         }

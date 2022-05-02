@@ -44,7 +44,7 @@ namespace CoreSharp.Enumerables
             => _source.Count;
 
         public bool HasItems
-            => _source.Any();
+            => _source.Count > 0;
 
         public bool HasMetMaxCapacity
             => Count == MaxCapacity;

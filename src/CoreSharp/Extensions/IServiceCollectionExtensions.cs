@@ -99,7 +99,6 @@ namespace CoreSharp.Extensions
         /// </summary>
         private static IDictionary<Type, Type> GetContractsWithImplementations(Assembly[] assemblies, Func<Type, bool> additionalInterfacePredicate = null)
         {
-            _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
             additionalInterfacePredicate ??= _ => true;
 
             var dictionary = new Dictionary<Type, Type>();
@@ -136,7 +135,7 @@ namespace CoreSharp.Extensions
                     return false;
 
                 //Doesn't implement given interface, ignore 
-                //Type.GetInterface(string) doesn't work wiyh nested classes 
+                //Type.GetInterface(string) doesn't work with nested classes 
                 else if (!t.GetInterfaces().Contains(contractType))
                     return false;
 
@@ -276,7 +275,7 @@ namespace CoreSharp.Extensions
             _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
 
             static Type GetGenericTypeBase(Type type)
-                        => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+                => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
             var serviceInterfaces = serviceType.GetInterfaces();
             var actualContract = Array.Find(serviceInterfaces, i => GetGenericTypeBase(i) == GetGenericTypeBase(contractType));
 

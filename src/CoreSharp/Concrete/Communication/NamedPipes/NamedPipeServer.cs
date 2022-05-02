@@ -58,7 +58,7 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
                 }
             }
         }
-        private bool IsTerminated { get; set; } = false;
+        private bool IsTerminated { get; set; }
         public int BufferSize { get; set; } = 8 * 1024;
 
         //Events 

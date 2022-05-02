@@ -12,7 +12,7 @@ namespace CoreSharp.Extensions
         /// <summary>
         /// Return <see langword="true"/> or <see langword="false"/>.
         /// </summary>
-        public static bool CoinToss(this Random random)
+        public static bool NextBool(this Random random)
         {
             _ = random ?? throw new ArgumentNullException(nameof(random));
 
@@ -52,7 +52,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).", nameof(minimum));
 
             var randomValue = random.NextDouble();
-            return (randomValue * (maximum - minimum)) + minimum;
+            return randomValue * (maximum - minimum) + minimum;
         }
 
         /// <inheritdoc cref="NextString(Random, int)"/>

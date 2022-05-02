@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-
-namespace CoreSharp.Tests.Dummies
+﻿namespace CoreSharp.Tests.Dummies
 {
-
     internal class DummyClass<TValue> : DummyClass
     {
         //Properties

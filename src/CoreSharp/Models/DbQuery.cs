@@ -85,17 +85,10 @@ namespace CoreSharp.Models
             command.CommandType = QueryType;
             command.CommandText = query;
 
-            if (Parameters.Any())
+            if (Parameters.Count > 0)
                 command.Parameters.AddRange(Parameters.ToArray());
 
             return command;
-        }
-
-        /// <inheritdoc cref="DbCommand.ExecuteNonQuery"/>
-        public int ExecuteNonQuery(string query)
-        {
-            Task<int> Action() => ExecuteNonQueryAsync(query);
-            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DbCommand.ExecuteNonQueryAsync(CancellationToken)"/>
@@ -105,25 +98,11 @@ namespace CoreSharp.Models
             return await command.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        /// <inheritdoc cref="DbCommand.ExecuteScalar"/>
-        public TResult ExecuteScalar<TResult>(string query)
-        {
-            Task<TResult> Action() => ExecuteScalarAsync<TResult>(query);
-            return Task.Run(Action).GetAwaiter().GetResult();
-        }
-
         /// <inheritdoc cref="DbCommand.ExecuteScalarAsync(CancellationToken)"/>
         public async Task<TResult> ExecuteScalarAsync<TResult>(string query, CancellationToken cancellationToken = default)
         {
             await using var command = await BuildDbCommandAsync(query, cancellationToken);
             return (TResult)await command.ExecuteScalarAsync(cancellationToken);
-        }
-
-        /// <inheritdoc cref="FillAsync(string, DataTable, CancellationToken)"/>
-        public int Fill(string query, DataTable table)
-        {
-            Task<int> Action() => FillAsync(query, table);
-            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="DataTable.Load(IDataReader)"/>
@@ -135,24 +114,6 @@ namespace CoreSharp.Models
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             table.Load(reader);
             return table.Rows.Count;
-        }
-
-        /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
-        public int Fill(string query, DataSet set)
-        {
-            var mappings = Enumerable.Empty<DataTableMapping>();
-            return Fill(query, set, mappings);
-        }
-
-        /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
-        public int Fill(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings)
-            => Fill(query, set, tableMappings?.ToArray());
-
-        /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
-        public int Fill(string query, DataSet set, params DataTableMapping[] tableMappings)
-        {
-            Task<int> Action() => FillAsync(query, set, tableMappings);
-            return Task.Run(Action).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>

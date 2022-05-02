@@ -19,9 +19,9 @@ namespace CoreSharp.Extensions
             var comparisonTo = comparer.Compare(value, to);
 
             if (includeEnds)
-                return (comparisonFrom >= 0) && (comparisonTo <= 0);
+                return comparisonFrom >= 0 && comparisonTo <= 0;
             else
-                return (comparisonFrom > 0) && (comparisonTo < 0);
+                return comparisonFrom > 0 && comparisonTo < 0;
         }
     }
 }

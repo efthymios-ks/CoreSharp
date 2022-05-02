@@ -57,9 +57,7 @@ namespace CoreSharp.Concrete.Communication.Tcp
             => EndPoint = new IPEndPoint(IPAddress.Any, port);
 
         ~TcpServer()
-        {
-            Dispose();
-        }
+            => Dispose();
 
         //Events  
         public EventHandler<SessionStartedEventArgs> SessionStarted;

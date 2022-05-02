@@ -33,7 +33,6 @@ namespace CoreSharp.EqualityComparers
             else if (left is null || right is null)
                 return false;
 
-
             var leftKey = KeySelector(left);
             var rightKey = KeySelector(right);
             return _keyComparer.Equals(leftKey, rightKey);

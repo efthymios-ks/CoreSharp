@@ -276,11 +276,9 @@ namespace CoreSharp.Extensions
                     .ToDictionary(p => p.Name, p => p.GetValue(entity));
         }
 
-#pragma warning disable RCS1175 // Unused this parameter.
         /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
-        public static IEnumerable<TAttribute> GetAttributes<TElement, TMember, TAttribute>(this TElement element, Expression<Func<TElement, TMember>> memberSelector)
+        public static IEnumerable<TAttribute> GetAttributes<TElement, TMember, TAttribute>(this TElement _, Expression<Func<TElement, TMember>> memberSelector)
             where TAttribute : Attribute
-#pragma warning restore RCS1175 // Unused this parameter. 
             => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
         /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>

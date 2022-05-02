@@ -63,7 +63,7 @@ namespace CoreSharp.Extensions
                 throw new ArgumentOutOfRangeException(nameof(totalWidth), $"{nameof(totalWidth)} has to be zero or greater.");
 
             var padding = totalWidth - input.Length;
-            var padLeft = (padding / 2) + input.Length;
+            var padLeft = padding / 2 + input.Length;
 
             return input.PadLeft(padLeft, paddingChar).PadRight(totalWidth, paddingChar);
         }
@@ -157,7 +157,7 @@ namespace CoreSharp.Extensions
             else if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
-            if ((start + length) > input.Length)
+            if (start + length > input.Length)
                 return input[start..];
             else
                 return input.Substring(start, length);

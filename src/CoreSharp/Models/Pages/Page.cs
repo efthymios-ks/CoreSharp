@@ -37,7 +37,7 @@ namespace CoreSharp.Models.Pages
         public virtual bool HasPrevious
             => PageNumber > 0;
         public virtual bool HasNext
-            => PageNumber < (TotalPages - 1);
+            => PageNumber < TotalPages - 1;
 
         //Methods
         public override string ToString()
