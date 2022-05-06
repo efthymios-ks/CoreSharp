@@ -1,8 +1,8 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class IDictionaryExtensionsTests
     {
         //Fields
-        private readonly IDictionary<string, int> _dictionaryNull = null;
+        private readonly IDictionary<string, int> _dictionaryNull;
         private readonly IDictionary<string, int> _dictionary = new Dictionary<string, int>();
 
         //Methods 

@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class StringBuilderExtensionsTests
     {
         //Fields
-        private readonly StringBuilder _builderNull = null;
+        private readonly StringBuilder _builderNull;
         private readonly StringBuilder _builder = new();
 
         //Methods

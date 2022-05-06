@@ -9,7 +9,7 @@ namespace CoreSharp.EqualityComparers.Tests
     {
         //Fields
         private readonly IEqualityComparer<IDictionary<string, int>> _equalityComparer = new DictionaryEqualityComparer<string, int>();
-        private readonly IDictionary<string, int> _dictionaryNull = null;
+        private readonly IDictionary<string, int> _dictionaryNull;
         private readonly IDictionary<string, int> _dictionaryEmpty = new Dictionary<string, int>();
 
         //Methods

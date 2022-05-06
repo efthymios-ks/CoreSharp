@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics;
 
-namespace CoreSharp.Tests.Dummies
+namespace Tests.Dummies.Entities
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    internal class DummyClass : IDummyService
+    internal class DummyClass
     {
         //Constructors 
-        public DummyClass() : this(default)
+        public DummyClass()
+            : this(default)
         {
         }
 

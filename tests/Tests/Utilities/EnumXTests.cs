@@ -1,7 +1,7 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Tests.Dummies.Enums;
 
 namespace CoreSharp.Utilities.Tests
 {

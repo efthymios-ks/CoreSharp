@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests
     public class ArrayExtensionsTests
     {
         //Fields
-        private readonly int[,] _sourceNull = null;
+        private readonly int[,] _sourceNull;
 
         [Test]
         public void GetRow_SourceIsNull_ThrowArgumentNullException()

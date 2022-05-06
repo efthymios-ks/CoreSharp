@@ -1,8 +1,8 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq.Expressions;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {

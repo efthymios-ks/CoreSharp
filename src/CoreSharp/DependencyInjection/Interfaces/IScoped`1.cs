@@ -1,4 +1,4 @@
-﻿namespace CoreSharp.Interfaces.Services
+﻿namespace CoreSharp.DependencyInjection.Interfaces
 {
     public interface IScoped<TContract> : IScoped
     {

@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class RandomExtensionsTests
     {
         //Fields
-        private readonly Random _rngNull = null;
+        private readonly Random _rngNull;
         private readonly Random _rng = new(DateTime.Now.Millisecond);
         private const int SampleCount = 5;
 

@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class DbProviderFactoryExtenionsTests
     {
         //Fields 
-        private readonly DbProviderFactory _factoryNull = null;
+        private readonly DbProviderFactory _factoryNull;
         private DbProviderFactory _sqlFactory;
 
         //Methods 

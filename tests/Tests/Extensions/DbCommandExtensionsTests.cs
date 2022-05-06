@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class DbCommandExtensionsTests
     {
         //Fields
-        private readonly DbCommand _commandNull = null;
+        private readonly DbCommand _commandNull;
         private SqlCommand _sqlCommand;
 
         //Methods

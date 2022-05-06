@@ -1,7 +1,7 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -115,7 +115,6 @@ namespace CoreSharp.Extensions.Tests
 
         [Test]
         [TestCase(typeof(DummyClass<>), typeof(int), false, false)]
-        [TestCase(typeof(DummyClass<>), typeof(IDummyService), false, true)]
         [TestCase(typeof(DummyClass<>), typeof(DummyClass), false, true)]
         [TestCase(typeof(DummyClass<>), typeof(DummyClass<>), false, true)]
         [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), false, false)]

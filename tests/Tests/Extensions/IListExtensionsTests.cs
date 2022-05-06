@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests
     public class IListExtensionsTests
     {
         //Fields
-        private readonly IList<int> _sourceNull = null;
+        private readonly IList<int> _sourceNull;
         private readonly IList<int> _sourceEmpty = new List<int>();
 
         //Methods 

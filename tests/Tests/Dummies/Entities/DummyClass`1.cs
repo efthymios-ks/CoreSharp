@@ -1,4 +1,4 @@
-﻿namespace CoreSharp.Tests.Dummies
+﻿namespace Tests.Dummies.Entities
 {
     internal class DummyClass<TValue> : DummyClass
     {

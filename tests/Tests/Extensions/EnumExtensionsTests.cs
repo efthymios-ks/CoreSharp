@@ -1,6 +1,6 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using Tests.Dummies.Enums;
 
 namespace CoreSharp.Extensions.Tests
 {

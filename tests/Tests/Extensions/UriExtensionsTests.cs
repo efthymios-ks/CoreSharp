@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests
     public class UriExtensionsTests
     {
         //Fields 
-        private readonly Uri _uriNull = null;
+        private readonly Uri _uriNull;
 
         [Test]
         public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()

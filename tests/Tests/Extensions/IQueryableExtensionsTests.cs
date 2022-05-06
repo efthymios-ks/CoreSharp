@@ -1,8 +1,8 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests
     public class IQueryableExtensionsTests
     {
         //Fields
-        private readonly IQueryable<DummyClass> _sourceNull = null;
+        private readonly IQueryable<DummyClass> _sourceNull;
         private readonly IQueryable<DummyClass> _sourceEmpty = Enumerable.Empty<DummyClass>().AsQueryable();
 
         //Methods

@@ -1,10 +1,10 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Text.Json;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {

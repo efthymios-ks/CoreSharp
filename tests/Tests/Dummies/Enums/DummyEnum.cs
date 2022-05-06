@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CoreSharp.Tests.Dummies
+namespace Tests.Dummies.Enums
 {
     /// <summary>
     /// Dummy enum.

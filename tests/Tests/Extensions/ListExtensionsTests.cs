@@ -1,9 +1,9 @@
-﻿using CoreSharp.Tests.Dummies;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tests.Dummies.Entities;
 
 namespace CoreSharp.Extensions.Tests
 {
@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions.Tests
     public class ListExtensionsTests
     {
         //Fields
-        private readonly List<DummyClass> _sourceNull = null;
+        private readonly List<DummyClass> _sourceNull;
         private readonly List<DummyClass> _sourceEmpty = new();
 
         //Methods 

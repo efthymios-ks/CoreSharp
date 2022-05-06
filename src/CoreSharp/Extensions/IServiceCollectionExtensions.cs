@@ -1,4 +1,4 @@
-﻿using CoreSharp.Interfaces.Services;
+﻿using CoreSharp.DependencyInjection.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -41,6 +41,7 @@ namespace CoreSharp.Extensions
             return services.Configure<TOptions>(options => section.Bind(options));
         }
 
+        #region Unmarked services
         /// <inheritdoc cref="AddServices(IServiceCollection, Assembly[])"/>
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
             => serviceCollection.AddServices(Assembly.GetEntryAssembly());
@@ -52,7 +53,7 @@ namespace CoreSharp.Extensions
             _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
 
             var interfaceNameRegex = new Regex(InterfaceGroupRegexExp);
-            var contractsWithImplementations = GetContractsWithImplementations(assemblies,
+            var contractsWithImplementations = GetUnmarkedContractImplementationsPairs(assemblies,
                 contract => interfaceNameRegex.IsMatch(contract.Name));
 
             foreach (var (key, value) in contractsWithImplementations)
@@ -85,7 +86,7 @@ namespace CoreSharp.Extensions
                 => type.GetDirectInterfaces()
                        .Select(t => t.GetGenericTypeBase())
                        .Any(t => t == interfaceBaseType);
-            var contractsWithImplementations = GetContractsWithImplementations(assemblies, ImplementsBaseInterfaceDirectly);
+            var contractsWithImplementations = GetUnmarkedContractImplementationsPairs(assemblies, ImplementsBaseInterfaceDirectly);
 
             foreach (var (key, value) in contractsWithImplementations)
                 serviceCollection.TryAddScoped(key, value);
@@ -97,28 +98,42 @@ namespace CoreSharp.Extensions
         /// Returns a <see cref="IDictionary{TKey, TValue}"/>
         /// with all contracts and their implementation.
         /// </summary>
-        private static IDictionary<Type, Type> GetContractsWithImplementations(Assembly[] assemblies, Func<Type, bool> additionalInterfacePredicate = null)
+        private static IDictionary<Type, Type> GetUnmarkedContractImplementationsPairs(Assembly[] assemblies, Func<Type, bool> additionalInterfacePredicate = null)
         {
             additionalInterfacePredicate ??= _ => true;
 
-            var dictionary = new Dictionary<Type, Type>();
-            var contracts = assemblies.SelectMany(assembly => assembly.GetTypes())
-                                      .Where(type => type.IsInterface && additionalInterfacePredicate(type));
-            foreach (var contract in contracts)
+            bool ContractFilter(Type type)
             {
-                var implementation = GetContractImplementation(contract, assemblies);
-                if (implementation is not null)
-                    dictionary.Add(contract, implementation);
+                //Not an interface, ignore
+                if (!type.IsInterface)
+                    return false;
+
+                //Additional checks do not apply, ignore 
+                else if (!additionalInterfacePredicate(type))
+                    return false;
+
+                //Take 
+                return true;
             }
 
-            return dictionary;
+            var pairs = new Dictionary<Type, Type>();
+            var contracts = assemblies.SelectMany(assembly => assembly.GetTypes())
+                                      .Where(ContractFilter);
+            foreach (var contract in contracts)
+            {
+                var implementation = GetUnmarkedContractImplementation(contract, assemblies);
+                if (implementation is not null)
+                    pairs.Add(contract, implementation);
+            }
+
+            return pairs;
         }
 
         /// <summary>
         /// Find implementation <see cref="Type"/>
         /// for given contract <see cref="Type"/>.
         /// </summary>
-        private static Type GetContractImplementation(Type contractType, Assembly[] assemblies)
+        private static Type GetUnmarkedContractImplementation(Type contractType, Assembly[] assemblies)
         {
             _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
             _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
@@ -134,14 +149,19 @@ namespace CoreSharp.Extensions
                 else if (t.IsAbstract)
                     return false;
 
-                //Doesn't implement given interface, ignore 
                 //Type.GetInterface(string) doesn't work with nested classes 
-                else if (!t.GetInterfaces().Contains(contractType))
+                var interfaces = t.GetInterfaces();
+
+                //It's marked, ignore 
+                if (interfaces.Contains(typeof(IService)))
                     return false;
 
-                //Else take
-                else
-                    return true;
+                //Doesn't implement given interface, ignore 
+                else if (!interfaces.Contains(contractType))
+                    return false;
+
+                //Take 
+                return true;
             }).ToArray();
 
             //If single implementation, register it 
@@ -177,7 +197,9 @@ namespace CoreSharp.Extensions
             //None found
             return null;
         }
+        #endregion
 
+        #region Marked services
         /// <inheritdoc cref="AddMarkedServices(IServiceCollection, Assembly[])"/>>
         public static IServiceCollection AddMarkedServices(this IServiceCollection serviceCollecton)
            => serviceCollecton.AddMarkedServices(Assembly.GetEntryAssembly());
@@ -214,12 +236,12 @@ namespace CoreSharp.Extensions
 
             foreach (var implementation in implementations)
             {
-                var contract = GetServiceContract(implementation);
-                var lifetime = GetServiceLifetime(implementation);
+                var contract = GetMarkedServiceContract(implementation);
+                var lifetime = GetMarkedServiceLifetime(implementation);
 
                 // class Repository : IRepository, IScope<IRepository> 
                 if (contract is not null)
-                    contract = GetServiceActualContract(implementation, contract);
+                    contract = GetMarkedServiceActualContract(implementation, contract);
 
                 // class Repository : IScoped 
                 else
@@ -237,10 +259,8 @@ namespace CoreSharp.Extensions
         /// Extract contract from provided
         /// service implementing <see cref="IService"/>.
         /// </summary>
-        private static Type GetServiceContract(Type service)
+        private static Type GetMarkedServiceContract(Type service)
         {
-            _ = service ?? throw new ArgumentNullException(nameof(service));
-
             var interfaces = service.GetInterfaces();
             var genericService = Array.Find(interfaces, i => i.IsGenericType && i.IsAssignableTo(typeof(IService)));
             return genericService?.GetGenericArguments()[0];
@@ -250,10 +270,8 @@ namespace CoreSharp.Extensions
         /// Extract <see cref="ServiceLifetime"/> from provided
         /// service using <see cref="IService"/>.
         /// </summary>
-        private static ServiceLifetime GetServiceLifetime(Type service)
+        private static ServiceLifetime GetMarkedServiceLifetime(Type service)
         {
-            _ = service ?? throw new ArgumentNullException(nameof(service));
-
             var lifetimesDictionary = new (Type Type, ServiceLifetime Lifetime)[]
             {
                 (typeof(ITransient),  ServiceLifetime.Transient),
@@ -269,11 +287,8 @@ namespace CoreSharp.Extensions
         /// Applies several generic-related checks and
         /// transformations.
         /// </summary>
-        private static Type GetServiceActualContract(this Type serviceType, Type contractType)
+        private static Type GetMarkedServiceActualContract(this Type serviceType, Type contractType)
         {
-            _ = serviceType ?? throw new ArgumentNullException(nameof(serviceType));
-            _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
-
             static Type GetGenericTypeBase(Type type)
                 => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
             var serviceInterfaces = serviceType.GetInterfaces();
@@ -295,5 +310,6 @@ namespace CoreSharp.Extensions
 
             return actualContract;
         }
+        #endregion
     }
 }
