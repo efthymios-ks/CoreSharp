@@ -30,20 +30,20 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
             else if (string.IsNullOrWhiteSpace(pipeName))
                 throw new ArgumentNullException(nameof(pipeName));
 
-            pipeName = pipeName
-                .ToLower()
-                .Truncate(256)
-                .Erase("\\");
+            pipeName = pipeName.ToLower()
+                               .Truncate(256)
+                               .Erase("\\");
 
             ServerName = serverName;
             PipeName = pipeName;
 
-            _pipe = new NamedPipeClientStream(serverName, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+            _pipe = new(serverName, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         }
 
         //Properties 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string DebuggerDisplay => $"Server='{ServerName}', Pipe='{PipeName}'";
+        private string DebuggerDisplay
+            => $"Server='{ServerName}', Pipe='{PipeName}'";
         public string ServerName { get; }
         public string PipeName { get; }
         public bool IsConnected
@@ -65,7 +65,8 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
                 OnConnectionStatusChanged(_isConnected);
             }
         }
-        public int BufferSize { get; set; } = 8 * 1024;
+        public int BufferSize { get; set; }
+            = 8 * 1024;
 
         //Events 
         public event EventHandler<ConnectionStatusChangedEventArgs> ConnectionStatusChanged;
@@ -186,16 +187,12 @@ namespace CoreSharp.Concrete.Communication.NamedPipes
 
         private void OnDataSent(byte[] data)
         {
-            _ = data ?? throw new ArgumentNullException(nameof(data));
-
             var args = new DataTransferredEventArgs(data);
             DataSent?.Invoke(this, args);
         }
 
         private void OnDataReceived(byte[] data)
         {
-            _ = data ?? throw new ArgumentNullException(nameof(data));
-
             var args = new DataTransferredEventArgs(data);
             DataReceived?.Invoke(this, args);
         }

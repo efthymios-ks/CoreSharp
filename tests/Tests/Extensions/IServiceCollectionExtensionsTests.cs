@@ -15,16 +15,14 @@ namespace CoreSharp.Extensions.Tests
     {
         //Fields
         private IServiceCollection _serviceCollection;
-        private IServiceProvider _services;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _serviceCollection = new ServiceCollection();
             var assembly = Assembly.GetExecutingAssembly();
+            _serviceCollection = new ServiceCollection();
             _serviceCollection.AddServices(assembly);
             _serviceCollection.AddMarkedServices(assembly);
-            _services = _serviceCollection.BuildServiceProvider();
         }
 
         //Methods 
@@ -74,53 +72,56 @@ namespace CoreSharp.Extensions.Tests
         public void AddServices_NoImplementationFound_Skip()
         {
             //Act
-            var implementation = _services.GetService<IServiceWithNoImplementation>();
+            var descriptor = GetServiceDescriptor<IServiceWithNoImplementation>();
 
             //Assert
-            implementation.Should().BeNull();
+            descriptor.Should().BeNull();
         }
 
         [Test]
         public void AddServices_SingleImplementationFoundAndNameMissmatch_Register()
         {
             //Act
-            var implementation = _services.GetService<IServiceWithSingleImplementationAndNameMissmatch>();
+            var descriptor = GetServiceDescriptor<IServiceWithSingleImplementationAndNameMissmatch>();
 
             //Assert
-            implementation.Should().BeOfType<ServiceWithSingleImplementationAndNameMissmatch1>();
-            implementation.Should().BeAssignableTo<IServiceWithSingleImplementationAndNameMissmatch>();
+            descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
+            descriptor.ServiceType.Should().Be<IServiceWithSingleImplementationAndNameMissmatch>();
+            descriptor.ImplementationType.Should().Be<ServiceWithSingleImplementationAndNameMissmatch1>();
         }
 
         [Test]
         public void AddServices_SingleImplementationFoundAndNameMatch_Register()
         {
             //Act
-            var implementation = _services.GetService<IServiceWithSingleImplementationAndNameMatch>();
+            var descriptor = GetServiceDescriptor<IServiceWithSingleImplementationAndNameMatch>();
 
             //Assert
-            implementation.Should().BeOfType<ServiceWithSingleImplementationAndNameMatch>();
-            implementation.Should().BeAssignableTo<IServiceWithSingleImplementationAndNameMatch>();
+            descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
+            descriptor.ServiceType.Should().Be<IServiceWithSingleImplementationAndNameMatch>();
+            descriptor.ImplementationType.Should().Be<ServiceWithSingleImplementationAndNameMatch>();
         }
 
         [Test]
         public void AddServices_ManyImplementationFoundAndNameMissmatch_Skip()
         {
             //Act
-            var implementation = _services.GetService<IServiceWithManyImplementationsAndNameMissmatch>();
+            var descriptor = GetServiceDescriptor<IServiceWithManyImplementationsAndNameMissmatch>();
 
             //Assert
-            implementation.Should().BeNull();
+            descriptor.Should().BeNull();
         }
 
         [Test]
         public void AddServices_ManyImplementationFoundAndNameMatch_Register()
         {
             //Act
-            var implementation = _services.GetService<IServiceWithManyImplementationsAndNameMatch>();
+            var descriptor = GetServiceDescriptor<IServiceWithManyImplementationsAndNameMatch>();
 
             //Assert
-            implementation.Should().BeOfType<ServiceWithManyImplementationsAndNameMatch>();
-            implementation.Should().BeAssignableTo<IServiceWithManyImplementationsAndNameMatch>();
+            descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
+            descriptor.ServiceType.Should().Be<IServiceWithManyImplementationsAndNameMatch>();
+            descriptor.ImplementationType.Should().Be<ServiceWithManyImplementationsAndNameMatch>();
         }
         #endregion
 
@@ -154,14 +155,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_TransientWithContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<ITransientServiceWithContract>();
-            var descriptor = GetServiceDescriptor<ITransientServiceWithContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<ITransientServiceWithContract>();
 
-            //Assert
-            implementation.Should().BeOfType<TransientServiceWithContract>();
-            implementation.Should().BeAssignableTo<ITransientServiceWithContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Transient);
             descriptor.ServiceType.Should().Be(typeof(ITransientServiceWithContract));
             descriptor.ImplementationType.Should().Be(typeof(TransientServiceWithContract));
@@ -170,13 +167,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_TransientWithoutContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<ScopedServiceWithoutContract>();
-            var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>();
 
-            //Assert
-            implementation.Should().BeOfType<ScopedServiceWithoutContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
             descriptor.ServiceType.Should().Be(typeof(ScopedServiceWithoutContract));
             descriptor.ImplementationType.Should().Be(typeof(ScopedServiceWithoutContract));
@@ -185,14 +179,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_ScopedWithContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<IScopedServiceWithContract>();
-            var descriptor = GetServiceDescriptor<IScopedServiceWithContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<IScopedServiceWithContract>();
 
-            //Assert
-            implementation.Should().BeOfType<ScopedServiceWithContract>();
-            implementation.Should().BeAssignableTo<IScopedServiceWithContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
             descriptor.ServiceType.Should().Be(typeof(IScopedServiceWithContract));
             descriptor.ImplementationType.Should().Be(typeof(ScopedServiceWithContract));
@@ -201,13 +191,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_ScopedWithoutContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<ScopedServiceWithoutContract>();
-            var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>();
 
-            //Assert
-            implementation.Should().BeOfType<ScopedServiceWithoutContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
             descriptor.ServiceType.Should().Be(typeof(ScopedServiceWithoutContract));
             descriptor.ImplementationType.Should().Be(typeof(ScopedServiceWithoutContract));
@@ -216,14 +203,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_SingletonWithContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<ISingletonServiceWithContract>();
-            var descriptor = GetServiceDescriptor<ISingletonServiceWithContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<ISingletonServiceWithContract>();
 
-            //Assert
-            implementation.Should().BeOfType<SingletonServiceWithContract>();
-            implementation.Should().BeAssignableTo<ISingletonServiceWithContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
             descriptor.ServiceType.Should().Be(typeof(ISingletonServiceWithContract));
             descriptor.ImplementationType.Should().Be(typeof(SingletonServiceWithContract));
@@ -232,13 +215,10 @@ namespace CoreSharp.Extensions.Tests
         [Test]
         public void AddMarkedServices_SingletonWithoutContract_Register()
         {
-            //Act
-            var implementation = _services.GetService<SingletonServiceWithoutContract>();
-            var descriptor = GetServiceDescriptor<SingletonServiceWithoutContract>(_serviceCollection);
+            //Act 
+            var descriptor = GetServiceDescriptor<SingletonServiceWithoutContract>();
 
-            //Assert
-            implementation.Should().BeOfType<SingletonServiceWithoutContract>();
-
+            //Assert 
             descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
             descriptor.ServiceType.Should().Be(typeof(SingletonServiceWithoutContract));
             descriptor.ImplementationType.Should().Be(typeof(SingletonServiceWithoutContract));
@@ -246,10 +226,10 @@ namespace CoreSharp.Extensions.Tests
         #endregion
 
         //Local 
-        private static ServiceDescriptor GetServiceDescriptor<TService>(IServiceCollection services)
-            => GetServiceDescriptor(services, typeof(TService));
+        private ServiceDescriptor GetServiceDescriptor<TService>()
+            => GetServiceDescriptor(typeof(TService));
 
-        private static ServiceDescriptor GetServiceDescriptor(IServiceCollection services, Type serviceType)
-            => services.FirstOrDefault(s => s.ServiceType == serviceType);
+        private ServiceDescriptor GetServiceDescriptor(Type serviceType)
+            => _serviceCollection.FirstOrDefault(s => s.ServiceType == serviceType);
     }
 }

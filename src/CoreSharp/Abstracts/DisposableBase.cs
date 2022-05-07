@@ -5,7 +5,7 @@ using System.IO;
 namespace CoreSharp.Abstracts
 {
     /// <inheritdoc cref="IDisposable"/>
-    public abstract class DisposableBase : IDisposable
+    internal abstract class DisposableBase : IDisposable
     {
         //Fields
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

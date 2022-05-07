@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.0.9</Version>
-		<PackageReleaseNotes>-Extensions, IEnumerable, Minor naming fixes.</PackageReleaseNotes>
+		<Version>5.0.10</Version>
+		<PackageReleaseNotes>-Restructured dependency injection related classes.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

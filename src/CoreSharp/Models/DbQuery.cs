@@ -12,7 +12,7 @@ namespace CoreSharp.Models
     /// <summary>
     /// An extension to <see cref="DbConnection"/> to run quick actions on it.
     /// </summary>
-    public class DbQuery : IDisposable
+    public class DbQuery : IDisposable, IAsyncDisposable
     {
         //Fields 
         private readonly DbConnection _connection;
@@ -57,11 +57,17 @@ namespace CoreSharp.Models
         public ICollection<DbParameter> Parameters { get; } = new HashSet<DbParameter>();
 
         //Methods 
-        /// <inheritdoc />
         public void Dispose()
         {
             GC.SuppressFinalize(this);
             _connection?.Dispose();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            GC.SuppressFinalize(this);
+            if (_connection is not null)
+                await _connection.DisposeAsync();
         }
 
         /// <inheritdoc cref="DbParameterCollection.Add(object)"/>
@@ -138,9 +144,8 @@ namespace CoreSharp.Models
             try
             {
                 adapter.SelectCommand = command;
-                var tableMappingsArray = tableMappings?.ToArray();
-                if (tableMappingsArray?.Any() is true)
-                    adapter.TableMappings.AddRange(tableMappingsArray);
+                if (tableMappings.Any())
+                    adapter.TableMappings.AddRange(tableMappings.ToArray());
 
                 return await Task.Run(() => adapter.Fill(set), cancellationToken);
             }
@@ -148,7 +153,7 @@ namespace CoreSharp.Models
             {
                 if (adapter is IAsyncDisposable asyncDisposable)
                     await asyncDisposable.DisposeAsync();
-                else if (adapter is IDisposable disposable)
+                if (adapter is IDisposable disposable)
                     disposable.Dispose();
             }
         }

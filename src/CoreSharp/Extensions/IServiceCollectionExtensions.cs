@@ -226,7 +226,7 @@ namespace CoreSharp.Extensions
                     return false;
 
                 //Doesn't implement IService 
-                else if (t.GetInterface(typeof(IService).FullName) is null)
+                else if (!t.GetInterfaces().Contains(typeof(IService)))
                     return false;
 
                 //Else take
