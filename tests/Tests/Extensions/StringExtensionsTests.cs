@@ -557,6 +557,34 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
+        [TestCase(null, false)]
+        [TestCase(StringEmpty, false)]
+        [TestCase(" ", false)]
+        [TestCase("1", true)]
+        public void HasValue_WhenCalled_ReturnTrueIfNotNullOrWhiteSpace(string value, bool expected)
+        {
+            //Act 
+            var result = value.HasValue();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, StringEmpty)]
+        [TestCase(StringEmpty, StringEmpty)]
+        [TestCase(" ", " ")]
+        [TestCase("1", "1")]
+        public void OrEmpty_WhenCalled_ReturnTrueIfNotNullOrWhiteSpace(string value, string expected)
+        {
+            //Act 
+            var result = value.OrEmpty();
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
         public void Reverse_InputIsNull_ThrowArgumentNullException()
         {
             //Act

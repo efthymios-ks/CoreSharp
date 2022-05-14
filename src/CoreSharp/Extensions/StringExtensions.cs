@@ -254,6 +254,18 @@ namespace CoreSharp.Extensions
             => string.IsNullOrWhiteSpace(input);
 
         /// <summary>
+        /// Reverse <see cref="string.IsNullOrWhiteSpace(string?)"/>.
+        /// </summary>
+        public static bool HasValue(this string input)
+            => !string.IsNullOrWhiteSpace(input);
+
+        /// <summary>
+        /// Return given input or <see cref="string.Empty"/> if null.
+        /// </summary>
+        public static string OrEmpty(this string input)
+            => input ?? string.Empty;
+
+        /// <summary>
         /// Reverse a <see cref="string"/>.
         /// </summary>
         public static string Reverse(this string input)
