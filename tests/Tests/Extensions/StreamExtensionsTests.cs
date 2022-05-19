@@ -41,13 +41,13 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void ToArrayAsync_StreamIsNull_ThrowArgumentNullException()
+        public async Task ToArrayAsync_StreamIsNull_ThrowArgumentNullException()
         {
             //Act
             Func<Task> action = () => _streamNull.ToArrayAsync();
 
             //Assert
-            action.Should().ThrowExactlyAsync<ArgumentNullException>();
+            await action.Should().ThrowExactlyAsync<ArgumentNullException>();
         }
 
         [Test]

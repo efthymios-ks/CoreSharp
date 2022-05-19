@@ -106,54 +106,66 @@ namespace CoreSharp.Extensions
         public static async Task<TResult> Or<TResult>(this Task<TResult> task, TResult defaultValue)
             => await (task ?? Task.FromResult(defaultValue));
 
-        /// <summary>
-        /// 'Try-catch'ing providing <see cref="Task{TResult}"/>.
-        /// Will return result if succeeds, else the exception.
-        /// Usefull for one-liners.
-        /// <code>
-        /// // Get value and error
-        /// var (value1, exception) = await GetValueAsync().TryGetAsync();
-        /// // Get value and skip error
-        /// var (value2, _) = await GetValueAsync().TryGetAsync();
-        /// </code>
-        /// </summary>
-        public async static Task<(TResult result, Exception exception)> TryGetAsync<TResult>(this Task<TResult> task)
-        {
-            _ = task ?? throw new ArgumentNullException(nameof(task));
-
-            try
-            {
-                var result = await task;
-                return (result, null);
-            }
-            catch (Exception exception)
-            {
-                return (default, exception);
-            }
-        }
+        /// <inheritdoc cref="IgnoreError{TException}(Task)"/>
+        public async static Task IgnoreError(this Task task)
+            => await task.IgnoreError<Exception>();
 
         /// <summary>
-        /// 'Try-catch'ing providing <see cref="Task"/>.
+        /// 'Try-catch'ing given <see cref="Task"/>.
         /// Usefull for one-liners.
+        /// Can be chained.
         /// <code>
-        /// // Run and get error
-        /// var exception = await PostAsync().TryRunAsync();
-        /// // Run and skip error
-        /// await PostAsync().TryRunAsync();
+        /// // Catch all exceptions.
+        /// await PostAsync().IgnoreError();
+        ///
+        /// // Catch specific exceptions.
+        /// await PostAsync().IgnoreError&lt;DivideByZeroException&gt;()
+        ///                  .IgnoreError&lt;InvalidCastException&gt;();
         /// </code>
         /// </summary>
-        public async static Task<Exception> TryRunAsync(this Task task)
+        public async static Task IgnoreError<TException>(this Task task)
+            where TException : Exception
         {
             _ = task ?? throw new ArgumentNullException(nameof(task));
 
             try
             {
                 await task;
-                return null;
             }
-            catch (Exception exception)
+            catch (Exception exception) when (exception is TException)
             {
-                return exception;
+            }
+        }
+
+        /// <inheritdoc cref="IgnoreError{TResult, TException}(Task{TResult})"/>
+        public async static Task<TResult> IgnoreError<TResult>(this Task<TResult> task)
+            => await task.IgnoreError<TResult, Exception>();
+
+        /// <summary>
+        /// 'Try-catch'ing given <see cref="Task{TResult}"/>.
+        /// Usefull for one-liners.
+        /// Can be chained.
+        /// <code>
+        /// // Catch all exceptions.
+        /// var result = await GetAsync().IgnoreError();
+        ///
+        /// // Catch specific exceptions.
+        /// var result = await GetAsync().IgnoreError&lt;DivideByZeroException&gt;()
+        ///                              .IgnoreError&lt;InvalidCastException&gt;();
+        /// </code>
+        /// </summary>
+        public async static Task<TResult> IgnoreError<TResult, TException>(this Task<TResult> task)
+            where TException : Exception
+        {
+            _ = task ?? throw new ArgumentNullException(nameof(task));
+
+            try
+            {
+                return await task;
+            }
+            catch (Exception exception) when (exception is TException)
+            {
+                return default;
             }
         }
     }

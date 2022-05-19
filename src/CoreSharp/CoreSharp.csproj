@@ -16,7 +16,9 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>5.0.10</Version>
-		<PackageReleaseNotes>-String, Added `HasValue()` and `OrEmpty` methods.</PackageReleaseNotes>
+		<PackageReleaseNotes>-String, Added `HasValue()` and `OrEmpty` methods.
+-Extensions. IEnumerable, Added `Repeat()` method.
+		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
