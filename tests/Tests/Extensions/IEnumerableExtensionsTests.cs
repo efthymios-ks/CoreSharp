@@ -1438,5 +1438,54 @@ namespace CoreSharp.Extensions.Tests
             //Assert 
             result.Should().Equal(expected);
         }
+
+        [Test]
+        public void Repeat_SourceIsNull_ThrowArgumentNullException()
+        {
+            //Act 
+            Action action = () => _sourceNull.Repeat(2);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void Repeat_CountIsNegative_ThrowArgumentOutOfRangeException()
+        {
+            //Act 
+            Action action = () => _sourceEmpty.Repeat(-1);
+
+            //Assert 
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        }
+
+        [Test]
+        public void Repeat_CountIsZero_ReturnEmpty()
+        {
+            //Arrange
+            var source = new[] { 1, 2 };
+            var expected = Enumerable.Empty<int>();
+
+            //Act 
+            var result = source.Repeat(0);
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
+
+        [Test]
+        public void Repeat_WhenCalled_RepeatAndReturnSequence()
+        {
+            //Arrange
+            var source = new[] { 1, 2 };
+            const int count = 2;
+            var expected = new[] { 1, 2, 1, 2 };
+
+            //Act 
+            var result = source.Repeat(count);
+
+            //Assert 
+            result.Should().Equal(expected);
+        }
     }
 }

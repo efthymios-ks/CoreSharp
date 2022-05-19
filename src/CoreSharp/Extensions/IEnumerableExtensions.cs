@@ -668,5 +668,26 @@ namespace CoreSharp.Extensions
                 }
             }
         }
+
+        /// <summary>
+        /// Repeat given sequence n-times.
+        /// </summary>
+        public static IEnumerable<TElement> Repeat<TElement>(this IEnumerable<TElement> source, int count)
+        {
+            _ = source ?? throw new ArgumentNullException(nameof(source));
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} has to be positive or zero.");
+
+            return source.RepeatInternal(count);
+        }
+
+        private static IEnumerable<TElement> RepeatInternal<TElement>(this IEnumerable<TElement> source, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                foreach (var element in source)
+                    yield return element;
+            }
+        }
     }
 }
