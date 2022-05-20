@@ -15,9 +15,10 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.0.10</Version>
+		<Version>5.0.11</Version>
 		<PackageReleaseNotes>-String, Added `HasValue()` and `OrEmpty` methods.
 -Extensions. IEnumerable, Added `Repeat()` method.
+-Extensions, Tasks, Added `IgnoreError()` methods.
 		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
@@ -28,7 +29,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.16" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.17" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0">
 			<TreatAsUsed>true</TreatAsUsed>
 		</PackageReference>
