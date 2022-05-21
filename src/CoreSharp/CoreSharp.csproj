@@ -15,11 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.0.11</Version>
-		<PackageReleaseNotes>-String, Added `HasValue()` and `OrEmpty` methods.
--Extensions. IEnumerable, Added `Repeat()` method.
--Extensions, Tasks, Added `IgnoreError()` methods.
-		</PackageReleaseNotes>
+		<Version>5.1.0</Version>
+		<PackageReleaseNotes>-Delegates, Added `AsyncAction` and `AsyncEventHandler`.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
