@@ -1076,5 +1076,113 @@ namespace CoreSharp.Extensions.Tests
             //Assert
             result.Should().Be(stringValue);
         }
+
+        [Test]
+        [TestCase(null, " ")]
+        [TestCase("", null)]
+        [TestCase("", "")]
+        public void SubstringAfter_ArgsAreNull_ThrowArgumentNullException(string input, string match)
+        {
+            //Act 
+            Action action = () => input.SubstringAfter(match);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("1234321", "3", "4321")]
+        [TestCase("1234321", "4", "321")]
+        [TestCase("1234321", "321", "")]
+        [TestCase("1234321", "0", null)]
+        public void SubstringAfter_WhenCalled_ReturnSubstringAfterMatch(string input, string match, string expected)
+        {
+            //Act 
+            var result = input.SubstringAfter(match);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, " ")]
+        [TestCase("", null)]
+        [TestCase("", "")]
+        public void SubstringAfterLast_ArgsAreNull_ThrowArgumentNullException(string input, string match)
+        {
+            //Act 
+            Action action = () => input.SubstringAfterLast(match);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("1234321", "3", "21")]
+        [TestCase("1234321", "4", "321")]
+        [TestCase("1234321", "321", "")]
+        [TestCase("1234321", "0", null)]
+        public void SubstringAfterLast_WhenCalled_ReturnSubstringAfterLastMatch(string input, string match, string expected)
+        {
+            //Act 
+            var result = input.SubstringAfterLast(match);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, " ")]
+        [TestCase("", null)]
+        [TestCase("", "")]
+        public void SubstringBefore_ArgsAreNull_ThrowArgumentNullException(string input, string match)
+        {
+            //Act 
+            Action action = () => input.SubstringBefore(match);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("1234321", "3", "12")]
+        [TestCase("1234321", "4", "123")]
+        [TestCase("1234321", "123", "")]
+        [TestCase("1234321", "0", null)]
+        public void SubstringBefore_WhenCalled_ReturnSubstringBeforeMatch(string input, string match, string expected)
+        {
+            //Act 
+            var result = input.SubstringBefore(match);
+
+            //Assert
+            result.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(null, " ")]
+        [TestCase("", null)]
+        [TestCase("", "")]
+        public void SubstringBeforeLast_ArgsAreNull_ThrowArgumentNullException(string input, string match)
+        {
+            //Act 
+            Action action = () => input.SubstringBeforeLast(match);
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        [TestCase("1234321", "3", "1234")]
+        [TestCase("1234321", "4", "123")]
+        [TestCase("1234321", "123", "")]
+        [TestCase("1234321", "0", null)]
+        public void SubstringBeforeLast_WhenCalled_ReturnSubstringBeforeLastMatch(string input, string match, string expected)
+        {
+            //Act 
+            var result = input.SubstringBeforeLast(match);
+
+            //Assert
+            result.Should().Be(expected);
+        }
     }
 }

@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>5.1.1</Version>
-		<PackageReleaseNotes>-Delegates, Added `AsyncDelegate`.</PackageReleaseNotes>
+		<Version>5.2.0</Version>
+		<PackageReleaseNotes>-Extensions, String, Added `SubstringBefore()` and SubstringAfter()` methods.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

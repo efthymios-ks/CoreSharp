@@ -657,5 +657,69 @@ namespace CoreSharp.Extensions
         /// </summary>
         public static string Or(this string left, string right)
             => !string.IsNullOrEmpty(left) ? left : right;
+
+        /// <summary>
+        /// Returns substring after first match.
+        /// </summary>
+        public static string SubstringAfter(this string input, string match)
+        {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            if (string.IsNullOrEmpty(match))
+                throw new ArgumentNullException(nameof(match));
+
+            var matchStartIndex = input.IndexOf(match);
+            if (matchStartIndex < 0)
+                return null;
+
+            return input[(matchStartIndex + match.Length)..];
+        }
+
+        /// <summary>
+        /// Returns substring after last match.
+        /// </summary>
+        public static string SubstringAfterLast(this string input, string match)
+        {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            if (string.IsNullOrEmpty(match))
+                throw new ArgumentNullException(nameof(match));
+
+            var matchStartIndex = input.LastIndexOf(match);
+            if (matchStartIndex < 0)
+                return null;
+
+            return input[(matchStartIndex + match.Length)..];
+        }
+
+        /// <summary>
+        /// Returns substring before first match.
+        /// </summary>
+        public static string SubstringBefore(this string input, string match)
+        {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            if (string.IsNullOrEmpty(match))
+                throw new ArgumentNullException(nameof(match));
+
+            var matchStartIndex = input.IndexOf(match);
+            if (matchStartIndex < 0)
+                return null;
+
+            return input[..matchStartIndex];
+        }
+
+        /// <summary>
+        /// Returns substring before last match.
+        /// </summary>
+        public static string SubstringBeforeLast(this string input, string match)
+        {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            if (string.IsNullOrEmpty(match))
+                throw new ArgumentNullException(nameof(match));
+
+            var matchStartIndex = input.LastIndexOf(match);
+            if (matchStartIndex < 0)
+                return null;
+
+            return input[..matchStartIndex];
+        }
     }
 }
