@@ -1,4 +1,5 @@
-﻿using CoreSharp.DependencyInjection.Interfaces;
+﻿using CoreSharp.DependencyInjection.Attributes;
+using CoreSharp.DependencyInjection.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -71,6 +72,7 @@ namespace CoreSharp.Extensions
         /// <para>-If single implementation is found, then it is registered regardless.</para>
         /// <para>-If multiple implementations are found, only the one with the `I{InterfaceName}` and `{InterfaceName}` convention is registered.</para>
         /// <para>-If multiple implementations are found and none has a proper name, none is registered.</para>
+        /// <para>-Use <see cref="IgnoreServiceAttribute"/> on either contract or implementation to ignore.</para>
         /// </summary>
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type interfaceBaseType, params Assembly[] assemblies)
         {
@@ -104,8 +106,12 @@ namespace CoreSharp.Extensions
 
             bool ContractFilter(Type type)
             {
-                //Not an interface, ignore
+                //Not an interface, ignore 
                 if (!type.IsInterface)
+                    return false;
+
+                //Manual ignore, ignore 
+                else if (type.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
                     return false;
 
                 //Additional checks do not apply, ignore 
@@ -147,6 +153,10 @@ namespace CoreSharp.Extensions
 
                 //Not a concrete class, ignore 
                 else if (t.IsAbstract)
+                    return false;
+
+                //Manual ignore, ignore 
+                else if (t.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
                     return false;
 
                 //Type.GetInterface(string) doesn't work with nested classes 
@@ -209,6 +219,7 @@ namespace CoreSharp.Extensions
         /// <para>-<see cref="ITransient"/> / <see cref="ITransient{TContract}"/>.</para>
         /// <para>-<see cref="IScoped"/> / <see cref="IScoped{TContract}"/>.</para>
         /// <para>-<see cref="ISingleton"/> / <see cref="ISingleton{TContract}"/>.</para>
+        /// <para>-Use <see cref="IgnoreServiceAttribute"/> on either contract or implementation to ignore.</para>
         /// </summary>
         public static IServiceCollection AddMarkedServices(this IServiceCollection serviceCollecton, params Assembly[] assemblies)
         {
@@ -225,7 +236,11 @@ namespace CoreSharp.Extensions
                 else if (t.IsAbstract)
                     return false;
 
-                //Doesn't implement IService 
+                //Manual ignore, ignore 
+                else if (t.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
+                    return false;
+
+                //Doesn't implement IService, ignore 
                 else if (!t.GetInterfaces().Contains(typeof(IService)))
                     return false;
 
@@ -239,11 +254,16 @@ namespace CoreSharp.Extensions
                 var contract = GetMarkedServiceContract(implementation);
                 var lifetime = GetMarkedServiceLifetime(implementation);
 
-                // class Repository : IRepository, IScope<IRepository> 
-                if (contract is not null)
+                // [IgnoreService]
+                // interface IRepository { } 
+                if (contract?.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
+                    continue;
+
+                // class Repository : IRepository, IScope<IRepository> { } 
+                else if (contract is not null)
                     contract = GetMarkedServiceActualContract(implementation, contract);
 
-                // class Repository : IScoped 
+                // class Repository : IScoped { } 
                 else
                     contract = implementation;
 

@@ -6,7 +6,9 @@ namespace Tests.Dummies.Services.Marked
     {
     }
 
-    internal class ScopedServiceWithContract : IScopedServiceWithContract, IScoped<IScopedServiceWithContract>
+    internal class ScopedServiceWithContract :
+        IScopedServiceWithContract,
+        IScoped<IScopedServiceWithContract>
     {
     }
 }

@@ -6,7 +6,9 @@ namespace Tests.Dummies.Services.Marked
     {
     }
 
-    internal class TransientServiceWithContract : ITransientServiceWithContract, ITransient<ITransientServiceWithContract>
+    internal class TransientServiceWithContract :
+        ITransientServiceWithContract,
+        ITransient<ITransientServiceWithContract>
     {
     }
 }

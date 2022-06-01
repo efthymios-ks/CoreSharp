@@ -1,4 +1,5 @@
 ﻿using CoreSharp.Json.TextJson.JsonConverters;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,6 +13,13 @@ namespace CoreSharp.Json.TextJson
         private static JsonSerializerOptions _default;
 
         //Properties
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static IEnumerable<JsonConverter> DefaultJsonConverters
+            => new[]
+            {
+                new TimeSpanJsonConverter()
+            };
+
         public static JsonSerializerOptions Default
             => _default ??= CreateDefault();
 
@@ -31,8 +39,9 @@ namespace CoreSharp.Json.TextJson
                 IgnoreReadOnlyFields = true,
                 IgnoreReadOnlyProperties = true
             };
-            foreach (var serializer in JsonConvertersSelect.All)
-                options.Converters.Add(serializer);
+
+            foreach (var jsonConverter in DefaultJsonConverters)
+                options.Converters.Add(jsonConverter);
 
             return options;
         }

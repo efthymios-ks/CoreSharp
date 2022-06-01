@@ -6,7 +6,9 @@ namespace Tests.Dummies.Services.Marked
     {
     }
 
-    internal class SingletonServiceWithContract : ISingletonServiceWithContract, ISingleton<ISingletonServiceWithContract>
+    internal class SingletonServiceWithContract :
+        ISingletonServiceWithContract,
+        ISingleton<ISingletonServiceWithContract>
     {
     }
 }
