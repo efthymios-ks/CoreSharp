@@ -16,8 +16,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>5.2.0</Version>
-		<PackageReleaseNotes>-Extensions, String, Added `SubstringBefore()` and SubstringAfter()` methods.
--Dependency injection, Attributes, Added `[IgnoreServiceAttribute]`.</PackageReleaseNotes>
+		<PackageReleaseNotes>-Code clean-up.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

@@ -16,6 +16,7 @@ namespace CoreSharp.Utilities
     {
         /// <summary>
         /// Combines url segments.
+        /// Also takes care of multiple slashes.
         /// <example>
         /// <code>
         /// // "/sec1/sec2/sec3/"
@@ -23,7 +24,7 @@ namespace CoreSharp.Utilities
         /// </code>
         /// </example>
         /// </summary>
-        public static string JoinSegments(params object[] segments)
+        public static string JoinSegments(params string[] segments)
         {
             _ = segments ?? throw new ArgumentNullException(nameof(segments));
 
@@ -35,7 +36,7 @@ namespace CoreSharp.Utilities
                 var segment = segments[i];
                 var trimmed = $"{segment}".Trim();
 
-                //If first segment is absolute (e.g. https://www.page.gr), do not insert '/' 
+                //If first segment is absolute (e.g. https://www.page.gr), do not insert '/' separator
                 if (i == 0 && Uri.IsWellFormedUriString(trimmed, UriKind.Relative))
                     builder.Append('/');
 
@@ -72,15 +73,15 @@ namespace CoreSharp.Utilities
         }
 
         /// <summary>
-        /// Build url from base url and parameters.
+        /// Build url from base url and query parameters list.
         /// </summary>
-        public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> parameters)
+        public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> queryParameters)
         {
-            _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = queryParameters ?? throw new ArgumentNullException(nameof(queryParameters));
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
-            var query = parameters.ToUrlQueryString();
+            var query = queryParameters.ToUrlQueryString();
 
             var trimChars = new[] { ' ', '?', '&', '/' };
             baseUrl = baseUrl.Trim(trimChars);

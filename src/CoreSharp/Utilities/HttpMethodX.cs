@@ -1,5 +1,7 @@
 ﻿using CoreSharp.Enums;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace CoreSharp.Utilities
@@ -20,24 +22,22 @@ namespace CoreSharp.Utilities
         {
             _ = methodName ?? throw new ArgumentNullException(nameof(methodName));
 
-            methodName = methodName.ToLowerInvariant();
+            var lookupTable = new Dictionary<string, RestMethod>()
+            {
+                { HttpMethod.Get.Method, RestMethod.Get },
+                { HttpMethod.Post.Method, RestMethod.Get },
+                { HttpMethod.Put.Method, RestMethod.Post },
+                { HttpMethod.Patch.Method, RestMethod.Patch },
+                { HttpMethod.Delete.Method, RestMethod.Delete },
+                { HttpMethod.Head.Method, RestMethod.Head },
+                { HttpMethod.Options.Method, RestMethod.Options },
+                { HttpMethod.Trace.Method, RestMethod.Trace },
+            };
 
-            if (methodName.Contains(HttpMethod.Get.Method))
-                return RestMethod.Get;
-            else if (methodName.Contains(HttpMethod.Post.Method))
-                return RestMethod.Post;
-            else if (methodName.Contains(HttpMethod.Put.Method))
-                return RestMethod.Put;
-            else if (methodName.Contains(HttpMethod.Patch.Method))
-                return RestMethod.Patch;
-            else if (methodName.Contains(HttpMethod.Delete.Method))
-                return RestMethod.Delete;
-            else if (methodName.Contains(HttpMethod.Head.Method))
-                return RestMethod.Head;
-            else if (methodName.Contains(HttpMethod.Options.Method))
-                return RestMethod.Options;
-            else if (methodName.Contains(HttpMethod.Trace.Method))
-                return RestMethod.Trace;
+            methodName = methodName.ToLowerInvariant();
+            var found = lookupTable.SingleOrDefault(m => m.Key.Contains(methodName));
+            if (found.Key is not null)
+                return found.Value;
             else
                 throw new ArgumentOutOfRangeException(nameof(methodName));
         }
