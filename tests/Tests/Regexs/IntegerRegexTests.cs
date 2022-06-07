@@ -29,7 +29,7 @@ namespace CoreSharp.Regexs.Tests
         [TestCase("+1,000,000.0", "el-GR", false)]
         [TestCase("1,000,000.0", "el-GR", false)]
         [TestCase("+1,000,000.0", "el-GR", false)]
-        public void IntegerRegex_WhenInteger_ReturnTrue(string input, string cultureName, bool isMatch)
+        public void IntegerRegex_InputIsInteger_ReturnTrue(string input, string cultureName, bool isMatch)
         {
             //Arrange
             var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
@@ -38,6 +38,7 @@ namespace CoreSharp.Regexs.Tests
             //Act 
             var result = integerRegex.IsMatch;
 
+            //Assert
             result.Should().Be(isMatch);
         }
 
@@ -54,6 +55,7 @@ namespace CoreSharp.Regexs.Tests
             //Act 
             var result = integerRegex.Sign;
 
+            //Assert
             result.Should().Be(groupSign);
         }
 
@@ -70,6 +72,7 @@ namespace CoreSharp.Regexs.Tests
             //Act 
             var result = integerRegex.Value;
 
+            //Assert
             result.Should().Be(groupValue);
         }
     }

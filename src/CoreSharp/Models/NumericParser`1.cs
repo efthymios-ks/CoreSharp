@@ -17,15 +17,18 @@ namespace CoreSharp.Models
         private readonly bool _isFormatPercentage;
 
         //Constructors
-        public NumericParser() : this(CultureInfo.CurrentCulture)
+        public NumericParser()
+            : this(CultureInfo.CurrentCulture)
         {
         }
 
-        public NumericParser(CultureInfo cultureInfo) : this(null, cultureInfo)
+        public NumericParser(CultureInfo cultureInfo)
+            : this(null, cultureInfo)
         {
         }
 
-        public NumericParser(string format) : this(format, CultureInfo.CurrentCulture)
+        public NumericParser(string format)
+            : this(format, CultureInfo.CurrentCulture)
         {
         }
 
@@ -44,7 +47,7 @@ namespace CoreSharp.Models
         /// Parse and convert <see cref="string"/> input to <see cref="decimal"/>.
         /// If fails to do so, value remains untouched.
         /// </summary>
-        public bool TryParseValue(string input, ref TNumber value)
+        public bool TryParseValue(string input, out TNumber value)
         {
             try
             {
@@ -54,13 +57,13 @@ namespace CoreSharp.Models
                     //Nullable: Null 
                     //Non-Nullable: 0 
                     value = default;
-                    return true;
+                    return false;
                 }
 
                 //Parse to decimal? (cause it can fit all numeric types) 
                 var tempValue = ParseValue(input);
 
-                //Validate
+                //If failed, throw 
                 if (tempValue is null)
                     throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
@@ -76,7 +79,7 @@ namespace CoreSharp.Models
             }
             catch
             {
-                //Revert to last valid value 
+                value = default;
                 return false;
             }
         }
