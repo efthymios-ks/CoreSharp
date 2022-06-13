@@ -20,7 +20,7 @@ namespace CoreSharp.Utilities
         /// <example>
         /// <code>
         /// // "/sec1/sec2/sec3/"
-        /// var url = Url.JoinSegments("/sec1/", "/sec2/", "/sec3");
+        /// var url = UriX.JoinSegments("/sec1/", "/sec2/", "/sec3");
         /// </code>
         /// </example>
         /// </summary>
