@@ -47,16 +47,6 @@ namespace CoreSharp.Extensions
             where TEntity : class
             => entity.ToJson(JsonSettings.Default);
 
-        /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
-        public static string ToJson<TEntity>(this TEntity entity, TextJson.JsonSerializerOptions options)
-            where TEntity : class
-        {
-            _ = entity ?? throw new ArgumentNullException(nameof(entity));
-            _ = options ?? throw new ArgumentNullException(nameof(options));
-
-            return TextJson.JsonSerializer.Serialize(entity, options);
-        }
-
         /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
         public static string ToJson<TEntity>(this TEntity entity, JsonNet.JsonSerializerSettings settings)
             where TEntity : class
@@ -67,29 +57,23 @@ namespace CoreSharp.Extensions
             return JsonNet.JsonConvert.SerializeObject(entity, settings);
         }
 
-        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
-        public static async Task<Stream> ToJsonStreamAsync<TEntity>(this TEntity entity)
-            where TEntity : class
-            => await entity.ToJsonStreamAsync(JsonSettings.Default);
-
-        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
-        public static async Task<Stream> ToJsonStreamAsync<TEntity>(
-            this TEntity entity,
-            TextJson.JsonSerializerOptions options,
-            CancellationToken cancellationToken = default)
+        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, TextJson.JsonSerializerOptions, CancellationToken)"/>
+        public static string ToJson<TEntity>(this TEntity entity, TextJson.JsonSerializerOptions options)
             where TEntity : class
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
             _ = options ?? throw new ArgumentNullException(nameof(options));
 
-            var stream = new MemoryStream();
-            await TextJson.JsonSerializer.SerializeAsync(stream, entity, options, cancellationToken);
-            stream.Position = 0;
-            return stream;
+            return TextJson.JsonSerializer.Serialize(entity, options);
         }
 
+        /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
+        public static async Task<Stream> ToJsonStreamAsync<TEntity>(this TEntity entity)
+            where TEntity : class
+            => await entity.ToJsonStreamAsync(JsonSettings.Default);
+
         /// <summary>
-        /// Serialize the specified object to JSON.
+        /// Serialize the specified object to JSON using Json.NET.
         /// </summary>
         public static async Task<Stream> ToJsonStreamAsync<TEntity>(
             this TEntity entity,
@@ -113,24 +97,31 @@ namespace CoreSharp.Extensions
             return stream;
         }
 
+        /// <summary>
+        /// Serialize the specified object to JSON using Text.Json.
+        /// </summary>
+        public static async Task<Stream> ToJsonStreamAsync<TEntity>(
+            this TEntity entity,
+            TextJson.JsonSerializerOptions options,
+            CancellationToken cancellationToken = default)
+            where TEntity : class
+        {
+            _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var stream = new MemoryStream();
+            await TextJson.JsonSerializer.SerializeAsync(stream, entity, options, cancellationToken);
+            stream.Position = 0;
+            return stream;
+        }
+
         /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
         public static TEntity JsonClone<TEntity>(this TEntity item)
             where TEntity : class
             => item.JsonClone(JsonSettings.Default);
 
-        /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
-        public static TEntity JsonClone<TEntity>(this TEntity item, TextJson.JsonSerializerOptions options)
-            where TEntity : class
-        {
-            _ = item ?? throw new ArgumentNullException(nameof(item));
-            _ = options ?? throw new ArgumentNullException(nameof(options));
-
-            var json = TextJson.JsonSerializer.Serialize(item, options);
-            return TextJson.JsonSerializer.Deserialize<TEntity>(json, options);
-        }
-
         /// <summary>
-        /// Perform a deep copy using json serialization.
+        /// Perform a deep copy using json serialization and Json.NET.
         /// </summary>
         public static TEntity JsonClone<TEntity>(this TEntity item, JsonNet.JsonSerializerSettings settings)
             where TEntity : class
@@ -142,24 +133,26 @@ namespace CoreSharp.Extensions
             return JsonNet.JsonConvert.DeserializeObject<TEntity>(json, settings);
         }
 
+        /// <summary>
+        /// Perform a deep copy using json serialization and Text.Json.
+        /// </summary>
+        public static TEntity JsonClone<TEntity>(this TEntity item, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+        {
+            _ = item ?? throw new ArgumentNullException(nameof(item));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var json = TextJson.JsonSerializer.Serialize(item, options);
+            return TextJson.JsonSerializer.Deserialize<TEntity>(json, options);
+        }
+
         /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right)
             where TEntity : class
             => left.JsonEquals(right, JsonSettings.Default);
 
-        /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
-        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, TextJson.JsonSerializerOptions options)
-            where TEntity : class
-        {
-            _ = options ?? throw new ArgumentNullException(nameof(options));
-
-            var equalityComparer = new JsonEqualityComparer<TEntity>(options);
-            return equalityComparer.Equals(left, right);
-        }
-
         /// <summary>
-        /// Compares two entities using
-        /// <see cref="JsonEqualityComparer{TEntity}"/>.
+        /// Compares two entities using <see cref="JsonEqualityComparer{TEntity}"/> and Json.Net.
         /// </summary>
         public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonNet.JsonSerializerSettings settings)
             where TEntity : class
@@ -167,6 +160,18 @@ namespace CoreSharp.Extensions
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
             var equalityComparer = new JsonEqualityComparer<TEntity>(settings);
+            return equalityComparer.Equals(left, right);
+        }
+
+        /// <summary>
+        /// Compares two entities using <see cref="JsonEqualityComparer{TEntity}"/> and Text.Json.
+        /// </summary>
+        public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+        {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            var equalityComparer = new JsonEqualityComparer<TEntity>(options);
             return equalityComparer.Equals(left, right);
         }
 

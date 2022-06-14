@@ -304,7 +304,7 @@ namespace CoreSharp.Extensions
             return input;
         }
 
-        /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
+        /// <inheritdoc cref="FromJson(string, Type)"/>
         public static TEntity FromJson<TEntity>(this string json)
             where TEntity : class
             => json.FromJson(typeof(TEntity)) as TEntity;
@@ -318,7 +318,7 @@ namespace CoreSharp.Extensions
             where TEntity : class
            => json.FromJson(typeof(TEntity), settings) as TEntity;
 
-        /// <inheritdoc cref="StreamExtensions.FromJson(Stream)"/>
+        /// <inheritdoc cref="StreamExtensions.FromJson{TEntity}(Stream, JsonNet.JsonSerializerSettings)"/>
         public static object FromJson(this string json, Type entityType, JsonNet.JsonSerializerSettings settings)
         {
             _ = settings ?? throw new ArgumentNullException(nameof(settings));
@@ -338,7 +338,7 @@ namespace CoreSharp.Extensions
             where TEntity : class
            => json.FromJson(typeof(TEntity), options) as TEntity;
 
-        /// <inheritdoc cref="StreamExtensions.FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
+        /// <inheritdoc cref="StreamExtensions.FromJsonAsync(Stream, TextJson.JsonSerializerOptions)"/>
         public static object FromJson(this string json, Type entityType, TextJson.JsonSerializerOptions options)
         {
             _ = options ?? throw new ArgumentNullException(nameof(options));

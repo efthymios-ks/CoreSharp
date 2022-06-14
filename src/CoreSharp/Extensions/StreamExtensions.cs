@@ -1,5 +1,6 @@
 ﻿using CoreSharp.Json.JsonNet;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,10 @@ namespace CoreSharp.Extensions
     public static class StreamExtensions
     {
         //Fields
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private const int DefaultBufferSize = 10240;
 
-        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
+        /// <inheritdoc cref="FromJson(Stream, Type)"/>
         public static TEntity FromJson<TEntity>(this Stream stream)
             where TEntity : class
             => stream.FromJson(typeof(TEntity)) as TEntity;
@@ -33,40 +35,9 @@ namespace CoreSharp.Extensions
             where TEntity : class
            => stream.FromJson(typeof(TEntity), settings) as TEntity;
 
-        /// <inheritdoc cref="FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
-        public static async Task<TEntity> FromJsonAsync<TEntity>(this Stream stream, TextJson.JsonSerializerOptions options)
-            where TEntity : class
-            => await stream.FromJsonAsync(typeof(TEntity), options) as TEntity;
-
-        /// <inheritdoc cref="FromJson(Stream, Type, JsonNet.JsonSerializerSettings)"/>
-        public static async Task<object> FromJsonAsync(this Stream stream, Type entityType, TextJson.JsonSerializerOptions options)
-        {
-            _ = stream ?? throw new ArgumentNullException(nameof(stream));
-            _ = options ?? throw new ArgumentNullException(nameof(options));
-
-            if (!stream.CanRead)
-                throw new NotSupportedException($"{nameof(stream)} is not readable.");
-            if (stream.CanSeek)
-                stream.Position = 0;
-
-            try
-            {
-                return await TextJson.JsonSerializer.DeserializeAsync(stream, entityType, options);
-            }
-            catch
-            {
-                return null;
-            }
-            finally
-            {
-                if (stream.CanSeek)
-                    stream.Position = 0;
-            }
-        }
-
         /// <summary>
         /// Parses the text representing a JSON object
-        /// into an instance of the type specified.
+        /// into an instance of the type specified using Json.NET.
         /// </summary>
         public static object FromJson(this Stream stream, Type entityType, JsonNet.JsonSerializerSettings settings)
         {
@@ -83,6 +54,40 @@ namespace CoreSharp.Extensions
                 using var streamReader = new StreamReader(stream, leaveOpen: true);
                 using var jsonReader = new JsonNet.JsonTextReader(streamReader);
                 return serializer.Deserialize(jsonReader, entityType);
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (stream.CanSeek)
+                    stream.Position = 0;
+            }
+        }
+
+        /// <inheritdoc cref="FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
+        public static async Task<TEntity> FromJsonAsync<TEntity>(this Stream stream, TextJson.JsonSerializerOptions options)
+            where TEntity : class
+            => await stream.FromJsonAsync(typeof(TEntity), options) as TEntity;
+
+        /// <summary>
+        /// Parses the text representing a JSON object
+        /// into an instance of the type specified using Text.Json.
+        /// </summary>
+        public static async Task<object> FromJsonAsync(this Stream stream, Type entityType, TextJson.JsonSerializerOptions options)
+        {
+            _ = stream ?? throw new ArgumentNullException(nameof(stream));
+            _ = options ?? throw new ArgumentNullException(nameof(options));
+
+            if (!stream.CanRead)
+                throw new NotSupportedException($"{nameof(stream)} is not readable.");
+            if (stream.CanSeek)
+                stream.Position = 0;
+
+            try
+            {
+                return await TextJson.JsonSerializer.DeserializeAsync(stream, entityType, options);
             }
             catch
             {
