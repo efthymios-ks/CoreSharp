@@ -1,6 +1,7 @@
 ﻿using CoreSharp.Json.TextJson.JsonConverters;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -37,7 +38,8 @@ namespace CoreSharp.Json.TextJson
                 IncludeFields = false,
                 WriteIndented = true,
                 IgnoreReadOnlyFields = true,
-                IgnoreReadOnlyProperties = true
+                IgnoreReadOnlyProperties = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 
             foreach (var jsonConverter in DefaultJsonConverters)

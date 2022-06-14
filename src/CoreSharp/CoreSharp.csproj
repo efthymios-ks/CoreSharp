@@ -16,9 +16,8 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>5.2.1</Version>
-		<PackageReleaseNotes>-Code clean-up.
--Utilities, UriX, Fixed comments.
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>-Extensions, Clean-up xml documentation.Json.
+-Text.Json, Options, Added `UnsafeRelaxedJsonEscaping` in default options.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
