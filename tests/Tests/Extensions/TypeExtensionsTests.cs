@@ -22,10 +22,20 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        [TestCase(typeof(double), true)]
-        [TestCase(typeof(double?), true)]
+        [TestCase(typeof(byte), true)]
+        [TestCase(typeof(byte?), true)]
+        [TestCase(typeof(sbyte), true)]
+        [TestCase(typeof(sbyte?), true)]
         [TestCase(typeof(int), true)]
         [TestCase(typeof(int?), true)]
+        [TestCase(typeof(long), true)]
+        [TestCase(typeof(long?), true)]
+        [TestCase(typeof(float), true)]
+        [TestCase(typeof(float?), true)]
+        [TestCase(typeof(double), true)]
+        [TestCase(typeof(double?), true)]
+        [TestCase(typeof(decimal), true)]
+        [TestCase(typeof(decimal?), true)]
         [TestCase(typeof(string), false)]
         public void IsNumeric_TypeIsNumeric_ReturnTrue(Type type, bool expected)
         {
@@ -77,13 +87,26 @@ namespace CoreSharp.Extensions.Tests
         }
 
         [Test]
-        public void GetGenericTypeBase_ArgIsNull_ThrowArgumentNullException()
+        public void GetGenericTypeBase_TypeIsNull_ThrowArgumentNullException()
         {
             //Arrange
             Type type = null;
 
             //Act
             Action action = () => type.GetGenericTypeBase();
+
+            //Assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void GetDefault_TypeIsNull_ThrowArgumentNullException()
+        {
+            //Arrange
+            Type type = null;
+
+            //Act
+            Action action = () => type.GetDefault();
 
             //Assert
             action.Should().ThrowExactly<ArgumentNullException>();
