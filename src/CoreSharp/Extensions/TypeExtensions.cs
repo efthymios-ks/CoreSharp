@@ -163,7 +163,11 @@ namespace CoreSharp.Extensions
         /// Runtime equivalent of default(T).
         /// </summary>
         public static object GetDefault(this Type type)
-            => type.IsValueType ? Activator.CreateInstance(type) : null;
+        {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
+
+            return type.IsValueType ? Activator.CreateInstance(type) : null;
+        }
 
         /// <summary>
         /// Determines whether the current <see cref="Type"/>

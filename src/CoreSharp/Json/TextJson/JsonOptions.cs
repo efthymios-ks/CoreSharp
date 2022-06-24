@@ -30,7 +30,7 @@ namespace CoreSharp.Json.TextJson
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never,
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 AllowTrailingCommas = true,
                 ReferenceHandler = ReferenceHandler.Preserve,
@@ -39,6 +39,7 @@ namespace CoreSharp.Json.TextJson
                 WriteIndented = true,
                 IgnoreReadOnlyFields = true,
                 IgnoreReadOnlyProperties = true,
+                MaxDepth = 8,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 

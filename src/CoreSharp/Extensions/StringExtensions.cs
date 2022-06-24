@@ -577,27 +577,30 @@ namespace CoreSharp.Extensions
             input ??= string.Empty;
             input = input.ToLowerInvariant().Trim();
 
+            //Valid boolean 
             if (bool.TryParse(input, out var result))
                 return result;
 
-            var inputAsInt = input.ToIntCI();
+            //String interpretation
+            bool? resultFromString = input switch
+            {
+                "true" or "yes" => true,
+                "false" or "no" => false,
+                _ => null
+            };
+
+            if (resultFromString is not null)
+                return resultFromString;
+
+            //Int interpretation 
+            if (!int.TryParse(input, out var inputAsInt))
+                return null;
+
             return inputAsInt switch
             {
-                //1 or 0 
                 1 => true,
                 0 => false,
-                _ => input switch
-                {
-                    //true or false 
-                    "true" => true,
-                    "false" => false,
-
-                    //Yes or no 
-                    "yes" => true,
-                    "no" => false,
-
-                    _ => null
-                }
+                _ => null
             };
         }
 

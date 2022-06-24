@@ -10,8 +10,6 @@ namespace CoreSharp.Json.JsonNet
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static JsonSerializerSettings _default;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static JsonSerializerSettings _displayOnly;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static JsonSerializerSettings _primitiveOnly;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static JsonSerializerSettings _strict;
@@ -19,9 +17,6 @@ namespace CoreSharp.Json.JsonNet
         //Properties
         public static JsonSerializerSettings Default
             => _default ??= CreateDefault();
-
-        public static JsonSerializerSettings DisplayOnly
-            => _displayOnly ??= CreateDisplayOnly();
 
         public static JsonSerializerSettings PrimitiveOnly
             => _primitiveOnly ??= CreatePrimitiveOnly();
@@ -33,37 +28,25 @@ namespace CoreSharp.Json.JsonNet
         private static JsonSerializerSettings CreateDefault()
             => new()
             {
-                Formatting = Formatting.None,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = WritableOnlyPropertiesResolver.Instance
-            };
-
-        private static JsonSerializerSettings CreateDisplayOnly()
-            => new()
-            {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Include,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                MaxDepth = 8,
+                ContractResolver = WritableOnlyPropertiesResolver.Instance
             };
 
         private static JsonSerializerSettings CreatePrimitiveOnly()
-            => new()
-            {
-                Formatting = Formatting.None,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = PrimitiveOnlyResolver.Instance
-            };
+        {
+            var settings = Default;
+            settings.ContractResolver = PrimitiveOnlyResolver.Instance;
+            return settings;
+        }
 
         private static JsonSerializerSettings CreateStrict()
-            => new()
-            {
-                Formatting = Formatting.None,
-                NullValueHandling = NullValueHandling.Include,
-                MissingMemberHandling = MissingMemberHandling.Error,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = WritableOnlyPropertiesResolver.Instance
-            };
+        {
+            var settings = Default;
+            settings.MissingMemberHandling = MissingMemberHandling.Error;
+            return settings;
+        }
     }
 }
