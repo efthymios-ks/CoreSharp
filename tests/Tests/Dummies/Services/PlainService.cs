@@ -1,10 +1,9 @@
-﻿namespace Tests.Dummies.Services
-{
-    public interface IPlainService
-    {
-    }
+﻿namespace Tests.Dummies.Services;
 
-    public class PlainService : IPlainService
-    {
-    }
+public interface IPlainService
+{
+}
+
+public class PlainService : IPlainService
+{
 }

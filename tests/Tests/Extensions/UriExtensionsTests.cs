@@ -3,70 +3,69 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class UriExtensionsTests
 {
-    [TestFixture]
-    public class UriExtensionsTests
+    //Fields 
+    private readonly Uri _uriNull;
+
+    [Test]
+    public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()
     {
-        //Fields 
-        private readonly Uri _uriNull;
+        //Act
+        Action action = () => _uriNull.GetQueryParameters();
 
-        [Test]
-        public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()
+        //Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void GetQueryParameters_WhenCalled_ReturnDictionaryWithQueryParameters()
+    {
+        //Arrange
+        const string url = "https://example.com/?name=efthymios&color=black";
+        var uri = new Uri(url);
+        var expected = new Dictionary<string, string>
         {
-            //Act
-            Action action = () => _uriNull.GetQueryParameters();
+            { "name", "efthymios" },
+            { "color", "black" }
+        };
 
-            //Assert 
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Act
+        var result = uri.GetQueryParameters();
 
-        [Test]
-        public void GetQueryParameters_WhenCalled_ReturnDictionaryWithQueryParameters()
+        //Assert 
+        result.Should().Equal(expected);
+    }
+
+    [Test]
+    public void GetFragmentParameters_UriIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _uriNull.GetFragmentParameters();
+
+        //Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void GetFragmentParameters_WhenCalled_ReturnDictionaryWithFragmentParameters()
+    {
+        //Arrange
+        const string url = "https://example.com/route#name=efthymios&color=black";
+        var uri = new Uri(url);
+        var expected = new Dictionary<string, string>
         {
-            //Arrange
-            const string url = "https://example.com/?name=efthymios&color=black";
-            var uri = new Uri(url);
-            var expected = new Dictionary<string, string>
-            {
-                { "name", "efthymios" },
-                { "color", "black" }
-            };
+            { "name", "efthymios" },
+            { "color", "black" }
+        };
 
-            //Act
-            var result = uri.GetQueryParameters();
+        //Act
+        var result = uri.GetFragmentParameters();
 
-            //Assert 
-            result.Should().Equal(expected);
-        }
-
-        [Test]
-        public void GetFragmentParameters_UriIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _uriNull.GetFragmentParameters();
-
-            //Assert 
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void GetFragmentParameters_WhenCalled_ReturnDictionaryWithFragmentParameters()
-        {
-            //Arrange
-            const string url = "https://example.com/route#name=efthymios&color=black";
-            var uri = new Uri(url);
-            var expected = new Dictionary<string, string>
-            {
-                { "name", "efthymios" },
-                { "color", "black" }
-            };
-
-            //Act
-            var result = uri.GetFragmentParameters();
-
-            //Assert 
-            result.Should().Equal(expected);
-        }
+        //Assert 
+        result.Should().Equal(expected);
     }
 }

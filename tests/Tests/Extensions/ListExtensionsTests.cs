@@ -5,56 +5,55 @@ using System.Collections.Generic;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class ListExtensionsTests
 {
-    [TestFixture]
-    public class ListExtensionsTests
+    //Fields
+    private readonly List<DummyClass> _sourceNull;
+    private readonly List<DummyClass> _sourceEmpty = new();
+
+    //Methods 
+    [Test]
+    public void Sort_SourceIsNull_ThrowArgumentNullException()
     {
-        //Fields
-        private readonly List<DummyClass> _sourceNull;
-        private readonly List<DummyClass> _sourceEmpty = new();
+        //Act
+        Action action = () => _sourceNull.Sort(i => i.Id);
 
-        //Methods 
-        [Test]
-        public void Sort_SourceIsNull_ThrowArgumentNullException()
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Sort_KeySelectorIsNull_ThrowArgumentNullException()
+    {
+        //Arrange
+        Func<DummyClass, int> keySelector = null;
+
+        //Act
+        Action action = () => _sourceEmpty.Sort(keySelector);
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Sort_WhenCalled_SortByGivenKey()
+    {
+        //Arrange
+        var source = new List<DummyClass>
         {
-            //Act
-            Action action = () => _sourceNull.Sort(i => i.Id);
+            new(3),
+            new(1),
+            new(2)
+        };
+        var expected = source.ToList().OrderBy(i => i.Id);
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Act
+        source.Sort(i => i.Id);
 
-        [Test]
-        public void Sort_KeySelectorIsNull_ThrowArgumentNullException()
-        {
-            //Arrange
-            Func<DummyClass, int> keySelector = null;
-
-            //Act
-            Action action = () => _sourceEmpty.Sort(keySelector);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void Sort_WhenCalled_SortByGivenKey()
-        {
-            //Arrange
-            var source = new List<DummyClass>
-            {
-                new(3),
-                new(1),
-                new(2)
-            };
-            var expected = source.ToList().OrderBy(i => i.Id);
-
-            //Act
-            source.Sort(i => i.Id);
-
-            //Assert
-            source.Should().Equal(expected);
-        }
+        //Assert
+        source.Should().Equal(expected);
     }
 }

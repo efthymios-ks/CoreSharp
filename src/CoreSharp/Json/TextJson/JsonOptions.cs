@@ -5,48 +5,47 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CoreSharp.Json.TextJson
+namespace CoreSharp.Json.TextJson;
+
+public static class JsonOptions
 {
-    public static class JsonOptions
-    {
-        //Fields 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static JsonSerializerOptions _default;
+    //Fields 
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private static JsonSerializerOptions _default;
 
-        //Properties
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static IEnumerable<JsonConverter> DefaultJsonConverters
-            => new[]
-            {
-                new TimeSpanJsonConverter()
-            };
-
-        public static JsonSerializerOptions Default
-            => _default ??= CreateDefault();
-
-        //Methods
-        private static JsonSerializerOptions CreateDefault()
+    //Properties
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private static IEnumerable<JsonConverter> DefaultJsonConverters
+        => new[]
         {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-                ReadCommentHandling = JsonCommentHandling.Skip,
-                AllowTrailingCommas = true,
-                ReferenceHandler = ReferenceHandler.Preserve,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString,
-                IncludeFields = false,
-                WriteIndented = true,
-                IgnoreReadOnlyFields = true,
-                IgnoreReadOnlyProperties = true,
-                MaxDepth = 8,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
+            new TimeSpanJsonConverter()
+        };
 
-            foreach (var jsonConverter in DefaultJsonConverters)
-                options.Converters.Add(jsonConverter);
+    public static JsonSerializerOptions Default
+        => _default ??= CreateDefault();
 
-            return options;
-        }
+    //Methods
+    private static JsonSerializerOptions CreateDefault()
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            AllowTrailingCommas = true,
+            ReferenceHandler = ReferenceHandler.Preserve,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            IncludeFields = false,
+            WriteIndented = true,
+            IgnoreReadOnlyFields = true,
+            IgnoreReadOnlyProperties = true,
+            MaxDepth = 8,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+
+        foreach (var jsonConverter in DefaultJsonConverters)
+            options.Converters.Add(jsonConverter);
+
+        return options;
     }
 }

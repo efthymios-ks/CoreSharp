@@ -1,71 +1,70 @@
 ﻿using System;
 
-namespace CoreSharp.Enums
+namespace CoreSharp.Enums;
+
+/// <summary>
+/// Month <see cref="Enum"/>.
+/// Can be cast to <see cref="int"/>.
+/// </summary>
+public enum Month
 {
     /// <summary>
-    /// Month <see cref="Enum"/>.
-    /// Can be cast to <see cref="int"/>.
+    /// January.
     /// </summary>
-    public enum Month
-    {
-        /// <summary>
-        /// January.
-        /// </summary>
-        January = 1,
+    January = 1,
 
-        /// <summary>
-        /// February.
-        /// </summary>
-        February = 2,
+    /// <summary>
+    /// February.
+    /// </summary>
+    February = 2,
 
-        /// <summary>
-        /// March.
-        /// </summary>
-        March = 3,
+    /// <summary>
+    /// March.
+    /// </summary>
+    March = 3,
 
-        /// <summary>
-        /// April.
-        /// </summary>
-        April = 4,
+    /// <summary>
+    /// April.
+    /// </summary>
+    April = 4,
 
-        /// <summary>
-        /// May.
-        /// </summary>
-        May = 5,
+    /// <summary>
+    /// May.
+    /// </summary>
+    May = 5,
 
-        /// <summary>
-        /// June.
-        /// </summary>
-        June = 6,
+    /// <summary>
+    /// June.
+    /// </summary>
+    June = 6,
 
-        /// <summary>
-        /// July.
-        /// </summary>
-        July = 7,
+    /// <summary>
+    /// July.
+    /// </summary>
+    July = 7,
 
-        /// <summary>
-        /// August.
-        /// </summary>
-        August = 8,
+    /// <summary>
+    /// August.
+    /// </summary>
+    August = 8,
 
-        /// <summary>
-        /// September.
-        /// </summary>
-        September = 9,
+    /// <summary>
+    /// September.
+    /// </summary>
+    September = 9,
 
-        /// <summary>
-        /// October.
-        /// </summary>
-        October = 10,
+    /// <summary>
+    /// October.
+    /// </summary>
+    October = 10,
 
-        /// <summary>
-        /// November.
-        /// </summary>
-        November = 11,
+    /// <summary>
+    /// November.
+    /// </summary>
+    November = 11,
 
-        /// <summary>
-        /// December.
-        /// </summary>
-        December = 12
-    }
+    /// <summary>
+    /// December.
+    /// </summary>
+    December = 12
 }

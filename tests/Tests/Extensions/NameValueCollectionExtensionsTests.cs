@@ -3,42 +3,41 @@ using NUnit.Framework;
 using System;
 using System.Collections.Specialized;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class NameValueCollectionExtensionsTests
 {
-    [TestFixture]
-    public class NameValueCollectionExtensionsTests
+    //Fields
+    private readonly NameValueCollection _sourceNull;
+
+    //Methods 
+    [Test]
+    public void ToUrlQueryString_ParametersInNull_ThrowArgumentNullException()
     {
-        //Fields
-        private readonly NameValueCollection _sourceNull;
+        //Act
+        Action action = () => _sourceNull.ToUrlQueryString();
 
-        //Methods 
-        [Test]
-        public void ToUrlQueryString_ParametersInNull_ThrowArgumentNullException()
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void ToUrlQueryString_WhenCalled_ReturnQueryString()
+    {
+        //Arrange
+        var parameters = new NameValueCollection
         {
-            //Act
-            Action action = () => _sourceNull.ToUrlQueryString();
+            { "name", "Efthymios Koktsidis" },
+            { "color", "Black" },
+            { "count", "10" }
+        };
+        const string expected = "?name=Efthymios%20Koktsidis&color=Black&count=10";
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Act
+        var result = parameters.ToUrlQueryString();
 
-        [Test]
-        public void ToUrlQueryString_WhenCalled_ReturnQueryString()
-        {
-            //Arrange
-            var parameters = new NameValueCollection
-            {
-                { "name", "Efthymios Koktsidis" },
-                { "color", "Black" },
-                { "count", "10" }
-            };
-            const string expected = "?name=Efthymios%20Koktsidis&color=Black&count=10";
-
-            //Act
-            var result = parameters.ToUrlQueryString();
-
-            //Assert
-            result.Should().Be(expected);
-        }
+        //Assert
+        result.Should().Be(expected);
     }
 }

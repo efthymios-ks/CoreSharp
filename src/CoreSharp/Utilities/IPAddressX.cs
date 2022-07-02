@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 
-namespace CoreSharp.Utilities
+namespace CoreSharp.Utilities;
+
+/// <summary>
+/// <see cref="IPAddress"/> utilities.
+/// </summary>
+public static class IPAddressX
 {
     /// <summary>
-    /// <see cref="IPAddress"/> utilities.
+    /// Get current machines ip collection.
     /// </summary>
-    public static class IPAddressX
+    public static IEnumerable<IPAddress> GetCurrentIpCollection()
     {
-        /// <summary>
-        /// Get current machines ip collection.
-        /// </summary>
-        public static IEnumerable<IPAddress> GetCurrentIpCollection()
-        {
-            var hostName = Dns.GetHostName();
-            var iphe = Dns.GetHostEntry(hostName);
-            return iphe.AddressList;
-        }
+        var hostName = Dns.GetHostName();
+        var iphe = Dns.GetHostEntry(hostName);
+        return iphe.AddressList;
     }
 }

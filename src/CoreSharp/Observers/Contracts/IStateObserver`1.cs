@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace CoreSharp.Observers.Contracts
-{
-    public interface IStateObserver<TEntity>
-        where TEntity : class
-    {
-        //Properties
-        TEntity State { get; set; }
+namespace CoreSharp.Observers.Contracts;
 
-        //Events 
-        event Action<TEntity> StateChanged;
-    }
+public interface IStateObserver<TEntity>
+    where TEntity : class
+{
+    //Properties
+    TEntity State { get; set; }
+
+    //Events 
+    event Action<TEntity> StateChanged;
 }

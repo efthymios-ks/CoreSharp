@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace CoreSharp.Concrete.Communication
-{
-    internal class ConnectionStatusChangedEventArgs : EventArgs
-    {
-        //Constructors 
-        public ConnectionStatusChangedEventArgs(bool isConnected)
-            => IsConnected = isConnected;
+namespace CoreSharp.Concrete.Communication;
 
-        //Properties 
-        public bool IsConnected { get; }
-    }
+internal class ConnectionStatusChangedEventArgs : EventArgs
+{
+    //Constructors 
+    public ConnectionStatusChangedEventArgs(bool isConnected)
+        => IsConnected = isConnected;
+
+    //Properties 
+    public bool IsConnected { get; }
 }

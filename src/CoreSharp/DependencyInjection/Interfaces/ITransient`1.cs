@@ -1,6 +1,5 @@
-﻿namespace CoreSharp.DependencyInjection.Interfaces
+﻿namespace CoreSharp.DependencyInjection.Interfaces;
+
+public interface ITransient<TContract> : ITransient
 {
-    public interface ITransient<TContract> : ITransient
-    {
-    }
 }

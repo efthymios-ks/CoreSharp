@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoreSharp.Utilities
+namespace CoreSharp.Utilities;
+
+/// <summary>
+/// <see cref="ValueTask"/> utilities.
+/// </summary>
+public static class ValueTaskX
 {
-    /// <summary>
-    /// <see cref="ValueTask"/> utilities.
-    /// </summary>
-    public static class ValueTaskX
+    /// <inheritdoc cref="WhenAll(ValueTask[])"/>
+    public static async Task WhenAll(IEnumerable<ValueTask> valueTasks)
+        => await WhenAll(valueTasks?.ToArray());
+
+    /// <inheritdoc cref="Task.WhenAll(Task[])"/>
+    public static async Task WhenAll(params ValueTask[] valueTasks)
     {
-        /// <inheritdoc cref="WhenAll(ValueTask[])"/>
-        public static async Task WhenAll(IEnumerable<ValueTask> valueTasks)
-            => await WhenAll(valueTasks?.ToArray());
+        _ = valueTasks ?? throw new ArgumentNullException(nameof(valueTasks));
 
-        /// <inheritdoc cref="Task.WhenAll(Task[])"/>
-        public static async Task WhenAll(params ValueTask[] valueTasks)
-        {
-            _ = valueTasks ?? throw new ArgumentNullException(nameof(valueTasks));
-
-            var tasks = valueTasks.Select(vt => vt.AsTask());
-            await Task.WhenAll(tasks);
-        }
+        var tasks = valueTasks.Select(vt => vt.AsTask());
+        await Task.WhenAll(tasks);
     }
 }

@@ -1,14 +1,13 @@
-﻿namespace CoreSharp.Enums
+﻿namespace CoreSharp.Enums;
+
+public enum RestMethod
 {
-    public enum RestMethod
-    {
-        Get,
-        Post,
-        Put,
-        Patch,
-        Delete,
-        Head,
-        Options,
-        Trace
-    }
+    Get,
+    Post,
+    Put,
+    Patch,
+    Delete,
+    Head,
+    Options,
+    Trace
 }

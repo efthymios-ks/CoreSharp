@@ -1,46 +1,45 @@
 ﻿using System;
 using System.IO;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="FileInfo"/> extensions.
+/// </summary>
+public static class FileInfoExtensions
 {
     /// <summary>
-    /// <see cref="FileInfo"/> extensions.
+    /// Change given file extension.
     /// </summary>
-    public static class FileInfoExtensions
+    public static FileInfo ChangeExtension(this FileInfo file, string extension)
     {
-        /// <summary>
-        /// Change given file extension.
-        /// </summary>
-        public static FileInfo ChangeExtension(this FileInfo file, string extension)
-        {
-            _ = file ?? throw new ArgumentNullException(nameof(file));
+        _ = file ?? throw new ArgumentNullException(nameof(file));
 
-            var newFileName = Path.ChangeExtension(file.FullName, extension);
-            return new FileInfo(newFileName);
-        }
+        var newFileName = Path.ChangeExtension(file.FullName, extension);
+        return new FileInfo(newFileName);
+    }
 
-        /// <summary>
-        /// Rename given file.
-        /// </summary>
-        /// <param name="name">New file name. May include or not a new extension.</param>
-        public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
-        {
-            _ = file ?? throw new ArgumentNullException(nameof(file));
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentNullException(nameof(name));
+    /// <summary>
+    /// Rename given file.
+    /// </summary>
+    /// <param name="name">New file name. May include or not a new extension.</param>
+    public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
+    {
+        _ = file ?? throw new ArgumentNullException(nameof(file));
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentNullException(nameof(name));
 
-            var oldParent = file.DirectoryName;
-            var oldExtension = file.Extension.Trim('.');
+        var oldParent = file.DirectoryName;
+        var oldExtension = file.Extension.Trim('.');
 
-            var newName = Path.GetFileNameWithoutExtension(name);
-            var newExtension = Path.GetExtension(name).Trim('.');
+        var newName = Path.GetFileNameWithoutExtension(name);
+        var newExtension = Path.GetExtension(name).Trim('.');
 
-            var finalExtension = string.IsNullOrWhiteSpace(newExtension) ? oldExtension : newExtension;
-            var finalName = $"{Path.Combine(oldParent!, newName)}.{finalExtension}";
+        var finalExtension = string.IsNullOrWhiteSpace(newExtension) ? oldExtension : newExtension;
+        var finalName = $"{Path.Combine(oldParent!, newName)}.{finalExtension}";
 
-            file.MoveTo(finalName, overwrite);
+        file.MoveTo(finalName, overwrite);
 
-            return new FileInfo(finalName);
-        }
+        return new FileInfo(finalName);
     }
 }

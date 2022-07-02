@@ -1,21 +1,20 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace CoreSharp.Utilities
+namespace CoreSharp.Utilities;
+
+/// <summary>
+/// <see cref="DirectoryInfo"/> utilities.
+/// </summary>
+public static class DirectoryInfoX
 {
     /// <summary>
-    /// <see cref="DirectoryInfo"/> utilities.
+    /// Get entry's assembly output folder.
     /// </summary>
-    public static class DirectoryInfoX
+    public static DirectoryInfo GetOutputFolder()
     {
-        /// <summary>
-        /// Get entry's assembly output folder.
-        /// </summary>
-        public static DirectoryInfo GetOutputFolder()
-        {
-            var assembly = Assembly.GetEntryAssembly();
-            var location = Path.GetDirectoryName(assembly.Location);
-            return new DirectoryInfo(location);
-        }
+        var assembly = Assembly.GetEntryAssembly();
+        var location = Path.GetDirectoryName(assembly.Location);
+        return new DirectoryInfo(location);
     }
 }

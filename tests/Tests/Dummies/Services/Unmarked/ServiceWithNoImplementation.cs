@@ -1,6 +1,5 @@
-﻿namespace Tests.Dummies.Services.Unmarked
+﻿namespace Tests.Dummies.Services.Unmarked;
+
+public interface IServiceWithNoImplementation
 {
-    public interface IServiceWithNoImplementation
-    {
-    }
 }

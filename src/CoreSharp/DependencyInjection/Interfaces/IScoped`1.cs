@@ -1,6 +1,5 @@
-﻿namespace CoreSharp.DependencyInjection.Interfaces
+﻿namespace CoreSharp.DependencyInjection.Interfaces;
+
+public interface IScoped<TContract> : IScoped
 {
-    public interface IScoped<TContract> : IScoped
-    {
-    }
 }

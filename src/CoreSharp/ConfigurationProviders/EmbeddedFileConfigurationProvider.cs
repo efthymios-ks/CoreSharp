@@ -4,62 +4,61 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace CoreSharp.ConfigurationProviders
+namespace CoreSharp.ConfigurationProviders;
+
+public class EmbeddedFileConfigurationProvider : ConfigurationProvider
 {
-    public class EmbeddedFileConfigurationProvider : ConfigurationProvider
+    //Fields 
+    private readonly IConfigurationBuilder _builder;
+    private readonly IFileProvider _fileProvider;
+    private readonly EmbeddedFileConfigurationOptions _options;
+
+    //Constructors
+    public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
     {
-        //Fields 
-        private readonly IConfigurationBuilder _builder;
-        private readonly IFileProvider _fileProvider;
-        private readonly EmbeddedFileConfigurationOptions _options;
+        _builder = builder ?? throw new ArgumentNullException(nameof(builder));
+        _options = options ?? throw new ArgumentNullException(nameof(options));
+        _ = _options.ScanAssembly ?? throw new NullReferenceException(nameof(options.ScanAssembly));
 
-        //Constructors
-        public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
+        _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
+    }
+
+    //Methods
+    public override void Load()
+    {
+        Data.Clear();
+
+        var locations = new HashSet<string>
         {
-            _builder = builder ?? throw new ArgumentNullException(nameof(builder));
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-            _ = _options.ScanAssembly ?? throw new NullReferenceException(nameof(options.ScanAssembly));
+            GetAppsettingsPath(_options.Location, null),
+            GetAppsettingsPath(_options.Location, _options.Environment)
+        };
 
-            _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
-        }
+        foreach (var location in locations)
+            AddFile(location);
+    }
 
-        //Methods
-        public override void Load()
-        {
-            Data.Clear();
+    private static string GetAppsettingsPath(string location, string environmentName)
+    {
+        location ??= string.Empty;
+        location = location.Replace('\\', '/').Trim('/');
 
-            var locations = new HashSet<string>
-            {
-                GetAppsettingsPath(_options.Location, null),
-                GetAppsettingsPath(_options.Location, _options.Environment)
-            };
+        var fileName = string.IsNullOrWhiteSpace(environmentName)
+                        ? "appsettings.json"
+                        : $"appsettings.{environmentName}.json";
 
-            foreach (var location in locations)
-                AddFile(location);
-        }
+        return Path.Combine(location, fileName);
+    }
 
-        private static string GetAppsettingsPath(string location, string environmentName)
-        {
-            location ??= string.Empty;
-            location = location.Replace('\\', '/').Trim('/');
+    private void AddFile(string appSettingsPath)
+    {
+        if (string.IsNullOrWhiteSpace(appSettingsPath))
+            throw new ArgumentNullException(nameof(appSettingsPath));
 
-            var fileName = string.IsNullOrWhiteSpace(environmentName)
-                            ? "appsettings.json"
-                            : $"appsettings.{environmentName}.json";
+        var file = _fileProvider.GetFileInfo(appSettingsPath);
+        if (!file.Exists)
+            return;
 
-            return Path.Combine(location, fileName);
-        }
-
-        private void AddFile(string appSettingsPath)
-        {
-            if (string.IsNullOrWhiteSpace(appSettingsPath))
-                throw new ArgumentNullException(nameof(appSettingsPath));
-
-            var file = _fileProvider.GetFileInfo(appSettingsPath);
-            if (!file.Exists)
-                return;
-
-            _builder.AddJsonFile(_fileProvider, appSettingsPath, optional: false, reloadOnChange: true);
-        }
+        _builder.AddJsonFile(_fileProvider, appSettingsPath, optional: false, reloadOnChange: true);
     }
 }

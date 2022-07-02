@@ -3,100 +3,99 @@ using NUnit.Framework;
 using System;
 using System.Globalization;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class ArrayExtensionsTests
 {
-    [TestFixture]
-    public class ArrayExtensionsTests
+    //Fields
+    private readonly int[,] _sourceNull;
+
+    [Test]
+    public void GetRow_SourceIsNull_ThrowArgumentNullException()
     {
-        //Fields
-        private readonly int[,] _sourceNull;
+        var culture = CultureInfo.CurrentCulture;
 
-        [Test]
-        public void GetRow_SourceIsNull_ThrowArgumentNullException()
+        //Act
+        Action action = () => _sourceNull.GetRow(0);
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    [TestCase(0, 0, -1)]
+    [TestCase(0, 0, 1)]
+    public void GetRow_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
+    {
+        //Arrange
+        var source = new int[rows, columns];
+
+        //Act
+        Action action = () => source.GetRow(row);
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+    }
+
+    [Test]
+    public void GetRow_WhenCalled_ReturnRow()
+    {
+        //Arrange
+        var source = new[,]
         {
-            var culture = CultureInfo.CurrentCulture;
+            { 1, 2 },
+            { 3, 4 }
+        };
+        var expected = new[] { 3, 4 };
 
-            //Act
-            Action action = () => _sourceNull.GetRow(0);
+        //Act
+        var result = source.GetRow(1);
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Assert
+        result.Should().Equal(expected);
+    }
 
-        [Test]
-        [TestCase(0, 0, -1)]
-        [TestCase(0, 0, 1)]
-        public void GetRow_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
+    [Test]
+    public void GetColumn_SourceIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _sourceNull.GetColumn(0);
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    [TestCase(0, 0, -1)]
+    [TestCase(0, 0, 1)]
+    public void GetColumn_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
+    {
+        //Arrange
+        var source = new int[rows, columns];
+
+        //Act
+        Action action = () => source.GetColumn(row);
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+    }
+
+    [Test]
+    public void GetColumn_WhenCalled_ReturnColumn()
+    {
+        //Arrange
+        var source = new[,]
         {
-            //Arrange
-            var source = new int[rows, columns];
+            { 1, 2 },
+            { 3, 4 }
+        };
+        var expected = new[] { 2, 4 };
 
-            //Act
-            Action action = () => source.GetRow(row);
+        //Act
+        var result = source.GetColumn(1);
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
-        }
-
-        [Test]
-        public void GetRow_WhenCalled_ReturnRow()
-        {
-            //Arrange
-            var source = new[,]
-            {
-                { 1, 2 },
-                { 3, 4 }
-            };
-            var expected = new[] { 3, 4 };
-
-            //Act
-            var result = source.GetRow(1);
-
-            //Assert
-            result.Should().Equal(expected);
-        }
-
-        [Test]
-        public void GetColumn_SourceIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _sourceNull.GetColumn(0);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        [TestCase(0, 0, -1)]
-        [TestCase(0, 0, 1)]
-        public void GetColumn_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
-        {
-            //Arrange
-            var source = new int[rows, columns];
-
-            //Act
-            Action action = () => source.GetColumn(row);
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
-        }
-
-        [Test]
-        public void GetColumn_WhenCalled_ReturnColumn()
-        {
-            //Arrange
-            var source = new[,]
-            {
-                { 1, 2 },
-                { 3, 4 }
-            };
-            var expected = new[] { 2, 4 };
-
-            //Act
-            var result = source.GetColumn(1);
-
-            //Assert
-            result.Should().Equal(expected);
-        }
+        //Assert
+        result.Should().Equal(expected);
     }
 }

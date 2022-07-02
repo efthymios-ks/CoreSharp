@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="TimeSpan"/> extensions.
+/// </summary>
+public static class TimeSpanExtensions
 {
+    /// <inheritdoc cref="ToStringReadable(TimeSpan)" />
+    public static string ToStringReadable(this TimeSpan? timeSpan)
+        => (timeSpan ?? TimeSpan.Zero).ToStringReadable();
+
     /// <summary>
-    /// <see cref="TimeSpan"/> extensions.
+    /// Convert <see cref="TimeSpan"/> to human readable string.
     /// </summary>
-    public static class TimeSpanExtensions
+    public static string ToStringReadable(this TimeSpan timeSpan)
     {
-        /// <inheritdoc cref="ToStringReadable(TimeSpan)" />
-        public static string ToStringReadable(this TimeSpan? timeSpan)
-            => (timeSpan ?? TimeSpan.Zero).ToStringReadable();
+        if (timeSpan == TimeSpan.Zero)
+            return "0ms";
 
-        /// <summary>
-        /// Convert <see cref="TimeSpan"/> to human readable string.
-        /// </summary>
-        public static string ToStringReadable(this TimeSpan timeSpan)
+        var fields = new List<string>();
+
+        //Negate, if negative 
+        if (timeSpan < TimeSpan.Zero)
         {
-            if (timeSpan == TimeSpan.Zero)
-                return "0ms";
-
-            var fields = new List<string>();
-
-            //Negate, if negative 
-            if (timeSpan < TimeSpan.Zero)
-            {
-                fields.Add("-");
-                timeSpan = timeSpan == TimeSpan.MinValue ? TimeSpan.MaxValue : timeSpan.Negate();
-            }
-
-            //Add values 
-            void Add(int value, string unit)
-            {
-                if (value != 0)
-                    fields.Add($"{value}{unit}");
-            }
-
-            Add(timeSpan.Days, "d");
-            Add(timeSpan.Hours, "h");
-            Add(timeSpan.Minutes, "m");
-            Add(timeSpan.Seconds, "s");
-            Add(timeSpan.Milliseconds, "ms");
-
-            //Join and return
-            return string.Join(" ", fields);
+            fields.Add("-");
+            timeSpan = timeSpan == TimeSpan.MinValue ? TimeSpan.MaxValue : timeSpan.Negate();
         }
+
+        //Add values 
+        void Add(int value, string unit)
+        {
+            if (value != 0)
+                fields.Add($"{value}{unit}");
+        }
+
+        Add(timeSpan.Days, "d");
+        Add(timeSpan.Hours, "h");
+        Add(timeSpan.Minutes, "m");
+        Add(timeSpan.Seconds, "s");
+        Add(timeSpan.Milliseconds, "ms");
+
+        //Join and return
+        return string.Join(" ", fields);
     }
 }

@@ -1,14 +1,13 @@
 ﻿using CoreSharp.DependencyInjection.Interfaces;
 
-namespace Tests.Dummies.Services.Marked
-{
-    internal interface ISingletonServiceWithContract
-    {
-    }
+namespace Tests.Dummies.Services.Marked;
 
-    internal class SingletonServiceWithContract :
-        ISingletonServiceWithContract,
-        ISingleton<ISingletonServiceWithContract>
-    {
-    }
+internal interface ISingletonServiceWithContract
+{
+}
+
+internal class SingletonServiceWithContract :
+    ISingletonServiceWithContract,
+    ISingleton<ISingletonServiceWithContract>
+{
 }

@@ -4,42 +4,41 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class ExpandoObjectExtensionsTests
 {
-    [TestFixture]
-    public class ExpandoObjectExtensionsTests
+    [Test]
+    public void ToDictionary_InputIsNull_ThrowNewArgumentNullException()
     {
-        [Test]
-        public void ToDictionary_InputIsNull_ThrowNewArgumentNullException()
+        //Arrange 
+        ExpandoObject expando = null;
+
+        //Act 
+        Action action = () => expando.ToDictionary();
+
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void ToDictionary_WhenCalled_ReturnDictionary()
+    {
+        //Arrange 
+        var source = new Dictionary<string, object>
         {
-            //Arrange 
-            ExpandoObject expando = null;
+            { "id", 1 },
+            { "color", "black" }
+        };
+        IDictionary<string, object> expando = new ExpandoObject();
+        foreach (var item in source)
+            expando.Add(item);
 
-            //Act 
-            Action action = () => expando.ToDictionary();
+        //Act 
+        var dictionary = ((ExpandoObject)expando).ToDictionary();
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void ToDictionary_WhenCalled_ReturnDictionary()
-        {
-            //Arrange 
-            var source = new Dictionary<string, object>
-            {
-                { "id", 1 },
-                { "color", "black" }
-            };
-            IDictionary<string, object> expando = new ExpandoObject();
-            foreach (var item in source)
-                expando.Add(item);
-
-            //Act 
-            var dictionary = ((ExpandoObject)expando).ToDictionary();
-
-            //Assert
-            dictionary.Should().Equal(source);
-        }
+        //Assert
+        dictionary.Should().Equal(source);
     }
 }

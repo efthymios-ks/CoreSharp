@@ -1,27 +1,26 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace CoreSharp.Utilities
+namespace CoreSharp.Utilities;
+
+/// <summary>
+/// Json utilities.
+/// </summary>
+public static class JsonX
 {
     /// <summary>
-    /// Json utilities.
+    /// Check if string is an empty json.
     /// </summary>
-    public static class JsonX
+    public static bool IsEmpty(string json)
     {
-        /// <summary>
-        /// Check if string is an empty json.
-        /// </summary>
-        public static bool IsEmpty(string json)
-        {
-            json ??= string.Empty;
+        json ??= string.Empty;
 
-            //Remove spaces, line-breaks and whitespace
-            json = Regex.Replace(json, @"\s+", string.Empty);
+        //Remove spaces, line-breaks and whitespace
+        json = Regex.Replace(json, @"\s+", string.Empty);
 
-            //Empty formats
-            var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
+        //Empty formats
+        var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
 
-            return emptyFormats.Any(f => f == json);
-        }
+        return emptyFormats.Any(f => f == json);
     }
 }

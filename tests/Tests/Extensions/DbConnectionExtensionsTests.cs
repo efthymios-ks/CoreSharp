@@ -4,91 +4,90 @@ using System;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace CoreSharp.Extensions.Tests
+namespace CoreSharp.Extensions.Tests;
+
+[TestFixture]
+public class DbConnectionExtensionsTests
 {
-    [TestFixture]
-    public class DbConnectionExtensionsTests
+    //Fields
+    private readonly DbConnection _connectionNull;
+    private DbConnection _sqlConnection;
+
+    //Methods
+    [SetUp]
+    public void SetUp()
+        => _sqlConnection = new SqlConnection();
+
+    [TearDown]
+    public void TearDown()
     {
-        //Fields
-        private readonly DbConnection _connectionNull;
-        private DbConnection _sqlConnection;
+        _sqlConnection?.Dispose();
+        _sqlConnection = null;
+    }
 
-        //Methods
-        [SetUp]
-        public void SetUp()
-            => _sqlConnection = new SqlConnection();
+    [Test]
+    public void CreateDataAdapter_ConnectionIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _connectionNull.CreateDataAdapter();
 
-        [TearDown]
-        public void TearDown()
-        {
-            _sqlConnection?.Dispose();
-            _sqlConnection = null;
-        }
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
 
-        [Test]
-        public void CreateDataAdapter_ConnectionIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _connectionNull.CreateDataAdapter();
+    [Test]
+    public void CreateDataAdapter_WhenCalled_ReturnSameTypeDbAdapter()
+    {
+        //Act
+        var result = _sqlConnection.CreateDataAdapter();
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Assert
+        result.Should().BeOfType<SqlDataAdapter>();
+    }
 
-        [Test]
-        public void CreateDataAdapter_WhenCalled_ReturnSameTypeDbAdapter()
-        {
-            //Act
-            var result = _sqlConnection.CreateDataAdapter();
+    [Test]
+    public void CreateParameter_ConnectionIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _connectionNull.CreateParameter("{name}", "Efthymios");
 
-            //Assert
-            result.Should().BeOfType<SqlDataAdapter>();
-        }
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
 
-        [Test]
-        public void CreateParameter_ConnectionIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _connectionNull.CreateParameter("{name}", "Efthymios");
+    [Test]
+    public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
+    {
+        //Arrange
+        const string name = "{name}";
+        const string value = "Efthymios";
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Act
+        var result = _sqlConnection.CreateParameter(name, value);
 
-        [Test]
-        public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
-        {
-            //Arrange
-            const string name = "{name}";
-            const string value = "Efthymios";
+        //Assert
+        result.Should().BeOfType<SqlParameter>();
+        result.ParameterName.Should().Be(name);
+        result.Value.Should().Be(value);
+    }
 
-            //Act
-            var result = _sqlConnection.CreateParameter(name, value);
+    [Test]
+    public void IsOpen_ConnectionIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _connectionNull.IsOpen();
 
-            //Assert
-            result.Should().BeOfType<SqlParameter>();
-            result.ParameterName.Should().Be(name);
-            result.Value.Should().Be(value);
-        }
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
 
-        [Test]
-        public void IsOpen_ConnectionIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _connectionNull.IsOpen();
+    [Test]
+    public void IsAvailable_ConnectionIsNull_ThrowArgumentNullException()
+    {
+        //Act
+        Action action = () => _connectionNull.IsOpen();
 
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
-
-        [Test]
-        public void IsAvailable_ConnectionIsNull_ThrowArgumentNullException()
-        {
-            //Act
-            Action action = () => _connectionNull.IsOpen();
-
-            //Assert
-            action.Should().ThrowExactly<ArgumentNullException>();
-        }
+        //Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
     }
 }

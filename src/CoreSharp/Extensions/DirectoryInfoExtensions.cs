@@ -1,22 +1,21 @@
 ﻿using System;
 using System.IO;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="DirectoryInfo"/> extensions.
+/// </summary>
+public static class DirectoryInfoExtensions
 {
     /// <summary>
-    /// <see cref="DirectoryInfo"/> extensions.
+    /// Deletes all files from directory.
     /// </summary>
-    public static class DirectoryInfoExtensions
+    public static void Clear(this DirectoryInfo directory, bool recursive = false)
     {
-        /// <summary>
-        /// Deletes all files from directory.
-        /// </summary>
-        public static void Clear(this DirectoryInfo directory, bool recursive = false)
-        {
-            Array.ForEach(directory.GetFiles(), i => i.Delete());
+        Array.ForEach(directory.GetFiles(), i => i.Delete());
 
-            if (recursive)
-                Array.ForEach(directory.GetDirectories(), i => i.Delete(true));
-        }
+        if (recursive)
+            Array.ForEach(directory.GetDirectories(), i => i.Delete(true));
     }
 }

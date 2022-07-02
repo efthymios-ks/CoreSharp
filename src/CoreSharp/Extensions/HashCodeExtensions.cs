@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="HashCode"/> extensions.
+/// </summary>
+public static class HashCodeExtensions
 {
+    /// <inheritdoc cref="AddRange{TElement}(HashCode, IEnumerable{TElement}, IEqualityComparer{TElement})"/>
+    public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source)
+        => hashCode.AddRange(source, EqualityComparer<TElement>.Default);
+
     /// <summary>
-    /// <see cref="HashCode"/> extensions.
+    /// Add multiple values to <see cref="HashCode"/>.
     /// </summary>
-    public static class HashCodeExtensions
+    public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source, IEqualityComparer<TElement> equalityComparer)
     {
-        /// <inheritdoc cref="AddRange{TElement}(HashCode, IEnumerable{TElement}, IEqualityComparer{TElement})"/>
-        public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source)
-            => hashCode.AddRange(source, EqualityComparer<TElement>.Default);
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
 
-        /// <summary>
-        /// Add multiple values to <see cref="HashCode"/>.
-        /// </summary>
-        public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source, IEqualityComparer<TElement> equalityComparer)
-        {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
-            _ = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
-
-            foreach (var element in source)
-                hashCode.Add(element, equalityComparer);
-        }
+        foreach (var element in source)
+            hashCode.Add(element, equalityComparer);
     }
 }

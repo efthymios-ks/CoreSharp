@@ -2,32 +2,31 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="ExpandoObject"/> extensions.
+/// </summary>
+public static class ExpandoObjectExtensions
 {
     /// <summary>
-    /// <see cref="ExpandoObject"/> extensions.
+    /// Convert to <see cref="IDictionary{TKey, TValue}"/>.
     /// </summary>
-    public static class ExpandoObjectExtensions
+    public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
     {
-        /// <summary>
-        /// Convert to <see cref="IDictionary{TKey, TValue}"/>.
-        /// </summary>
-        public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
-        {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            return source;
-        }
+        return source;
+    }
 
-        /// <summary>
-        /// Try get specific value by key.
-        /// </summary>
-        public static TElement GetValue<TElement>(this ExpandoObject source, string key)
-        {
-            _ = source ?? throw new ArgumentNullException(nameof(source));
+    /// <summary>
+    /// Try get specific value by key.
+    /// </summary>
+    public static TElement GetValue<TElement>(this ExpandoObject source, string key)
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
 
-            var dictionary = source.ToDictionary();
-            return (TElement)dictionary[key];
-        }
+        var dictionary = source.ToDictionary();
+        return (TElement)dictionary[key];
     }
 }

@@ -2,31 +2,30 @@
 using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Extensions
+namespace CoreSharp.Extensions;
+
+/// <summary>
+/// <see cref="Uri"/> extensions.
+/// </summary>
+public static class UriExtensions
 {
     /// <summary>
-    /// <see cref="Uri"/> extensions.
+    /// Get <see cref="Uri.Query"/> parameters.
     /// </summary>
-    public static class UriExtensions
+    public static IDictionary<string, string> GetQueryParameters(this Uri uri)
     {
-        /// <summary>
-        /// Get <see cref="Uri.Query"/> parameters.
-        /// </summary>
-        public static IDictionary<string, string> GetQueryParameters(this Uri uri)
-        {
-            _ = uri ?? throw new ArgumentNullException(nameof(uri));
+        _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return UriX.GetParameters(uri.Query);
-        }
+        return UriX.GetParameters(uri.Query);
+    }
 
-        /// <summary>
-        /// Get <see cref="Uri.Fragment"/> parameters.
-        /// </summary>
-        public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
-        {
-            _ = uri ?? throw new ArgumentNullException(nameof(uri));
+    /// <summary>
+    /// Get <see cref="Uri.Fragment"/> parameters.
+    /// </summary>
+    public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
+    {
+        _ = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            return UriX.GetParameters(uri.Fragment.TrimStart('#'));
-        }
+        return UriX.GetParameters(uri.Fragment.TrimStart('#'));
     }
 }

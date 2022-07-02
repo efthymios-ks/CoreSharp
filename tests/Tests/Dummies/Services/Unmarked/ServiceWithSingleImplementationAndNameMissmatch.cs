@@ -1,14 +1,13 @@
-﻿namespace Tests.Dummies.Services.Unmarked
-{
-    public interface IServiceWithSingleImplementationAndNameMissmatch
-    {
-    }
+﻿namespace Tests.Dummies.Services.Unmarked;
 
-    /// <summary>
-    /// Name missmatch and single implementation.
-    /// Should register.
-    /// </summary>
-    public class ServiceWithSingleImplementationAndNameMissmatch1 : IServiceWithSingleImplementationAndNameMissmatch
-    {
-    }
+public interface IServiceWithSingleImplementationAndNameMissmatch
+{
+}
+
+/// <summary>
+/// Name missmatch and single implementation.
+/// Should register.
+/// </summary>
+public class ServiceWithSingleImplementationAndNameMissmatch1 : IServiceWithSingleImplementationAndNameMissmatch
+{
 }

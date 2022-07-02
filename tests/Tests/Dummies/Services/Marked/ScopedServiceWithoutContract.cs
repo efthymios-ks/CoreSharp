@@ -1,8 +1,7 @@
 ﻿using CoreSharp.DependencyInjection.Interfaces;
 
-namespace Tests.Dummies.Services.Marked
+namespace Tests.Dummies.Services.Marked;
+
+internal class ScopedServiceWithoutContract : IScoped
 {
-    internal class ScopedServiceWithoutContract : IScoped
-    {
-    }
 }
