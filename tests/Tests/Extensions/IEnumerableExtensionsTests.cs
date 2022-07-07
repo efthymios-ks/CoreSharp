@@ -1000,6 +1000,7 @@ public class IEnumerableExtensionsTests
         result.Should().BeFalse();
     }
 
+#if !NET6_0_OR_GREATER
     [Test]
     public void Chunk_SourceIsNull_ThrowArgumentNullException()
     {
@@ -1041,6 +1042,7 @@ public class IEnumerableExtensionsTests
         for (var i = 0; i < result.Length; i++)
             result[i].Should().Equal(expected[i]);
     }
+#endif
 
     [Test]
     public void FirstOr_SourceIsNull_ThrowArgumentNullException()

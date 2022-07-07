@@ -494,6 +494,7 @@ public static class IEnumerableExtensions
     public static IEnumerable<TElement> FilterFlexible<TElement>(this IEnumerable<TElement> source, Func<TElement, string> propertySelector, string filter)
         => (source?.AsQueryable()).FilterFlexible(propertySelector, filter);
 
+#if !NET6_0_OR_GREATER
     /// <summary>
     /// Split the elements of a sequence into chunks of size at most size.
     /// </summary>
@@ -517,6 +518,7 @@ public static class IEnumerableExtensions
             index += size;
         }
     }
+#endif
 
     /// <inheritdoc cref="FirstOr{TItem}(IEnumerable{TItem}, Func{TItem, bool}, TItem)" />
     public static TElement FirstOr<TElement>(this IEnumerable<TElement> source, TElement fallbackValue)

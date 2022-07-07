@@ -76,8 +76,9 @@ public class StringExtensionsTests
         result.Should().Be(expected);
     }
 
+#if !NET6_0_OR_GREATER
     [Test]
-    public void SplitChunks_InputIsNull_ThrowArgumentNullException()
+    public void Chunk_InputIsNull_ThrowArgumentNullException()
     {
         //Act
         Action action = () => StringNull.Chunk(2);
@@ -89,7 +90,7 @@ public class StringExtensionsTests
     [Test]
     [TestCase(0)]
     [TestCase(-1)]
-    public void SplitChunks_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
+    public void Chunk_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
     {
         //Act
         Action action = () => StringEmpty.Chunk(chunkSize);
@@ -99,7 +100,7 @@ public class StringExtensionsTests
     }
 
     [Test]
-    public void SplitChunks_WhenCalled_SplitInputInChunks()
+    public void Chunk_WhenCalled_SplitInputInChunks()
     {
         //Arrange 
         const string input = "12345";
@@ -112,6 +113,7 @@ public class StringExtensionsTests
         //Assert
         result.Should().Equal(expected);
     }
+#endif
 
     [Test]
     public void PadCenter_InputIsNull_ThrowArgumentNullException()

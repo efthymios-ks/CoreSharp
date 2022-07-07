@@ -46,12 +46,14 @@ public static class StringExtensions
         return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
     }
 
+#if !NET6_0_OR_GREATER
     /// <inheritdoc cref="IEnumerableExtensions.Chunk{TItem}(IEnumerable{TItem}, int)"/>
     public static IEnumerable<string> Chunk(this string input, int size)
     {
         var chunks = input.Chunk<char>(size);
         return chunks.Select(c => new string(c.ToArray()));
     }
+#endif
 
     /// <summary>
     /// Center align text.
