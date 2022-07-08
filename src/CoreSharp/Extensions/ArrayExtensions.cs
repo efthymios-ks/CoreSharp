@@ -37,4 +37,18 @@ public static class ArrayExtensions
         return Enumerable.Range(0, rowSize)
                          .Select(r => source[r, column]);
     }
+
+    /// <inheritdoc cref="Slice{TElement}(TElement[], int, int)"/>
+    public static TElement[] Slice<TElement>(this TElement[] array, int offset)
+        => array.Slice(offset, (array?.Length ?? 0) - offset);
+
+    /// <summary>
+    /// Get sub-array given offset and length.
+    /// </summary>
+    public static TElement[] Slice<TElement>(this TElement[] array, int offset, int length)
+    {
+        var result = new TElement[length];
+        Array.Copy(array, offset, result, 0, length);
+        return result;
+    }
 }
