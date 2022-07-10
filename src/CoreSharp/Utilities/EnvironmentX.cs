@@ -36,8 +36,7 @@ public static class EnvironmentX
     /// <summary>
     /// Check if DEBUG is defined.
     /// </summary>
-    public static bool IsDebugging()
-        =>
+    public const bool IsDebugging =
 #if DEBUG
         true;
 #else

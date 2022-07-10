@@ -187,7 +187,7 @@ public static class IDictionaryExtensions
         var propertiesWithValue = properties.Where(p => p.Value is not null);
         foreach (var (key, value) in propertiesWithValue)
         {
-            var property = entityTypeProperties.SingleOrDefault(p => p.Name == key && p.PropertyType.IsAssignableFrom(value.GetType()));
+            var property = entityTypeProperties.SingleOrDefault(p => p.Name == key && p.PropertyType.IsInstanceOfType(value));
             if (property is null)
                 continue;
 

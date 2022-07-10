@@ -1,17 +1,18 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class ListExtensionsTests
 {
     //Fields
-    private readonly List<DummyClass> _sourceNull;
+    private readonly List<DummyClass> _sourceNull = null;
     private readonly List<DummyClass> _sourceEmpty = new();
 
     //Methods 
@@ -48,7 +49,7 @@ public class ListExtensionsTests
             new(1),
             new(2)
         };
-        var expected = source.ToList().OrderBy(i => i.Id);
+        var expected = source.OrderBy(i => i.Id);
 
         //Act
         source.Sort(i => i.Id);

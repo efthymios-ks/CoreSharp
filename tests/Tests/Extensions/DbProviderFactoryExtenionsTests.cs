@@ -1,16 +1,17 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class DbProviderFactoryExtenionsTests
 {
     //Fields 
-    private readonly DbProviderFactory _factoryNull;
+    private readonly DbProviderFactory _factoryNull = null;
     private DbProviderFactory _sqlFactory;
 
     //Methods 

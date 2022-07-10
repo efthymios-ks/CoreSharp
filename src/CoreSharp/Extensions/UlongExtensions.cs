@@ -20,10 +20,6 @@ public static class UlongExtensions
     public static string ToComputerSize(this ulong byteSize, IFormatProvider formatProvider)
         => byteSize.ToComputerSize("G", formatProvider);
 
-    /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
-    public static string ToComputerSizeCI(this ulong byteSize)
-        => byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
-
     /// <summary>
     /// Downsizes bytes and adds appropriate prefix.
     /// </summary>
@@ -55,4 +51,8 @@ public static class UlongExtensions
 
         return scaledValue.ToString(format, formatProvider) + prefix + "B";
     }
+
+    /// <inheritdoc cref="ToComputerSize(ulong, string, IFormatProvider)"/>
+    public static string ToComputerSizeCI(this ulong byteSize)
+        => byteSize.ToComputerSize("0.###", CultureInfo.InvariantCulture);
 }

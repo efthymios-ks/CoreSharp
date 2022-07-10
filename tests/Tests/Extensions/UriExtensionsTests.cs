@@ -1,15 +1,16 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class UriExtensionsTests
 {
     //Fields 
-    private readonly Uri _uriNull;
+    private readonly Uri _uriNull = null;
 
     [Test]
     public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()

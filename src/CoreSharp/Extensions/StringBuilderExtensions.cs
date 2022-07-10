@@ -13,10 +13,6 @@ public static class StringBuilderExtensions
     public static StringBuilder AppendFormatLine(this StringBuilder builder, string format, params object[] arguments)
         => builder.AppendFormatLine(CultureInfo.CurrentCulture, format, arguments);
 
-    /// <inheritdoc cref="AppendFormatLine(StringBuilder, IFormatProvider, string, object[])"/>
-    public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] arguments)
-       => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
-
     /// <summary>
     /// Chain calls <see cref="StringBuilder.AppendFormat(IFormatProvider?, string, object?[])"/> + <see cref="StringBuilder.AppendLine(string?)"/>.
     /// </summary>
@@ -27,4 +23,8 @@ public static class StringBuilderExtensions
         return builder.AppendFormat(formatProvider, format, arguments)
                       .AppendLine();
     }
+
+    /// <inheritdoc cref="AppendFormatLine(StringBuilder, IFormatProvider, string, object[])"/>
+    public static StringBuilder AppendFormatLineCI(this StringBuilder builder, string format, params object[] arguments)
+       => builder.AppendFormatLine(CultureInfo.InvariantCulture, format, arguments);
 }

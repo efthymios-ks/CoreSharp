@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -6,13 +7,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class StreamExtensionsTests
 {
     //Fields
-    private readonly Stream _streamNull;
+    private readonly Stream _streamNull = null;
 
     [Test]
     public void FromJson_OptionsIsNull_ThrowArgumentNullException()

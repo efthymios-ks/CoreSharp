@@ -1,16 +1,17 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class IQueryableExtensionsTests
 {
     //Fields
-    private readonly IQueryable<DummyClass> _sourceNull;
+    private readonly IQueryable<DummyClass> _sourceNull = null;
     private readonly IQueryable<DummyClass> _sourceEmpty = Enumerable.Empty<DummyClass>().AsQueryable();
 
     //Methods

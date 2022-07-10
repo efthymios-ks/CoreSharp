@@ -193,10 +193,8 @@ public static class GenericExtensions
                 return false;
             else if (!properyInfo.CanRead)
                 return false;
-            else if (!properyInfo.PropertyType.IsPrimitiveExtended())
-                return false;
             else
-                return true;
+                return properyInfo.PropertyType.IsPrimitiveExtended();
         }
 
         var properties = item.GetType()
@@ -296,9 +294,7 @@ public static class GenericExtensions
     /// </summary>
     public static IEnumerable<TElement> Yield<TElement>(this TElement element)
     {
-        if (element is null)
-            yield break;
-        else
+        if (element is not null)
             yield return element;
     }
 
@@ -313,9 +309,6 @@ public static class GenericExtensions
         _ = fieldSelector ?? throw new ArgumentNullException(nameof(fieldSelector));
 
         var innerEnttity = fieldSelector(entity);
-        if (innerEnttity is null)
-            return entity;
-        else
-            return innerEnttity.GetInnermostField(fieldSelector);
+        return innerEnttity is null ? entity : innerEnttity.GetInnermostField(fieldSelector);
     }
 }

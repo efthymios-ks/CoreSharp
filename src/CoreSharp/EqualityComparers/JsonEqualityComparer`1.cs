@@ -36,13 +36,13 @@ public class JsonEqualityComparer<TEntity> : IEqualityComparer<TEntity>
         => _serializeFunction = serializeFunction ?? throw new ArgumentNullException(nameof(serializeFunction));
 
     //Methods
-    public bool Equals(TEntity left, TEntity right)
+    public bool Equals(TEntity x, TEntity y)
     {
-        var leftJson = _serializeFunction(left);
-        var rightJson = _serializeFunction(right);
+        var leftJson = _serializeFunction(x);
+        var rightJson = _serializeFunction(y);
         return leftJson == rightJson;
     }
 
-    public int GetHashCode(TEntity item)
-        => _serializeFunction(item).GetHashCode();
+    public int GetHashCode(TEntity obj)
+        => _serializeFunction(obj).GetHashCode();
 }

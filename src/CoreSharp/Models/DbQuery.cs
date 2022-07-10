@@ -12,7 +12,7 @@ namespace CoreSharp.Models;
 /// <summary>
 /// An extension to <see cref="DbConnection"/> to run quick actions on it.
 /// </summary>
-public class DbQuery : IDisposable, IAsyncDisposable
+public class DbQuery : IAsyncDisposable
 {
     //Fields 
     private readonly DbConnection _connection;
@@ -57,15 +57,10 @@ public class DbQuery : IDisposable, IAsyncDisposable
     public ICollection<DbParameter> Parameters { get; } = new HashSet<DbParameter>();
 
     //Methods 
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
-        _connection?.Dispose();
-    }
-
     public async ValueTask DisposeAsync()
     {
         GC.SuppressFinalize(this);
+
         if (_connection is not null)
             await _connection.DisposeAsync();
     }

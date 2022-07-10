@@ -14,9 +14,13 @@ public static class IPAddressExtensions
     public static async Task<bool> PingAsync(this IPAddress address, int timeoutMillis = 5000)
     {
         _ = address ?? throw new ArgumentNullException(nameof(address));
-        if (timeoutMillis <= 0)
-            throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
+        return timeoutMillis <= 0
+            ? throw new ArgumentOutOfRangeException(nameof(timeoutMillis))
+            : await address.PingInternalAsync(timeoutMillis);
+    }
 
+    private static async Task<bool> PingInternalAsync(this IPAddress address, int timeoutMillis = 5000)
+    {
         try
         {
             using var ping = new Ping();

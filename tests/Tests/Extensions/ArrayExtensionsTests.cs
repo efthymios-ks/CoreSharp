@@ -1,21 +1,19 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
-using System.Globalization;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class ArrayExtensionsTests
 {
     //Fields
-    private readonly int[,] _sourceNull;
+    private readonly int[,] _sourceNull = null;
 
     [Test]
     public void GetRow_SourceIsNull_ThrowArgumentNullException()
     {
-        var culture = CultureInfo.CurrentCulture;
-
         //Act
         Action action = () => _sourceNull.GetRow(0);
 

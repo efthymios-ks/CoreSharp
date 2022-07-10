@@ -9,7 +9,8 @@ namespace CoreSharp.Enumerables.Validations;
 public class ValidationSteps : ValidationStepCollectionBase
 {
     //Constructors
-    public ValidationSteps(IEnumerable<ValidationStep> steps, bool sequentialValidation = true) : this(sequentialValidation)
+    public ValidationSteps(IEnumerable<ValidationStep> steps, bool sequentialValidation = true)
+        : this(sequentialValidation)
     {
         _ = steps ?? throw new ArgumentNullException(nameof(steps));
 
@@ -28,7 +29,7 @@ public class ValidationSteps : ValidationStepCollectionBase
     /// Steps have to be sequantially valid.
     /// If Step-1 is not valid, then Step-2 cannot be valid as well.
     /// </summary>
-    public bool SequentialValidation { get; set; } = true;
+    public bool SequentialValidation { get; set; }
 
     //Methods 
     public override string ToString() => $"{Count} steps";
@@ -50,12 +51,7 @@ public class ValidationSteps : ValidationStepCollectionBase
             var previousStep = GetPreviousStep(number);
 
             //If there is no previous step, run current step validation 
-            if (previousStep is null)
-                return currentStep.IsValid;
-
-            //Else run recursively previous step validation and then the current step 
-            else
-                return IsStepValid(previousStep.Number) && currentStep.IsValid;
+            return previousStep is null ? currentStep.IsValid : IsStepValid(previousStep.Number) && currentStep.IsValid;
         }
         else
         {
@@ -69,10 +65,8 @@ public class ValidationSteps : ValidationStepCollectionBase
 
         if (bypassValidation)
             return step.ValidationMessage;
-        else if (!step.IsValid)
-            return step.ValidationMessage;
         else
-            return string.Empty;
+            return !step.IsValid ? step.ValidationMessage : string.Empty;
     }
 
     public ValidationStep GetStep(int number)
@@ -80,10 +74,9 @@ public class ValidationSteps : ValidationStepCollectionBase
         ValidationStep.ValidateNumber(number);
 
         var step = this.FirstOrDefault(s => s.Number == number);
-        if (step is null)
-            throw new ArgumentException($"{nameof(ValidationStep)} with {nameof(ValidationStep.Number)}=`{number}` not found.", nameof(number));
-        else
-            return step;
+        return step is null
+            ? throw new ArgumentException($"{nameof(ValidationStep)} with {nameof(ValidationStep.Number)}=`{number}` not found.", nameof(number))
+            : step;
     }
 
     private ValidationStep GetPreviousStep(int number)

@@ -14,27 +14,27 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     where TEntity : class
 {
     //Methods 
-    public bool Equals(TEntity left, TEntity right)
+    public bool Equals(TEntity x, TEntity y)
     {
         //Same reference 
-        if (left == right)
+        if (x == y)
             return true;
         //Null 
-        else if (left is null || right is null)
+        else if (x is null || y is null)
             return false;
 
-        var leftProperties = GetPrimitiveProperties(left);
-        var rightProperties = GetPrimitiveProperties(right);
+        var leftProperties = GetPrimitiveProperties(x);
+        var rightProperties = GetPrimitiveProperties(y);
         var dictionaryComparer = new DictionaryEqualityComparer<string, object>();
         return dictionaryComparer.Equals(leftProperties, rightProperties);
     }
 
-    public int GetHashCode(TEntity entity)
+    public int GetHashCode(TEntity obj)
     {
-        if (entity is null)
+        if (obj is null)
             return default(TEntity).GetHashCode();
 
-        var primitiveValues = GetPrimitiveProperties(entity).Select(p => p.Value);
+        var primitiveValues = GetPrimitiveProperties(obj).Select(p => p.Value);
         var enumerableComparer = new EnumerableEqualityComparer<object>();
         return enumerableComparer.GetHashCode(primitiveValues);
     }

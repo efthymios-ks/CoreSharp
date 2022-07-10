@@ -1,15 +1,16 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.EqualityComparers;
+using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace CoreSharp.EqualityComparers.Tests;
+namespace Tests.EqualityComparers;
 
 [TestFixture]
 public class DictionaryEqualityComparerTests
 {
     //Fields
     private readonly IEqualityComparer<IDictionary<string, int>> _equalityComparer = new DictionaryEqualityComparer<string, int>();
-    private readonly IDictionary<string, int> _dictionaryNull;
+    private readonly IDictionary<string, int> _dictionaryNull = null;
     private readonly IDictionary<string, int> _dictionaryEmpty = new Dictionary<string, int>();
 
     //Methods

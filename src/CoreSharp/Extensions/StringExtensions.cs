@@ -120,10 +120,7 @@ public static class StringExtensions
         if (length < 0)
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
-        if (length <= input.Length)
-            return input[..length];
-        else
-            return input;
+        return length <= input.Length ? input[..length] : input;
     }
 
     /// <summary>
@@ -159,19 +156,12 @@ public static class StringExtensions
         else if (length < 0)
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
 
-        if (start + length > input.Length)
-            return input[start..];
-        else
-            return input.Substring(start, length);
+        return start + length > input.Length ? input[start..] : input.Substring(start, length);
     }
 
     /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
     public static string FormatWith(this string format, params object[] parameters)
        => format.FormatWith(CultureInfo.CurrentCulture, parameters);
-
-    /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
-    public static string FormatWithCI(this string format, params object[] parameters)
-        => format.FormatWith(CultureInfo.InvariantCulture, parameters);
 
     /// <summary>
     /// String.Format with custom IFormatProvider setting.
@@ -182,6 +172,10 @@ public static class StringExtensions
 
         return string.Format(formatProvider, format, arguments);
     }
+
+    /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
+    public static string FormatWithCI(this string format, params object[] parameters)
+        => format.FormatWith(CultureInfo.InvariantCulture, parameters);
 
     /// <inheritdoc cref="EqualsAnyCI(string, string[])"/>
     public static bool EqualsAnyCI(this string input, IEnumerable<string> values)
@@ -410,10 +404,6 @@ public static class StringExtensions
     public static int? ToInt(this string input, IFormatProvider formatProvider)
         => input.ToInt(NumberStyles.Number, formatProvider);
 
-    /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
-    public static int? ToIntCI(this string input)
-        => input.ToInt(NumberStyles.Number, CultureInfo.InvariantCulture);
-
     /// <summary>
     /// User-friendly <see cref="int.TryParse(string?, NumberStyles, IFormatProvider?, out int)"/> resulting to <see cref="int"/>.
     /// </summary>
@@ -421,11 +411,12 @@ public static class StringExtensions
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (int.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return int.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
+    public static int? ToIntCI(this string input)
+        => input.ToInt(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
     public static long? ToLong(this string input)
@@ -440,19 +431,16 @@ public static class StringExtensions
         => input.ToLong(NumberStyles.Number, formatProvider);
 
     /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
-    public static long? ToLongCI(this string input)
-        => input.ToLong(NumberStyles.Number, CultureInfo.InvariantCulture);
-
-    /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
     public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (long.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return long.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
+    public static long? ToLongCI(this string input)
+        => input.ToLong(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
     public static short? ToShort(this string input)
@@ -466,10 +454,6 @@ public static class StringExtensions
     public static short? ToShort(this string input, IFormatProvider formatProvider)
         => input.ToShort(NumberStyles.Number, formatProvider);
 
-    /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
-    public static short? ToShortCI(this string input)
-        => input.ToShort(NumberStyles.Number, CultureInfo.InvariantCulture);
-
     /// <summary>
     /// User-friendly <see cref="short.TryParse(string?, NumberStyles, IFormatProvider?, out short)"/> resulting to <see cref="short"/>.
     /// </summary>
@@ -477,11 +461,12 @@ public static class StringExtensions
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (short.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return short.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToShort(string, NumberStyles, IFormatProvider)"/>
+    public static short? ToShortCI(this string input)
+        => input.ToShort(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
     public static float? ToFloat(this string input)
@@ -495,10 +480,6 @@ public static class StringExtensions
     public static float? ToFloat(this string input, IFormatProvider formatProvider)
         => input.ToFloat(NumberStyles.Number, formatProvider);
 
-    /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
-    public static float? ToFloatCI(this string input)
-        => input.ToFloat(NumberStyles.Number, CultureInfo.InvariantCulture);
-
     /// <summary>
     /// User-friendly <see cref="float.TryParse(string?, NumberStyles, IFormatProvider?, out float)"/> resulting to <see cref="float"/>.
     /// </summary>
@@ -506,11 +487,12 @@ public static class StringExtensions
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (float.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return float.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToFloat(string, NumberStyles, IFormatProvider)"/>
+    public static float? ToFloatCI(this string input)
+        => input.ToFloat(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
     public static double? ToDouble(this string input)
@@ -524,10 +506,6 @@ public static class StringExtensions
     public static double? ToDouble(this string input, IFormatProvider formatProvider)
         => input.ToDouble(NumberStyles.Number, formatProvider);
 
-    /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
-    public static double? ToDoubleCI(this string input)
-        => input.ToDouble(NumberStyles.Number, CultureInfo.InvariantCulture);
-
     /// <summary>
     /// User-friendly <see cref="double.TryParse(string?, NumberStyles, IFormatProvider?, out double)"/> resulting to <see cref="double"/>.
     /// </summary>
@@ -535,11 +513,12 @@ public static class StringExtensions
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (double.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return double.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToDouble(string, NumberStyles, IFormatProvider)"/>
+    public static double? ToDoubleCI(this string input)
+        => input.ToDouble(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
     public static decimal? ToDecimal(this string input)
@@ -553,10 +532,6 @@ public static class StringExtensions
     public static decimal? ToDecimal(this string input, IFormatProvider formatProvider)
         => input.ToDecimal(NumberStyles.Number, formatProvider);
 
-    /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
-    public static decimal? ToDecimalCI(this string input)
-        => input.ToDecimal(NumberStyles.Number, CultureInfo.InvariantCulture);
-
     /// <summary>
     /// User-friendly <see cref="decimal.TryParse(string?, NumberStyles, IFormatProvider?, out decimal)"/> resulting to <see cref="decimal"/>.
     /// </summary>
@@ -564,11 +539,12 @@ public static class StringExtensions
     {
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (decimal.TryParse(input, numberStyles, formatProvider, out var result))
-            return result;
-        else
-            return null;
+        return decimal.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToDecimal(string, NumberStyles, IFormatProvider)"/>
+    public static decimal? ToDecimalCI(this string input)
+        => input.ToDecimal(NumberStyles.Number, CultureInfo.InvariantCulture);
 
     /// <summary>
     /// Convert <see cref="string"/> to <see cref="bool"/>.
@@ -595,15 +571,14 @@ public static class StringExtensions
             return resultFromString;
 
         //Int interpretation 
-        if (!int.TryParse(input, out var inputAsInt))
-            return null;
-
-        return inputAsInt switch
-        {
-            1 => true,
-            0 => false,
-            _ => null
-        };
+        return !int.TryParse(input, out var inputAsInt)
+            ? null
+            : inputAsInt switch
+            {
+                1 => true,
+                0 => false,
+                _ => null
+            };
     }
 
     /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
@@ -618,14 +593,6 @@ public static class StringExtensions
     public static DateTime? ToDateTime(this string input, string dateTimeFormat, IFormatProvider formatProvider)
         => input.ToDateTime(dateTimeFormat, DateTimeStyles.None, formatProvider);
 
-    /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
-    public static DateTime? ToDateTimeSortable(this string input)
-        => input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
-
-    /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
-    public static DateTime? ToDateTimeSortableUtc(this string input)
-       => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
-
     /// <summary>
     /// User-friendly <see cref="DateTime.TryParseExact(string?, string?, IFormatProvider?, DateTimeStyles, out DateTime)"/> resulting to <see cref="DateTime"/>.
     /// </summary>
@@ -634,11 +601,16 @@ public static class StringExtensions
         _ = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
 
-        if (DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyles, out var result))
-            return result;
-        else
-            return null;
+        return DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyles, out var result) ? result : null;
     }
+
+    /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
+    public static DateTime? ToDateTimeSortable(this string input)
+        => input.ToDateTime("u", DateTimeStyles.None, CultureInfo.InvariantCulture);
+
+    /// <inheritdoc cref="ToDateTime(string, string, DateTimeStyles, IFormatProvider)"/>
+    public static DateTime? ToDateTimeSortableUtc(this string input)
+       => input.ToDateTime("o", DateTimeStyles.None, CultureInfo.InvariantCulture)?.ToUniversalTime();
 
     /// <inheritdoc cref="ToGuid(string, string)"/>>
     public static Guid? ToGuid(this string input)
@@ -651,10 +623,7 @@ public static class StringExtensions
     {
         _ = format ?? throw new ArgumentNullException(nameof(format));
 
-        if (Guid.TryParseExact(input, format, out var result))
-            return result;
-        else
-            return null;
+        return Guid.TryParseExact(input, format, out var result) ? result : null;
     }
 
     /// <summary>
@@ -673,10 +642,7 @@ public static class StringExtensions
             throw new ArgumentNullException(nameof(match));
 
         var matchStartIndex = input.IndexOf(match);
-        if (matchStartIndex < 0)
-            return null;
-
-        return input[(matchStartIndex + match.Length)..];
+        return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
     }
 
     /// <summary>
@@ -689,10 +655,7 @@ public static class StringExtensions
             throw new ArgumentNullException(nameof(match));
 
         var matchStartIndex = input.LastIndexOf(match);
-        if (matchStartIndex < 0)
-            return null;
-
-        return input[(matchStartIndex + match.Length)..];
+        return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
     }
 
     /// <summary>
@@ -705,10 +668,7 @@ public static class StringExtensions
             throw new ArgumentNullException(nameof(match));
 
         var matchStartIndex = input.IndexOf(match);
-        if (matchStartIndex < 0)
-            return null;
-
-        return input[..matchStartIndex];
+        return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
 
     /// <summary>
@@ -721,9 +681,6 @@ public static class StringExtensions
             throw new ArgumentNullException(nameof(match));
 
         var matchStartIndex = input.LastIndexOf(match);
-        if (matchStartIndex < 0)
-            return null;
-
-        return input[..matchStartIndex];
+        return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
 }

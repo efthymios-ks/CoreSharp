@@ -110,10 +110,6 @@ public static class ConsoleX
         Log(data);
     }
 
-    /// <inheritdoc cref="Log(string)"/>
-    public static void LogCI(string format, params object[] parameters)
-        => Log(CultureInfo.InvariantCulture, format, parameters);
-
     /// <summary>
     /// Log message with timestamp.
     /// </summary>
@@ -132,4 +128,9 @@ public static class ConsoleX
         Write(" ");
         WriteLine(message);
     }
+
+    /// <inheritdoc cref="Log(string)"/>
+    public static void LogCI(string format, params object[] parameters)
+        => Log(CultureInfo.InvariantCulture, format, parameters);
+
 }

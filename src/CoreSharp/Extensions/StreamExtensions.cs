@@ -133,12 +133,17 @@ public static class StreamExtensions
     /// <summary>
     /// Write <see cref="Stream"/> to physical file.
     /// </summary>
-    public static async Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
+    public static Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
     {
         _ = stream ?? throw new ArgumentNullException(nameof(stream));
-        if (string.IsNullOrWhiteSpace(filePath))
-            throw new ArgumentNullException(nameof(filePath));
 
+        return string.IsNullOrWhiteSpace(filePath)
+                ? throw new ArgumentNullException(nameof(filePath))
+                : stream.ToFileInternalAsync(filePath, bufferSize, cancellationToken);
+    }
+
+    private static async Task ToFileInternalAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
+    {
         if (stream.CanSeek)
             stream.Position = 0;
 

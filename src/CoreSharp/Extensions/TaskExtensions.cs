@@ -35,12 +35,11 @@ public static class TaskExtensions
 
             if (!t.IsFaulted)
                 return t;
-            else if (t.Exception is not AggregateException aggregateException)
+
+            if (t.Exception is not AggregateException aggregateException)
                 return t;
-            //else if (!HasInnerExceptions(aggregateException))
-            //    return t;
-            else
-                return Task.FromException(aggregateException.Flatten());
+
+            return Task.FromException(aggregateException.Flatten());
         }
 
         await task.ContinueWith(
@@ -73,10 +72,7 @@ public static class TaskExtensions
 
         var timeoutTask = Task.Delay(timeout);
         var completedTask = await Task.WhenAny(task, timeoutTask);
-        if (completedTask == task)
-            return await task;
-        else
-            throw new TimeoutException();
+        return completedTask == task ? await task : throw new TimeoutException();
     }
 
     /// <summary>
@@ -107,7 +103,7 @@ public static class TaskExtensions
         => await (task ?? Task.FromResult(defaultValue));
 
     /// <inheritdoc cref="IgnoreError{TException}(Task)"/>
-    public async static Task IgnoreError(this Task task)
+    public static async Task IgnoreError(this Task task)
         => await task.IgnoreError<Exception>();
 
     /// <summary>
@@ -123,7 +119,7 @@ public static class TaskExtensions
     ///                  .IgnoreError&lt;InvalidCastException&gt;();
     /// </code>
     /// </summary>
-    public async static Task IgnoreError<TException>(this Task task)
+    public static async Task IgnoreError<TException>(this Task task)
         where TException : Exception
     {
         _ = task ?? throw new ArgumentNullException(nameof(task));
@@ -134,11 +130,12 @@ public static class TaskExtensions
         }
         catch (Exception exception) when (exception is TException)
         {
+            //This is the point of the method. Ignore error.
         }
     }
 
     /// <inheritdoc cref="IgnoreError{TResult, TException}(Task{TResult})"/>
-    public async static Task<TResult> IgnoreError<TResult>(this Task<TResult> task)
+    public static async Task<TResult> IgnoreError<TResult>(this Task<TResult> task)
         => await task.IgnoreError<TResult, Exception>();
 
     /// <summary>
@@ -154,7 +151,7 @@ public static class TaskExtensions
     ///                              .IgnoreError&lt;InvalidCastException&gt;();
     /// </code>
     /// </summary>
-    public async static Task<TResult> IgnoreError<TResult, TException>(this Task<TResult> task)
+    public static async Task<TResult> IgnoreError<TResult, TException>(this Task<TResult> task)
         where TException : Exception
     {
         _ = task ?? throw new ArgumentNullException(nameof(task));

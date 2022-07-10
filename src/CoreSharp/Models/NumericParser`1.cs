@@ -65,7 +65,7 @@ public class NumericParser<TNumber>
 
             //If failed, throw 
             if (tempValue is null)
-                throw new NullReferenceException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
+                throw new ArgumentNullException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
             //Format to string... 
             input = FormatValue(tempValue);
@@ -103,10 +103,7 @@ public class NumericParser<TNumber>
             return default;
 
         //Divide by 100, since `ToString("P")` format specifier multiplies by 100 
-        if (_isFormatPercentage || isValuePercentage)
-            return result / 100;
-
-        return result;
+        return _isFormatPercentage || isValuePercentage ? result / 100 : result;
     }
 
     /// <inheritdoc cref="FormatValue(decimal?)"/>

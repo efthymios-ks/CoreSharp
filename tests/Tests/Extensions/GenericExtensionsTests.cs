@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class GenericExtensionsTests
@@ -345,7 +346,7 @@ public class GenericExtensionsTests
         var exception2 = new Exception("2", exception1);
 
         //Act
-        var result = exception1.GetInnermostField(e => e.InnerException);
+        var result = exception2.GetInnermostField(e => e.InnerException);
 
         //Assert
         result.Should().BeSameAs(exception1);

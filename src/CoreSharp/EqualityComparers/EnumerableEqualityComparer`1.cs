@@ -18,7 +18,7 @@ public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable
     {
     }
 
-    public EnumerableEqualityComparer(IEqualityComparer<TEntity> entityComparer = null)
+    public EnumerableEqualityComparer(IEqualityComparer<TEntity> entityComparer)
         => _entityComparer = entityComparer ?? throw new ArgumentNullException(nameof(entityComparer));
 
     //Methods

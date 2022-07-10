@@ -52,7 +52,7 @@ public static class DateTimeExtensions
 
         var universalStart = startDate.ToUniversalTime();
         var universalEnd = endDate.ToUniversalTime();
-        return endDate >= universalStart.Add(duration);
+        return universalEnd < universalStart.Add(duration);
     }
 
     /// <summary>

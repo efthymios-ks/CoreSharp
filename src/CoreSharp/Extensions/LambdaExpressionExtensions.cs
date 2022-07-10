@@ -25,7 +25,7 @@ public static class LambdaExpressionExtensions
                 ExpressionType.Convert or ExpressionType.ConvertChecked => NameSelector((expression as UnaryExpression)?.Operand),
                 ExpressionType.Invoke => NameSelector(((InvocationExpression)expression).Expression),
                 ExpressionType.ArrayLength => nameof(Array.Length),
-                _ => throw new ArgumentException("Expression is not a proper member selector.", nameof(memberExpression))
+                _ => throw new ArgumentException("Expression is not a proper member selector.", nameof(expression))
             };
         }
 

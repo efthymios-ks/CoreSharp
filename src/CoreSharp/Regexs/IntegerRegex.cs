@@ -13,7 +13,6 @@ public sealed class IntegerRegex
     //Fields
     private const string PatternTemplate = @"^(?<Sign>[+-]?)[ ]?(?<Value>(?:\d{1,3}(?:{ThousandSeparator}\d{3})*)|\d+)$";
     private readonly CultureInfo _culture;
-    private readonly Regex _regex;
     private readonly Match _match;
 
     //Constructors
@@ -28,8 +27,8 @@ public sealed class IntegerRegex
         _culture = culture ?? throw new ArgumentNullException(nameof(culture));
 
         Input = input;
-        _regex = new Regex(Pattern);
-        _match = _regex.Match(input.Trim());
+        var regex = new Regex(Pattern);
+        _match = regex.Match(input.Trim());
     }
 
     //Properties

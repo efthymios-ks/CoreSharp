@@ -8,7 +8,7 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class TcpClientExtensions
 {
-    /// <inheritdoc cref="SocketExtensions.IsConnected(Socket, int)"/>
+    /// <inheritdoc cref="SocketExtensions.IsConnectedAsync(Socket, int)"/>
     public static async Task<bool> IsConnectedAsync(this TcpClient client, int timeoutMillis = 5000)
         => await (client?.Client).IsConnectedAsync(timeoutMillis);
 }

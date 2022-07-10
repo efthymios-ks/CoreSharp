@@ -5,7 +5,7 @@ namespace Tests.Dummies.Enums;
 /// <summary>
 /// Dummy enum.
 /// </summary>
-internal enum DummyEnum
+internal enum DummyType
 {
     /// <summary>
     /// Option 1.

@@ -1,16 +1,18 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class DbConnectionExtensionsTests
 {
     //Fields
-    private readonly DbConnection _connectionNull;
+    private readonly DbConnection _connectionNull = null;
     private DbConnection _sqlConnection;
 
     //Methods
@@ -85,9 +87,9 @@ public class DbConnectionExtensionsTests
     public void IsAvailable_ConnectionIsNull_ThrowArgumentNullException()
     {
         //Act
-        Action action = () => _connectionNull.IsOpen();
+        Func<Task<bool>> action = () => _connectionNull.IsAvailableAsync();
 
         //Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
+        action.Should().ThrowExactlyAsync<ArgumentNullException>();
     }
 }

@@ -24,26 +24,26 @@ public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
     protected Func<TEntity, TKey> KeySelector { get; }
 
     //Methods 
-    public bool Equals(TEntity left, TEntity right)
+    public bool Equals(TEntity x, TEntity y)
     {
         //Same reference 
-        if (ReferenceEquals(left, right))
+        if (ReferenceEquals(x, y))
             return true;
         //Null 
-        else if (left is null || right is null)
+        else if (x is null || y is null)
             return false;
 
-        var leftKey = KeySelector(left);
-        var rightKey = KeySelector(right);
+        var leftKey = KeySelector(x);
+        var rightKey = KeySelector(y);
         return _keyComparer.Equals(leftKey, rightKey);
     }
 
-    public int GetHashCode(TEntity item)
+    public int GetHashCode(TEntity obj)
     {
-        if (item is null)
+        if (obj is null)
             return _keyComparer.GetHashCode(default);
 
-        var key = KeySelector(item);
+        var key = KeySelector(obj);
         return _keyComparer.GetHashCode(key);
     }
 }

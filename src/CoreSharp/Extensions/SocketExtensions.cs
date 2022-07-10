@@ -10,19 +10,19 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class SocketExtensions
 {
-    /// <inheritdoc cref="IsConnectedAsync(Socket, int)" />
-    public static bool IsConnected(this Socket socket, int timeoutMillis = 5000)
-        => socket.IsConnectedAsync(timeoutMillis).GetAwaiter().GetResult();
-
     /// <summary>
     /// Check if <see cref="Socket"/> is connected using simple flag polling and pinging.
     /// </summary>
     public static async Task<bool> IsConnectedAsync(this Socket socket, int timeoutMillis = 5000)
     {
         _ = socket ?? throw new ArgumentNullException(nameof(socket));
-        if (timeoutMillis <= 0)
-            throw new ArgumentOutOfRangeException(nameof(timeoutMillis), $"{nameof(timeoutMillis)} has to be positive and non-zero.");
+        return timeoutMillis <= 0
+            ? throw new ArgumentOutOfRangeException(nameof(timeoutMillis), $"{nameof(timeoutMillis)} has to be positive and non-zero.")
+            : await socket.IsConnectedInternalAsync(timeoutMillis);
+    }
 
+    private static async Task<bool> IsConnectedInternalAsync(this Socket socket, int timeoutMillis = 5000)
+    {
         if (!socket.Connected)
         {
             return false;
@@ -34,10 +34,7 @@ public static class SocketExtensions
                 return false;
 
             //Ping 
-            if (socket.RemoteEndPoint is IPEndPoint endPoint && !await endPoint.PingAsync(timeoutMillis))
-                return false;
-
-            return true;
+            return socket.RemoteEndPoint is not IPEndPoint endPoint || await endPoint.PingAsync(timeoutMillis);
         }
     }
 }

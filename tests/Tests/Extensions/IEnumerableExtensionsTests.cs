@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Globalization;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class IEnumerableExtensionsTests
 {
     //Fields
-    private readonly IEnumerable<DummyClass> _sourceNull;
+    private readonly IEnumerable<DummyClass> _sourceNull = null;
     private readonly IEnumerable<DummyClass> _sourceEmpty = Enumerable.Empty<DummyClass>();
 
     //Methods 
@@ -115,8 +116,11 @@ public class IEnumerableExtensionsTests
     [Test]
     public void Except_FilterIsNull_ThrowArgumentNullException()
     {
+        //Arrange
+        Predicate<DummyClass> filter = null;
+
         //Act 
-        Action action = () => _sourceEmpty.Except(null);
+        Action action = () => _sourceEmpty.Except(filter);
 
         //Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -216,6 +220,7 @@ public class IEnumerableExtensionsTests
         result.Should().Be(expected);
     }
 
+#if !NET6_0_OR_GREATER
     [Test]
     public void ToHashSet_SourceIsNull_ThrowArgumentNullException()
     {
@@ -250,6 +255,7 @@ public class IEnumerableExtensionsTests
         result.Should().BeOfType<HashSet<int>>();
         result.Should().Equal(expected);
     }
+#endif
 
     [Test]
     public void ToCollection_SourceIsNull_ThrowArgumentNullException()
@@ -467,12 +473,13 @@ public class IEnumerableExtensionsTests
         var item = new DummyClass();
 
         //Act  
-        Action action = () => _sourceNull.Append(item);
+        Action action = () => _ = _sourceNull.Append(item);
 
         //Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
+#if !NET6_0_OR_GREATER
     [Test]
     public void Append_ItemsIsNull_ThrowArgumentNullException()
     {
@@ -497,6 +504,7 @@ public class IEnumerableExtensionsTests
         //Assert 
         result.Should().Equal(expected);
     }
+#endif
 
     [Test]
     public void ForEach_SourceIsNull_ThrowArgumentNullException()
@@ -575,11 +583,8 @@ public class IEnumerableExtensionsTests
     [Test]
     public void Contains_ItemIsNull_ThrowArgumentNullException()
     {
-        //Arrange
-        var item = new DummyClass();
-
         //Act 
-        Action action = () => _sourceEmpty.Contains<DummyClass, int>(item, null);
+        Action action = () => _sourceEmpty.Contains<DummyClass, int>(null, d => d.Id);
 
         //Assert 
         action.Should().ThrowExactly<ArgumentNullException>();

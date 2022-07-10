@@ -1,22 +1,23 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class DbCommandExtensionsTests
 {
     //Fields
-    private readonly DbCommand _commandNull;
+    private readonly DbCommand _commandNull = null;
     private SqlCommand _sqlCommand;
 
     //Methods
     [SetUp]
     public void SetUp()
-        => _sqlCommand = new SqlCommand();
+        => _sqlCommand = new();
 
     [TearDown]
     public void TearDown()

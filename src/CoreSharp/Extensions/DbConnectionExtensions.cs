@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CoreSharp.Extensions;
 
-//TODO: Add unit tests  
 /// <summary>
 /// <see cref="DbConnection"/> extensions.
 /// </summary>

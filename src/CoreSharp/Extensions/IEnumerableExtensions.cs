@@ -54,17 +54,6 @@ public static class IEnumerableExtensions
     private static IEnumerable<TElement> ConvertAllInternal<TElement>(this IEnumerable source)
         => from object item in source select (TElement)Convert.ChangeType(item, typeof(TElement));
 
-    /// <summary>
-    /// Exclude items from collection satisfying a condition.
-    /// </summary>
-    public static IEnumerable<TElement> Except<TElement>(this IEnumerable<TElement> source, Predicate<TElement> filter)
-    {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        filter = filter ?? throw new ArgumentNullException(nameof(filter));
-
-        return source.Where(i => !filter(i));
-    }
-
     /// <inheritdoc cref="Enumerable.Distinct{TElement}(IEnumerable{TElement})"/>
     public static IEnumerable<TElement> Distinct<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
@@ -80,24 +69,12 @@ public static class IEnumerableExtensions
         => source.StringJoin(" ", string.Empty, null);
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
-    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source)
-        => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
-
-    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<TElement>(this IEnumerable<TElement> source, string separator)
         => source.StringJoin(separator, null, null);
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
-    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source, string separator)
-        => source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
-
-    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<TElement>(this IEnumerable<TElement> source, string separator, string stringFormat)
         => source.StringJoin(separator, stringFormat, null);
-
-    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
-    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source, string separator, string stringFormat)
-        => source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<TElement>(this IEnumerable<TElement> source, string separator, IFormatProvider formatProvider)
@@ -125,31 +102,43 @@ public static class IEnumerableExtensions
         return string.Join(separator, formattedItems);
     }
 
-    /// <inheritdoc cref="ToHashSet{TElement}(IEnumerable{TElement}, IEqualityComparer{TElement})"/>
+    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
+    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source)
+        => source.StringJoin(" ", string.Empty, CultureInfo.InvariantCulture);
+
+    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
+    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source, string separator)
+        => source.StringJoin(separator, string.Empty, CultureInfo.InvariantCulture);
+
+    /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
+    public static string StringJoinCI<TElement>(this IEnumerable<TElement> source, string separator, string stringFormat)
+        => source.StringJoin(separator, stringFormat, CultureInfo.InvariantCulture);
+
+#if NET6_0_OR_GREATER
+    /// <inheritdoc cref="ToHashSet{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>
     public static HashSet<TElement> ToHashSet<TElement>(this IEnumerable<TElement> source)
     {
         var comparer = EqualityComparer<TElement>.Default;
         return source.ToHashSet(comparer);
     }
 
-    /// <inheritdoc cref="ToHashSet{TElement}(IEnumerable{TElement}, IEqualityComparer{TElement})"/>
-    public static HashSet<TElement> ToHashSet<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
-    {
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
-
-        var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
-        return source.ToHashSet(comparer);
-    }
-
-    /// <summary>
-    /// Create a <see cref="HashSet{TElement}"/> from an <see cref="IEnumerable{TElement}"/>.
-    /// </summary>
+    /// <inheritdoc cref="ToHashSet{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>
     public static HashSet<TElement> ToHashSet<TElement>(this IEnumerable<TElement> source, IEqualityComparer<TElement> comparer)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
 
         return new HashSet<TElement>(source, comparer);
+    }
+#endif
+
+    /// <inheritdoc cref="Enumerable.ToHashSet{TSource}(IEnumerable{TSource})"/>
+    public static HashSet<TElement> ToHashSet<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
+    {
+        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
+        var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
+        return source.ToHashSet(comparer);
     }
 
     /// <summary>
@@ -194,7 +183,6 @@ public static class IEnumerableExtensions
         foreach (var chunk in sequence)
         {
             var isTaking = chunk > 0;
-            //bool isSkipping = !isTaking;
             var absoluteChunk = Math.Abs(chunk);
 
             if (isTaking)
@@ -209,6 +197,17 @@ public static class IEnumerableExtensions
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Exclude items from collection satisfying a condition.
+    /// </summary>
+    public static IEnumerable<TElement> Except<TElement>(this IEnumerable<TElement> source, Predicate<TElement> filter)
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = filter ?? throw new ArgumentNullException(nameof(filter));
+
+        return source.Where(i => !filter(i));
     }
 
     /// <inheritdoc cref="Enumerable.Except{TSource}(IEnumerable{TSource}, IEnumerable{TSource}, IEqualityComparer{TSource}?)"/>
@@ -243,6 +242,7 @@ public static class IEnumerableExtensions
         return sequence.SelectMany(source => source);
     }
 
+#if !NET6_0_OR_GREATER
     /// <inheritdoc cref="Append{TElement}(IEnumerable{TElement}, TElement[])"/>
     public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, IEnumerable<TElement> items)
         => source.Append(items?.ToArray());
@@ -257,6 +257,7 @@ public static class IEnumerableExtensions
 
         return items.Aggregate(source, Enumerable.Append);
     }
+#endif
 
     /// <inheritdoc cref="ForEach{TElement}(IEnumerable{TElement}, Action{TElement, int})"/>
     public static void ForEach<TElement>(this IEnumerable<TElement> source, Action<TElement> action)
@@ -677,10 +678,9 @@ public static class IEnumerableExtensions
     public static IEnumerable<TElement> Repeat<TElement>(this IEnumerable<TElement> source, int count)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
-        if (count < 0)
-            throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} has to be positive or zero.");
-
-        return source.RepeatInternal(count);
+        return count < 0
+            ? throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} has to be positive or zero.")
+            : source.RepeatInternal(count);
     }
 
     private static IEnumerable<TElement> RepeatInternal<TElement>(this IEnumerable<TElement> source, int count)

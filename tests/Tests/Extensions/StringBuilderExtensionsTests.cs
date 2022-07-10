@@ -1,16 +1,17 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Text;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class StringBuilderExtensionsTests
 {
     //Fields
-    private readonly StringBuilder _builderNull;
+    private readonly StringBuilder _builderNull = null;
     private readonly StringBuilder _builder = new();
 
     //Methods

@@ -11,7 +11,7 @@ namespace CoreSharp.Models;
 public class UrlQueryBuilder : QueryBuilder
 {
     //Methods
-    private void InternalAdd(string key, object value)
+    private void AddInternal(string key, object value)
     {
         if (value is not null)
             base.Add(key, Convert.ToString(value, CultureInfo.InvariantCulture));
@@ -35,15 +35,15 @@ public class UrlQueryBuilder : QueryBuilder
                 Add(key, timeSpanValue);
                 break;
             case string stringValue when !string.IsNullOrWhiteSpace(stringValue):
-                InternalAdd(key, stringValue.Trim());
+                AddInternal(key, stringValue.Trim());
                 break;
             case IEnumerable enumerable:
-                Add(key, enumerable);
+                AddMany(key, enumerable);
                 break;
             default:
                 if (value is IEnumerable<object> enumerableObject)
                 {
-                    Add(key, enumerableObject);
+                    AddMany(key, enumerableObject);
                 }
                 else if (type.IsClass && value is not object)
                 {
@@ -54,22 +54,11 @@ public class UrlQueryBuilder : QueryBuilder
                 }
                 else
                 {
-                    InternalAdd(key, value);
+                    AddInternal(key, value);
                 }
 
                 break;
         }
-    }
-
-    /// <summary>
-    /// Add <see cref="IDictionary{TKey, TValue}"/>.
-    /// </summary>
-    public void Add<TValue>(IDictionary<string, TValue> dictionary)
-    {
-        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
-
-        foreach (var pair in dictionary)
-            SwitchAdd(pair.Key, pair.Value);
     }
 
     /// <summary>
@@ -87,35 +76,46 @@ public class UrlQueryBuilder : QueryBuilder
     }
 
     /// <summary>
+    /// Add <see cref="IDictionary{TKey, TValue}"/>.
+    /// </summary>
+    public void Add<TValue>(IDictionary<string, TValue> dictionary)
+    {
+        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+
+        foreach (var pair in dictionary)
+            SwitchAdd(pair.Key, pair.Value);
+    }
+
+    /// <summary>
     /// Add <see cref="DateTime"/> and format with "s" specifier.
     /// </summary>
     public void Add(string key, DateTime value)
-        => InternalAdd(key, value.ToString("s"));
+        => AddInternal(key, value.ToString("s"));
 
     /// <summary>
     /// Add <see cref="DateTimeOffset"/> and format with "s" specifier.
     /// </summary>
     public void Add(string key, DateTimeOffset value)
-        => InternalAdd(key, value.ToString("s"));
+        => AddInternal(key, value.ToString("s"));
 
     /// <summary>
     /// Add <see cref="TimeSpan"/> and format with "c" specifier.
     /// </summary>
     public void Add(string key, TimeSpan value)
-        => InternalAdd(key, value.ToString("c"));
+        => AddInternal(key, value.ToString("c"));
 
-    /// <inheritdoc cref="Add(string, IEnumerable)"/>
-    public void Add<TElement>(string key, IEnumerable<TElement> items)
-        => Add(key, (IEnumerable)items);
+    /// <inheritdoc cref="AddMany(string, IEnumerable)"/>
+    public void AddMany<TElement>(string key, IEnumerable<TElement> items)
+        => AddMany(key, (IEnumerable)items);
 
     /// <summary>
     /// Add <see cref="IEnumerable"/>.
     /// </summary>
-    public void Add(string key, IEnumerable items)
+    public void AddMany(string key, IEnumerable items)
     {
         _ = items ?? throw new ArgumentNullException(nameof(items));
 
         foreach (var item in items)
-            InternalAdd(key, item);
+            AddInternal(key, item);
     }
 }

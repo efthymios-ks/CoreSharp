@@ -32,10 +32,6 @@ public static class DoubleExtensions
     public static string ToMetricSize(this double value, IFormatProvider formatProvider)
         => value.ToMetricSize("G", formatProvider);
 
-    /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/>
-    public static string ToMetricSizeCI(this double value)
-        => value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
-
     /// <summary>
     /// Convert value to SI string with appropriate prefix.
     /// </summary>
@@ -60,4 +56,8 @@ public static class DoubleExtensions
 
         return scaledValue.ToString(format, formatProvider) + prefix;
     }
+
+    /// <inheritdoc cref="ToMetricSize(double, string, IFormatProvider)"/>
+    public static string ToMetricSizeCI(this double value)
+        => value.ToMetricSize("0.###", CultureInfo.InvariantCulture);
 }

@@ -1,15 +1,16 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Specialized;
 
-namespace CoreSharp.Extensions.Tests;
+namespace Tests.Extensions;
 
 [TestFixture]
 public class NameValueCollectionExtensionsTests
 {
     //Fields
-    private readonly NameValueCollection _sourceNull;
+    private readonly NameValueCollection _sourceNull = null;
 
     //Methods 
     [Test]

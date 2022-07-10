@@ -1,16 +1,17 @@
-﻿using FluentAssertions;
+﻿using CoreSharp.EqualityComparers;
+using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CoreSharp.EqualityComparers.Tests;
+namespace Tests.EqualityComparers;
 
 [TestFixture]
 public class EnumerableEqualityComparerTests
 {
     //Fields
     private readonly IEqualityComparer<IEnumerable<int>> _equalityComparer = new EnumerableEqualityComparer<int>();
-    private readonly IEnumerable<int> _sourceNull;
+    private readonly IEnumerable<int> _sourceNull = null;
     private readonly IEnumerable<int> _sourceEmpty = Enumerable.Empty<int>();
 
     //Methods
