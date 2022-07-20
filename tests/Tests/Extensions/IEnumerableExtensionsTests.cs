@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class IEnumerableExtensionsTests

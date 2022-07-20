@@ -1,11 +1,10 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using Tests.Dummies.Entities;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class IQueryableExtensionsTests

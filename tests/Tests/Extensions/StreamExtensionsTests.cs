@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Tests.Dummies.Entities;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class StreamExtensionsTests

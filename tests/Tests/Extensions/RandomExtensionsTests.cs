@@ -1,11 +1,10 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class RandomExtensionsTests

@@ -1,21 +1,21 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class ArrayExtensionsTests
 {
     //Fields
-    private readonly int[,] _sourceNull = null;
+    private readonly int[] _sourceNull = null;
+    private readonly int[,] _source2DNull = null;
 
     [Test]
     public void GetRow_SourceIsNull_ThrowArgumentNullException()
     {
         //Act
-        Action action = () => _sourceNull.GetRow(0);
+        Action action = () => _source2DNull.GetRow(0);
 
         //Assert
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -58,7 +58,7 @@ public class ArrayExtensionsTests
     public void GetColumn_SourceIsNull_ThrowArgumentNullException()
     {
         //Act
-        Action action = () => _sourceNull.GetColumn(0);
+        Action action = () => _source2DNull.GetColumn(0);
 
         //Assert
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -92,6 +92,33 @@ public class ArrayExtensionsTests
 
         //Act
         var result = source.GetColumn(1);
+
+        //Assert
+        result.Should().Equal(expected);
+    }
+
+    [Test]
+    public void OrEmpty_SourceIsNull_ReturnArrayEmpty()
+    {
+        //Arrange
+        var expected = Array.Empty<int>();
+
+        //Act
+        var result = _sourceNull.OrEmpty();
+
+        //Assert
+        result.Should().Equal(expected);
+    }
+
+    [Test]
+    public void OrEmpty_SourceIsNotNull_ReturnSource()
+    {
+        //Arrange
+        var source = new[] { 1, 2 };
+        var expected = new[] { 1, 2 };
+
+        //Act
+        var result = source.OrEmpty();
 
         //Assert
         result.Should().Equal(expected);

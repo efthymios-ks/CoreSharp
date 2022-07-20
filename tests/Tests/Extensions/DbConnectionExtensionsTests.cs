@@ -1,12 +1,11 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace Tests.Extensions;
+namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class DbConnectionExtensionsTests

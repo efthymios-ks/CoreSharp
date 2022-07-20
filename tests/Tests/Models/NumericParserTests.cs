@@ -1,12 +1,11 @@
-﻿using CoreSharp.Models;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Linq;
 using Tests.Attributes;
 
-namespace Tests.Models;
+namespace CoreSharp.Models.Tests;
 
 [TestFixture]
 public class NumericParserTests
