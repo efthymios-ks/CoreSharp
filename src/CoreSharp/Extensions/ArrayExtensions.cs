@@ -39,16 +39,22 @@ public static class ArrayExtensions
     }
 
     /// <inheritdoc cref="Slice{TElement}(TElement[], int, int)"/>
-    public static TElement[] Slice<TElement>(this TElement[] array, int offset)
-        => array.Slice(offset, (array?.Length ?? 0) - offset);
+    public static TElement[] Slice<TElement>(this TElement[] source, int offset)
+        => source.Slice(offset, (source?.Length ?? 0) - offset);
 
     /// <summary>
     /// Get sub-array given offset and length.
     /// </summary>
-    public static TElement[] Slice<TElement>(this TElement[] array, int offset, int length)
+    public static TElement[] Slice<TElement>(this TElement[] source, int offset, int length)
     {
         var result = new TElement[length];
-        Array.Copy(array, offset, result, 0, length);
+        Array.Copy(source, offset, result, 0, length);
         return result;
     }
+
+    /// <summary>
+    /// Return <see cref="Array.Empty{TElement}"/> if source is null.
+    /// </summary>
+    public static TElement[] OrEmpty<TElement>(this TElement[] source)
+        => source ?? Array.Empty<TElement>();
 }
