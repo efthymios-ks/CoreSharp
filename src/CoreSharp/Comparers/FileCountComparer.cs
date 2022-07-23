@@ -9,13 +9,13 @@ namespace CoreSharp.Comparers;
 /// </summary>
 public class FileCountComparer : Comparer<DirectoryInfo>
 {
-    public override int Compare(DirectoryInfo current, DirectoryInfo previous)
+    public override int Compare(DirectoryInfo x, DirectoryInfo y)
     {
-        _ = current ?? throw new ArgumentNullException(nameof(current));
-        _ = previous ?? throw new ArgumentNullException(nameof(previous));
+        _ = x ?? throw new ArgumentNullException(nameof(x));
+        _ = y ?? throw new ArgumentNullException(nameof(y));
 
-        var currentLength = current.GetFiles().LongLength;
-        var previousLength = previous.GetFiles().LongLength;
+        var currentLength = x.GetFiles().LongLength;
+        var previousLength = y.GetFiles().LongLength;
 
         if (currentLength > previousLength)
             return 1;

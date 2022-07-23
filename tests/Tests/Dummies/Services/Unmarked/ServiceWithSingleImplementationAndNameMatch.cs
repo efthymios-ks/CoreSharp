@@ -1,6 +1,4 @@
-﻿using CoreSharp.DependencyInjection.Attributes;
-
-namespace Tests.Dummies.Services.Unmarked;
+﻿namespace Tests.Dummies.Services.Unmarked;
 
 public interface IServiceWithSingleImplementationAndNameMatch
 {

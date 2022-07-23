@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace CoreSharp.Abstracts;
+namespace CoreSharp.Common;
 
 /// <inheritdoc cref="INotifyPropertyChanged" />
 public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
@@ -13,7 +13,7 @@ public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         => PropertyChanged?.Invoke(this, new(propertyName));
 
-    protected virtual bool Set<TValue>(ref TValue field, TValue value, [CallerMemberName] string propertyName = null)
+    protected virtual bool SetValue<TValue>(ref TValue field, TValue value, [CallerMemberName] string propertyName = null)
     {
         if (Equals(field, value))
             return false;

@@ -22,7 +22,9 @@ public static class FileInfoExtensions
     /// <summary>
     /// Rename given file.
     /// </summary>
+    /// <param name="file"></param>
     /// <param name="name">New file name. May include or not a new extension.</param>
+    /// <param name="overwrite"></param>
     public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
     {
         _ = file ?? throw new ArgumentNullException(nameof(file));

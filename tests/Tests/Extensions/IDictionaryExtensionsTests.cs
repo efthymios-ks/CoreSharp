@@ -10,7 +10,7 @@ namespace CoreSharp.Extensions.Tests;
 public class IDictionaryExtensionsTests
 {
     //Fields
-    private readonly IDictionary<string, int> _dictionaryNull = null;
+    private readonly IDictionary<string, int> _dictionaryNull;
     private readonly IDictionary<string, int> _dictionary = new Dictionary<string, int>();
 
     //Methods 

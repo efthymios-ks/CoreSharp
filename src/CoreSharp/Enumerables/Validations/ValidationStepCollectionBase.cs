@@ -16,34 +16,34 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
     public bool IsReadOnly => false;
 
     //Methods
-    public void Add(ValidationStep validationStep)
+    public void Add(ValidationStep item)
     {
-        _ = validationStep ?? throw new ArgumentNullException(nameof(validationStep));
-        ValidationStep.ValidateNumber(validationStep.Number);
+        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ValidationStep.ValidateNumber(item.Number);
 
-        if (!Contains(validationStep))
-            _source.Add(validationStep.Number, validationStep);
+        if (!Contains(item))
+            _source.Add(item.Number, item);
     }
 
-    public bool Remove(ValidationStep validationStep)
+    public bool Remove(ValidationStep item)
     {
-        _ = validationStep ?? throw new ArgumentNullException(nameof(validationStep));
-        ValidationStep.ValidateNumber(validationStep.Number);
+        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ValidationStep.ValidateNumber(item.Number);
 
-        if (!Contains(validationStep))
+        if (!Contains(item))
             return false;
-        return _source.Remove(validationStep.Number);
+        return _source.Remove(item.Number);
     }
 
     public void Clear()
         => _source.Clear();
 
-    public bool Contains(ValidationStep validationStep)
+    public bool Contains(ValidationStep item)
     {
-        _ = validationStep ?? throw new ArgumentNullException(nameof(validationStep));
-        ValidationStep.ValidateNumber(validationStep.Number);
+        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ValidationStep.ValidateNumber(item.Number);
 
-        return _source.ContainsKey(validationStep.Number);
+        return _source.ContainsKey(item.Number);
     }
 
     public void CopyTo(ValidationStep[] array, int arrayIndex)

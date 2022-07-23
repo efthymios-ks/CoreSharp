@@ -22,35 +22,35 @@ public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable
         => _entityComparer = entityComparer ?? throw new ArgumentNullException(nameof(entityComparer));
 
     //Methods
-    public bool Equals(IEnumerable<TEntity> left, IEnumerable<TEntity> right)
+    public bool Equals(IEnumerable<TEntity> x, IEnumerable<TEntity> y)
     {
         //Same reference 
-        if (left == right)
+        if (x == y)
             return true;
         //Null 
-        else if (left is null || right is null)
+        else if (x is null || y is null)
             return false;
 
         //Different count 
-        if (left.Count() != right.Count())
+        if (x.Count() != y.Count())
             return false;
         //Left contains more items
-        else if (left.Except(right, _entityComparer).Any())
+        else if (x.Except(y, _entityComparer).Any())
             return false;
         //Right contains more items
-        else if (right.Except(left, _entityComparer).Any())
+        else if (y.Except(x, _entityComparer).Any())
             return false;
 
         return true;
     }
 
-    public int GetHashCode(IEnumerable<TEntity> source)
+    public int GetHashCode(IEnumerable<TEntity> obj)
     {
-        if (source is null)
+        if (obj is null)
             return _entityComparer.GetHashCode(default);
 
         var hash = new HashCode();
-        foreach (var entity in source)
+        foreach (var entity in obj)
             hash.Add(entity, _entityComparer);
         return hash.ToHashCode();
     }

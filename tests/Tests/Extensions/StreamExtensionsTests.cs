@@ -12,7 +12,7 @@ namespace CoreSharp.Extensions.Tests;
 public class StreamExtensionsTests
 {
     //Fields
-    private readonly Stream _streamNull = null;
+    private readonly Stream _streamNull;
 
     [Test]
     public void FromJson_OptionsIsNull_ThrowArgumentNullException()

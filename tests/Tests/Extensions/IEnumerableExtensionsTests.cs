@@ -1,5 +1,4 @@
-﻿using CoreSharp.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace CoreSharp.Extensions.Tests;
 public class IEnumerableExtensionsTests
 {
     //Fields
-    private readonly IEnumerable<DummyClass> _sourceNull = null;
+    private readonly IEnumerable<DummyClass> _sourceNull;
     private readonly IEnumerable<DummyClass> _sourceEmpty = Enumerable.Empty<DummyClass>();
 
     //Methods 
@@ -584,7 +583,7 @@ public class IEnumerableExtensionsTests
     public void Contains_ItemIsNull_ThrowArgumentNullException()
     {
         //Act 
-        Action action = () => _sourceEmpty.Contains<DummyClass, int>(null, d => d.Id);
+        Action action = () => _sourceEmpty.Contains(null, d => d.Id);
 
         //Assert 
         action.Should().ThrowExactly<ArgumentNullException>();

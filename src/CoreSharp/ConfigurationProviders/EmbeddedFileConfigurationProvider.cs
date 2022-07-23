@@ -18,7 +18,7 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
     {
         _builder = builder ?? throw new ArgumentNullException(nameof(builder));
         _options = options ?? throw new ArgumentNullException(nameof(options));
-        _ = _options.ScanAssembly ?? throw new NullReferenceException(nameof(options.ScanAssembly));
+        _ = _options.ScanAssembly ?? throw new ArgumentException(nameof(options.ScanAssembly));
 
         _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
     }

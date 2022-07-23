@@ -107,7 +107,7 @@ public class GenericExtensionsTests
     {
         //Arrange 
         var item = new DummyClass(1, "Red");
-        const string expected = @"{""Id"":1,""Name"":""Red""}";
+        const string expected = /*lang=json,strict*/ @"{""Id"":1,""Name"":""Red""}";
         var settings = new JsonSerializerSettings
         {
             Formatting = Formatting.None

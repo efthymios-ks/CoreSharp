@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions.Tests;
 public class ListExtensionsTests
 {
     //Fields
-    private readonly List<DummyClass> _sourceNull = null;
+    private readonly List<DummyClass> _sourceNull;
     private readonly List<DummyClass> _sourceEmpty = new();
 
     //Methods 

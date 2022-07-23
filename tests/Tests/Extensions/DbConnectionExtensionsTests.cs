@@ -11,7 +11,7 @@ namespace CoreSharp.Extensions.Tests;
 public class DbConnectionExtensionsTests
 {
     //Fields
-    private readonly DbConnection _connectionNull = null;
+    private readonly DbConnection _connectionNull;
     private DbConnection _sqlConnection;
 
     //Methods

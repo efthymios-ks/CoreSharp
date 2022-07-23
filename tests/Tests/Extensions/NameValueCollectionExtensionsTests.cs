@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests;
 public class NameValueCollectionExtensionsTests
 {
     //Fields
-    private readonly NameValueCollection _sourceNull = null;
+    private readonly NameValueCollection _sourceNull;
 
     //Methods 
     [Test]

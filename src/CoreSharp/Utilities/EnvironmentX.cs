@@ -19,19 +19,19 @@ public static class EnvironmentX
     /// Checks if the current host environment name is <see cref="EnvironmentName.Development"/>.
     /// </summary>
     public static bool IsDevelopment()
-        => string.Equals(GetAspNetCoreEnvironment(), Environments.Development, StringComparison.InvariantCultureIgnoreCase);
+        => string.Equals(GetAspNetCoreEnvironment(), Environments.Development, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Checks if the current host environment name is <see cref="EnvironmentName.Staging"/>.
     /// </summary>
     public static bool IsStaging()
-        => string.Equals(GetAspNetCoreEnvironment(), Environments.Staging, StringComparison.InvariantCultureIgnoreCase);
+        => string.Equals(GetAspNetCoreEnvironment(), Environments.Staging, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Checks if the current host environment name is <see cref="EnvironmentName.Production"/>.
     /// </summary>
     public static bool IsProduction()
-        => string.Equals(GetAspNetCoreEnvironment(), Environments.Production, StringComparison.InvariantCultureIgnoreCase);
+        => string.Equals(GetAspNetCoreEnvironment(), Environments.Production, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Check if DEBUG is defined.

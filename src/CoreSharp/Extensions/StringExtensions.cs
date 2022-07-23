@@ -190,7 +190,7 @@ public static class StringExtensions
         _ = input ?? throw new ArgumentNullException(nameof(input));
         _ = values ?? throw new ArgumentNullException(nameof(values));
 
-        return values.Any(v => input.Equals(v, StringComparison.InvariantCultureIgnoreCase));
+        return values.Any(v => input.Equals(v, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <inheritdoc cref="StartsWithAnyCI(string, string[])"/>
@@ -641,7 +641,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(match))
             throw new ArgumentNullException(nameof(match));
 
-        var matchStartIndex = input.IndexOf(match);
+        var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
     }
 
@@ -654,7 +654,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(match))
             throw new ArgumentNullException(nameof(match));
 
-        var matchStartIndex = input.LastIndexOf(match);
+        var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
     }
 
@@ -667,7 +667,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(match))
             throw new ArgumentNullException(nameof(match));
 
-        var matchStartIndex = input.IndexOf(match);
+        var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
 
@@ -680,7 +680,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(match))
             throw new ArgumentNullException(nameof(match));
 
-        var matchStartIndex = input.LastIndexOf(match);
+        var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
 }
