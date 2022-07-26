@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>6.0.2</Version>
-		<PackageReleaseNotes>-Integrated SonarLint and fixed code smells.</PackageReleaseNotes>
+		<Version>6.1.0</Version>
+		<PackageReleaseNotes>-Models, NumericParser`1, Clean-up.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

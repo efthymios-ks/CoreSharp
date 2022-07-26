@@ -73,7 +73,7 @@ public class NumericParserTests
         var parser = new NumericParser<double>(format, culture);
 
         //Act 
-        var formattedValue = parser.FormatValue(value);
+        var formattedValue = parser.ToString(value);
 
         //Assert 
         formattedValue.Should().Be(expected);
@@ -85,18 +85,20 @@ public class NumericParserTests
     [TestCase("N2", "en-US", "Test")]
     [TestCase("N2", "en-US", "1.000,12")]
     [TestCase("N2", "en-US", "1.000,13 €")]
-    public void TryParseValue_InvalidInput_ReturnFalseAndDefaultValue(string format, string cultureName, string input)
+    public void TryParseValue_InvalidInput_ReturnFalseAndUntouchedValue(string format, string cultureName, string input)
     {
         //Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
         var parser = new NumericParser<double>(format, culture);
+        const double initialValue = -1.0;
 
         //Act 
-        var result = parser.TryParseValue(input, out var value);
+        var value = initialValue;
+        var result = parser.TryParse(input, ref value);
 
         //Assert 
         result.Should().BeFalse();
-        value.Should().Be(default);
+        value.Should().Be(initialValue);
     }
 
     [Test]
@@ -111,9 +113,10 @@ public class NumericParserTests
         //Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
         var parser = new NumericParser<double>(format, culture);
+        var value = -1.0;
 
         //Act 
-        var result = parser.TryParseValue(input, out var value);
+        var result = parser.TryParse(input, ref value);
 
         //Assert 
         result.Should().BeTrue();

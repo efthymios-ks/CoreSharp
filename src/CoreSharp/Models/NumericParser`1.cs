@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace CoreSharp.Models;
 
-public class NumericParser<TNumber>
+public sealed class NumericParser<TNumber>
 {
     //Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -47,7 +47,7 @@ public class NumericParser<TNumber>
     /// Parse and convert <see cref="string"/> input to <see cref="decimal"/>.
     /// If fails to do so, value remains untouched.
     /// </summary>
-    public bool TryParseValue(string input, out TNumber value)
+    public bool TryParse(string input, ref TNumber number)
     {
         try
         {
@@ -55,31 +55,29 @@ public class NumericParser<TNumber>
             if (string.IsNullOrWhiteSpace(input))
             {
                 //Nullable: Null 
-                //Non-Nullable: 0 
-                value = default;
+                //Non-Nullable: 0  
                 return false;
             }
 
             //Parse to decimal? (cause it can fit all numeric types) 
-            var tempValue = ParseValue(input);
+            var tempNumber = ToDecimal(input);
 
             //If failed, throw 
-            if (tempValue is null)
+            if (tempNumber is null)
                 throw new ArgumentNullException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
             //Format to string... 
-            input = FormatValue(tempValue);
+            input = ToString(tempNumber);
 
             //...and parse back to decimal? to keep formatting or rounding 
-            tempValue = ParseValue(input);
+            tempNumber = ToDecimal(input);
 
             //Finally convert to required type 
-            value = tempValue.ChangeType<TNumber>(_cultureInfo);
+            number = tempNumber.ChangeType<TNumber>(_cultureInfo);
             return true;
         }
         catch
         {
-            value = default;
             return false;
         }
     }
@@ -88,7 +86,7 @@ public class NumericParser<TNumber>
     /// Parse value to <see cref="decimal"/>.
     /// Handles any type and format.
     /// </summary>
-    private decimal? ParseValue(string input)
+    private decimal? ToDecimal(string input)
     {
         var isValuePercentage = input.Contains('%');
 
@@ -106,13 +104,13 @@ public class NumericParser<TNumber>
         return _isFormatPercentage || isValuePercentage ? result / 100 : result;
     }
 
-    /// <inheritdoc cref="FormatValue(decimal?)"/>
-    public string FormatValue(TNumber value)
-        => FormatValue(value.ChangeType<decimal?>(_cultureInfo));
+    /// <inheritdoc cref="ToString(decimal?)"/>
+    public string ToString(TNumber number)
+        => ToString(number.ChangeType<decimal?>(_cultureInfo));
 
     /// <summary>
-    /// Format <see cref="string"/>.
+    /// Conver number to <see cref="string"/>.
     /// </summary>
-    private string FormatValue(decimal? value)
-        => value?.ToString(_format, _cultureInfo);
+    private string ToString(decimal? number)
+        => number?.ToString(_format, _cultureInfo);
 }
