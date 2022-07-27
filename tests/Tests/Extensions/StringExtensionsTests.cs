@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Tests.Dummies.Entities;
+﻿using Newtonsoft.Json;
 
 namespace CoreSharp.Extensions.Tests;
 

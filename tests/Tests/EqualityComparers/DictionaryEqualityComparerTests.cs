@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System.Collections.Generic;
-
-namespace CoreSharp.EqualityComparers.Tests;
+﻿namespace CoreSharp.EqualityComparers.Tests;
 
 [TestFixture]
 public class DictionaryEqualityComparerTests

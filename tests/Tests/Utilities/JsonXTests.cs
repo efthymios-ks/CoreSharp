@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-
-namespace CoreSharp.Utilities.Tests;
+﻿namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
 public class JsonXTests

@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System.Globalization;
-
-namespace CoreSharp.Regexs.Tests;
+﻿namespace CoreSharp.Regexs.Tests;
 
 [TestFixture]
 public class IntegerRegexTests

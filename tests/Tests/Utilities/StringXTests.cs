@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System.Linq;
-
-namespace CoreSharp.Utilities.Tests;
+﻿namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
 public class StringXTests

@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 
 namespace CoreSharp.Extensions.Tests;
 

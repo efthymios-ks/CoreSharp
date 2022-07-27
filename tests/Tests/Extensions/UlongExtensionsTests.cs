@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-
-namespace CoreSharp.Extensions.Tests;
+﻿namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class UlongExtensionsTests

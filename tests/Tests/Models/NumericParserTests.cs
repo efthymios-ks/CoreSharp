@@ -1,9 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Globalization;
-using System.Linq;
-using Tests.Attributes;
+﻿using Tests.Attributes;
 
 namespace CoreSharp.Models.Tests;
 

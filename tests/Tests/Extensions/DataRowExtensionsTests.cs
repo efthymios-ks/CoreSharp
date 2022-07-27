@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Data;
-using Tests.Dummies.Entities;
-
-namespace CoreSharp.Extensions.Tests;
+﻿namespace CoreSharp.Extensions.Tests;
 
 [TestFixture]
 public class DataRowExtensionsTests

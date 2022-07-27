@@ -1,8 +1,4 @@
 ﻿using CoreSharp.Enums;
-using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Globalization;
 
 namespace CoreSharp.Extensions.Tests;
 

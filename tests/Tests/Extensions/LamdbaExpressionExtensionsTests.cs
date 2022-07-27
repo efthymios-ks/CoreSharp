@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Linq.Expressions;
-using Tests.Dummies.Entities;
+﻿using System.Linq.Expressions;
 
 namespace CoreSharp.Extensions.Tests;
 

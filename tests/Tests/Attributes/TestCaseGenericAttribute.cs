@@ -1,9 +1,6 @@
-﻿using NUnit.Framework;
-using NUnit.Framework.Interfaces;
+﻿using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Builders;
-using System;
-using System.Collections.Generic;
 
 namespace Tests.Attributes;
 

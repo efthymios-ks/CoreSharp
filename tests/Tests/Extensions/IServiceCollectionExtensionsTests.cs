@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-using System;
-using System.Linq;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Tests.Dummies.Services;
 using Tests.Dummies.Services.Marked;

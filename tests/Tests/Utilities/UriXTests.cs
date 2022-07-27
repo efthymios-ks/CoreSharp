@@ -1,9 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-
-namespace CoreSharp.Utilities.Tests;
+﻿namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
 public class UriXTests
