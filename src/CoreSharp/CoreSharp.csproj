@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>6.1.1</Version>
-		<PackageReleaseNotes>-Exceptions, Entity(Not)FoundException, Removed `Throw()` methods.</PackageReleaseNotes>
+		<Version>6.1.2</Version>
+		<PackageReleaseNotes>-Extensions, IEnumerable, `StringJoin()`, Fixed default values.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>

@@ -66,7 +66,7 @@ public static class IEnumerableExtensions
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<TElement>(this IEnumerable<TElement> source)
-        => source.StringJoin(" ", string.Empty, null);
+        => source.StringJoin(null, null, null);
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<TElement>(this IEnumerable<TElement> source, string separator)
@@ -82,7 +82,7 @@ public static class IEnumerableExtensions
 
     /// <inheritdoc cref="StringJoin{TElement}(IEnumerable{TElement}, string, string, IFormatProvider)"/>
     public static string StringJoin<T>(this IEnumerable<T> source, IFormatProvider formatProvider)
-        => source.StringJoin(" ", string.Empty, formatProvider);
+        => source.StringJoin(null, null, formatProvider);
 
     /// <summary>
     /// Concatenates the elements of a specified array or the members of a collection,
@@ -91,7 +91,7 @@ public static class IEnumerableExtensions
     public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
-        separator ??= string.Empty;
+        separator ??= " ";
         stringFormat ??= "{0}";
         formatProvider ??= CultureInfo.CurrentCulture;
 
