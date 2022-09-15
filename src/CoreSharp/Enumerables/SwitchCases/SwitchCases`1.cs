@@ -6,10 +6,10 @@ namespace CoreSharp.Enumerables.SwitchCases;
 
 public class SwitchCases<TKey> : IEnumerable<KeyValuePair<TKey, Action>>
 {
-    //Fields 
+    // Fields 
     private readonly IDictionary<TKey, Action> _cases;
 
-    //Constructors
+    // Constructors
     public SwitchCases()
         : this(null)
     {
@@ -18,7 +18,7 @@ public class SwitchCases<TKey> : IEnumerable<KeyValuePair<TKey, Action>>
     public SwitchCases(IEqualityComparer<TKey> equalityComparer)
         => _cases = new Dictionary<TKey, Action>(equalityComparer);
 
-    //Methods 
+    // Methods 
     public void Add(TKey key, Action action)
         => _cases.Add(key, action);
 

@@ -14,11 +14,11 @@ namespace CoreSharp.EqualityComparers;
 /// </summary>
 public class JsonEqualityComparer<TEntity> : IEqualityComparer<TEntity>
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly Func<TEntity, string> _serializeFunction;
 
-    //Constructors
+    // Constructors
     public JsonEqualityComparer()
         : this(JsonSettings.Default)
     {
@@ -35,7 +35,7 @@ public class JsonEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     public JsonEqualityComparer(Func<TEntity, string> serializeFunction)
         => _serializeFunction = serializeFunction ?? throw new ArgumentNullException(nameof(serializeFunction));
 
-    //Methods
+    // Methods
     public bool Equals(TEntity x, TEntity y)
     {
         var leftJson = _serializeFunction(x);

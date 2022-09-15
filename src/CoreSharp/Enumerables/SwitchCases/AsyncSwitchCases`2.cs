@@ -7,10 +7,10 @@ namespace CoreSharp.Enumerables.SwitchCases;
 
 public class AsyncSwitchCases<TKey, TResult> : IEnumerable<KeyValuePair<TKey, Task<TResult>>>
 {
-    //Fields 
+    // Fields 
     private readonly IDictionary<TKey, Task<TResult>> _cases;
 
-    //Constructors
+    // Constructors
     public AsyncSwitchCases()
         : this(null)
     {
@@ -19,7 +19,7 @@ public class AsyncSwitchCases<TKey, TResult> : IEnumerable<KeyValuePair<TKey, Ta
     public AsyncSwitchCases(IEqualityComparer<TKey> equalityComparer)
         => _cases = new Dictionary<TKey, Task<TResult>>(equalityComparer);
 
-    //Methods 
+    // Methods 
     public void Add(TKey key, Task<TResult> task)
         => _cases.Add(key, task);
 

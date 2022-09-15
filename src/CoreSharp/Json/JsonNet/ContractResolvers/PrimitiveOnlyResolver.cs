@@ -9,14 +9,14 @@ namespace CoreSharp.Json.JsonNet.ContractResolvers;
 
 public class PrimitiveOnlyResolver : WritableOnlyPropertiesResolver
 {
-    //Fields
+    // Fields
     private static PrimitiveOnlyResolver _instance;
 
-    //Properties
+    // Properties
     public static new PrimitiveOnlyResolver Instance
         => _instance ??= new PrimitiveOnlyResolver();
 
-    //Methods
+    // Methods
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         => base.CreateProperties(type, memberSerialization)
                .Where(j => j.PropertyType.IsPrimitiveExtended())

@@ -10,28 +10,28 @@ namespace CoreSharp.Enumerables;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IEnumerable<TElement> _source;
 
-    //Constructors 
+    // Constructors 
     public Grouping(TKey key, IEnumerable<TElement> source)
     {
         Key = key;
         _source = source ?? throw new ArgumentNullException(nameof(source));
 
-        //Mutate once 
+        // Mutate once 
         _source = _source.ToArray();
     }
 
-    //Properties 
+    // Properties 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay
         => ToString();
 
     public TKey Key { get; }
 
-    //Methods 
+    // Methods 
     public override string ToString()
         => $"{Key} ({this.Count()})";
 

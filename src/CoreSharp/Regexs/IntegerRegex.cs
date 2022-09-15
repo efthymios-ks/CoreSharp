@@ -10,12 +10,12 @@ namespace CoreSharp.Regexs;
 /// </summary>
 public sealed class IntegerRegex
 {
-    //Fields
+    // Fields
     private const string PatternTemplate = @"^(?<Sign>[+-]?)[ ]?(?<Value>(?:\d{1,3}(?:{ThousandSeparator}\d{3})*)|\d+)$";
     private readonly CultureInfo _culture;
     private readonly Match _match;
 
-    //Constructors
+    // Constructors
     public IntegerRegex(string input)
         : this(input, CultureInfo.CurrentCulture)
     {
@@ -31,7 +31,7 @@ public sealed class IntegerRegex
         _match = regex.Match(input.Trim());
     }
 
-    //Properties
+    // Properties
     private string Pattern
         => PatternTemplate
             .Replace("{ThousandSeparator}", Regex.Escape(_culture.NumberFormat.NumberGroupSeparator));

@@ -9,11 +9,11 @@ namespace CoreSharp.Json.TextJson;
 
 public static class JsonOptions
 {
-    //Fields 
+    // Fields 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static JsonSerializerOptions _default;
 
-    //Properties
+    // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static IEnumerable<JsonConverter> DefaultJsonConverters
         => new[]
@@ -24,7 +24,7 @@ public static class JsonOptions
     public static JsonSerializerOptions Default
         => _default ??= CreateDefault();
 
-    //Methods
+    // Methods
     private static JsonSerializerOptions CreateDefault()
     {
         var options = new JsonSerializerOptions

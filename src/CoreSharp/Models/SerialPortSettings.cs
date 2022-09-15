@@ -11,7 +11,7 @@ namespace CoreSharp.Models;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class SerialPortSettings
 {
-    //Properties 
+    // Properties 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay
         => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate}, {nameof(Parity)}={Parity}";
@@ -24,7 +24,7 @@ public class SerialPortSettings
     public Encoding TextEncoding { get; set; } = Encoding.ASCII;
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(15);
 
-    //Methods 
+    // Methods 
     public override string ToString()
         => $"{nameof(PortName)}={PortName}, {nameof(BaudRate)}={BaudRate:F0}, {nameof(Parity)}={Parity}, {nameof(DataBits)}={DataBits:F0}, {nameof(StopBits)}={StopBits}";
 }

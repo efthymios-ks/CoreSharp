@@ -30,13 +30,13 @@ public static class UriX
 
         var builder = new StringBuilder();
 
-        //Connect 
+        // Connect 
         for (var i = 0; i < segments.Length; i++)
         {
             var segment = segments[i];
             var trimmed = $"{segment}".Trim();
 
-            //If first segment is absolute (e.g. https://www.page.gr), do not insert '/' separator
+            // If first segment is absolute (e.g. https://www.page.gr), do not insert '/' separator
             if (i == 0 && Uri.IsWellFormedUriString(trimmed, UriKind.Relative))
                 builder.Append('/');
 
@@ -45,10 +45,10 @@ public static class UriX
 
         builder.Append('/');
 
-        //Build url 
+        // Build url 
         var url = builder.ToString();
 
-        //Multiple forward-slashes to single one 
+        // Multiple forward-slashes to single one 
         return Regex.Replace(url, @"(?<=[^:\s])(\/+\/)+", "/");
     }
 

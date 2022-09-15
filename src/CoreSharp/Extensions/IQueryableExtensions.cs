@@ -41,22 +41,22 @@ public static class IQueryableExtensions
     /// </summary>
     public static IQueryable<TElement> FilterFlexible<TElement>(this IQueryable<TElement> query, Func<TElement, string> propertySelector, string filter)
     {
-        //Argument validation 
+        // Argument validation 
         _ = query ?? throw new ArgumentNullException(nameof(query));
         _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
         filter ??= string.Empty;
 
-        //Remove whitespace
+        // Remove whitespace
         filter = Regex.Replace(filter, @"\s", string.Empty);
 
-        //If empty, return empty 
+        // If empty, return empty 
         if (string.IsNullOrWhiteSpace(filter))
             return Enumerable.Empty<TElement>().AsQueryable();
 
-        //Get all characters 
+        // Get all characters 
         var characters = filter.ToCharArray();
 
-        //Build RegEx pattern 
+        // Build RegEx pattern 
         var builder = new StringBuilder();
         for (var i = 0; i < characters.Length; i++)
         {
@@ -71,10 +71,10 @@ public static class IQueryableExtensions
 
         var pattern = $"{builder}";
 
-        //Build RegEx object 
+        // Build RegEx object 
         var regex = new Regex(pattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        //Filter 
+        // Filter 
         return query.Where(i => regex.IsMatch(propertySelector(i)));
     }
 }

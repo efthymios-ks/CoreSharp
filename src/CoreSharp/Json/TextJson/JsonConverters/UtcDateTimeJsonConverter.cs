@@ -7,14 +7,14 @@ namespace CoreSharp.Json.TextJson.JsonConverters;
 
 public class UtcDateTimeJsonConverter : JsonConverter<DateTime>
 {
-    //Fields
+    // Fields
     private const string DateFormat = "O";
 
-    //Properties
+    // Properties
     private static CultureInfo CultureInfo
         => CultureInfo.InvariantCulture;
 
-    //Methods
+    // Methods
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
         var jsonValue = value.ToUniversalTime().ToString(DateFormat, CultureInfo);
@@ -26,8 +26,8 @@ public class UtcDateTimeJsonConverter : JsonConverter<DateTime>
         var dateAsString = reader.GetString();
         var date = DateTime.ParseExact(dateAsString, DateFormat, CultureInfo, DateTimeStyles.None);
 
-        //Avoid `DateTime.SpecifyKind` which changes values.
-        //Use `TimeZoneInfo.ConvertTimeToUtc` which changes just the `DateTime.Kind`.
+        // Avoid `DateTime.SpecifyKind` which changes values.
+        // Use `TimeZoneInfo.ConvertTimeToUtc` which changes just the `DateTime.Kind`.
         return TimeZoneInfo.ConvertTimeToUtc(date);
     }
 }

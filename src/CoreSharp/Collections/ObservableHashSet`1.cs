@@ -7,10 +7,10 @@ namespace CoreSharp.Collections;
 
 public class ObservableHashSet<TEntity> : ICollection<TEntity>, INotifyCollectionChanged
 {
-    //Fields
+    // Fields
     private readonly HashSet<TEntity> _source;
 
-    //Constructors
+    // Constructors
     public ObservableHashSet()
         : this(EqualityComparer<TEntity>.Default)
     {
@@ -35,17 +35,17 @@ public class ObservableHashSet<TEntity> : ICollection<TEntity>, INotifyCollectio
     public ObservableHashSet(int capacity, IEqualityComparer<TEntity> equalityComparer)
         => _source = new(capacity, equalityComparer);
 
-    //Properties
+    // Properties
     public int Count
         => _source.Count;
 
     public bool IsReadOnly
         => false;
 
-    //Events 
+    // Events 
     public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-    //Methods
+    // Methods
     protected void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
     {
         _ = args ?? throw new ArgumentNullException(nameof(args));

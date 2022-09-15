@@ -6,13 +6,13 @@ namespace CoreSharp.EqualityComparers;
 
 public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDictionary<TKey, TValue>>
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IEqualityComparer<TKey> _keyComparer;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IEqualityComparer<TValue> _valueComparer;
 
-    //Constructors 
+    // Constructors 
     public DictionaryEqualityComparer()
         : this(EqualityComparer<TKey>.Default, EqualityComparer<TValue>.Default)
     {
@@ -24,22 +24,22 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
         _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
     }
 
-    //Methods
+    // Methods
     public bool Equals(IDictionary<TKey, TValue> x, IDictionary<TKey, TValue> y)
     {
-        //Same reference 
+        // Same reference 
         if (x == y)
             return true;
-        //Null 
+        // Null 
         else if (x is null || y is null)
             return false;
 
-        //Keys don't match
+        // Keys don't match
         var keysComparer = new EnumerableEqualityComparer<TKey>(_keyComparer);
         if (!keysComparer.Equals(x.Keys, y.Keys))
             return false;
 
-        //Values don't match 
+        // Values don't match 
         foreach (var (key, value) in x)
         {
             var rightValue = y[key];

@@ -8,7 +8,7 @@ namespace CoreSharp.Utilities;
 /// </summary>
 public static class RegexX
 {
-    //Methods
+    // Methods
     /// <summary>
     /// Reduces many consequtive occurences of a char to single one.
     /// <code>

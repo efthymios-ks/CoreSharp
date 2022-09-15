@@ -14,12 +14,12 @@ namespace CoreSharp.Models;
 /// </summary>
 public class DbQuery : IAsyncDisposable
 {
-    //Fields 
+    // Fields 
     private readonly DbConnection _connection;
     private readonly DbTransaction _transaction;
     private int _timeoutSeconds;
 
-    //Constructors 
+    // Constructors 
     public DbQuery(DbConnection connection)
         => _connection = connection ?? throw new ArgumentNullException(nameof(connection));
 
@@ -29,7 +29,7 @@ public class DbQuery : IAsyncDisposable
         _connection = transaction?.Connection ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
     }
 
-    //Properties 
+    // Properties 
     /// <summary>
     /// Gets or sets the wait time (in seconds) before terminating
     /// the attempt to execute a <see cref="DbCommand.CommandTimeout"/> and generating an error.
@@ -56,7 +56,7 @@ public class DbQuery : IAsyncDisposable
     /// </summary>
     public ICollection<DbParameter> Parameters { get; } = new HashSet<DbParameter>();
 
-    //Methods 
+    // Methods 
     public async ValueTask DisposeAsync()
     {
         GC.SuppressFinalize(this);
@@ -74,11 +74,11 @@ public class DbQuery : IAsyncDisposable
 
     private async Task<DbCommand> BuildDbCommandAsync(string query, CancellationToken cancellationToken = default)
     {
-        //Open connection
+        // Open connection
         if (!_connection.IsOpen())
             await _connection.OpenAsync(cancellationToken);
 
-        //Prepare and execute DbCommand 
+        // Prepare and execute DbCommand 
         var command = _connection.CreateCommand();
         command.Connection = _connection;
         command.Transaction = _transaction;

@@ -6,11 +6,11 @@ namespace CoreSharp.Enumerables.Validations;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class ValidationStep
 {
-    //Fields  
+    // Fields  
     private readonly Func<bool> _validationFunction;
     private readonly Func<string> _validationMessageFunction;
 
-    //Constructors
+    // Constructors
     public ValidationStep(int stepNumber, Func<bool> validationFunction)
         : this(stepNumber, validationFunction, () => string.Empty)
     {
@@ -25,14 +25,14 @@ public class ValidationStep
         _validationMessageFunction = validationMessageFunction ?? throw new ArgumentNullException(nameof(validationMessageFunction));
     }
 
-    //Properties
+    // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => ToString();
     public int Number { get; }
     internal bool IsValid => _validationFunction();
     internal string ValidationMessage => _validationMessageFunction();
 
-    //Methods
+    // Methods
     public override string ToString() => $"Step={Number}";
 
     internal static void ValidateNumber(int number)

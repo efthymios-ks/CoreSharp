@@ -7,7 +7,7 @@ namespace CoreSharp.Exceptions;
 
 public class EntityNotFoundException : KeyNotFoundException
 {
-    //Constructors 
+    // Constructors 
     public EntityNotFoundException(Type entityType, string propertyName, object propertyValue)
         : this(entityType.Name, propertyName, propertyValue)
     {
@@ -21,12 +21,12 @@ public class EntityNotFoundException : KeyNotFoundException
         PropertyValue = propertyValue;
     }
 
-    //Properties  
+    // Properties  
     public string EntityName { get; }
     public string PropertyName { get; }
     public object PropertyValue { get; }
 
-    //Methods 
+    // Methods 
     public static EntityNotFoundException Create<TEntity, TKey>(Expression<Func<TEntity, TKey>> propertySelector, TKey targetValue)
     {
         _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));

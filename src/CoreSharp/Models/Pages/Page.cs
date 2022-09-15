@@ -7,7 +7,7 @@ namespace CoreSharp.Models.Pages;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Page
 {
-    //Constructors
+    // Constructors
     public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable items)
     {
         if (pageNumber < 0)
@@ -26,7 +26,7 @@ public class Page
         Items = items ?? throw new ArgumentNullException(nameof(items));
     }
 
-    //Properties
+    // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => ToString();
     public int PageNumber { get; }
@@ -39,7 +39,7 @@ public class Page
     public virtual bool HasNext
         => PageNumber < TotalPages - 1;
 
-    //Methods
+    // Methods
     public override string ToString()
         => $"{nameof(PageNumber)}={PageNumber}, {nameof(PageSize)}={PageSize}";
 }

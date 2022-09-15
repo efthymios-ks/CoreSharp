@@ -7,15 +7,15 @@ namespace CoreSharp.Json.TextJson.JsonConverters;
 
 public class TimeSpanJsonConverter : JsonConverter<TimeSpan>
 {
-    //Fields 
+    // Fields 
     private const string Format = "c";
     private const string FormatTemplate = "[d'.']hh':'mm':'ss['.'fffffff]";
 
-    //Properties 
+    // Properties 
     private static CultureInfo CultureInfo
         => CultureInfo.InvariantCulture;
 
-    //Methods 
+    // Methods 
     public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var timeSpanAsString = reader.GetString();

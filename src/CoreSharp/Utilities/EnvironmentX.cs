@@ -8,7 +8,7 @@ namespace CoreSharp.Utilities;
 /// </summary>
 public static class EnvironmentX
 {
-    //Methods
+    // Methods
     /// <summary>
     /// Get ASPNETCORE_ENVIRONMENT variable.
     /// </summary>

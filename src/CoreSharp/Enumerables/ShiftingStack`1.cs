@@ -8,11 +8,11 @@ namespace CoreSharp.Enumerables;
 
 public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
 {
-    //Fields 
+    // Fields 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IList<TElement> _source = new List<TElement>();
 
-    //Constructors
+    // Constructors
     public ShiftingStack(int maxCapacity)
         : this(maxCapacity, Enumerable.Empty<TElement>())
     {
@@ -29,7 +29,7 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
             Push(item);
     }
 
-    //Properties
+    // Properties
     /// <summary>
     /// Maximum number of items allowed in the <see cref="ShiftingStack{TElement}"/>.
     /// If max capacity is met, then bottom items are shifted out
@@ -49,7 +49,7 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     public bool HasMetMaxCapacity
         => Count == MaxCapacity;
 
-    //Methods
+    // Methods
     /// <summary>
     /// Removes all items.
     /// </summary>

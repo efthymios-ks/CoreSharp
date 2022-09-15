@@ -30,7 +30,7 @@ public static class TaskExtensions
 
         static Task ContinuationFunction(Task t)
         {
-            //static bool HasInnerExceptions(AggregateException exception)
+            // static bool HasInnerExceptions(AggregateException exception)
             //    => exception?.InnerException is AggregateException || exception.InnerExceptions.Count > 1;
 
             if (!t.IsFaulted)
@@ -130,7 +130,7 @@ public static class TaskExtensions
         }
         catch (Exception exception) when (exception is TException)
         {
-            //This is the point of the method. Ignore error.
+            // This is the point of the method. Ignore error.
         }
     }
 

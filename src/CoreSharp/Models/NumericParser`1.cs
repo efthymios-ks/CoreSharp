@@ -8,7 +8,7 @@ namespace CoreSharp.Models;
 
 public sealed class NumericParser<TNumber>
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly CultureInfo _cultureInfo;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -16,7 +16,7 @@ public sealed class NumericParser<TNumber>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly bool _isFormatPercentage;
 
-    //Constructors
+    // Constructors
     public NumericParser()
         : this(CultureInfo.CurrentCulture)
     {
@@ -42,7 +42,7 @@ public sealed class NumericParser<TNumber>
         _isFormatPercentage = Regex.IsMatch(_format, @"^[pP]\d+$");
     }
 
-    //Methods
+    // Methods
     /// <summary>
     /// Parse and convert <see cref="string"/> input to <see cref="decimal"/>.
     /// If fails to do so, value remains untouched.
@@ -51,28 +51,28 @@ public sealed class NumericParser<TNumber>
     {
         try
         {
-            //If input is empty 
+            // If input is empty 
             if (string.IsNullOrWhiteSpace(input))
             {
-                //Nullable: Null 
-                //Non-Nullable: 0  
+                // Nullable: Null 
+                // Non-Nullable: 0  
                 return false;
             }
 
-            //Parse to decimal? (cause it can fit all numeric types) 
+            // Parse to decimal? (cause it can fit all numeric types) 
             var tempNumber = ToDecimal(input);
 
-            //If failed, throw 
+            // If failed, throw 
             if (tempNumber is null)
                 throw new ArgumentNullException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
-            //Format to string... 
+            // Format to string... 
             input = ToString(tempNumber);
 
-            //...and parse back to decimal? to keep formatting or rounding 
+            // ...and parse back to decimal? to keep formatting or rounding 
             tempNumber = ToDecimal(input);
 
-            //Finally convert to required type 
+            // Finally convert to required type 
             number = tempNumber.ChangeType<TNumber>(_cultureInfo);
             return true;
         }
@@ -90,17 +90,17 @@ public sealed class NumericParser<TNumber>
     {
         var isValuePercentage = input.Contains('%');
 
-        //Remove all whitespace 
+        // Remove all whitespace 
         input = Regex.Replace(input, @"\s+", string.Empty);
 
-        //Remove percentage symbol 
+        // Remove percentage symbol 
         if (isValuePercentage)
             input = input.Replace(_cultureInfo.NumberFormat.PercentSymbol, string.Empty);
 
         if (!decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out var result))
             return default;
 
-        //Divide by 100, since `ToString("P")` format specifier multiplies by 100 
+        // Divide by 100, since `ToString("P")` format specifier multiplies by 100 
         return _isFormatPercentage || isValuePercentage ? result / 100 : result;
     }
 

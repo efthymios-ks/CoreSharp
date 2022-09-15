@@ -8,7 +8,7 @@ namespace CoreSharp.Enumerables.Validations;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class ValidationSteps : ValidationStepCollectionBase
 {
-    //Constructors
+    // Constructors
     public ValidationSteps(IEnumerable<ValidationStep> steps, bool sequentialValidation = true)
         : this(sequentialValidation)
     {
@@ -21,7 +21,7 @@ public class ValidationSteps : ValidationStepCollectionBase
     public ValidationSteps(bool sequentialValidation = true)
         => SequentialValidation = sequentialValidation;
 
-    //Properties 
+    // Properties 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => ToString();
 
@@ -31,7 +31,7 @@ public class ValidationSteps : ValidationStepCollectionBase
     /// </summary>
     public bool SequentialValidation { get; set; }
 
-    //Methods 
+    // Methods 
     public override string ToString() => $"{Count} steps";
 
     public void Add(int number, Func<bool> validationFunction)
@@ -50,7 +50,7 @@ public class ValidationSteps : ValidationStepCollectionBase
         {
             var previousStep = GetPreviousStep(number);
 
-            //If there is no previous step, run current step validation 
+            // If there is no previous step, run current step validation 
             return previousStep is null ? currentStep.IsValid : IsStepValid(previousStep.Number) && currentStep.IsValid;
         }
         else

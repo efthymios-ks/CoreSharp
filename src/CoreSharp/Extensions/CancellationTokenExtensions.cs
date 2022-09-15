@@ -24,11 +24,11 @@ public static class CancellationTokenExtensions
     /// {
     ///     await httpClient.SendAsync(httpRequestMessage, cancellationTokenSource.Token);
     /// }
-    /// //Cancelled by user
+    /// // Cancelled by user
     /// catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
     /// {
     /// }
-    /// //Timeout
+    /// // Timeout
     /// catch (TaskCanceledException)
     /// {
     /// }

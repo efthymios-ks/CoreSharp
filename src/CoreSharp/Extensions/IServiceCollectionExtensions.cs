@@ -18,18 +18,18 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class IServiceCollectionExtensions
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const string InterfacePrefix = "I";
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const string InterfaceGroupRegexExp = "(?<Name>.+)";
 
-    //Properties
+    // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static string InterfaceContractRegexExp
         => $"^{InterfacePrefix}{InterfaceGroupRegexExp}$";
 
-    //Methods 
+    // Methods 
     /// <summary>
     /// Registers and attempts to bind a particular type of <see cref="IOptions{TOptions}"/>.
     /// </summary>
@@ -106,19 +106,19 @@ public static class IServiceCollectionExtensions
 
         bool ContractFilter(Type type)
         {
-            //Not an interface, ignore 
+            // Not an interface, ignore 
             if (!type.IsInterface)
                 return false;
 
-            //Manual ignore, ignore 
+            // Manual ignore, ignore 
             else if (type.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
                 return false;
 
-            //Additional checks do not apply, ignore 
+            // Additional checks do not apply, ignore 
             else if (!additionalInterfacePredicate(type))
                 return false;
 
-            //Take 
+            // Take 
             return true;
         }
 
@@ -144,43 +144,43 @@ public static class IServiceCollectionExtensions
         _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
         _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
 
-        //Get all implementations for given contract 
+        // Get all implementations for given contract 
         var implementations = assemblies.SelectMany(a => a.GetTypes()).Where(t =>
         {
-            //Not a class, ignore 
+            // Not a class, ignore 
             if (!t.IsClass)
                 return false;
 
-            //Not a concrete class, ignore 
+            // Not a concrete class, ignore 
             else if (t.IsAbstract)
                 return false;
 
-            //Manual ignore, ignore 
+            // Manual ignore, ignore 
             else if (t.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
                 return false;
 
-            //Type.GetInterface(string) doesn't work with nested classes 
+            // Type.GetInterface(string) doesn't work with nested classes 
             var interfaces = t.GetInterfaces();
 
-            //It's marked, ignore 
+            // It's marked, ignore 
             if (interfaces.Contains(typeof(IService)))
                 return false;
 
-            //Doesn't implement given interface, ignore 
+            // Doesn't implement given interface, ignore 
             else if (!interfaces.Contains(contractType))
                 return false;
 
-            //Take 
+            // Take 
             return true;
         }).ToArray();
 
-        //If single implementation, register it 
+        // If single implementation, register it 
         if (implementations.Length == 1)
         {
             return implementations[0];
         }
 
-        //If multiple implementations
+        // If multiple implementations
         else if (implementations.Length > 1)
         {
             static string TrimGenericTypeBaseName(string name)
@@ -194,17 +194,17 @@ public static class IServiceCollectionExtensions
             static string GetGenericTypeBaseName(Type type)
                 => TrimGenericTypeBaseName(type.Name);
 
-            //Get contract name 
+            // Get contract name 
             var trimmedContractName = Regex.Match(contractType.Name, InterfaceContractRegexExp)
                                            .Groups["Name"]
                                            .Value;
             trimmedContractName = TrimGenericTypeBaseName(trimmedContractName);
 
-            //First one with the correct name convention
+            // First one with the correct name convention
             return Array.Find(implementations, i => GetGenericTypeBaseName(i) == trimmedContractName);
         }
 
-        //None found
+        // None found
         return null;
     }
     #endregion
@@ -228,23 +228,23 @@ public static class IServiceCollectionExtensions
 
         var implementations = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(t =>
         {
-            //Not a class, ignore 
+            // Not a class, ignore 
             if (!t.IsClass)
                 return false;
 
-            //Not a concrete class, ignore 
+            // Not a concrete class, ignore 
             else if (t.IsAbstract)
                 return false;
 
-            //Manual ignore, ignore 
+            // Manual ignore, ignore 
             else if (t.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
                 return false;
 
-            //Doesn't implement IService, ignore 
+            // Doesn't implement IService, ignore 
             else if (!t.GetInterfaces().Contains(typeof(IService)))
                 return false;
 
-            //Else take
+            // Else take
             else
                 return true;
         });
@@ -267,7 +267,7 @@ public static class IServiceCollectionExtensions
             else
                 contract = implementation;
 
-            //Register
+            // Register
             var descriptor = new ServiceDescriptor(contract, implementation, lifetime);
             serviceCollecton.TryAdd(descriptor);
         }

@@ -15,10 +15,10 @@ public static class JsonX
     {
         json ??= string.Empty;
 
-        //Remove spaces, line-breaks and whitespace
+        // Remove spaces, line-breaks and whitespace
         json = Regex.Replace(json, @"\s+", string.Empty);
 
-        //Empty formats
+        // Empty formats
         var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
 
         return emptyFormats.Any(f => f == json);

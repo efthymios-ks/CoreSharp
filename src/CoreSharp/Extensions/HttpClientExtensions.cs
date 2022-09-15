@@ -53,22 +53,22 @@ public static class HttpClientExtensions
         {
             return await httpClient.SendAsync(httpRequestMessage, httpCompletionOption, cancellationTokenSource.Token);
         }
-        //Cancelled by user 
+        // Cancelled by user 
         catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             throw new TaskCanceledException($"The request was cancelled from user-provided `{nameof(CancellationToken)}`.");
         }
-        //HttpClient.Timeout 
+        // HttpClient.Timeout 
         catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
         {
             throw new TimeoutException(message: ex.Message, innerException: ex);
         }
-        //IRequest.Timeout 
+        // IRequest.Timeout 
         catch (TaskCanceledException ex) when (ex.InnerException is IOException)
         {
             throw new TimeoutException(message: $"The request was cancelled due to the configured timeout of `{timeout.ToStringReadable()}` elapsing.", innerException: ex);
         }
-        //Timeout on really small TimeSpans 
+        // Timeout on really small TimeSpans 
         catch (TaskCanceledException)
         {
             throw new TaskCanceledException("The request was cancelled.");

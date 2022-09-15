@@ -148,7 +148,7 @@ public static class RandomExtensions
         {
             var randomIndex = random.Next(currentIndex, source.Count);
 
-            //Swap 
+            // Swap 
             (source[currentIndex], source[randomIndex]) = (source[randomIndex], source[currentIndex]);
         }
     }

@@ -5,9 +5,9 @@ namespace CoreSharp.Observers.Contracts;
 public interface IStateObserver<TEntity>
     where TEntity : class
 {
-    //Properties
+    // Properties
     TEntity State { get; set; }
 
-    //Events 
+    // Events 
     event Action<TEntity> StateChanged;
 }

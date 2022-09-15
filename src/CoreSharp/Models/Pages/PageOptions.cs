@@ -5,13 +5,13 @@ namespace CoreSharp.Models.Pages;
 
 public class PageOptions
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const int DefaultPageNumber = default;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const int DefaultPageSize = 20;
 
-    //Properties 
+    // Properties 
     [DefaultValue(DefaultPageNumber)]
     public int PageNumber { get; set; } = DefaultPageNumber;
 

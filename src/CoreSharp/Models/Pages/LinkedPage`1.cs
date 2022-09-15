@@ -4,7 +4,7 @@ namespace CoreSharp.Models.Pages;
 
 public class LinkedPage<TElement> : Page<TElement>
 {
-    //Constructors
+    // Constructors
     public LinkedPage(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable<TElement> items)
         : base(pageNumber, pageSize, totalItems, totalPages, items)
     {
@@ -17,7 +17,7 @@ public class LinkedPage<TElement> : Page<TElement>
         NextPage = nextPage;
     }
 
-    //Properties
+    // Properties
     public string PreviousPage { get; init; }
     public string NextPage { get; init; }
     public override bool HasPrevious

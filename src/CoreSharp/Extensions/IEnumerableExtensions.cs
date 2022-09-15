@@ -95,10 +95,10 @@ public static class IEnumerableExtensions
         stringFormat ??= "{0}";
         formatProvider ??= CultureInfo.CurrentCulture;
 
-        //Format items
+        // Format items
         var formattedItems = source.Select(i => string.Format(formatProvider, stringFormat, i));
 
-        //Return
+        // Return
         return string.Join(separator, formattedItems);
     }
 
@@ -318,14 +318,14 @@ public static class IEnumerableExtensions
         if (pageSize <= 0)
             throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
 
-        //ToArray() so we can get item index 
+        // ToArray() so we can get item index 
         var sourceArray = source.ToArray();
 
-        //Group by page index 
+        // Group by page index 
         return sourceArray.GroupBy(item =>
         {
             var itemIndex = Array.IndexOf(sourceArray, item);
-            return itemIndex / pageSize; //PageNumber 
+            return itemIndex / pageSize; // PageNumber 
         });
     }
 
@@ -367,7 +367,7 @@ public static class IEnumerableExtensions
                                .GetProperties(BindingFlags.Public | BindingFlags.Instance);
         using var streamWriter = new StreamWriter(stream, encoding: encoding, leaveOpen: true);
 
-        //Add headers 
+        // Add headers 
         if (includeHeader)
         {
             var names = properties.Select(p => p.Name);
@@ -375,7 +375,7 @@ public static class IEnumerableExtensions
             await streamWriter.WriteLineAsync(row, cancellationToken);
         }
 
-        //Add values 
+        // Add values 
         foreach (var item in source)
         {
             var values = properties.Select(p => p.GetValue(item));
@@ -401,7 +401,7 @@ public static class IEnumerableExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-        //Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
+        // Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
         var duplicates = source.GroupBy(keySelector)
                                .Where(g => g.Skip(1)
                                             .Any());
@@ -441,11 +441,11 @@ public static class IEnumerableExtensions
                                .GetType()
                                .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        //Create columns 
+        // Create columns 
         foreach (var property in properties)
             table.Columns.Add(property.Name, property.PropertyType.GetNullableBaseType());
 
-        //Create rows 
+        // Create rows 
         foreach (var item in source)
         {
             var values = properties.Select(p => p.GetValue(item)).ToArray();

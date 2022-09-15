@@ -555,11 +555,11 @@ public static class StringExtensions
         input ??= string.Empty;
         input = input.ToLowerInvariant().Trim();
 
-        //Valid boolean 
+        // Valid boolean 
         if (bool.TryParse(input, out var result))
             return result;
 
-        //String interpretation
+        // String interpretation
         bool? resultFromString = input switch
         {
             "true" or "yes" => true,
@@ -570,7 +570,7 @@ public static class StringExtensions
         if (resultFromString is not null)
             return resultFromString;
 
-        //Int interpretation 
+        // Int interpretation 
         return !int.TryParse(input, out var inputAsInt)
             ? null
             : inputAsInt switch

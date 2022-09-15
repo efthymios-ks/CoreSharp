@@ -6,7 +6,7 @@ namespace CoreSharp.Json.JsonNet;
 
 public static class JsonSettings
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static JsonSerializerSettings _default;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -14,7 +14,7 @@ public static class JsonSettings
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static JsonSerializerSettings _strict;
 
-    //Properties
+    // Properties
     public static JsonSerializerSettings Default
         => _default ??= CreateDefault();
 
@@ -24,7 +24,7 @@ public static class JsonSettings
     public static JsonSerializerSettings Strict
         => _strict ??= CreateStrict();
 
-    //Methods
+    // Methods
     private static JsonSerializerSettings CreateDefault()
         => new()
         {

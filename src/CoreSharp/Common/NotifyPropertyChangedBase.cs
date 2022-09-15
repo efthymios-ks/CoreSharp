@@ -6,10 +6,10 @@ namespace CoreSharp.Common;
 /// <inheritdoc cref="INotifyPropertyChanged" />
 public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
 {
-    //Events  
+    // Events  
     public event PropertyChangedEventHandler PropertyChanged;
 
-    //Methods 
+    // Methods 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         => PropertyChanged?.Invoke(this, new(propertyName));
 

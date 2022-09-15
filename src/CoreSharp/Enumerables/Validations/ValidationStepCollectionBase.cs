@@ -7,15 +7,15 @@ namespace CoreSharp.Enumerables.Validations;
 
 public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
 {
-    //Fields 
+    // Fields 
     private readonly SortedList<int, ValidationStep> _source = new();
 
-    //Properties 
+    // Properties 
     public int Count => _source.Count;
 
     public bool IsReadOnly => false;
 
-    //Methods
+    // Methods
     public void Add(ValidationStep item)
     {
         _ = item ?? throw new ArgumentNullException(nameof(item));

@@ -29,12 +29,12 @@ public static class HttpContentExtensions
     {
         _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
 
-        //Get content type 
+        // Get content type 
         var contentType = httpContent.GetContentType();
         if (contentType is null)
             throw new KeyNotFoundException($"{HeaderNames.ContentType} header missing from the response.");
 
-        //Check content type 
+        // Check content type 
         return contentType.MediaType switch
         {
             MediaTypeNames.Application.Json => await httpContent.FromJsonAsync<TResponse>(cancellationToken),

@@ -5,14 +5,14 @@ namespace CoreSharp.ConfigurationProviders;
 
 public class EmbeddedFileConfigurationSource : IConfigurationSource
 {
-    //Fields
+    // Fields
     private readonly EmbeddedFileConfigurationOptions _options;
 
-    //Constructors
+    // Constructors
     public EmbeddedFileConfigurationSource(EmbeddedFileConfigurationOptions options)
         => _options = options ?? throw new ArgumentNullException(nameof(options));
 
-    //Methods
+    // Methods
     public IConfigurationProvider Build(IConfigurationBuilder builder)
       => new EmbeddedFileConfigurationProvider(builder, _options);
 }

@@ -11,7 +11,7 @@ namespace CoreSharp.Observers;
 public class JsonStateObserver<TEntity> : StateObserver<TEntity>
     where TEntity : class
 {
-    //Constructors
+    // Constructors
     public JsonStateObserver()
         : base(new JsonEqualityComparer<TEntity>())
     {

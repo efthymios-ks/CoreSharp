@@ -75,18 +75,18 @@ public static class TypeExtensions
     {
         _ = type ?? throw new ArgumentNullException(nameof(type));
 
-        //Nullable extraction
+        // Nullable extraction
         var baseType = Nullable.GetUnderlyingType(type) ?? type;
 
-        //Enum extraction 
+        // Enum extraction 
         if (baseType.IsEnum)
             baseType = Enum.GetUnderlyingType(baseType);
 
-        //Base type check 
+        // Base type check 
         if (baseType.IsPrimitive)
             return true;
 
-        //Additional type check 
+        // Additional type check 
         var additionalTypes = new[]
         {
             typeof(string),
@@ -186,19 +186,19 @@ public static class TypeExtensions
                 baseType = baseType.GetGenericTypeDefinition();
         }
 
-        //Same type 
+        // Same type 
         if (type == baseType)
             return true;
 
-        //Implement class 
+        // Implement class 
         else if (type.IsSubclassOf(baseType))
             return true;
 
-        //Implement interface 
+        // Implement interface 
         else if (baseType.IsInterface && type.GetInterface(baseType.FullName) is not null)
             return true;
 
-        //No relation 
+        // No relation 
         return false;
     }
 }

@@ -4,7 +4,7 @@ namespace CoreSharp.ConfigurationProviders;
 
 public class EmbeddedFileConfigurationOptions
 {
-    //Properties
+    // Properties
     public Assembly ScanAssembly { get; set; }
     public string Location { get; set; }
     public string Environment { get; set; }

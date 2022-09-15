@@ -8,11 +8,11 @@ namespace CoreSharp.EqualityComparers;
 
 public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable<TEntity>>
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IEqualityComparer<TEntity> _entityComparer;
 
-    //Constructors 
+    // Constructors 
     public EnumerableEqualityComparer()
         : this(EqualityComparer<TEntity>.Default)
     {
@@ -21,23 +21,23 @@ public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable
     public EnumerableEqualityComparer(IEqualityComparer<TEntity> entityComparer)
         => _entityComparer = entityComparer ?? throw new ArgumentNullException(nameof(entityComparer));
 
-    //Methods
+    // Methods
     public bool Equals(IEnumerable<TEntity> x, IEnumerable<TEntity> y)
     {
-        //Same reference 
+        // Same reference 
         if (x == y)
             return true;
-        //Null 
+        // Null 
         else if (x is null || y is null)
             return false;
 
-        //Different count 
+        // Different count 
         if (x.Count() != y.Count())
             return false;
-        //Left contains more items
+        // Left contains more items
         else if (x.Except(y, _entityComparer).Any())
             return false;
-        //Right contains more items
+        // Right contains more items
         else if (y.Except(x, _entityComparer).Any())
             return false;
 

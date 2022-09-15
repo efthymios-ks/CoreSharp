@@ -29,11 +29,11 @@ public static class SocketExtensions
         }
         else
         {
-            //Poll 
+            // Poll 
             if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
                 return false;
 
-            //Ping 
+            // Ping 
             return socket.RemoteEndPoint is not IPEndPoint endPoint || await endPoint.PingAsync(timeoutMillis);
         }
     }

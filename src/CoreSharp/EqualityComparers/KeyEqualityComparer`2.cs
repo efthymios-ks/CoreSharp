@@ -5,10 +5,10 @@ namespace CoreSharp.EqualityComparers;
 
 public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
 {
-    //Fields
+    // Fields
     private readonly IEqualityComparer<TKey> _keyComparer;
 
-    //Constructors
+    // Constructors
     public KeyEqualityComparer(Func<TEntity, TKey> keySelector)
         : this(keySelector, EqualityComparer<TKey>.Default)
     {
@@ -20,16 +20,16 @@ public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
         _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
     }
 
-    //Properties
+    // Properties
     protected Func<TEntity, TKey> KeySelector { get; }
 
-    //Methods 
+    // Methods 
     public bool Equals(TEntity x, TEntity y)
     {
-        //Same reference 
+        // Same reference 
         if (ReferenceEquals(x, y))
             return true;
-        //Null 
+        // Null 
         else if (x is null || y is null)
             return false;
 

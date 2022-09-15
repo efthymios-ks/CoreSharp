@@ -7,7 +7,7 @@ namespace CoreSharp.Sources;
 
 internal static class AsciiControls
 {
-    //Fields 
+    // Fields 
     internal static char NUL => Convert.ToChar(0);
     internal static char SOH => Convert.ToChar(1);
     internal static char STX => Convert.ToChar(2);

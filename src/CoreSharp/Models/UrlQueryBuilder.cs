@@ -10,7 +10,7 @@ namespace CoreSharp.Models;
 
 public class UrlQueryBuilder : QueryBuilder
 {
-    //Methods
+    // Methods
     private void AddInternal(string key, object value)
     {
         if (value is not null)

@@ -51,17 +51,17 @@ public static class HttpStatusCodeX
         var properties = exception.GetType()
                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        //Extract HttpStatusCode directly 
+        // Extract HttpStatusCode directly 
         var statusCodeProperty = Array.Find(properties, p => p.PropertyType == typeof(HttpStatusCode));
         if (statusCodeProperty?.GetValue(exception) is HttpStatusCode statusCode)
             return statusCode;
 
-        //Extract from HttpResponseMessage 
+        // Extract from HttpResponseMessage 
         var httpResponseMessageProperty = Array.Find(properties, p => p.PropertyType == typeof(HttpResponseMessage));
         if (httpResponseMessageProperty?.GetValue(exception) is HttpResponseMessage responseMessage)
             return responseMessage.StatusCode;
 
-        //None found
+        // None found
         return null;
     }
 }

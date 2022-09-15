@@ -25,11 +25,11 @@ public static class UlongExtensions
     /// </summary>
     public static string ToComputerSize(this ulong byteSize, string format, IFormatProvider formatProvider)
     {
-        //Scale down bytes  
+        // Scale down bytes  
         const int thousand = 1024;
         var thousandCounter = 0;
 
-        //Integral division 
+        // Integral division 
         var integralLimit = (ulong)Math.Pow(thousand, 2);
         while (byteSize >= integralLimit)
         {
@@ -37,7 +37,7 @@ public static class UlongExtensions
             byteSize /= thousand;
         }
 
-        //Double division 
+        // Double division 
         double scaledValue = byteSize;
         while (scaledValue >= thousand)
         {
@@ -45,7 +45,7 @@ public static class UlongExtensions
             scaledValue /= thousand;
         }
 
-        //Get prefix
+        // Get prefix
         var prefixes = new[] { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
         var prefix = prefixes[thousandCounter];
 

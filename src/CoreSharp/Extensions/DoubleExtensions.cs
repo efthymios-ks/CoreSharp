@@ -45,7 +45,7 @@ public static class DoubleExtensions
             degree = (int)Math.Floor(Math.Log10(Math.Abs(value)) / 3);
         var scaledValue = value * Math.Pow(1000, -degree);
 
-        //Get prefix 
+        // Get prefix 
         var degreeSign = Math.Sign(degree);
         char? prefix = degreeSign switch
         {

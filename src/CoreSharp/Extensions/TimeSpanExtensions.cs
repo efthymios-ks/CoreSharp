@@ -22,14 +22,14 @@ public static class TimeSpanExtensions
 
         var fields = new List<string>();
 
-        //Negate, if negative 
+        // Negate, if negative 
         if (timeSpan < TimeSpan.Zero)
         {
             fields.Add("-");
             timeSpan = timeSpan == TimeSpan.MinValue ? TimeSpan.MaxValue : timeSpan.Negate();
         }
 
-        //Add values 
+        // Add values 
         void Add(int value, string unit)
         {
             if (value != 0)
@@ -42,7 +42,7 @@ public static class TimeSpanExtensions
         Add(timeSpan.Seconds, "s");
         Add(timeSpan.Milliseconds, "ms");
 
-        //Join and return
+        // Join and return
         return string.Join(" ", fields);
     }
 }

@@ -8,10 +8,10 @@ namespace CoreSharp.Collections;
 
 public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged
 {
-    //Fields
+    // Fields
     private readonly IDictionary<TKey, TValue> _source;
 
-    //Constructors
+    // Constructors
     public ObservableDictionary()
         : this(Enumerable.Empty<KeyValuePair<TKey, TValue>>())
     {
@@ -48,7 +48,7 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INo
     public ObservableDictionary(int capacity, IEqualityComparer<TKey> equalityComparer)
         => _source = new Dictionary<TKey, TValue>(capacity, equalityComparer);
 
-    //Properties
+    // Properties
     public TValue this[TKey key]
     {
         get => _source[key];
@@ -75,10 +75,10 @@ public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INo
     public bool IsReadOnly
         => _source.IsReadOnly;
 
-    //Events 
+    // Events 
     public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-    //Methods 
+    // Methods 
     protected void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
     {
         _ = args ?? throw new ArgumentNullException(nameof(args));

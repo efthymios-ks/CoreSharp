@@ -6,7 +6,7 @@ namespace CoreSharp.Exceptions;
 
 public class EntityExistsException : Exception
 {
-    //Constructors
+    // Constructors
     public EntityExistsException(Type entityType, string propertyName, object propertyValue)
         : this(entityType.Name, propertyName, propertyValue)
     {
@@ -20,12 +20,12 @@ public class EntityExistsException : Exception
         PropertyValue = propertyValue;
     }
 
-    //Properties 
+    // Properties 
     public string EntityName { get; }
     public string PropertyName { get; }
     public object PropertyValue { get; }
 
-    //Methods 
+    // Methods 
     public static EntityExistsException Create<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> propertySelector, TProperty propertyValue)
     {
         _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));

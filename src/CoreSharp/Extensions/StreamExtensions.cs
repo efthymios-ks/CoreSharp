@@ -17,7 +17,7 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class StreamExtensions
 {
-    //Fields
+    // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private const int DefaultBufferSize = 10240;
 
@@ -180,15 +180,15 @@ public static class StreamExtensions
 
         try
         {
-            //Reference equals 
+            // Reference equals 
             if (left == right)
                 return true;
 
-            //Different length
+            // Different length
             if (left.Length != right.Length)
                 return false;
 
-            //Check readability 
+            // Check readability 
             static void ThrowNotReadableException(string paramName)
                 => throw new NotSupportedException($"{paramName} is not readable.");
             if (!left.CanRead)
@@ -196,7 +196,7 @@ public static class StreamExtensions
             else if (!right.CanRead)
                 ThrowNotReadableException(nameof(right));
 
-            //Compare chunks
+            // Compare chunks
             left.Position = 0;
             right.Position = 0;
             for (var i = 0; i < left.Length; i += bufferSize)

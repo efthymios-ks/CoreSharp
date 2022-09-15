@@ -13,13 +13,13 @@ namespace CoreSharp.EqualityComparers;
 public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     where TEntity : class
 {
-    //Methods 
+    // Methods 
     public bool Equals(TEntity x, TEntity y)
     {
-        //Same reference 
+        // Same reference 
         if (x == y)
             return true;
-        //Null 
+        // Null 
         else if (x is null || y is null)
             return false;
 

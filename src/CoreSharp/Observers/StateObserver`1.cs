@@ -12,13 +12,13 @@ namespace CoreSharp.Observers;
 public class StateObserver<TEntity> : IStateObserver<TEntity>
     where TEntity : class
 {
-    //Fields 
+    // Fields 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly IEqualityComparer<TEntity> _equalityComparer;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private TEntity _value;
 
-    //Constructors
+    // Constructors
     public StateObserver()
     : this(EqualityComparer<TEntity>.Default)
     {
@@ -40,7 +40,7 @@ public class StateObserver<TEntity> : IStateObserver<TEntity>
         _equalityComparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
     }
 
-    //Properties
+    // Properties
     public TEntity State
     {
         get => _value;
@@ -54,7 +54,7 @@ public class StateObserver<TEntity> : IStateObserver<TEntity>
         }
     }
 
-    //Events 
+    // Events 
     public event Action<TEntity> StateChanged;
 
     private void OnValueChanged(TEntity value)

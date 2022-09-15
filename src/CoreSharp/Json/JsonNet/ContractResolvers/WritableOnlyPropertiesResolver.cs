@@ -8,14 +8,14 @@ namespace CoreSharp.Json.JsonNet.ContractResolvers;
 
 public class WritableOnlyPropertiesResolver : DefaultContractResolver
 {
-    //Fields
+    // Fields
     private static WritableOnlyPropertiesResolver _instance;
 
-    //Properties
+    // Properties
     public static WritableOnlyPropertiesResolver Instance
         => _instance ??= new WritableOnlyPropertiesResolver();
 
-    //Methods
+    // Methods
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         => base.CreateProperties(type, memberSerialization)
                .Where(p => p.Writable)

@@ -8,12 +8,12 @@ namespace CoreSharp.ConfigurationProviders;
 
 public class EmbeddedFileConfigurationProvider : ConfigurationProvider
 {
-    //Fields 
+    // Fields 
     private readonly IConfigurationBuilder _builder;
     private readonly IFileProvider _fileProvider;
     private readonly EmbeddedFileConfigurationOptions _options;
 
-    //Constructors
+    // Constructors
     public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
     {
         _builder = builder ?? throw new ArgumentNullException(nameof(builder));
@@ -23,7 +23,7 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
         _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
     }
 
-    //Methods
+    // Methods
     public override void Load()
     {
         Data.Clear();

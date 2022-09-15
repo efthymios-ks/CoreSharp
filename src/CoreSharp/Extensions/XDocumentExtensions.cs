@@ -32,10 +32,10 @@ public static class XDocumentExtensions
         _ = document ?? throw new ArgumentNullException(nameof(document));
         _ = pathSections ?? throw new ArgumentNullException(nameof(pathSections));
 
-        //Build XPath
+        // Build XPath
         var xpathExpression = string.Join("/", pathSections);
 
-        //Get elements 
+        // Get elements 
         return document.XPathSelectElements(xpathExpression);
     }
 

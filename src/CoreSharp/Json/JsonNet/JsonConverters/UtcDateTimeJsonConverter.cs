@@ -7,14 +7,14 @@ namespace CoreSharp.Json.JsonNet.JsonConverters;
 
 public class UtcDateTimeJsonConverter : DateTimeConverterBase
 {
-    //Fields
+    // Fields
     private const string DateFormat = "O";
 
-    //Properties
+    // Properties
     private static CultureInfo CultureInfo
         => CultureInfo.InvariantCulture;
 
-    //Methods
+    // Methods
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
         if (value is not DateTime dateTime)
