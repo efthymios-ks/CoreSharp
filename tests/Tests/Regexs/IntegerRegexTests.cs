@@ -27,14 +27,14 @@ public class IntegerRegexTests
     [TestCase("+1,000,000.0", "el-GR", false)]
     public void IntegerRegex_InputIsInteger_ReturnTrue(string input, string cultureName, bool isMatch)
     {
-        //Arrange
+        // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
-        //Act 
+        // Act 
         var result = integerRegex.IsMatch;
 
-        //Assert
+        // Assert
         result.Should().Be(isMatch);
     }
 
@@ -44,14 +44,14 @@ public class IntegerRegexTests
     [TestCase("+1", "el-GR", '+')]
     public void IntegerRegex_WhenCalled_MatchGroupSign(string input, string cultureName, char? groupSign)
     {
-        //Arrange
+        // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
-        //Act 
+        // Act 
         var result = integerRegex.Sign;
 
-        //Assert
+        // Assert
         result.Should().Be(groupSign);
     }
 
@@ -61,14 +61,14 @@ public class IntegerRegexTests
     [TestCase("+1", "el-GR", "1")]
     public void IntegerRegex_WhenCalled_MatchGroupValue(string input, string cultureName, string groupValue)
     {
-        //Arrange
+        // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
-        //Act 
+        // Act 
         var result = integerRegex.Value;
 
-        //Assert
+        // Assert
         result.Should().Be(groupValue);
     }
 }

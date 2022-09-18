@@ -5,18 +5,18 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class DateTimeExtensionsTests
 {
-    //Methods
+    // Methods
     [Test]
     public void HasExpired_TimeSpanHasExpired_ReturnTrue()
     {
-        //Arrange  
+        // Arrange  
         var elapsed = TimeSpan.FromMinutes(15);
         var from = DateTime.Now.Subtract(elapsed);
 
-        //Act 
+        // Act 
         var result = from.HasExpired(elapsed);
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
     }
 
@@ -27,13 +27,13 @@ public class DateTimeExtensionsTests
     [TestCase(2021, 4, 13, false)]
     public void IsWeekend_DateIsWeekend_ReturnTrue(int year, int month, int day, bool expected)
     {
-        //Arrange
+        // Arrange
         var date = new DateTime(year, month, day);
 
-        //Act
+        // Act
         var result = date.IsWeekend();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -44,25 +44,25 @@ public class DateTimeExtensionsTests
     [TestCase(2026, 1, 1, false)]
     public void IsInLeapYear_DateIsLeapYear_ReturnTrue(int year, int month, int day, bool expected)
     {
-        //Arrange
+        // Arrange
         var date = new DateTime(year, month, day);
 
-        //Act
+        // Act
         var result = date.IsInLeapYear();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Trim_WhenCalled_TrimToGivenPrecisionAndReturn()
     {
-        //Arrange 
+        // Arrange 
         var date = new DateTime(2021, 5, 2, 21, 34, 55, 500);
         const DateTimeParts precision = DateTimeParts.Date | DateTimeParts.Milliseconds;
         var expected = new DateTime(1, 1, 1, 21, 34, 55, 0);
 
-        //Act
+        // Act
         var result = date.Trim(precision);
 
         result.Should().Be(expected);
@@ -71,57 +71,57 @@ public class DateTimeExtensionsTests
     [Test]
     public void ToStringSortable_WhenCalled_ReturnSortableString()
     {
-        //Arrange 
+        // Arrange 
         var date = DateTime.Now;
         var expected = date.ToString("u", CultureInfo.InvariantCulture);
 
-        //Act
+        // Act
         var result = date.ToStringSortable();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToStringSortable_WhenCalled_ReturnUtcSortableString()
     {
-        //Arrange 
+        // Arrange 
         var date = DateTime.Now;
         var expected = date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
 
-        //Act
+        // Act
         var result = date.ToStringSortableUtc();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void GetElapsedTime_EitherDateHasUnspecifiedKind_ThrowArgumentException()
     {
-        //Arrange 
+        // Arrange 
         var date1 = DateTime.Now;
         var date2 = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
 
-        //Act
+        // Act
         Action action = () => date1.GetElapsedTime(date2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentException>();
     }
 
     [Test]
     public void GetElapsedTime_WhenCalled_ConvertToUtcAndReturnElapsed()
     {
-        //Arrange 
+        // Arrange 
         var endDate = DateTime.UtcNow.AddDays(1);
         var startDate = DateTime.Now;
         var expected = endDate.ToUniversalTime() - startDate.ToUniversalTime();
 
-        //Act
+        // Act
         var result = endDate.GetElapsedTime(startDate);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

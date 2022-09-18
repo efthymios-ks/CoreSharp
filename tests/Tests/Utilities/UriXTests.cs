@@ -6,10 +6,10 @@ public class UriXTests
     [Test]
     public void JoinSegments_SegmentsIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => UriX.JoinSegments(segments: null);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -19,17 +19,17 @@ public class UriXTests
     [TestCase("https://google.com/path1/path2/", "https:///google.com//", "///path1///", "//path2//")]
     public void JoinSegments_WhenCalled_ReturnUnifiedUrlWithTrimmedSlashes(string expected, params string[] segments)
     {
-        //Act
+        // Act
         var result = UriX.JoinSegments(segments);
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 
     [Test]
     public void Build_BaseUrlIsNullOrWhiteSpace_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         const string baseUrl = null;
         var parameters = new Dictionary<string, string>
         {
@@ -37,31 +37,31 @@ public class UriXTests
             { "color", "black" }
         };
 
-        //Act
+        // Act
         Action action = () => UriX.Build(baseUrl, parameters);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Build_ParametersIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         const string baseUrl = "https://example.com/";
         IDictionary<string, string> parameters = null;
 
-        //Act
+        // Act
         Action action = () => UriX.Build(baseUrl, parameters);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Build_WhenCalled_ReturnQueryString()
     {
-        //Arrange
+        // Arrange
         const string baseUrl = "https://example.com/";
         var parameters = new Dictionary<string, object>
         {
@@ -70,10 +70,10 @@ public class UriXTests
         };
         const string expected = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
 
-        //Act
+        // Act
         var result = UriX.Build(baseUrl, parameters);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

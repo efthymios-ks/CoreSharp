@@ -5,24 +5,24 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class NameValueCollectionExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly NameValueCollection _sourceNull;
 
-    //Methods 
+    // Methods 
     [Test]
     public void ToUrlQueryString_ParametersInNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceNull.ToUrlQueryString();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToUrlQueryString_WhenCalled_ReturnQueryString()
     {
-        //Arrange
+        // Arrange
         var parameters = new NameValueCollection
         {
             { "name", "Efthymios Koktsidis" },
@@ -31,10 +31,10 @@ public class NameValueCollectionExtensionsTests
         };
         const string expected = "?name=Efthymios%20Koktsidis&color=Black&count=10";
 
-        //Act
+        // Act
         var result = parameters.ToUrlQueryString();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

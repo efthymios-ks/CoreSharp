@@ -6,65 +6,65 @@ public class ObjectExtensionsTests
     [Test]
     public void GetValueOr_InputIsNull_ReturnDefault()
     {
-        //Arrange
+        // Arrange
         object input = null;
 
-        //Action
+        // Action
         var result = input.GetValue<int>();
 
-        //Assert
+        // Assert
         result.Should().Be(default);
     }
 
     [Test]
     public void GetValueOr_InputIsDbNull_ReturnDefault()
     {
-        //Arrange
+        // Arrange
         object input = DBNull.Value;
 
-        //Action
+        // Action
         var result = input.GetValue<int>();
 
-        //Assert
+        // Assert
         result.Should().Be(default);
     }
 
     [Test]
     public void GetValueOr_InputTypeDiffers_ReturnDefault()
     {
-        //Arrange
+        // Arrange
         object input = "1";
 
-        //Action
+        // Action
         var result = input.GetValue<int>();
 
-        //Assert
+        // Assert
         result.Should().Be(default);
     }
 
     [Test]
     public void GetValueOr_InputMissMatchAndGivenDefaultValue_ReturnGivenDefaultValue()
     {
-        //Arrange
+        // Arrange
         object input = "1";
 
-        //Action
+        // Action
         var result = input.GetValueOr(2);
 
-        //Assert
+        // Assert
         result.Should().Be(2);
     }
 
     [Test]
     public void AsOrDefault_InputTypeMatches_ReturnCastValue()
     {
-        //Arrange
+        // Arrange
         object input = 1;
 
-        //Action
+        // Action
         var result = input.GetValue<int>();
 
-        //Assert
+        // Assert
         result.Should().Be(1);
     }
 }

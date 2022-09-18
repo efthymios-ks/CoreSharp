@@ -3,38 +3,38 @@
 [TestFixture]
 public class ListExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly List<DummyClass> _sourceNull;
     private readonly List<DummyClass> _sourceEmpty = new();
 
-    //Methods 
+    // Methods 
     [Test]
     public void Sort_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceNull.Sort(i => i.Id);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Sort_KeySelectorIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Func<DummyClass, int> keySelector = null;
 
-        //Act
+        // Act
         Action action = () => _sourceEmpty.Sort(keySelector);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Sort_WhenCalled_SortByGivenKey()
     {
-        //Arrange
+        // Arrange
         var source = new List<DummyClass>
         {
             new(3),
@@ -43,10 +43,10 @@ public class ListExtensionsTests
         };
         var expected = source.OrderBy(i => i.Id);
 
-        //Act
+        // Act
         source.Sort(i => i.Id);
 
-        //Assert
+        // Assert
         source.Should().Equal(expected);
     }
 }

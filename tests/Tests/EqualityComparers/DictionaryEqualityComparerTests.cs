@@ -3,46 +3,46 @@
 [TestFixture]
 public class DictionaryEqualityComparerTests
 {
-    //Fields
+    // Fields
     private readonly IEqualityComparer<IDictionary<string, int>> _equalityComparer = new DictionaryEqualityComparer<string, int>();
     private readonly IDictionary<string, int> _dictionaryNull;
     private readonly IDictionary<string, int> _dictionaryEmpty = new Dictionary<string, int>();
 
-    //Methods
+    // Methods
     [Test]
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_dictionaryNull, _dictionaryEmpty);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_dictionaryEmpty, _dictionaryNull);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_dictionaryNull, _dictionaryNull);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void Equals_DifferentValues_ReturnFalse()
     {
-        //Arrange
+        // Arrange
         var left = new Dictionary<string, int>
         {
             { "1", 1 },
@@ -54,17 +54,17 @@ public class DictionaryEqualityComparerTests
             { "3", 3 }
         };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_SameValuesSameOrder_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         var left = new Dictionary<string, int>
         {
             { "1", 1 },
@@ -76,17 +76,17 @@ public class DictionaryEqualityComparerTests
             { "2", 2 }
         };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void Equals_SameValuesDifferentOrder_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         var left = new Dictionary<string, int>
         {
             { "1", 1 },
@@ -98,23 +98,23 @@ public class DictionaryEqualityComparerTests
             { "1", 1 }
         };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void GetHashCode_SourceIsNull_ReturnDefaultHashCode()
     {
-        //Arrange
+        // Arrange
         var expected = default(int).GetHashCode();
 
-        //Act
+        // Act
         var result = _equalityComparer.GetHashCode(_dictionaryNull);
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 }

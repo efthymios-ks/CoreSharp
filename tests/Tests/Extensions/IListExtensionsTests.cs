@@ -3,70 +3,70 @@
 [TestFixture]
 public class IListExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly IList<int> _sourceNull;
     private readonly IList<int> _sourceEmpty = new List<int>();
 
-    //Methods 
+    // Methods 
     [Test]
     public void Fill_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceNull.Fill(0);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Fill_WhenCalled_FillListWithSameValue()
     {
-        //Arrange
+        // Arrange
         IList<int> source = new List<int> { 1, 2, 3 };
         IList<int> expected = new List<int> { 0, 0, 0 };
 
-        //Act
+        // Act
         source.Fill(0);
 
-        //Assert
+        // Assert
         source.Should().Equal(expected);
     }
 
     [Test]
     public void Remove_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceNull.Remove(i => i > 0);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Remove_ExpressionIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         Func<int, bool> expression = null;
 
-        //Act
+        // Act
         Action action = () => _sourceEmpty.Remove(expression);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Remove_WhenCalled_RemoveMatchingItemsAndReturnCount()
     {
-        //Arrange  
+        // Arrange  
         var source = new List<int> { 0, 1, 0, 2, 0, 3 };
         var expectedSource = new List<int> { 1, 2, 3 };
         const int expectedCount = 3;
 
-        //Act
+        // Act
         var removedCount = source.Remove(i => i == 0);
 
-        //Assert
+        // Assert
         removedCount.Should().Be(expectedCount);
         source.Should().Equal(expectedSource);
     }
@@ -74,20 +74,20 @@ public class IListExtensionsTests
     [Test]
     public void InsertRange_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceNull.InsertRange(0, 0, 1, 2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void InsertRange_ValuesIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _sourceEmpty.InsertRange(0, values: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -96,27 +96,27 @@ public class IListExtensionsTests
     [TestCase(1)]
     public void InsertRange_IndexInvalid_ThrowArgumentOutOfRangeException(int index)
     {
-        //Arrange
+        // Arrange
         var source = new List<int>();
 
-        //Act
+        // Act
         Action action = () => source.InsertRange(index, 0, 1, 2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void InsertRange_WhenCalled_InsertValuesToGivenPosition()
     {
-        //Arrange
+        // Arrange
         var source = new List<int> { 0, 1, 4, 5 };
         var expected = new List<int> { 0, 1, 2, 3, 4, 5 };
 
-        //Act
+        // Act
         source.InsertRange(2, 2, 3);
 
-        //Assert
+        // Assert
         source.Should().Equal(expected);
     }
 }

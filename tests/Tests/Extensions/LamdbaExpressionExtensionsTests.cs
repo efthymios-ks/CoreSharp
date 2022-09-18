@@ -8,27 +8,27 @@ public class LambdaExpressionExtensionsTests
     [Test]
     public void GetMemberName_ExpressionIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Expression<Func<DummyClass, int>> expression = null;
 
-        //Act 
+        // Act 
         Action action = () => expression.GetMemberName();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetMemberName_WhenCalled_ReturnMemberName()
     {
-        //Arrange
+        // Arrange
         Expression<Func<DummyClass, int>> expression = d => d.Id;
         const string expected = nameof(DummyClass.Id);
 
-        //Act 
+        // Act 
         var result = expression.GetMemberName();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

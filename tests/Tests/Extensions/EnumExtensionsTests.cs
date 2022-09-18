@@ -8,11 +8,11 @@ public class EnumExtensionsTests
     [Test]
     public void GetDisplayName_WhenCalled_ReturnEnumDisplayAttribute()
     {
-        //Arrange 
+        // Arrange 
         const DummyType value = DummyType.Option1;
         const string expected = "Option 1 Name";
 
-        //Act 
+        // Act 
         var result = value.GetDisplayName();
 
         result.Should().Be(expected);
@@ -21,11 +21,11 @@ public class EnumExtensionsTests
     [Test]
     public void GetDisplayShortName_WhenCalled_ReturnEnumDisplayAttribute()
     {
-        //Arrange 
+        // Arrange 
         const DummyType value = DummyType.Option1;
         const string expected = "Option 1 ShortName";
 
-        //Act 
+        // Act 
         var result = value.GetDisplayShortName();
 
         result.Should().Be(expected);
@@ -34,11 +34,11 @@ public class EnumExtensionsTests
     [Test]
     public void GetDisplayDescription_WhenCalled_ReturnEnumDisplayAttribute()
     {
-        //Arrange 
+        // Arrange 
         const DummyType value = DummyType.Option1;
         const string expected = "Option 1 Description";
 
-        //Act 
+        // Act 
         var result = value.GetDisplayDescription();
 
         result.Should().Be(expected);

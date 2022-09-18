@@ -3,102 +3,102 @@
 [TestFixture]
 public class ICollectionExtensionsTests
 {
-    //Methods
+    // Methods
     [Test]
     public void AddRange_SourceIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         ICollection<int> source = null;
 
-        //Act
+        // Act
         Action action = () => source.AddRange();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddRange_ItemsIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         ICollection<int> source = new List<int>();
         IEnumerable<int> items = null;
 
-        //Act
+        // Act
         Action action = () => source.AddRange(items);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddRange_WhenCalled_AddItemsToCollection()
     {
-        //Arrange
+        // Arrange
         ICollection<int> source = new Collection<int> { 1, 2, 3 };
         var items = new[] { 4, 5, 6 };
         var expected = new Collection<int> { 1, 2, 3, 4, 5, 6 };
 
-        //Act
+        // Act
         source.AddRange(items);
 
-        //Assert
+        // Assert
         source.Should().Equal(expected);
     }
 
     [Test]
     public void TryAdd_SourceIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         ICollection<int> source = null;
 
-        //Act
+        // Act
         Action action = () => source.TryAdd(0);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryAdd_ItemIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var source = new List<int?>();
 
-        //Act
+        // Act
         Action action = () => source.TryAdd(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryAdd_KeySelectorIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var source = new List<int>();
         Func<int, int> keySelector = null;
 
-        //Act
+        // Act
         Action action = () => source.TryAdd(0, keySelector);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryAdd_ItemExists_DontAddAndReturnFalse()
     {
-        //Arrange
+        // Arrange
         var source = new List<int>()
         {
             1
         };
 
-        //Act
+        // Act
         var result = source.TryAdd(1);
 
-        //Assert
+        // Assert
         result.Should().BeFalse();
         source.Should().HaveCount(1);
         source[0].Should().Be(1);
@@ -107,16 +107,16 @@ public class ICollectionExtensionsTests
     [Test]
     public void TryAdd_ItemDoesntExist_AddAndReturnTrue()
     {
-        //Arrange
+        // Arrange
         var source = new List<int>()
         {
             1
         };
 
-        //Act
+        // Act
         var result = source.TryAdd(2);
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
         source.Should().HaveCount(2);
         source[0].Should().Be(1);

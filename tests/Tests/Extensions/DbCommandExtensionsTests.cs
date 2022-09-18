@@ -3,11 +3,11 @@
 [TestFixture]
 public class DbCommandExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly DbCommand _commandNull;
     private SqlCommand _sqlCommand;
 
-    //Methods
+    // Methods
     [SetUp]
     public void SetUp()
         => _sqlCommand = new();
@@ -22,24 +22,24 @@ public class DbCommandExtensionsTests
     [Test]
     public void CreateParameter_CommandIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _commandNull.CreateParameter("{name}", "Efthymios");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
     {
-        //Arrang 
+        // Arrang 
         const string name = "{name}";
         const string value = "Efthymios";
 
-        //Act 
+        // Act 
         var result = _sqlCommand.CreateParameter(name, value);
 
-        //Assert
+        // Assert
         result.Should().BeOfType<SqlParameter>();
         result.ParameterName.Should().Be(name);
         result.Value.Should().Be(value);
@@ -48,24 +48,24 @@ public class DbCommandExtensionsTests
     [Test]
     public void AddParameter_CommandIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _commandNull.AddParameterWithValue("{name}", "Efthymios");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddParameter_WhenCalled_AddsAndReturnSameTypeDbParameterWithValues()
     {
-        //Arrange 
+        // Arrange 
         const string name = "{name}";
         const string value = "Efthymios";
 
-        //Act 
+        // Act 
         var result = _sqlCommand.AddParameterWithValue(name, value);
 
-        //Assert
+        // Assert
         result.Should().BeOfType<SqlParameter>();
         result.ParameterName.Should().Be(name);
         result.Value.Should().Be(value);

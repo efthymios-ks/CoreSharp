@@ -3,17 +3,17 @@
 [TestFixture]
 public class ArrayExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly int[] _sourceNull;
     private readonly int[,] _source2DNull;
 
     [Test]
     public void GetRow_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _source2DNull.GetRow(0);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -22,20 +22,20 @@ public class ArrayExtensionsTests
     [TestCase(0, 0, 1)]
     public void GetRow_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
     {
-        //Arrange
+        // Arrange
         var source = new int[rows, columns];
 
-        //Act
+        // Act
         Action action = () => source.GetRow(row);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void GetRow_WhenCalled_ReturnRow()
     {
-        //Arrange
+        // Arrange
         var source = new[,]
         {
             { 1, 2 },
@@ -43,20 +43,20 @@ public class ArrayExtensionsTests
         };
         var expected = new[] { 3, 4 };
 
-        //Act
+        // Act
         var result = source.GetRow(1);
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void GetColumn_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _source2DNull.GetColumn(0);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -65,20 +65,20 @@ public class ArrayExtensionsTests
     [TestCase(0, 0, 1)]
     public void GetColumn_RowIndexInvalid_ThrowArgumentOutOfRangeException(int rows, int columns, int row)
     {
-        //Arrange
+        // Arrange
         var source = new int[rows, columns];
 
-        //Act
+        // Act
         Action action = () => source.GetColumn(row);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void GetColumn_WhenCalled_ReturnColumn()
     {
-        //Arrange
+        // Arrange
         var source = new[,]
         {
             { 1, 2 },
@@ -86,37 +86,37 @@ public class ArrayExtensionsTests
         };
         var expected = new[] { 2, 4 };
 
-        //Act
+        // Act
         var result = source.GetColumn(1);
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void OrEmpty_SourceIsNull_ReturnArrayEmpty()
     {
-        //Arrange
+        // Arrange
         var expected = Array.Empty<int>();
 
-        //Act
+        // Act
         var result = _sourceNull.OrEmpty();
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void OrEmpty_SourceIsNotNull_ReturnSource()
     {
-        //Arrange
+        // Arrange
         var source = new[] { 1, 2 };
         var expected = new[] { 1, 2 };
 
-        //Act
+        // Act
         var result = source.OrEmpty();
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 }

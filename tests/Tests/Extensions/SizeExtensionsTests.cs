@@ -8,13 +8,13 @@ public class SizeExtensionsTests
     [Test]
     public void ToSizeF_WhenCalled_ReturnSizeFWithSameValues()
     {
-        //Arrange 
+        // Arrange 
         var size = new Size(10, 20);
 
-        //Act
+        // Act
         var result = size.ToSizeF();
 
-        //Assert
+        // Assert
         result.Width.Should().Be(size.Width);
         result.Height.Should().Be(size.Height);
     }
@@ -27,15 +27,15 @@ public class SizeExtensionsTests
     [TestCase(20, 10, 20, 20, 20, 10)]
     public void Scale_WhenCalled_ReturnSizeScaledProportionally(int fromWidth, int fromHeight, int toWidth, int toHeight, int expectWidth, int expectedHeight)
     {
-        //Arrange
+        // Arrange
         var from = new Size(fromWidth, fromHeight);
         var to = new Size(toWidth, toHeight);
         var expected = new Size(expectWidth, expectedHeight);
 
-        //Act 
+        // Act 
         var result = from.Scale(to);
 
-        //Assert
+        // Assert
         result.Width.Should().Be(expected.Width);
         result.Height.Should().Be(expected.Height);
         result.Width.Should().BeLessOrEqualTo(to.Width);

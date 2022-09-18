@@ -8,13 +8,13 @@ public class NumberFormatInfoExtensionsTests
     [Test]
     public void SetCurrencyPositivePattern_InfoNull_ThrowsArgumentNullException()
     {
-        //Arrange
+        // Arrange
         NumberFormatInfo info = null;
 
-        //Act 
+        // Act 
         Action action = () => info.SetCurrencyPositivePattern(default);
 
-        //Assert 
+        // Assert 
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -23,28 +23,28 @@ public class NumberFormatInfoExtensionsTests
     [TestCase(CurrencyPositivePattern.NumberSpaceCurrency)]
     public void SetCurrencyPositivePattern_WhenCalled_SetsCurrencyPositivePattern(CurrencyPositivePattern input)
     {
-        //Arrange
+        // Arrange
         var info = new NumberFormatInfo();
         var expected = (int)input;
 
-        //Act 
+        // Act 
         info.SetCurrencyPositivePattern(input);
         var result = info.CurrencyPositivePattern;
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 
     [Test]
     public void SetCurrencyNegativePattern_InfoNull_ThrowsArgumentNullException()
     {
-        //Arrange
+        // Arrange
         NumberFormatInfo info = null;
 
-        //Act 
+        // Act 
         Action action = () => info.SetCurrencyNegativePattern(default);
 
-        //Assert 
+        // Assert 
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -53,28 +53,28 @@ public class NumberFormatInfoExtensionsTests
     [TestCase(CurrencyNegativePattern.SignNumberSpaceCurrency)]
     public void SetCurrencyNegativePattern_WhenCalled_SetsCurrencyPositivePattern(CurrencyNegativePattern input)
     {
-        //Arrange
+        // Arrange
         var info = new NumberFormatInfo();
         var expected = (int)input;
 
-        //Act 
+        // Act 
         info.SetCurrencyNegativePattern(input);
         var result = info.CurrencyNegativePattern;
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 
     [Test]
     public void SetNumberNegativePattern_InfoNull_ThrowsArgumentNullException()
     {
-        //Arrange
+        // Arrange
         NumberFormatInfo info = null;
 
-        //Act 
+        // Act 
         Action action = () => info.SetNumberNegativePattern(default);
 
-        //Assert 
+        // Assert 
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -83,15 +83,15 @@ public class NumberFormatInfoExtensionsTests
     [TestCase(NumberNegativePattern.SignSpaceNumber)]
     public void SetNumberNegativePattern_WhenCalled_SetsCurrencyPositivePattern(NumberNegativePattern input)
     {
-        //Arrange
+        // Arrange
         var info = new NumberFormatInfo();
         var expected = (int)input;
 
-        //Act 
+        // Act 
         info.SetNumberNegativePattern(input);
         var result = info.NumberNegativePattern;
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 }

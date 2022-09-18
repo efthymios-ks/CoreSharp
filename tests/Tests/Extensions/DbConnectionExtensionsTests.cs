@@ -3,11 +3,11 @@
 [TestFixture]
 public class DbConnectionExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly DbConnection _connectionNull;
     private DbConnection _sqlConnection;
 
-    //Methods
+    // Methods
     [SetUp]
     public void SetUp()
         => _sqlConnection = new SqlConnection();
@@ -22,44 +22,44 @@ public class DbConnectionExtensionsTests
     [Test]
     public void CreateDataAdapter_ConnectionIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _connectionNull.CreateDataAdapter();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void CreateDataAdapter_WhenCalled_ReturnSameTypeDbAdapter()
     {
-        //Act
+        // Act
         var result = _sqlConnection.CreateDataAdapter();
 
-        //Assert
+        // Assert
         result.Should().BeOfType<SqlDataAdapter>();
     }
 
     [Test]
     public void CreateParameter_ConnectionIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _connectionNull.CreateParameter("{name}", "Efthymios");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
     {
-        //Arrange
+        // Arrange
         const string name = "{name}";
         const string value = "Efthymios";
 
-        //Act
+        // Act
         var result = _sqlConnection.CreateParameter(name, value);
 
-        //Assert
+        // Assert
         result.Should().BeOfType<SqlParameter>();
         result.ParameterName.Should().Be(name);
         result.Value.Should().Be(value);
@@ -68,20 +68,20 @@ public class DbConnectionExtensionsTests
     [Test]
     public void IsOpen_ConnectionIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _connectionNull.IsOpen();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void IsAvailable_ConnectionIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Func<Task<bool>> action = () => _connectionNull.IsAvailableAsync();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactlyAsync<ArgumentNullException>();
     }
 }

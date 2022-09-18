@@ -13,10 +13,10 @@ public class IComparableExtensionsTests
     [TestCase(1, 3, 3, true, true)]
     public void IsBetween_ValueIsInRange_ReturnTrue(int left, int value, int right, bool includeEnds, bool expected)
     {
-        //Act 
+        // Act 
         var result = value.IsBetween(left, right, includeEnds);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

@@ -8,20 +8,20 @@ public class EnumXTests
     [Test]
     public void GetValues_WhenCalled_ReturnEnumValues()
     {
-        //Arrange
+        // Arrange
         var values = new[] { DummyType.Option1, DummyType.Option2, DummyType.Option3 };
 
-        //Act 
+        // Act 
         var result = EnumX.GetValues<DummyType>();
 
-        //Assert
+        // Assert
         result.Should().Equal(values);
     }
 
     [Test]
     public void GetDictionary_WhenCalled_ReturnEnumTextValueDictionary()
     {
-        //Arrange
+        // Arrange
         var dictionary = new Dictionary<string, DummyType>
         {
             { $"{DummyType.Option1}", DummyType.Option1 },
@@ -29,10 +29,10 @@ public class EnumXTests
             { $"{DummyType.Option3}", DummyType.Option3 }
         };
 
-        //Act 
+        // Act 
         var result = EnumX.GetDictionary<DummyType>();
 
-        //Assert
+        // Assert
         result.Should().Equal(dictionary);
     }
 }

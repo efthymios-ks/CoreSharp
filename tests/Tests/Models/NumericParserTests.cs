@@ -13,10 +13,10 @@ public class NumericParserTests
     [TestCaseGeneric(TypeArguments = new[] { typeof(Guid?) })]
     public void Constructor_GenericIsNotNumeric_ThrowArgumentException<TValue>()
     {
-        //Act 
+        // Act 
         Action action = () => _ = new NumericParser<TValue>();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentException>();
     }
 
@@ -31,13 +31,13 @@ public class NumericParserTests
     [TestCaseGeneric(TypeArguments = new[] { typeof(decimal?) })]
     public void Constructor_GenericIsNumeric_CreateInstance<TValue>()
     {
-        //Act 
+        // Act 
         var result = new NumericParser<TValue>();
         var resultType = result.GetType();
         var resultTypeGenericArguments = resultType.GetGenericArguments();
         var resultTypeGenericArgument = resultTypeGenericArguments?.FirstOrDefault();
 
-        //Assert 
+        // Assert 
         result.Should().NotBeNull();
         resultType.IsGenericType.Should().BeTrue();
         resultTypeGenericArguments.Should().HaveCount(1);
@@ -47,10 +47,10 @@ public class NumericParserTests
     [Test]
     public void Constructor_CultureIsNull_ThrowArgumentException()
     {
-        //Act 
+        // Act 
         Action action = () => _ = new NumericParser<int>(cultureInfo: null);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -63,14 +63,14 @@ public class NumericParserTests
     [TestCase("P2", "el-GR", 55.5, "5.550,00%")]
     public void FormatValue_WhenCalled_FormatRespectingFormatAndCulture(string format, string cultureName, double value, string expected)
     {
-        //Arrange
+        // Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
         var parser = new NumericParser<double>(format, culture);
 
-        //Act 
+        // Act 
         var formattedValue = parser.ToString(value);
 
-        //Assert 
+        // Assert 
         formattedValue.Should().Be(expected);
     }
 
@@ -82,16 +82,16 @@ public class NumericParserTests
     [TestCase("N2", "en-US", "1.000,13 €")]
     public void TryParseValue_InvalidInput_ReturnFalseAndUntouchedValue(string format, string cultureName, string input)
     {
-        //Arrange
+        // Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
         var parser = new NumericParser<double>(format, culture);
         const double initialValue = -1.0;
 
-        //Act 
+        // Act 
         var value = initialValue;
         var result = parser.TryParse(input, ref value);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
         value.Should().Be(initialValue);
     }
@@ -105,15 +105,15 @@ public class NumericParserTests
     [TestCase("P2", "el-GR", "55,550%", 0.5555)]
     public void TryParseValue_WhenCalled_ReturnTrueAndParsedValue(string format, string cultureName, string input, double expected)
     {
-        //Arrange
+        // Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
         var parser = new NumericParser<double>(format, culture);
         var value = -1.0;
 
-        //Act 
+        // Act 
         var result = parser.TryParse(input, ref value);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
         value.Should().Be(expected);
     }

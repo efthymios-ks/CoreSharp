@@ -6,13 +6,13 @@ public class TypeExtensionsTests
     [Test]
     public void IsNumeric_TypeIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Type typeNull = null;
 
-        //Act
+        // Act
         Action action = () => typeNull.IsNumeric();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -34,23 +34,23 @@ public class TypeExtensionsTests
     [TestCase(typeof(string), false)]
     public void IsNumeric_TypeIsNumeric_ReturnTrue(Type type, bool expected)
     {
-        //Act
+        // Act
         var result = type.IsNumeric();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void IsDate_TypeIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Type typeNull = null;
 
-        //Act
+        // Act
         Action action = () => typeNull.IsDate();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -62,10 +62,10 @@ public class TypeExtensionsTests
     [TestCase(typeof(string), false)]
     public void IsDate_TypeIsDate_ReturnTrue(Type type, bool expected)
     {
-        //Act
+        // Act
         var result = type.IsDate();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -74,36 +74,36 @@ public class TypeExtensionsTests
     [TestCase(typeof(int), typeof(int))]
     public void GetNullableBaseType_WhenCalled_ReturnBaseType(Type inputType, Type expectedType)
     {
-        //Act
+        // Act
         var result = inputType.GetNullableBaseType();
 
-        //Assert
+        // Assert
         result.Should().Be(expectedType);
     }
 
     [Test]
     public void GetGenericTypeBase_TypeIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Type type = null;
 
-        //Act
+        // Act
         Action action = () => type.GetGenericTypeBase();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetDefault_TypeIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Type type = null;
 
-        //Act
+        // Act
         Action action = () => type.GetDefault();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -112,10 +112,10 @@ public class TypeExtensionsTests
     [TestCase(typeof(DummyClass<int>), typeof(DummyClass<>))]
     public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type inputType, Type expectedType)
     {
-        //Act
+        // Act
         var result = inputType.GetGenericTypeBase();
 
-        //Assert
+        // Assert
         result.Should().Be(expectedType);
     }
 
@@ -124,10 +124,10 @@ public class TypeExtensionsTests
     [TestCase(typeof(int), null)]
     public void Implements_ArgIsNull_ThrowArgumentNullException(Type parentType, Type baseType)
     {
-        //Act
+        // Act
         Action action = () => parentType.Implements(baseType);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -139,10 +139,10 @@ public class TypeExtensionsTests
     [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), true, true)]
     public void Implements_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expected)
     {
-        //Act
+        // Act
         var result = parentType.Implements(baseType, useGenericBaseType);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

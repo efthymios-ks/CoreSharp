@@ -5,106 +5,106 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class ExceptionExtensionsTests
 {
-    //Methods
+    // Methods
     [Test]
     public void UnwrapMessages_ExceptionIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Exception exception = null;
 
-        //Act
+        // Act
         Action action = () => exception.UnwrapMessages();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void UnwrapMessages_WhenCalled_ReturnAllExceptionMessages()
     {
-        //Arrange
+        // Arrange
         var level3Exception = new Exception("Level 3");
         var level2Exception = new AggregateException("Level 2", level3Exception);
         var level1Exception = new Exception("Level 1", level2Exception);
         var messages = new[] { level1Exception.Message, level2Exception.Message, level3Exception.Message };
         var expected = string.Join(Environment.NewLine, messages);
 
-        //Act
+        // Act
         var result = level1Exception.UnwrapMessages();
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 
     [Test]
     public void Unwrap_ExceptionIsNull_ReturnEmptyEnumerable()
     {
-        //Arrange
+        // Arrange
         Exception exception = null;
 
-        //Act
+        // Act
         Action action = () => exception.Unwrap();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Unwrap_WhenCalled_ReturnAllExceptionMessages()
     {
-        //Arrange
+        // Arrange
         var ex3 = new Exception("Level 3");
         var ex2 = new AggregateException("Level 2", ex3);
         var ex1 = new Exception("Level 1", ex2);
         var expected = new[] { ex1, ex2, ex3 };
 
-        //Act
+        // Act
         var result = ex1.Unwrap();
 
-        //Assert 
+        // Assert 
         result.Should().Equal(expected);
     }
 
     [Test]
     public void GetInnermostException_ExceptionIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Exception exception = null;
 
-        //Act
+        // Act
         Action action = () => exception.GetInnermostException();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetInnermostException_ExceptionHasNoInnerValue_ReturnItself()
     {
-        //Arrange 
+        // Arrange 
         var exception = new Exception();
 
-        //Act
+        // Act
         var result = exception.GetInnermostException();
 
-        //Assert 
+        // Assert 
         result.Should().BeSameAs(exception);
     }
 
     [Test]
     public void GetInnermostException_ExceptionHasInnerValue_ReturnItself()
     {
-        //Arrange 
+        // Arrange 
         var ex1 = new Exception("1");
         var ex2 = new Exception("2", ex1);
         var ex3_1 = new KeyNotFoundException("3.1", ex2);
         var ex3_2 = new InvalidDataException("3.2");
         var ex4 = new AggregateException(ex3_1, ex3_2);
 
-        //Act
+        // Act
         var result = ex4.GetInnermostException();
 
-        //Assert 
+        // Assert 
         result.Should().BeSameAs(ex1);
     }
 }

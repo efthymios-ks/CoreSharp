@@ -9,10 +9,10 @@ public class FloatExtensionsTests
     [TestCase(3, 1, 3, 1, 10, 10)]
     public void Map_WhenCalled_MapAndReturnValueToNewRange(float value, float fromLow, float fromHigh, float toLow, float toHigh, float expected)
     {
-        //Act
+        // Act
         var result = value.Map(fromLow, fromHigh, toLow, toHigh);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

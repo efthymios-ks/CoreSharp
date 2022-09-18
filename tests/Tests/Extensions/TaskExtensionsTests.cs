@@ -3,7 +3,7 @@
 [TestFixture]
 public class TaskExtensionsTests
 {
-    //Methods
+    // Methods
     private static Task<TValue> GetValueAsync<TValue>(TValue value)
         => Task.FromResult(value);
 
@@ -13,16 +13,16 @@ public class TaskExtensionsTests
     [Test]
     public async Task WithAggregateException_WhenAllSuccessfull_ReturnResponses()
     {
-        //Arrange
+        // Arrange
         const int value1 = 1;
         const int value2 = 2;
         var task1 = GetValueAsync(value1);
         var task2 = GetValueAsync(value2);
 
-        //Act
+        // Act
         await Task.WhenAll(task1, task2).WithAggregateException();
 
-        //Assert 
+        // Assert 
         task1.Result.Should().Be(value1);
         task2.Result.Should().Be(value2);
     }
@@ -30,16 +30,16 @@ public class TaskExtensionsTests
     [Test]
     public async Task WithAggregateException_WhenExceptionsOccure_ReturnAggregateException()
     {
-        //Arrange 
+        // Arrange 
         var exception1 = new ArgumentException("1");
         var exception2 = new ArgumentException("2");
         var task1 = GetExceptionAsync(exception1);
         var task2 = GetExceptionAsync(exception2);
 
-        //Act
+        // Act
         Func<Task> action = async () => await Task.WhenAll(task1, task2).WithAggregateException();
 
-        //Assert 
+        // Assert 
         var assertion = await action.Should().ThrowExactlyAsync<AggregateException>();
         var aggregateException = assertion.Which;
         aggregateException.InnerExceptions.Count.Should().Be(2);
@@ -50,53 +50,53 @@ public class TaskExtensionsTests
     [Test]
     public async Task IgnoreError_TaskIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Task task = null;
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError();
 
-        //Assert 
+        // Assert 
         await action.Should().ThrowExactlyAsync<ArgumentNullException>();
     }
 
     [Test]
     public async Task IgnoreError_NoExceptionTypeProvided_IgnoreAllExceptions()
     {
-        //Arrange 
+        // Arrange 
         var task = Task.FromException(new InvalidCastException());
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError();
 
-        //Assert 
+        // Assert 
         await action.Should().NotThrowAsync();
     }
 
     [Test]
     public async Task IgnoreError_ExceptionTypeProvidedAndThrowsSame_IgnoreException()
     {
-        //Arrange 
+        // Arrange 
         var task = Task.FromException(new InvalidCastException());
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError<InvalidCastException>();
 
-        //Assert 
+        // Assert 
         await action.Should().NotThrowAsync<InvalidCastException>();
     }
 
     [Test]
     public async Task IgnoreError_ExceptionTypeProvidedAndThrowsDifferent_ThrowException()
     {
-        //Arrange 
+        // Arrange 
         var exceptionToThrow = new InvalidCastException();
         var task = Task.FromException(exceptionToThrow);
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError<InvalidOperationException>();
 
-        //Assert 
+        // Assert 
         var assertion = await action.Should().ThrowExactlyAsync<InvalidCastException>();
         var exceptionCaught = assertion.Which;
         exceptionCaught.Should().BeSameAs(exceptionToThrow);
@@ -105,53 +105,53 @@ public class TaskExtensionsTests
     [Test]
     public async Task IgnoreError_WithResult_TaskIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         Task<int> task = null;
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError();
 
-        //Assert 
+        // Assert 
         await action.Should().ThrowExactlyAsync<ArgumentNullException>();
     }
 
     [Test]
     public async Task IgnoreError_WithResult_NoExceptionTypeProvided_IgnoreAllExceptions()
     {
-        //Arrange 
+        // Arrange 
         var task = Task.FromException<int>(new InvalidCastException());
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError();
 
-        //Assert 
+        // Assert 
         await action.Should().NotThrowAsync();
     }
 
     [Test]
     public async Task IgnoreError_WithResult_ExceptionTypeProvidedAndThrowsSame_IgnoreException()
     {
-        //Arrange 
+        // Arrange 
         var task = Task.FromException<int>(new InvalidCastException());
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError<InvalidCastException>();
 
-        //Assert 
+        // Assert 
         await action.Should().NotThrowAsync<InvalidCastException>();
     }
 
     [Test]
     public async Task IgnoreError_WithResult_ExceptionTypeProvidedAndThrowsDifferent_ThrowException()
     {
-        //Arrange 
+        // Arrange 
         var exceptionToThrow = new InvalidCastException();
         var task = Task.FromException<int>(exceptionToThrow);
 
-        //Act
+        // Act
         Func<Task> action = () => task.IgnoreError<InvalidOperationException>();
 
-        //Assert 
+        // Assert 
         var assertion = await action.Should().ThrowExactlyAsync<InvalidCastException>();
         var exceptionCaught = assertion.Which;
         exceptionCaught.Should().BeSameAs(exceptionToThrow);
@@ -160,14 +160,14 @@ public class TaskExtensionsTests
     [Test]
     public async Task IgnoreError_WithResult_NoExceptionIsThrown_GetResult()
     {
-        //Arrange 
+        // Arrange 
         const int expected = 1;
         var task = Task.FromResult(expected);
 
-        //Act
+        // Act
         Func<Task<int>> action = () => task.IgnoreError();
 
-        //Assert 
+        // Assert 
         var assertion = await action.Should().NotThrowAsync();
         var result = assertion.Which;
         result.Should().Be(expected);

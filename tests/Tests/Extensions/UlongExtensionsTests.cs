@@ -14,10 +14,10 @@ public class UlongExtensionsTests
     [TestCase(1610612736ul, "1.5GB")]
     public void ToComputerSize_WhenCalled_ReturnSiMetricString(ulong value, string expected)
     {
-        //Action
+        // Action
         var result = value.ToComputerSizeCI();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

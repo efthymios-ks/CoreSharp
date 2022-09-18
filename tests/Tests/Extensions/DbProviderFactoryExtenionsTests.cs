@@ -3,11 +3,11 @@
 [TestFixture]
 public class DbProviderFactoryExtenionsTests
 {
-    //Fields 
+    // Fields 
     private readonly DbProviderFactory _factoryNull;
     private DbProviderFactory _sqlFactory;
 
-    //Methods 
+    // Methods 
     [SetUp]
     public void SetUp()
     {
@@ -18,24 +18,24 @@ public class DbProviderFactoryExtenionsTests
     [Test]
     public void CreateParameter_FactoryIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _factoryNull.CreateParameter("{name}", "Efthymios");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void CreateParameter_WhenCalled_ReturnSameTypeDbParameterWithValues()
     {
-        //Arrange
+        // Arrange
         const string name = "{name}";
         const string value = "Efthymios";
 
-        //Act
+        // Act
         var result = _sqlFactory.CreateParameter(name, value);
 
-        //Assert
+        // Assert
         result.Should().BeOfType<SqlParameter>();
         result.ParameterName.Should().Be(name);
         result.Value.Should().Be(value);

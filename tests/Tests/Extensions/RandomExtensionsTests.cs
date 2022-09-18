@@ -3,7 +3,7 @@
 [TestFixture]
 public class RandomExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly Random _rngNull;
     private readonly Random _rng = new(DateTime.Now.Millisecond);
     private const int SampleCount = 5;
@@ -11,50 +11,50 @@ public class RandomExtensionsTests
     [Test]
     public void NextBool_RngIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _rngNull.NextBool();
 
-        //Act
+        // Act
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void OneOf_RngIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rngNull.OneOf(1, 2, 3);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void OneOf_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _rng.OneOf<int>(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void OneOf_SourceIEmpty_ThrowArgumentException()
     {
-        //Act
+        // Act
         Action action = () => _rng.OneOf<int>();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentException>();
     }
 
     [Test]
     public void NextDouble_RngIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rngNull.NextDouble(0, 100);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -62,24 +62,24 @@ public class RandomExtensionsTests
     [TestCase(0, 100, SampleCount)]
     public void NextDouble_WhenCalled_ReturnRandomValueInRange(double minimum, double maximum, int sampleCount)
     {
-        //Arrange 
+        // Arrange 
         var samples = new double[sampleCount];
 
-        //Act 
+        // Act 
         for (var i = 0; i < samples.Length; i++)
             samples[i] = _rng.NextDouble(minimum, maximum);
 
-        //Assert
+        // Assert
         samples.Should().OnlyContain(s => s >= minimum && s <= maximum);
     }
 
     [Test]
     public void ChanceGreaterThan_RngIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rngNull.ChanceGreaterThan(50);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -88,20 +88,20 @@ public class RandomExtensionsTests
     [TestCase(101)]
     public void ChanceGreaterThan_PercentageOutOfRange_ThrowArgumentOutOfRangeException(double percentage)
     {
-        //Act 
+        // Act 
         Action action = () => _rng.ChanceGreaterThan(percentage);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void ChanceLowerThan_RngIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rngNull.ChanceLowerThan(50);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -110,20 +110,20 @@ public class RandomExtensionsTests
     [TestCase(101)]
     public void ChanceLowerThan_PercentageOutOfRange_ThrowArgumentOutOfRangeException(double percentage)
     {
-        //Act 
+        // Act 
         Action action = () => _rng.ChanceLowerThan(percentage);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void ChanceBetween_RngIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rngNull.ChanceBetween(25, 75);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -132,10 +132,10 @@ public class RandomExtensionsTests
     [TestCase(25, 101)]
     public void ChanceLowerThan_EndsOutOfRange_ThrowArgumentOutOfRangeException(double percentageLeft, double percentageRight)
     {
-        //Act 
+        // Act 
         Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
@@ -143,33 +143,33 @@ public class RandomExtensionsTests
     [TestCase(75, 25)]
     public void ChanceLowerThan_LeftGreaterThanRight_ThrowArgumentOutOfRangeException(double percentageLeft, double percentageRight)
     {
-        //Act 
+        // Act 
         Action action = () => _rng.ChanceBetween(percentageLeft, percentageRight);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentException>();
     }
 
     [Test]
     public void Shuffle_RngIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var source = new List<int> { 1, 2, 3, 4, 5 };
 
-        //Act 
+        // Act 
         Action action = () => _rngNull.Shuffle(source);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Shuffle_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _rng.Shuffle<int>(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -177,15 +177,15 @@ public class RandomExtensionsTests
     [TestCase(SampleCount)]
     public void Shuffle_WhenCalled_ShufflesList(int sampleCount)
     {
-        //Arrange
+        // Arrange
         var original = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         var shuffled = original.ToList();
 
-        //Act 
+        // Act 
         for (var i = 0; i < sampleCount; i++)
             _rng.Shuffle(shuffled);
 
-        //Assert  
+        // Assert  
         shuffled.Should().NotEqual(original);
         shuffled.Should().OnlyContain(i => original.Any(o => o.Equals(i)));
     }

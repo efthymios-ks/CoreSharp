@@ -6,44 +6,44 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class GenericExtensionsTests
 {
-    //Methods
+    // Methods
     [Test]
     public void EqualsAny_ItemIsNull_ThrowArgumentException()
     {
-        //Arrange 
+        // Arrange 
         const string item = null;
 
-        //Act 
+        // Act 
         Action action = () => item.EqualsAny("1", "2");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void EqualsAny_SourceIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         const string item = "1";
 
-        //Act 
+        // Act 
         Action action = () => item.EqualsAny(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void EqualsAny_KeySelectorIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         const string item = "1";
         var source = new[] { "1", "2" };
 
-        //Act 
+        // Act 
         Action action = () => item.EqualsAny<string, string>(source, null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -52,10 +52,10 @@ public class GenericExtensionsTests
     [TestCase(true, "1", "1", "2")]
     public void EqualsAny_WhenCalled_ReturnTrueIfItemInSource(bool expected, string item, params string[] source)
     {
-        //Act 
+        // Act 
         var result = item.EqualsAny(source);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -64,43 +64,43 @@ public class GenericExtensionsTests
     [TestCase(true, "1", "1", "2")]
     public void EqualsAny_WhenCalledWithKeySelector_ReturnTrue(bool expected, string item, params string[] source)
     {
-        //Act 
+        // Act 
         var result = item.EqualsAny(source, i => i);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToJson_InputIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         DummyClass item = null;
 
-        //Act
+        // Act
         Action action = () => item.ToJson();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToJson_OptionsIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var item = new DummyClass();
 
-        //Act
+        // Act
         Action action = () => item.ToJson(options: null);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToJson_WhenCalled_ReturnNewReferenceWithSameValues()
     {
-        //Arrange 
+        // Arrange 
         var item = new DummyClass(1, "Red");
         const string expected = /*lang=json,strict*/ @"{""Id"":1,""Name"":""Red""}";
         var settings = new JsonSerializerSettings
@@ -108,50 +108,50 @@ public class GenericExtensionsTests
             Formatting = Formatting.None
         };
 
-        //Act
+        // Act
         var result = item.ToJson(settings);
 
-        //Assert  
+        // Assert  
         result.Should().Be(expected);
     }
 
     [Test]
     public void JsonClone_InputIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         DummyClass item = null;
 
-        //Act
+        // Act
         Action action = () => item.JsonClone();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void JsonClone_OptionsIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var item = new DummyClass();
 
-        //Act
+        // Act
         JsonSerializerOptions options = null;
         Action action = () => item.JsonClone(options);
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void JsonClone_WhenCalled_ReturnNewReferenceWithSameValues()
     {
-        //Arrange
+        // Arrange
         var item = new DummyClass(1, "Red");
 
-        //Act
+        // Act
         var result = item.JsonClone();
 
-        //Assert 
+        // Assert 
         result.Id.Should().Be(item.Id);
         result.Name.Should().Be(item.Name);
     }
@@ -159,96 +159,96 @@ public class GenericExtensionsTests
     [Test]
     public void JsonEquals_OnlyLeftIsNull_ReturnFalse()
     {
-        //Arrange
+        // Arrange
         DummyClass left = null;
         var right = new DummyClass();
 
-        //Act
+        // Act
         var result = left.JsonEquals(right);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void JsonEquals_OnlyRightIsNull_ReturnFalse()
     {
-        //Arrange
+        // Arrange
         var left = new DummyClass();
         DummyClass right = null;
 
-        //Act
+        // Act
         var result = left.JsonEquals(right);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void JsonEquals_BothAreNull_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         DummyClass left = null;
         DummyClass right = null;
 
-        //Act
+        // Act
         var result = left.JsonEquals(right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void JsonEquals_PropertiesDontMatch_ReturnFalse()
     {
-        //Arrange 
+        // Arrange 
         var left = new DummyClass(1, "Black");
         var right = new DummyClass(1, "White");
 
-        //Act 
+        // Act 
         var result = left.JsonEquals(right);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void JsonEquals_PropertiesMatch_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         var left = new DummyClass(1, "Black");
         var right = new DummyClass(1, "Black");
 
-        //Act
+        // Act
         var result = left.JsonEquals(right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void IsNull_ClassIsNull_ReturnTrue()
     {
-        //Arrange 
+        // Arrange 
         DummyClass input = null;
 
-        //Act 
+        // Act 
         var result = input.IsNull();
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
     }
 
     [Test]
     public void IsNull_ClassHasValue_ReturnFalse()
     {
-        //Arrange 
+        // Arrange 
         var input = new DummyClass();
 
-        //Act 
+        // Act 
         var result = input.IsNull();
 
-        //Assert
+        // Assert
         result.Should().BeFalse();
     }
 
@@ -257,10 +257,10 @@ public class GenericExtensionsTests
     [TestCase(0, false)]
     public void IsNull_StructIsNull_ReturnTrue(int? input, bool expected)
     {
-        //Act 
+        // Act 
         var result = input.IsNull();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -271,78 +271,78 @@ public class GenericExtensionsTests
     [TestCase(default(int), true)]
     public void IsDefault_WhenCalled_ReturnTrueIfInputHasDefaultTypeValue(int input, bool expected)
     {
-        //Act
+        // Act
         var result = input.IsDefault();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Yield_ArgIsNull_ReturnEmptyEnumerable()
     {
-        //Arrange
+        // Arrange
         int? value = null;
         var expected = Enumerable.Empty<int?>();
 
-        //Act
+        // Act
         var result = value.Yield();
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void Yield_WhenCalled_ReturnEnumerable()
     {
-        //Arrange
+        // Arrange
         const int value = 0;
         var expected = new[] { 0 };
 
-        //Act
+        // Act
         var result = value.Yield();
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void GetInnermostField_EntityIsNull_ThrowArgumentNullException()
     {
-        //Arange
+        // Arange
         Exception exception = null;
 
-        //Act
+        // Act
         Action action = () => exception.GetInnermostField(e => e.InnerException);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetInnermostField_FieldSelectorIsNull_ThrowArgumentNullException()
     {
-        //Arange
+        // Arange
         var exception = new Exception();
 
-        //Act
+        // Act
         Action action = () => exception.GetInnermostField(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetInnermostField_WhenCalled_ReturnInnermostField()
     {
-        //Arange
+        // Arange
         var exception1 = new Exception("1");
         var exception2 = new Exception("2", exception1);
 
-        //Act
+        // Act
         var result = exception2.GetInnermostField(e => e.InnerException);
 
-        //Assert
+        // Assert
         result.Should().BeSameAs(exception1);
     }
 }

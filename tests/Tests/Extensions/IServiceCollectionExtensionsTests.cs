@@ -9,7 +9,7 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class IServiceCollectionExtensionsTests
 {
-    //Fields
+    // Fields
     private IServiceCollection _serviceCollection;
 
     [OneTimeSetUp]
@@ -21,66 +21,66 @@ public class IServiceCollectionExtensionsTests
         _serviceCollection.AddMarkedServices(assembly);
     }
 
-    //Methods 
+    // Methods 
     #region Unmarked services
     [Test]
     public void AddServices_ServicesIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         IServiceCollection services = null;
 
-        //Act
+        // Act
         Action action = () => services.AddServices();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddServices_InterfaceBaseTypeIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         var services = new ServiceCollection();
         Type interfaceBaseType = null;
 
-        //Act
+        // Act
         Action action = () => services.AddServices(interfaceBaseType);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddServices_AssembliesIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         var services = new ServiceCollection();
         var interfaceBaseType = typeof(IPlainService);
 
-        //Act
+        // Act
         Action action = () => services.AddServices(interfaceBaseType, assemblies: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddServices_NoImplementationFound_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithNoImplementation>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
 
     [Test]
     public void AddServices_SingleImplementationFoundAndNameMissmatch_Register()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithSingleImplementationAndNameMissmatch>();
 
-        //Assert
+        // Assert
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be<IServiceWithSingleImplementationAndNameMissmatch>();
@@ -90,10 +90,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddServices_SingleImplementationFoundAndNameMatch_Register()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithSingleImplementationAndNameMatch>();
 
-        //Assert
+        // Assert
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be<IServiceWithSingleImplementationAndNameMatch>();
@@ -103,20 +103,20 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddServices_ManyImplementationFoundAndNameMissmatch_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithManyImplementationsAndNameMissmatch>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
 
     [Test]
     public void AddServices_ManyImplementationFoundAndNameMatch_Register()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithManyImplementationsAndNameMatch>();
 
-        //Assert
+        // Assert
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be<IServiceWithManyImplementationsAndNameMatch>();
@@ -126,20 +126,20 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddServices_MatchesButHasIgnoreServiceAttributeOnContract_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithIgnoreServiceAttributeOnContract>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
 
     [Test]
     public void AddServices_MatchesButHasIgnoreServiceAttributeOnImplementation_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IServiceWithIgnoreServiceAttributeOnImplementation>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
     #endregion
@@ -148,36 +148,36 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_ServicesIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         IServiceCollection services = null;
 
-        //Act
+        // Act
         Action action = () => services.AddMarkedServices();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddMarkedServices_AssembliesIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         var services = new ServiceCollection();
 
-        //Act
+        // Act
         Action action = () => services.AddMarkedServices(assemblies: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddMarkedServices_TransientWithContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<ITransientServiceWithContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Transient);
         descriptor.ServiceType.Should().Be(typeof(ITransientServiceWithContract));
@@ -187,10 +187,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_TransientWithoutContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be(typeof(ScopedServiceWithoutContract));
         descriptor.ImplementationType.Should().Be(typeof(ScopedServiceWithoutContract));
@@ -199,10 +199,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_ScopedWithContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<IScopedServiceWithContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be(typeof(IScopedServiceWithContract));
@@ -212,10 +212,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_ScopedWithoutContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<ScopedServiceWithoutContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Scoped);
         descriptor.ServiceType.Should().Be(typeof(ScopedServiceWithoutContract));
@@ -225,10 +225,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_SingletonWithContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<ISingletonServiceWithContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
         descriptor.ServiceType.Should().Be(typeof(ISingletonServiceWithContract));
@@ -238,10 +238,10 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_SingletonWithoutContract_Register()
     {
-        //Act 
+        // Act 
         var descriptor = GetServiceDescriptor<SingletonServiceWithoutContract>();
 
-        //Assert 
+        // Assert 
         descriptor.Should().NotBeNull();
         descriptor.Lifetime.Should().Be(ServiceLifetime.Singleton);
         descriptor.ServiceType.Should().Be(typeof(SingletonServiceWithoutContract));
@@ -251,35 +251,35 @@ public class IServiceCollectionExtensionsTests
     [Test]
     public void AddMarkedServices_MatchesButHasIgnoreServiceAttributeOnContract_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IMarkedServiceWithIgnoreServiceAttributeOnContract>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
 
     [Test]
     public void AddMarkedServices_MatchesButHasIgnoreServiceAttributeOnImplementation_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<IMarkedServiceWithIgnoreServiceAttributeOnImplementation>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
 
     [Test]
     public void AddMarkedServices_MatchesButHasIgnoreServiceAttributeOnItself_Skip()
     {
-        //Act
+        // Act
         var descriptor = GetServiceDescriptor<MarkedServiceWithIgnoreServiceAttributeOnItself>();
 
-        //Assert
+        // Assert
         descriptor.Should().BeNull();
     }
     #endregion
 
-    //Local 
+    // Local 
     private ServiceDescriptor GetServiceDescriptor<TService>()
         => GetServiceDescriptor(typeof(TService));
 

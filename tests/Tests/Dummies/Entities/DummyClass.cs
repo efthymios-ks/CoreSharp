@@ -5,7 +5,7 @@ namespace Tests.Dummies.Entities;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 internal class DummyClass
 {
-    //Constructors 
+    // Constructors 
     public DummyClass()
         : this(default)
     {
@@ -17,7 +17,7 @@ internal class DummyClass
         Name = name;
     }
 
-    //Properties 
+    // Properties 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay
         => ToString();

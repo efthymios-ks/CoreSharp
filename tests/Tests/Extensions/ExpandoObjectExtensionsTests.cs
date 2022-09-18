@@ -8,20 +8,20 @@ public class ExpandoObjectExtensionsTests
     [Test]
     public void ToDictionary_InputIsNull_ThrowNewArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         ExpandoObject expando = null;
 
-        //Act 
+        // Act 
         Action action = () => expando.ToDictionary();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToDictionary_WhenCalled_ReturnDictionary()
     {
-        //Arrange 
+        // Arrange 
         var source = new Dictionary<string, object>
         {
             { "id", 1 },
@@ -31,10 +31,10 @@ public class ExpandoObjectExtensionsTests
         foreach (var item in source)
             expando.Add(item);
 
-        //Act 
+        // Act 
         var dictionary = ((ExpandoObject)expando).ToDictionary();
 
-        //Assert
+        // Assert
         dictionary.Should().Equal(source);
     }
 }

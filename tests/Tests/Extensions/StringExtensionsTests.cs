@@ -5,68 +5,68 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class StringExtensionsTests
 {
-    //Fields
+    // Fields
     private const string StringNull = null;
     private const string StringEmpty = "";
 
-    //Methods 
+    // Methods 
     [Test]
     public void Truncate_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Truncate(3);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Truncate_LengthIsNegative_ThrowArgumentOutOfRangeException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.Truncate(-1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Truncate_WhenCalled_ReturnTruncatedString()
     {
-        //Arrange
+        // Arrange
         const string input = "12345";
         const string expected = "123";
 
-        //Act
+        // Act
         var result = input.Truncate(3);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void FormatAsciiControls_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.FormatAsciiControls();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void FormatAsciiControls_WhenCalled_ReplaceAsciiControlCharsAndReturn()
     {
-        //Arrange
+        // Arrange
         var soh = Convert.ToChar(1);
         var eot = Convert.ToChar(4);
         var input = $"{soh}_Hello_{eot}";
         const string expected = "<SOH>_Hello_<EOT>";
 
-        //Act
+        // Act
         var result = input.FormatAsciiControls();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -74,10 +74,10 @@ public class StringExtensionsTests
     [Test]
     public void Chunk_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Chunk(2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -86,25 +86,25 @@ public class StringExtensionsTests
     [TestCase(-1)]
     public void Chunk_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.Chunk(chunkSize);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Chunk_WhenCalled_SplitInputInChunks()
     {
-        //Arrange 
+        // Arrange 
         const string input = "12345";
         const int size = 2;
         var expected = new[] { "12", "34", "5" };
 
-        //Act
+        // Act
         var result = input.Chunk(size);
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 #endif
@@ -112,218 +112,218 @@ public class StringExtensionsTests
     [Test]
     public void PadCenter_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.PadCenter(2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void PadCenter_TotalWidthIsNegative_ThrowArgumentOutOfRangeException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.PadCenter(-1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void PadCenter_WhenCalled_PadCenterAndReturnInput()
     {
-        //Arrange
+        // Arrange
         const string input = "123";
         const int totalWidth = 7;
         const string expected = "  123  ";
 
-        //Act
+        // Act
         var result = input.PadCenter(totalWidth);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void RemoveFirst_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.RemoveFirst("1");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveFirst_ValueIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.RemoveFirst(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveFirst_WhenCalled_RemoveFirstValueOccurence()
     {
-        //Arrange
+        // Arrange
         const string input = "1 A 2 A 3 A";
         const string value = "A";
         const string expected = "1  2 A 3 A";
 
-        //Act
+        // Act
         var result = input.RemoveFirst(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void RemoveLast_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.RemoveLast("1");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveLast_ValueIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.RemoveLast(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveLast_WhenCalled_RemoveFirstValueOccurence()
     {
-        //Arrange
+        // Arrange
         const string input = "1 A 2 A 3 A";
         const string value = "A";
         const string expected = "1 A 2 A 3 ";
 
-        //Act
+        // Act
         var result = input.RemoveLast(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void RemoveAll_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.RemoveAll("1");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveAll_ValueIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.RemoveAll(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void RemoveAll_WhenCalled_RemoveFirstValueOccurence()
     {
-        //Arrange
+        // Arrange
         const string input = "1 A 2 A 3 A";
         const string value = "A";
         const string expected = "1  2  3 ";
 
-        //Act
+        // Act
         var result = input.RemoveAll(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Left_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Left(3);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Left_LengthIsNegative_ThrowArgumentOutOfRangeException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.Left(-1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Left_WhenCalled_ReturnLeftSubstring()
     {
-        //Arrange
+        // Arrange
         const string input = "12345";
         const string expected = "123";
 
-        //Act
+        // Act
         var result = input.Left(3);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Right_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Right(3);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Right_LengthIsNegative_ThrowArgumentOutOfRangeException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.Right(-1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Right_WhenCalled_ReturnRightSubstring()
     {
-        //Arrange
+        // Arrange
         const string input = "12345";
         const string expected = "345";
 
-        //Act
+        // Act
         var result = input.Right(3);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Mid_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Mid(2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -332,116 +332,116 @@ public class StringExtensionsTests
     [TestCase("123", 4)]
     public void Mid_IndexIsOutOfRange_ThrowArgumentOutOfRangeException(string input, int index)
     {
-        //Act
+        // Act
         Action action = () => input.Mid(index, 2);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Mid_LengthIsNegative_ThrowArgumentOutOfRangeException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.Mid(0, -1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentOutOfRangeException>();
     }
 
     [Test]
     public void Mid_WhenCalled_ReturnMidSubstring()
     {
-        //Arrange
+        // Arrange
         const string input = "12345";
         const string expected = "234";
 
-        //Act
+        // Act
         var result = input.Mid(1, 3);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void FormatWith_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.FormatWith(1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void FormatWith_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.FormatWith(formatProvider: null, arguments: 1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void FormatWith_ParametersIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.FormatWith(CultureInfo.InvariantCulture, arguments: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void FormatWith_WhenCalled_ReturnFormattedString()
     {
-        //Arrange
+        // Arrange
         const string format = "{0}";
         const int value = 1000;
         var culture = CultureInfo.CurrentCulture;
         var expected = string.Format(culture, format, value);
 
-        //Act
+        // Act
         var result = format.FormatWith(culture, value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void FormatWithCI_WhenCalled_FormatStringWithCultureInvariant()
     {
-        //Arrange
+        // Arrange
         const string format = "{0}";
         const int value = 1000;
         var culture = CultureInfo.InvariantCulture;
         const string expected = "1000";
 
-        //Act
+        // Act
         var result = format.FormatWith(culture, value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void EqualsAnyCI_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.EqualsAnyCI("a");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void EqualsAnyCI_ValuesIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.EqualsAnyCI(values: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -451,30 +451,30 @@ public class StringExtensionsTests
     [TestCase("Ab", "AB", true)]
     public void EqualsAnyCI_WhenCalled_ReturnTrueIfEqualsAnyIgnoringCase(string input, string value, bool expected)
     {
-        //Act
+        // Act
         var result = input.EqualsAnyCI(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void StartsWithAnyCI_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.StartsWithAnyCI("a");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void StartsWithAnyCI_ValuesIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.StartsWithAnyCI(values: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -484,30 +484,30 @@ public class StringExtensionsTests
     [TestCase("Ab", "A", true)]
     public void StartsWithAnyCI_WhenCalled_ReturnTrueIfStartsWithAnyIgnoringCase(string input, string value, bool expected)
     {
-        //Act
+        // Act
         var result = input.StartsWithAnyCI(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void EndsWithAnyCI_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.EndsWithAnyCI("a");
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void EndsWithAnyCI_ValuesIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.EndsWithAnyCI(values: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -517,10 +517,10 @@ public class StringExtensionsTests
     [TestCase("Ab", "B", true)]
     public void EndsWithAnyCI_WhenCalled_ReturnTrueIfStartsWithAnyIgnoringCase(string input, string value, bool expected)
     {
-        //Act
+        // Act
         var result = input.EndsWithAnyCI(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -531,10 +531,10 @@ public class StringExtensionsTests
     [TestCase("1", false)]
     public void IsNullOrEmpty_WhenCalled_ReturnTrueIfNullOrEmpty(string value, bool expected)
     {
-        //Act 
+        // Act 
         var result = value.IsNullOrEmpty();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -545,10 +545,10 @@ public class StringExtensionsTests
     [TestCase("1", false)]
     public void IsNullOrWhiteSpace_WhenCalled_ReturnTrueIfNullOrWhiteSpace(string value, bool expected)
     {
-        //Act 
+        // Act 
         var result = value.IsNullOrWhiteSpace();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -559,10 +559,10 @@ public class StringExtensionsTests
     [TestCase("1", true)]
     public void HasValue_WhenCalled_ReturnTrueIfNotNullOrWhiteSpace(string value, bool expected)
     {
-        //Act 
+        // Act 
         var result = value.HasValue();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -573,20 +573,20 @@ public class StringExtensionsTests
     [TestCase("1", "1")]
     public void OrEmpty_WhenCalled_ReturnTrueIfNotNullOrWhiteSpace(string value, string expected)
     {
-        //Act 
+        // Act 
         var result = value.OrEmpty();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Reverse_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.Reverse();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -595,10 +595,10 @@ public class StringExtensionsTests
     [TestCase("123", "321")]
     public void Reverse_WhenCalled_ReturnReversedInput(string input, string expected)
     {
-        //Act
+        // Act
         var result = input.Reverse();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -607,10 +607,10 @@ public class StringExtensionsTests
     [TestCase(StringEmpty, null)]
     public void Erase_AnyArgumentIsNull_ThrowArgumentNullException(string input, string value)
     {
-        //Act 
+        // Act 
         Action action = () => input.Erase(value);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -618,20 +618,20 @@ public class StringExtensionsTests
     [TestCase("1-2-3", "-", "123")]
     public void Erase_WhenCalled_EraseAllOccurrencesOfGivenValue(string input, string value, string expected)
     {
-        //Act 
+        // Act 
         var result = input.Erase(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void SafeTrim_TrimCharsIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.SafeTrim(trimChars: null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -643,30 +643,30 @@ public class StringExtensionsTests
     [TestCase(" a ", "a")]
     public void SafeTrim_WhenCalled_ReplaceNullWithStringEmptyThenTrimAndReturn(string input, string expected)
     {
-        //Act
+        // Act
         var result = input.SafeTrim();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void FromJson_OptionsIsNull_ThrowArgumentNullException()
     {
-        //Assert
+        // Assert
         JsonSerializerSettings settings = null;
 
-        //Act
+        // Act
         Action action = () => StringEmpty.FromJson<DummyClass>(settings);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void FromJson_WhenCalled_MapItemPropertiesAndReturnTrue()
     {
-        //Arrange
+        // Arrange
         const int id = 1;
         const string name = "Efthymios";
         var json = "{\"id\": {id}, \"name\": \"{name}\"}";
@@ -674,10 +674,10 @@ public class StringExtensionsTests
             .Replace("{id}", $"{id}")
             .Replace("{name}", name);
 
-        //Act
+        // Act
         var result = json.FromJson<DummyClass>();
 
-        //Assert  
+        // Assert  
         result.Id.Should().Be(id);
         result.Name.Should().Be(name);
     }
@@ -685,7 +685,7 @@ public class StringExtensionsTests
     [Test]
     public void ToExpandoObject_WhenJsonIsJObject_ReturnExpandoObject()
     {
-        //Arrange
+        // Arrange
         const int id = 1;
         const string name = "Efthymios";
         var json = "{\"id\": {id}, \"name\": \"{name}\"}";
@@ -693,10 +693,10 @@ public class StringExtensionsTests
             .Replace("{id}", $"{id}")
             .Replace("{name}", name);
 
-        //Act
+        // Act
         var result = json.ToExpandoObject();
 
-        //Assert  
+        // Assert  
         ((int)result.id).Should().Be(id);
         ((string)result.name).Should().Be(name);
     }
@@ -704,7 +704,7 @@ public class StringExtensionsTests
     [Test]
     public void ToExpandoObject_WhenJsonIsJArray_ReturnIEnumerableExpandoObject()
     {
-        //Arrange
+        // Arrange
         const int id = 1;
         const string name = "Efthymios";
         var json = "[{\"id\": {id}, \"name\": \"{name}\"}]";
@@ -712,10 +712,10 @@ public class StringExtensionsTests
             .Replace("{id}", $"{id}")
             .Replace("{name}", name);
 
-        //Act
+        // Act
         var result = json.ToExpandoObject();
 
-        //Assert 
+        // Assert 
         ((int)result[0].id).Should().Be(id);
         ((string)result[0].name).Should().Be(name);
     }
@@ -723,17 +723,17 @@ public class StringExtensionsTests
     [Test]
     public void GetLines_InputIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringNull.GetLines();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetLines_WhenCalled_SplitAndReturnLines()
     {
-        //Arrange
+        // Arrange
         var lines = new[]
         {
             "Line 1",
@@ -742,43 +742,43 @@ public class StringExtensionsTests
         };
         var joined = string.Join(Environment.NewLine, lines);
 
-        //Act
+        // Act
         var result = joined.GetLines();
 
-        //Assert
+        // Assert
         result.Should().Equal(lines);
     }
 
     [Test]
     public void Replace_InputIsNull_ThrowArgumentNullException()
     {
-        //Arrange
+        // Arrange
         var dictionary = new Dictionary<string, string>();
 
-        //Act
+        // Act
         Action action = () => StringNull.Replace(dictionary);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Replace_DictionaryIsNull_ThrowArgumentNulLException()
     {
-        //Arrange
+        // Arrange
         Dictionary<string, string> dictionary = null;
 
-        //Act
+        // Act
         Action action = () => StringEmpty.Replace(dictionary);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
     {
-        //Arrange
+        // Arrange
         const string input = "Key1, Key2, Key3";
         var dictionary = new Dictionary<string, int>
         {
@@ -788,20 +788,20 @@ public class StringExtensionsTests
         };
         const string expected = "1, 2, 3";
 
-        //Act
+        // Act
         var result = input.Replace(dictionary);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToInt_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToInt(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -812,20 +812,20 @@ public class StringExtensionsTests
     [TestCase("1.1", null)]
     public void ToInt_InputValid_ReturnInt(string input, int? expected)
     {
-        //Act
+        // Act
         var result = input.ToInt(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToLong_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToLong(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -836,20 +836,20 @@ public class StringExtensionsTests
     [TestCase("1.1", null)]
     public void ToLong_InputValid_ReturnLong(string input, long? expected)
     {
-        //Act
+        // Act
         var result = input.ToLong(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToShort_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToShort(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -860,20 +860,20 @@ public class StringExtensionsTests
     [TestCase("1.1", null)]
     public void ToShort_InputValid_ReturnShort(string input, short? expected)
     {
-        //Act
+        // Act
         var result = input.ToShort(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToFloat_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToFloat(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -884,20 +884,20 @@ public class StringExtensionsTests
     [TestCase("1.1", 1.1f)]
     public void ToFloat_InputValid_ReturnFloat(string input, float? expected)
     {
-        //Act
+        // Act
         var result = input.ToFloat(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToDouble_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToDouble(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -908,20 +908,20 @@ public class StringExtensionsTests
     [TestCase("1.1", 1.1)]
     public void ToDouble_InputValid_ReturnDouble(string input, double? expected)
     {
-        //Act
+        // Act
         var result = input.ToDouble(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToDecimal_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToDecimal(null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -932,13 +932,13 @@ public class StringExtensionsTests
     [TestCase("1.1", 1.1)]
     public void ToDecimal_InputValid_ReturnDecimal(string input, double? expected)
     {
-        //Arrange
+        // Arrange
         var expectedDecimal = (decimal?)expected;
 
-        //Act
+        // Act
         var result = input.ToDecimal(NumberStyles.Any, CultureInfo.InvariantCulture);
 
-        //Assert
+        // Assert
         result.Should().Be(expectedDecimal);
     }
 
@@ -953,123 +953,123 @@ public class StringExtensionsTests
     [TestCase("yes", true)]
     public void ToBool_InputIsValid_ReturnBool(string input, bool? expected)
     {
-        //Assert
+        // Assert
         var result = input.ToBool();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToDateTime_DateTimeFormatIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToDateTime(StringNull);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToDateTime_FormatProviderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToDateTime(StringEmpty, null);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToDateTime_InputValid_ReturnDateTime()
     {
-        //Arrange 
+        // Arrange 
         var expected = new DateTime(2021, 5, 4, 11, 17, 45);
         const string dateTimeFormat = "u";
         var formatProvider = CultureInfo.InvariantCulture;
         var input = expected.ToString(dateTimeFormat, formatProvider);
 
-        //Act
+        // Act
         var result = input.ToDateTime(dateTimeFormat, formatProvider);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToGuid_FormatIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => StringEmpty.ToGuid(StringNull);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToGuid_InputValid_ReturnGuid()
     {
-        //Arrange 
+        // Arrange 
         var expected = Guid.NewGuid();
         const string format = "D";
         var input = expected.ToString(format);
 
-        //Act
+        // Act
         var result = input.ToGuid(format);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void Or_LeftIsNull_ReturnRight()
     {
-        //Arrange
+        // Arrange
         const string stringValue = "1";
 
-        //Act
+        // Act
         var result = StringNull.Or(stringValue);
 
-        //Assert
+        // Assert
         result.Should().Be(stringValue);
     }
 
     [Test]
     public void Or_LeftIsEmpty_ReturnRight()
     {
-        //Arrange
+        // Arrange
         const string stringValue = "1";
 
-        //Act
+        // Act
         var result = StringEmpty.Or(stringValue);
 
-        //Assert
+        // Assert
         result.Should().Be(stringValue);
     }
 
     [Test]
     public void Or_RightIsNull_ReturnLeft()
     {
-        //Arrange
+        // Arrange
         const string stringValue = "1";
 
-        //Act
+        // Act
         var result = stringValue.Or(StringNull);
 
-        //Assert
+        // Assert
         result.Should().Be(stringValue);
     }
 
     [Test]
     public void Or_RightIsEmpty_ReturnLeft()
     {
-        //Arrange
+        // Arrange
         const string stringValue = "1";
 
-        //Act
+        // Act
         var result = stringValue.Or(StringEmpty);
 
-        //Assert
+        // Assert
         result.Should().Be(stringValue);
     }
 
@@ -1079,10 +1079,10 @@ public class StringExtensionsTests
     [TestCase("", "")]
     public void SubstringAfter_ArgsAreNull_ThrowArgumentNullException(string input, string match)
     {
-        //Act 
+        // Act 
         Action action = () => input.SubstringAfter(match);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -1093,10 +1093,10 @@ public class StringExtensionsTests
     [TestCase("1234321", "0", null)]
     public void SubstringAfter_WhenCalled_ReturnSubstringAfterMatch(string input, string match, string expected)
     {
-        //Act 
+        // Act 
         var result = input.SubstringAfter(match);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -1106,10 +1106,10 @@ public class StringExtensionsTests
     [TestCase("", "")]
     public void SubstringAfterLast_ArgsAreNull_ThrowArgumentNullException(string input, string match)
     {
-        //Act 
+        // Act 
         Action action = () => input.SubstringAfterLast(match);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -1120,10 +1120,10 @@ public class StringExtensionsTests
     [TestCase("1234321", "0", null)]
     public void SubstringAfterLast_WhenCalled_ReturnSubstringAfterLastMatch(string input, string match, string expected)
     {
-        //Act 
+        // Act 
         var result = input.SubstringAfterLast(match);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -1133,10 +1133,10 @@ public class StringExtensionsTests
     [TestCase("", "")]
     public void SubstringBefore_ArgsAreNull_ThrowArgumentNullException(string input, string match)
     {
-        //Act 
+        // Act 
         Action action = () => input.SubstringBefore(match);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -1147,10 +1147,10 @@ public class StringExtensionsTests
     [TestCase("1234321", "0", null)]
     public void SubstringBefore_WhenCalled_ReturnSubstringBeforeMatch(string input, string match, string expected)
     {
-        //Act 
+        // Act 
         var result = input.SubstringBefore(match);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -1160,10 +1160,10 @@ public class StringExtensionsTests
     [TestCase("", "")]
     public void SubstringBeforeLast_ArgsAreNull_ThrowArgumentNullException(string input, string match)
     {
-        //Act 
+        // Act 
         Action action = () => input.SubstringBeforeLast(match);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -1174,10 +1174,10 @@ public class StringExtensionsTests
     [TestCase("1234321", "0", null)]
     public void SubstringBeforeLast_WhenCalled_ReturnSubstringBeforeLastMatch(string input, string match, string expected)
     {
-        //Act 
+        // Act 
         var result = input.SubstringBeforeLast(match);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

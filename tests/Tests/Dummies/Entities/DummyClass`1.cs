@@ -2,6 +2,6 @@
 
 internal class DummyClass<TValue> : DummyClass
 {
-    //Properties
+    // Properties
     public TValue Value { get; set; }
 }

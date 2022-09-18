@@ -6,31 +6,31 @@ namespace CoreSharp.Extensions.Tests;
 [TestFixture]
 public class StreamExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly Stream _streamNull;
 
     [Test]
     public void FromJson_OptionsIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _streamNull.FromJson<DummyClass>();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public async Task FromJson_WhenCalled_MapItemPropertiesAndReturnTrue()
     {
-        //Arrange
+        // Arrange
         var dummy = new DummyClass(1, "Black");
         await using var stream = new MemoryStream();
         await JsonSerializer.SerializeAsync(stream, dummy);
 
-        //Act
+        // Act
         var result = stream.FromJson<DummyClass>();
 
-        //Assert 
+        // Assert 
         result.Id.Should().Be(dummy.Id);
         result.Name.Should().Be(dummy.Name);
     }
@@ -38,24 +38,24 @@ public class StreamExtensionsTests
     [Test]
     public async Task ToArrayAsync_StreamIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Func<Task> action = () => _streamNull.ToArrayAsync();
 
-        //Assert
+        // Assert
         await action.Should().ThrowExactlyAsync<ArgumentNullException>();
     }
 
     [Test]
     public async Task ToArrayAsync_WhenCalled_ConvertToByteArray()
     {
-        //Arrange
+        // Arrange
         var byteArray = new byte[] { 1, 2, 3 };
         await using var stream = new MemoryStream(byteArray);
 
-        //Act
+        // Act
         var result = await stream.ToArrayAsync();
 
-        //Assert 
+        // Assert 
         result.Should().Equal(byteArray);
     }
 }

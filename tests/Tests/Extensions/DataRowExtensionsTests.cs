@@ -3,24 +3,24 @@
 [TestFixture]
 public class DataRowExtensionsTests
 {
-    //Methods
+    // Methods
     [Test]
     public void GetColumnNames_DataRowIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         DataRow row = null;
 
-        //Act 
+        // Act 
         Action action = () => row.GetColumnNames();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetColumnNames_WhenCalled_ReturnsColumnNames()
     {
-        //Arrange 
+        // Arrange 
         var columnNames = new[] { "Column 1", "Column 2", "Column3" };
         var table = new DataTable();
         table.Rows.Add();
@@ -28,30 +28,30 @@ public class DataRowExtensionsTests
             table.Columns.Add(name);
         var row = table.Rows[0];
 
-        //Act 
+        // Act 
         var result = row.GetColumnNames();
 
-        //Assert
+        // Assert
         result.Should().Equal(columnNames);
     }
 
     [Test]
     public void GetColumnValues_DataRowIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         DataRow row = null;
 
-        //Act 
+        // Act 
         Action action = () => row.GetColumnValues();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetColumnValues_WhenCalled_ReturnsColumnValues()
     {
-        //Arrange  
+        // Arrange  
         var columnValues = new object[] { "Efthymios", 26 };
         var table = new DataTable();
         table.Columns.Add("Name", typeof(string));
@@ -59,39 +59,39 @@ public class DataRowExtensionsTests
         table.Rows.Add(columnValues);
         var row = table.Rows[0];
 
-        //Act 
+        // Act 
         var result = row.GetColumnValues();
 
-        //Assert
+        // Assert
         result.Should().Equal(columnValues);
     }
 
     [Test]
     public void ToEntity_DataRowIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         DataRow row = null;
 
-        //Act 
+        // Act 
         Action action = () => row.ToEntity<DummyClass>();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToEntity_WhenCalled_MapColumnsToEntity()
     {
-        //Arrange  
+        // Arrange  
         var table = new DataTable();
         table.Columns.Add(nameof(DummyClass.Id), typeof(int));
         table.Columns.Add(nameof(DummyClass.Name), typeof(string));
         var row = table.Rows.Add(1, "Red");
 
-        //Act 
+        // Act 
         var result = row.ToEntity<DummyClass>();
 
-        //Assert
+        // Assert
         result.Id.Should().Be(1);
         result.Name.Should().Be("Red");
     }

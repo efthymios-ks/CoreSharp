@@ -8,13 +8,13 @@ public class TimeSpanExtensionsTests
     [TestCase(1, 0, 1, 0, 1, "1d 1m 1ms")]
     public void ToStringReadable_WhenCalled_DivideAndReturnTimeSpanValuesWithUnits(int days, int hours, int minutes, int seconds, int millis, string expected)
     {
-        //Arrange
+        // Arrange
         var time = new TimeSpan(days, hours, minutes, seconds, millis);
 
-        //Act
+        // Act
         var result = time.ToStringReadable();
 
-        //Result
+        // Result
         result.Should().Be(expected);
     }
 }

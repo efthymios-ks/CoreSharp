@@ -3,70 +3,70 @@
 [TestFixture]
 public class KeyEqualityComparerTests
 {
-    //Fields
+    // Fields
     private readonly IEqualityComparer<int?> _equalityComparer = new KeyEqualityComparer<int?, int?>(i => i);
 
-    //Methods
+    // Methods
     [Test]
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(null, 0);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(0, null);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(null, null);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void Equals_DifferentKeyValues_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(0, 1);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_SameKeyValues_ReturnTrue()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(0, 0);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void GetHashCode_SourceIsNull_ReturnDefaultHashCode()
     {
-        //Arrange 
+        // Arrange 
         var expected = default(int?).GetHashCode();
 
-        //Act
+        // Act
         var result = _equalityComparer.GetHashCode(null);
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 }

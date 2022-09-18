@@ -3,11 +3,11 @@
 [TestFixture]
 public class IDictionaryExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly IDictionary<string, int> _dictionaryNull;
     private readonly IDictionary<string, int> _dictionary = new Dictionary<string, int>();
 
-    //Methods 
+    // Methods 
     [SetUp]
     public void SetUp()
     {
@@ -20,30 +20,30 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryGet_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.TryGet("1", out _);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryGet_KeyNotFound_ReturnFalse()
     {
-        //Act 
+        // Act 
         var result = _dictionary.TryGet("-1", out _);
 
-        //Assert
+        // Assert
         result.Should().BeFalse();
     }
 
     [Test]
     public void TryGet_KeyFound_ReturnTrueAndValue()
     {
-        //Act 
+        // Act 
         var result = _dictionary.TryGet("1", out var value);
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
         value.Should().Be(1);
     }
@@ -51,25 +51,25 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryAdd_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.TryAdd("1", 1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryAdd_KeyFound_ReturnFalseAndAddNothing()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
 
-        //Act 
+        // Act 
         var added = _dictionary.TryAdd("1", 1);
 
-        //Assert
+        // Assert
         added.Should().BeFalse();
         _dictionary.Should().Equal(expected);
     }
@@ -77,16 +77,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryAdd_KeyNotFound_ReturnTrueAndAddValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected.Add("4", 4);
 
-        //Act 
+        // Act 
         var added = _dictionary.TryAdd("4", 4);
 
-        //Assert
+        // Assert
         added.Should().BeTrue();
         _dictionary.Should().Equal(expected);
     }
@@ -94,25 +94,25 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryRemove_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.TryRemove("1", out _);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryRemove_KeyNotFound_ReturnFalseAndRemoveNothing()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
 
-        //Act 
+        // Act 
         var result = _dictionary.TryRemove("-1", out _);
 
-        //Assert
+        // Assert
         result.Should().BeFalse();
         _dictionary.Should().Equal(expected);
     }
@@ -120,16 +120,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryRemove_KeyFound_RemoveAndReturnValueAndTrue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, i) in _dictionary)
             expected.Add(key, i);
         expected.Remove("3");
 
-        //Act 
+        // Act 
         var removed = _dictionary.TryRemove("3", out var value);
 
-        //Assert
+        // Assert
         removed.Should().BeTrue();
         value.Should().Be(3);
         _dictionary.Should().Equal(expected);
@@ -138,38 +138,38 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryUpdate_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.TryUpdate("-1", 100);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryUpdate_UpdateActionIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         Func<string, int, int> updateAction = null;
 
-        //Act 
+        // Act 
         Action action = () => _dictionary.TryUpdate("1", updateAction);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void TryUpdate_KeyNotFound_ReturnFalse()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
 
-        //Act 
+        // Act 
         var result = _dictionary.TryUpdate("-1", 100);
 
-        //Assert
+        // Assert
         result.Should().BeFalse();
         _dictionary.Should().Equal(expected);
     }
@@ -177,16 +177,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryUpdate_KeyFoundAndUpdateIsValue_ReturnTrueAndUpdateValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected["1"] = 100;
 
-        //Act 
+        // Act 
         var result = _dictionary.TryUpdate("1", 100);
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
         _dictionary.Should().Equal(expected);
     }
@@ -194,7 +194,7 @@ public class IDictionaryExtensionsTests
     [Test]
     public void TryUpdate_KeyFoundAndUpdateIsFunction_ReturnTrueAndUpdateValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
@@ -202,10 +202,10 @@ public class IDictionaryExtensionsTests
 
         expected["1"] = 2;
 
-        //Act 
+        // Act 
         var result = _dictionary.TryUpdate("1", UpdateAction);
 
-        //Assert
+        // Assert
         result.Should().BeTrue();
         _dictionary.Should().Equal(expected);
     }
@@ -213,39 +213,39 @@ public class IDictionaryExtensionsTests
     [Test]
     public void AddOrUpdate_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.AddOrUpdate("-1", 100);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddOrUpdate_UpdateActionIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         Func<string, int, int> updateAction = null;
 
-        //Act 
+        // Act 
         Action action = () => _dictionary.AddOrUpdate("1", 100, updateAction);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AddOrUpdate_KeyNotFound_AddAndReturnValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected.Add("4", 4);
 
-        //Act 
+        // Act 
         var result = _dictionary.AddOrUpdate("4", 4, -4);
 
-        //Assert
+        // Assert
         result.Should().Be(4);
         _dictionary.Should().Equal(expected);
     }
@@ -253,16 +253,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void AddOrUpdate_KeyFoundAndUpdateIsValue_UpdateAndReturnValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected["3"] = 300;
 
-        //Act 
+        // Act 
         var result = _dictionary.AddOrUpdate("3", -3, 300);
 
-        //Assert
+        // Assert
         result.Should().Be(300);
         _dictionary.Should().Equal(expected);
     }
@@ -270,16 +270,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void AddOrUpdate_KeyFoundAndUpdateIsFunction_UpdateAndReturnValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected["3"] = 300;
 
-        //Act 
+        // Act 
         var result = _dictionary.AddOrUpdate("3", -3, _ => 300);
 
-        //Assert
+        // Assert
         result.Should().Be(300);
         _dictionary.Should().Equal(expected);
     }
@@ -287,25 +287,25 @@ public class IDictionaryExtensionsTests
     [Test]
     public void GetOrAdd_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.GetOrAdd("1", 100);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetOrAdd_KeyFound_ReturnValueWithoutAdding()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
 
-        //Act 
+        // Act 
         var result = _dictionary.GetOrAdd("1", 100);
 
-        //Assert
+        // Assert
         result.Should().Be(1);
         _dictionary.Should().Equal(expected);
     }
@@ -313,16 +313,16 @@ public class IDictionaryExtensionsTests
     [Test]
     public void GetOrAdd_KeyNotFound_AddAndReturnValue()
     {
-        //Arrange
+        // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
             expected.Add(key, value);
         expected.Add("4", 4);
 
-        //Act 
+        // Act 
         var result = _dictionary.GetOrAdd("4", 4);
 
-        //Assert
+        // Assert
         result.Should().Be(4);
         _dictionary.Should().Equal(expected);
     }
@@ -330,17 +330,17 @@ public class IDictionaryExtensionsTests
     [Test]
     public void ToEnumerable_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.ToEnumerable();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToEnumerable_WhenCalled_ReturnKeyValuePairsEnumerable()
     {
-        //Arrange
+        // Arrange
         var expected = new[]
         {
             new KeyValuePair<string, int>("1", 1),
@@ -348,20 +348,20 @@ public class IDictionaryExtensionsTests
             new KeyValuePair<string, int>("3", 3)
         };
 
-        //Act 
+        // Act 
         var result = _dictionary.ToEnumerable();
 
-        //Assert
+        // Assert
         result.Should().Equal(expected);
     }
 
     [Test]
     public void ContainsValue_SourceIsNull_ThrowArgumentNullException()
     {
-        //Act 
+        // Act 
         Action action = () => _dictionaryNull.ContainsValue(1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
@@ -371,27 +371,27 @@ public class IDictionaryExtensionsTests
     [TestCase(4, false)]
     public void ContainsValue_ContainsValue_ReturnTrue(int value, bool expected)
     {
-        //Act 
+        // Act 
         var result = _dictionary.ContainsValue(value);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToUrlQueryString_ParametersInNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _dictionaryNull.ToUrlQueryString();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToUrlQueryString_WhenCalled_ReturnQueryString()
     {
-        //Arrange
+        // Arrange
         var parameters = new Dictionary<string, object>
         {
             { "name", "Efthymios Koktsidis" },
@@ -400,40 +400,40 @@ public class IDictionaryExtensionsTests
         };
         const string expected = "?name=Efthymios%20Koktsidis&color=Black&count=10";
 
-        //Act
+        // Act
         var result = parameters.ToUrlQueryString();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
     [Test]
     public void ToEntity_DictionaryIsNull_ThrowArgumentNullException()
     {
-        //Arrange 
+        // Arrange 
         IDictionary<string, object> properties = null;
 
-        //Act 
+        // Act 
         Action action = () => properties.ToEntity<DummyClass>();
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void ToEntity_WhenCalled_MapPropertiesToEntity()
     {
-        //Arrange 
+        // Arrange 
         var properties = new Dictionary<string, object>
         {
             { nameof(DummyClass.Id), 1},
             { nameof(DummyClass.Name), "Red"},
         };
 
-        //Act 
+        // Act 
         var result = properties.ToEntity<DummyClass>();
 
-        //Assert
+        // Assert
         result.Id.Should().Be(1);
         result.Name.Should().Be("Red");
     }

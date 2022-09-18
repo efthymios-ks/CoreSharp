@@ -9,10 +9,10 @@ public class DoubleExtensionsTests
     [TestCase(3, 1, 3, 1, 10, 10)]
     public void Map_WhenCalled_MapAndReturnValueToNewRange(double value, double fromLow, double fromHigh, double toLow, double toHigh, double expected)
     {
-        //Act
+        // Act
         var result = value.Map(fromLow, fromHigh, toLow, toHigh);
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 
@@ -25,10 +25,10 @@ public class DoubleExtensionsTests
     [TestCase(1234567, "1.235M")]
     public void ToMetricSize_WhenCalled_ReturnSiMetricString(double value, string expected)
     {
-        //Action
+        // Action
         var result = value.ToMetricSizeCI();
 
-        //Assert
+        // Assert
         result.Should().Be(expected);
     }
 }

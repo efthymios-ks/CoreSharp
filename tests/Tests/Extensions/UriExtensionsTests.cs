@@ -3,23 +3,23 @@
 [TestFixture]
 public class UriExtensionsTests
 {
-    //Fields 
+    // Fields 
     private readonly Uri _uriNull;
 
     [Test]
     public void GetQueryParameters_UriIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _uriNull.GetQueryParameters();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetQueryParameters_WhenCalled_ReturnDictionaryWithQueryParameters()
     {
-        //Arrange
+        // Arrange
         const string url = "https://example.com/?name=efthymios&color=black";
         var uri = new Uri(url);
         var expected = new Dictionary<string, string>
@@ -28,27 +28,27 @@ public class UriExtensionsTests
             { "color", "black" }
         };
 
-        //Act
+        // Act
         var result = uri.GetQueryParameters();
 
-        //Assert 
+        // Assert 
         result.Should().Equal(expected);
     }
 
     [Test]
     public void GetFragmentParameters_UriIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _uriNull.GetFragmentParameters();
 
-        //Assert 
+        // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void GetFragmentParameters_WhenCalled_ReturnDictionaryWithFragmentParameters()
     {
-        //Arrange
+        // Arrange
         const string url = "https://example.com/route#name=efthymios&color=black";
         var uri = new Uri(url);
         var expected = new Dictionary<string, string>
@@ -57,10 +57,10 @@ public class UriExtensionsTests
             { "color", "black" }
         };
 
-        //Act
+        // Act
         var result = uri.GetFragmentParameters();
 
-        //Assert 
+        // Assert 
         result.Should().Equal(expected);
     }
 }

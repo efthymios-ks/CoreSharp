@@ -3,11 +3,11 @@
 [TestFixture]
 public class StringBuilderExtensionsTests
 {
-    //Fields
+    // Fields
     private readonly StringBuilder _builderNull;
     private readonly StringBuilder _builder = new();
 
-    //Methods
+    // Methods
     [SetUp]
     public void SetUp()
         => _builder.Clear();
@@ -15,43 +15,43 @@ public class StringBuilderExtensionsTests
     [Test]
     public void AppendFormatLine_BuilderIsNull_ThrowArgumentNullException()
     {
-        //Act
+        // Act
         Action action = () => _builderNull.AppendFormatLine("{0}", 1);
 
-        //Assert
+        // Assert
         action.Should().ThrowExactly<ArgumentNullException>();
     }
 
     [Test]
     public void AppendFormatLine_WhenCalled_AppendFormattedStringAndNewLine()
     {
-        //Arrange
+        // Arrange
         const string format = "{0}";
         const int value = 1000;
         var culture = CultureInfo.CurrentCulture;
         var formatResult = string.Format(culture, format, value);
         var expected = formatResult + Environment.NewLine;
 
-        //Act
+        // Act
         var result = _builder.AppendFormatLine(culture, format, value);
 
-        //Assert
+        // Assert
         result.ToString().Should().EndWith(expected);
     }
 
     [Test]
     public void AppendFormatLineCI_WhenCalledAppendStringFormatWithInvariantCultureArgument()
     {
-        //Arrange
+        // Arrange
         const string format = "{0}";
         const int value = 1000;
         var formatResult = string.Format(CultureInfo.InvariantCulture, format, value);
         var expected = formatResult + Environment.NewLine;
 
-        //Act
+        // Act
         var result = _builder.AppendFormatLineCI(format, value);
 
-        //Assert
+        // Assert
         result.ToString().Should().EndWith(expected);
     }
 }

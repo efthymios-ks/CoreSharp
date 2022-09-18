@@ -7,22 +7,22 @@ namespace Tests.Attributes;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class TestCaseGenericAttribute : TestCaseAttribute, ITestBuilder
 {
-    //Constructors
+    // Constructors
     public TestCaseGenericAttribute(params object[] arguments)
         : base(arguments)
     {
     }
 
-    //Properties
+    // Properties
     public Type[] TypeArguments { get; set; }
 
-    //Methods
+    // Methods
     IEnumerable<TestMethod> ITestBuilder.BuildFrom(IMethodInfo method, Test suite)
     {
         if (!method.IsGenericMethodDefinition)
             return BuildFrom(method, suite);
 
-        //If not all generic types are defined
+        // If not all generic types are defined
         var genericArgumentsCount = method.GetGenericArguments().Length;
         if (TypeArguments?.Length != genericArgumentsCount)
         {
@@ -33,7 +33,7 @@ public class TestCaseGenericAttribute : TestCaseAttribute, ITestBuilder
             return new[] { testMethod };
         }
 
-        //Return property test method
+        // Return property test method
         var genericMethod = method.MakeGenericMethod(TypeArguments);
         return BuildFrom(genericMethod, suite);
     }

@@ -3,94 +3,94 @@
 [TestFixture]
 public class EnumerableEqualityComparerTests
 {
-    //Fields
+    // Fields
     private readonly IEqualityComparer<IEnumerable<int>> _equalityComparer = new EnumerableEqualityComparer<int>();
     private readonly IEnumerable<int> _sourceNull;
     private readonly IEnumerable<int> _sourceEmpty = Enumerable.Empty<int>();
 
-    //Methods
+    // Methods
     [Test]
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_sourceNull, _sourceEmpty);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_sourceEmpty, _sourceNull);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
-        //Act
+        // Act
         var result = _equalityComparer.Equals(_sourceNull, _sourceNull);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void Equals_DifferentValues_ReturnFalse()
     {
-        //Arrange
+        // Arrange
         var left = new[] { 1, 2 };
         var right = new[] { 2, 3 };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeFalse();
     }
 
     [Test]
     public void Equals_SameValuesSameOrder_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         var left = new[] { 1, 2 };
         var right = new[] { 1, 2 };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void Equals_SameValuesDifferentOrder_ReturnTrue()
     {
-        //Arrange
+        // Arrange
         var left = new[] { 1, 2 };
         var right = new[] { 2, 1 };
 
-        //Act
+        // Act
         var result = _equalityComparer.Equals(left, right);
 
-        //Assert 
+        // Assert 
         result.Should().BeTrue();
     }
 
     [Test]
     public void GetHashCode_SourceIsNull_ReturnDefaultHashCode()
     {
-        //Arrange 
+        // Arrange 
         var expected = default(int).GetHashCode();
 
-        //Act
+        // Act
         var result = _equalityComparer.GetHashCode(_sourceNull);
 
-        //Assert 
+        // Assert 
         result.Should().Be(expected);
     }
 }
