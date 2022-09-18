@@ -16,7 +16,10 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>6.1.2</Version>
-		<PackageReleaseNotes>-Extensions, IEnumerable, `StringJoin()`, Fixed default values.</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			-Extensions, IEnumerable, `StringJoin()`, Fixed default values.
+			-Collections, ObservableHashSet, Added tests.
+		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
