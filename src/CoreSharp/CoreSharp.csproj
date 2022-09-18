@@ -19,6 +19,7 @@
 		<PackageReleaseNotes>
 			-Extensions, IEnumerable, `StringJoin()`, Fixed default values.
 			-Collections, ObservableHashSet, Added tests.
+			-Collections, ObservableDictionary, Added tests.
 		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>

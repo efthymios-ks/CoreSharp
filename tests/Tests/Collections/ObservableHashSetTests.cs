@@ -27,17 +27,43 @@ public class ObservableHashSetTests
     }
 
     [Test]
+    public void Add_ContainsItem_ReturnFalse()
+    {
+        // Arrange 
+        var hashSet = new ObservableHashSet<int> { 1 };
+
+        // Act
+        var added = hashSet.Add(1);
+
+        // Assert 
+        added.Should().BeFalse();
+    }
+
+    [Test]
     [SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "<Pending>")]
     public void Add_DoesNotContainItem_AddItem()
     {
         // Arrange  
-        var hashSet = new ObservableHashSet<int> { 1, 2 };
+        var hashSet = new ObservableHashSet<int> { 1 };
 
         // Act
-        hashSet.Add(3);
+        hashSet.Add(2);
 
         // Assert 
-        hashSet.Should().Equal(new[] { 1, 2, 3 });
+        hashSet.Should().Equal(new[] { 1, 2 });
+    }
+
+    [Test]
+    public void Add_DoesNotContainItem_ReturnTre()
+    {
+        // Arrange  
+        var hashSet = new ObservableHashSet<int> { 1 };
+
+        // Act
+        var added = hashSet.Add(2);
+
+        // Assert 
+        added.Should().BeTrue();
     }
 
     [Test]
@@ -45,18 +71,18 @@ public class ObservableHashSetTests
     {
         // Arrange 
         NotifyCollectionChangedEventArgs capturedArgs = null;
-        var hashSet = new ObservableHashSet<int> { 1, 2 };
+        var hashSet = new ObservableHashSet<int> { 1 };
         hashSet.CollectionChanged += (_, args)
             => capturedArgs = args;
 
         // Act
-        hashSet.Add(3);
+        hashSet.Add(2);
 
         // Assert 
         capturedArgs.Should().NotBeNull();
         capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Add);
         capturedArgs.NewItems.Count.Should().Be(1);
-        capturedArgs.NewItems[0].Should().Be(3);
+        capturedArgs.NewItems[0].Should().Be(2);
     }
 
     [Test]
@@ -64,26 +90,26 @@ public class ObservableHashSetTests
     {
         // Arrange 
         NotifyCollectionChangedEventArgs capturedArgs = null;
-        var hashSet = new ObservableHashSet<int> { 1, 2 };
+        var hashSet = new ObservableHashSet<int> { 1 };
         hashSet.CollectionChanged += (_, args)
             => capturedArgs = args;
 
         // Act
-        hashSet.Remove(3);
+        hashSet.Remove(2);
 
         // Assert 
         capturedArgs.Should().BeNull();
-        hashSet.Should().Equal(new[] { 1, 2 });
+        hashSet.Should().Equal(new[] { 1 });
     }
 
     [Test]
     public void Remove_DoesNotContainItem_ReturnFalse()
     {
         // Arrange  
-        var hashSet = new ObservableHashSet<int> { 1, 2 };
+        var hashSet = new ObservableHashSet<int> { 1 };
 
         // Act
-        var removed = hashSet.Remove(3);
+        var removed = hashSet.Remove(2);
 
         // Assert 
         removed.Should().BeFalse();
@@ -106,10 +132,10 @@ public class ObservableHashSetTests
     public void Remove_ContainsItem_ReturnTrue()
     {
         // Arrange 
-        var hashSet = new ObservableHashSet<int> { 1, 2 };
+        var hashSet = new ObservableHashSet<int> { 1 };
 
         // Act
-        var removed = hashSet.Remove(2);
+        var removed = hashSet.Remove(1);
 
         // Assert 
         removed.Should().BeTrue();

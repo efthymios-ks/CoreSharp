@@ -9,12 +9,13 @@ public sealed class ObservableHashSet<TEntity> : HashSet<TEntity>, INotifyCollec
     public event NotifyCollectionChangedEventHandler CollectionChanged;
 
     // Methods
-    public new void Add(TEntity item)
+    public new bool Add(TEntity item)
     {
         if (!base.Add(item))
-            return;
+            return false;
 
         OnCollectionChanged(new(NotifyCollectionChangedAction.Add, new[] { item }));
+        return true;
     }
 
     public new bool Remove(TEntity item)
