@@ -6,11 +6,11 @@ namespace CoreSharp.Models.Tests;
 public class NumericParserTests
 {
     [Test]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(string) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(DateTime) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(DateTime?) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(Guid) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(Guid?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(string) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(DateTime) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(DateTime?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(Guid) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(Guid?) })]
     public void Constructor_GenericIsNotNumeric_ThrowArgumentException<TValue>()
     {
         // Act 
@@ -21,14 +21,14 @@ public class NumericParserTests
     }
 
     [Test]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(int) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(int?) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(float) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(float?) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(double) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(double?) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(decimal) })]
-    [TestCaseGeneric(TypeArguments = new[] { typeof(decimal?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(int) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(int?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(float) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(float?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(double) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(double?) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(decimal) })]
+    [GenericTestCase(TypeArguments = new[] { typeof(decimal?) })]
     public void Constructor_GenericIsNumeric_CreateInstance<TValue>()
     {
         // Act 

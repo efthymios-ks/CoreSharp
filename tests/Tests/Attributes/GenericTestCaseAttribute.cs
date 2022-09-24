@@ -5,10 +5,10 @@ using NUnit.Framework.Internal.Builders;
 namespace Tests.Attributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public class TestCaseGenericAttribute : TestCaseAttribute, ITestBuilder
+public class GenericTestCaseAttribute : TestCaseAttribute, ITestBuilder
 {
     // Constructors
-    public TestCaseGenericAttribute(params object[] arguments)
+    public GenericTestCaseAttribute(params object[] arguments)
         : base(arguments)
     {
     }
