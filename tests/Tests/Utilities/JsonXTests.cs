@@ -10,12 +10,12 @@ public class JsonXTests
     [TestCase(" [ ]", true)]
     [TestCase(" [ { } ] ", true)]
     [TestCase("{id=1}", false)]
-    public void IsEmptyJsonTest(string input, bool expected)
+    public void IsEmptyJsonTest(string input, bool expectedIsEmpty)
     {
         // Assert
-        var result = JsonX.IsEmpty(input);
+        var isEmpty = JsonX.IsEmpty(input);
 
         // Assert
-        result.Should().Be(expected);
+        isEmpty.Should().Be(expectedIsEmpty);
     }
 }

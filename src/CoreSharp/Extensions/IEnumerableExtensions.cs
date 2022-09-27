@@ -417,7 +417,21 @@ public static class IEnumerableExtensions
     /// Check if there are any duplicate entries.
     /// </summary>
     public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
-        => source.GetDuplicates(keySelector).Count > 0;
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+
+        var keyEqualityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
+        var hashset = new HashSet<TElement>(keyEqualityComparer);
+
+        foreach (var element in source)
+        {
+            if (!hashset.Add(element))
+                return true;
+        }
+
+        return false;
+    }
 
     /// <inheritdoc cref="ToDataTable{TElement}(IEnumerable{TElement}, string)"/>
     public static DataTable ToDataTable<TElement>(this IEnumerable<TElement> source)

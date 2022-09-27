@@ -11,50 +11,50 @@ public class KeyEqualityComparerTests
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(null, 0);
+        var equals = _equalityComparer.Equals(null, 0);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(0, null);
+        var equals = _equalityComparer.Equals(0, null);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
         // Act
-        var result = _equalityComparer.Equals(null, null);
+        var equals = _equalityComparer.Equals(null, null);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
     public void Equals_DifferentKeyValues_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(0, 1);
+        var equals = _equalityComparer.Equals(0, 1);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_SameKeyValues_ReturnTrue()
     {
         // Act
-        var result = _equalityComparer.Equals(0, 0);
+        var equals = _equalityComparer.Equals(0, 0);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -64,9 +64,9 @@ public class KeyEqualityComparerTests
         var expected = default(int?).GetHashCode();
 
         // Act
-        var result = _equalityComparer.GetHashCode(null);
+        var hashCode = _equalityComparer.GetHashCode(null);
 
         // Assert 
-        result.Should().Be(expected);
+        hashCode.Should().Be(expected);
     }
 }

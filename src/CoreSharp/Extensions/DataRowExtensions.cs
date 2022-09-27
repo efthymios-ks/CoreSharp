@@ -24,7 +24,7 @@ public static class DataRowExtensions
     /// <summary>
     /// Get <see cref="DataRow"/> column values.
     /// </summary>
-    public static IEnumerable<object> GetColumnValues(this DataRow row)
+    public static object[] GetColumnValues(this DataRow row)
     {
         _ = row ?? throw new ArgumentNullException(nameof(row));
 
@@ -40,7 +40,7 @@ public static class DataRowExtensions
         _ = row ?? throw new ArgumentNullException(nameof(row));
 
         var columnNames = row.Table.Columns.Cast<DataColumn>().Select(c => c.ColumnName);
-        var properties = columnNames.ToDictionary(column => column, column => row[column]);
+        var properties = columnNames.ToDictionary(columnName => columnName, column => row[column]);
         return properties.ToEntity<TEntity>();
     }
 }

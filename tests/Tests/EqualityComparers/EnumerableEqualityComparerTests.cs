@@ -13,30 +13,30 @@ public class EnumerableEqualityComparerTests
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(_sourceNull, _sourceEmpty);
+        var equals = _equalityComparer.Equals(_sourceNull, _sourceEmpty);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(_sourceEmpty, _sourceNull);
+        var equals = _equalityComparer.Equals(_sourceEmpty, _sourceNull);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
         // Act
-        var result = _equalityComparer.Equals(_sourceNull, _sourceNull);
+        var equals = _equalityComparer.Equals(_sourceNull, _sourceNull);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -47,10 +47,10 @@ public class EnumerableEqualityComparerTests
         var right = new[] { 2, 3 };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
@@ -61,10 +61,10 @@ public class EnumerableEqualityComparerTests
         var right = new[] { 1, 2 };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -75,10 +75,10 @@ public class EnumerableEqualityComparerTests
         var right = new[] { 2, 1 };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -88,9 +88,9 @@ public class EnumerableEqualityComparerTests
         var expected = default(int).GetHashCode();
 
         // Act
-        var result = _equalityComparer.GetHashCode(_sourceNull);
+        var hashCode = _equalityComparer.GetHashCode(_sourceNull);
 
         // Assert 
-        result.Should().Be(expected);
+        hashCode.Should().Be(expected);
     }
 }

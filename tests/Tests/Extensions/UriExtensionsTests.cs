@@ -22,17 +22,17 @@ public class UriExtensionsTests
         // Arrange
         const string url = "https://example.com/?name=efthymios&color=black";
         var uri = new Uri(url);
-        var expected = new Dictionary<string, string>
+        var expectedParameters = new Dictionary<string, string>
         {
             { "name", "efthymios" },
             { "color", "black" }
         };
 
         // Act
-        var result = uri.GetQueryParameters();
+        var parameters = uri.GetQueryParameters();
 
         // Assert 
-        result.Should().Equal(expected);
+        parameters.Should().Equal(expectedParameters);
     }
 
     [Test]
@@ -51,16 +51,16 @@ public class UriExtensionsTests
         // Arrange
         const string url = "https://example.com/route#name=efthymios&color=black";
         var uri = new Uri(url);
-        var expected = new Dictionary<string, string>
+        var expectedParameters = new Dictionary<string, string>
         {
             { "name", "efthymios" },
             { "color", "black" }
         };
 
         // Act
-        var result = uri.GetFragmentParameters();
+        var parameters = uri.GetFragmentParameters();
 
         // Assert 
-        result.Should().Equal(expected);
+        parameters.Should().Equal(expectedParameters);
     }
 }

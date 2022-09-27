@@ -23,24 +23,24 @@ public static class EnumExtensions
     /// <summary>
     /// Get <see cref="DisplayAttribute"/> attribute from an <see cref="Enum"/>.
     /// </summary>
-    public static DisplayAttribute GetDisplay(this Enum value)
+    public static DisplayAttribute GetDisplayAttribute(this Enum value)
         => value.GetAttribute<DisplayAttribute>();
 
     /// <summary>
     /// Get <see cref="DisplayAttribute.Name"/> attribute from an <see cref="Enum"/>.
     /// </summary>
-    public static string GetDisplayName(this Enum value)
-        => value.GetDisplay()?.Name ?? $"{value}";
+    public static string GetDisplayAttributeName(this Enum value)
+        => value.GetDisplayAttribute()?.Name ?? $"{value}";
 
     /// <summary>
     /// Get <see cref="DisplayAttribute.ShortName"/> attribute from an <see cref="Enum"/>.
     /// </summary>
-    public static string GetDisplayShortName(this Enum value)
-        => value.GetDisplay()?.ShortName ?? $"{value}";
+    public static string GetDisplayAttributeShortName(this Enum value)
+        => value.GetDisplayAttribute()?.ShortName ?? $"{value}";
 
     /// <summary>
     /// Get <see cref="DisplayAttribute.Description"/> attribute from an <see cref="Enum"/>.
     /// </summary>
-    public static string GetDisplayDescription(this Enum value)
-        => value.GetDisplay()?.Description ?? $"{value}";
+    public static string GetDisplayAttributeDescription(this Enum value)
+        => value.GetDisplayAttribute()?.Description ?? $"{value}";
 }

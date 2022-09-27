@@ -61,7 +61,7 @@ public class NumericParserTests
     [TestCase("C2", "el-GR", 1000.129, "1.000,13 €")]
     [TestCase("P2", "en-US", 0.555, "55.50%")]
     [TestCase("P2", "el-GR", 55.5, "5.550,00%")]
-    public void FormatValue_WhenCalled_FormatRespectingFormatAndCulture(string format, string cultureName, double value, string expected)
+    public void FormatValue_WhenCalled_FormatRespectingFormatAndCulture(string format, string cultureName, double value, string expectedFormattedValue)
     {
         // Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
@@ -71,7 +71,7 @@ public class NumericParserTests
         var formattedValue = parser.ToString(value);
 
         // Assert 
-        formattedValue.Should().Be(expected);
+        formattedValue.Should().Be(expectedFormattedValue);
     }
 
     [Test]
@@ -89,10 +89,10 @@ public class NumericParserTests
 
         // Act 
         var value = initialValue;
-        var result = parser.TryParse(input, ref value);
+        var parsed = parser.TryParse(input, ref value);
 
         // Assert 
-        result.Should().BeFalse();
+        parsed.Should().BeFalse();
         value.Should().Be(initialValue);
     }
 
@@ -103,7 +103,7 @@ public class NumericParserTests
     [TestCase("C2", "el-GR", "1.000,129 €", 1000.13)]
     [TestCase("P2", "en-US", "55.55%", 0.5555)]
     [TestCase("P2", "el-GR", "55,550%", 0.5555)]
-    public void TryParseValue_WhenCalled_ReturnTrueAndParsedValue(string format, string cultureName, string input, double expected)
+    public void TryParseValue_WhenCalled_ReturnTrueAndParsedValue(string format, string cultureName, string input, double expectedValue)
     {
         // Arrange
         var culture = CultureInfo.CreateSpecificCulture(cultureName);
@@ -111,10 +111,10 @@ public class NumericParserTests
         var value = -1.0;
 
         // Act 
-        var result = parser.TryParse(input, ref value);
+        var parsed = parser.TryParse(input, ref value);
 
         // Assert 
-        result.Should().BeTrue();
-        value.Should().Be(expected);
+        parsed.Should().BeTrue();
+        value.Should().Be(expectedValue);
     }
 }

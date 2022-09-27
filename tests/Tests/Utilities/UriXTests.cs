@@ -17,13 +17,13 @@ public class UriXTests
     [TestCase("http://google.com/path1/path2/", "http://google.com", "//path1//", "/path2/")]
     [TestCase("https://google.com/path1/path2/", "https://google.com", "//path1//", "/path2/")]
     [TestCase("https://google.com/path1/path2/", "https:///google.com//", "///path1///", "//path2//")]
-    public void JoinSegments_WhenCalled_ReturnUnifiedUrlWithTrimmedSlashes(string expected, params string[] segments)
+    public void JoinSegments_WhenCalled_ReturnUnifiedUrlWithTrimmedSlashes(string expectedUrl, params string[] segments)
     {
         // Act
-        var result = UriX.JoinSegments(segments);
+        var url = UriX.JoinSegments(segments);
 
         // Assert 
-        result.Should().Be(expected);
+        url.Should().Be(expectedUrl);
     }
 
     [Test]
@@ -68,12 +68,12 @@ public class UriXTests
             { "name", "Efthymios Koktsidis" },
             { "count", 10 }
         };
-        const string expected = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
+        const string expectedUrl = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
 
         // Act
-        var result = UriX.Build(baseUrl, parameters);
+        var url = UriX.Build(baseUrl, parameters);
 
         // Assert
-        result.Should().Be(expected);
+        url.Should().Be(expectedUrl);
     }
 }

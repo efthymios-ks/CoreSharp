@@ -35,13 +35,13 @@ public class StringExtensionsTests
     {
         // Arrange
         const string input = "12345";
-        const string expected = "123";
+        const string expectedTruncadted = "123";
 
         // Act
-        var result = input.Truncate(3);
+        var truncated = input.Truncate(3);
 
         // Assert
-        result.Should().Be(expected);
+        truncated.Should().Be(expectedTruncadted);
     }
 
     [Test]
@@ -61,16 +61,16 @@ public class StringExtensionsTests
         var soh = Convert.ToChar(1);
         var eot = Convert.ToChar(4);
         var input = $"{soh}_Hello_{eot}";
-        const string expected = "<SOH>_Hello_<EOT>";
+        const string expectedFormatted = "<SOH>_Hello_<EOT>";
 
         // Act
-        var result = input.FormatAsciiControls();
+        var formatted = input.FormatAsciiControls();
 
         // Assert
-        result.Should().Be(expected);
+        formatted.Should().Be(expectedFormatted);
     }
 
-#if !NET6_0_OR_GREATER
+#if !NET6_0_OR_GREATER 
     [Test]
     public void Chunk_InputIsNull_ThrowArgumentNullException()
     {
@@ -99,13 +99,13 @@ public class StringExtensionsTests
         // Arrange 
         const string input = "12345";
         const int size = 2;
-        var expected = new[] { "12", "34", "5" };
+        var expectedChunks = new[] { "12", "34", "5" };
 
         // Act
-        var result = input.Chunk(size);
+        var chunks = input.Chunk(size);
 
         // Assert
-        result.Should().Equal(expected);
+        chunks.Should().Equal(expectedChunks);
     }
 #endif
 
@@ -135,13 +135,13 @@ public class StringExtensionsTests
         // Arrange
         const string input = "123";
         const int totalWidth = 7;
-        const string expected = "  123  ";
+        const string expectedPadded = "  123  ";
 
         // Act
-        var result = input.PadCenter(totalWidth);
+        var padded = input.PadCenter(totalWidth);
 
         // Assert
-        result.Should().Be(expected);
+        padded.Should().Be(expectedPadded);
     }
 
     [Test]

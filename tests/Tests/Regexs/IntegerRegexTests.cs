@@ -25,50 +25,50 @@ public class IntegerRegexTests
     [TestCase("+1,000,000.0", "el-GR", false)]
     [TestCase("1,000,000.0", "el-GR", false)]
     [TestCase("+1,000,000.0", "el-GR", false)]
-    public void IntegerRegex_InputIsInteger_ReturnTrue(string input, string cultureName, bool isMatch)
+    public void IntegerRegex_InputIsInteger_ReturnTrue(string input, string cultureName, bool expectedIsMatch)
     {
         // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
         // Act 
-        var result = integerRegex.IsMatch;
+        var isMatch = integerRegex.IsMatch;
 
         // Assert
-        result.Should().Be(isMatch);
+        isMatch.Should().Be(expectedIsMatch);
     }
 
     [Test]
     [TestCase("-1", "el-GR", '-')]
     [TestCase("1", "el-GR", null)]
     [TestCase("+1", "el-GR", '+')]
-    public void IntegerRegex_WhenCalled_MatchGroupSign(string input, string cultureName, char? groupSign)
+    public void IntegerRegex_WhenCalled_MatchGroupSign(string input, string cultureName, char? exppectedGroupSign)
     {
         // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
         // Act 
-        var result = integerRegex.Sign;
+        var sign = integerRegex.Sign;
 
         // Assert
-        result.Should().Be(groupSign);
+        sign.Should().Be(exppectedGroupSign);
     }
 
     [Test]
     [TestCase("-1", "el-GR", "1")]
     [TestCase("1", "el-GR", "1")]
     [TestCase("+1", "el-GR", "1")]
-    public void IntegerRegex_WhenCalled_MatchGroupValue(string input, string cultureName, string groupValue)
+    public void IntegerRegex_WhenCalled_MatchGroupValue(string input, string cultureName, string expecteGroupValue)
     {
         // Arrange
         var cultureInfo = CultureInfo.GetCultureInfo(cultureName);
         var integerRegex = new IntegerRegex(input, cultureInfo);
 
         // Act 
-        var result = integerRegex.Value;
+        var value = integerRegex.Value;
 
         // Assert
-        result.Should().Be(groupValue);
+        value.Should().Be(expecteGroupValue);
     }
 }

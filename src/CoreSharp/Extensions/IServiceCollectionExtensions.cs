@@ -269,7 +269,7 @@ public static class IServiceCollectionExtensions
 
             // Register
             var descriptor = new ServiceDescriptor(contract, implementation, lifetime);
-            serviceCollecton.TryAdd(descriptor);
+            ServiceCollectionDescriptorExtensions.TryAdd(serviceCollecton, descriptor);
         }
 
         return serviceCollecton;

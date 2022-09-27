@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CoreSharp.Extensions;
 
@@ -9,15 +8,11 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class ICollectionExtensions
 {
-    /// <inheritdoc cref="AddRange{TElement}(ICollection{TElement}, TElement[])"/>
-    public static void AddRange<TElement>(this ICollection<TElement> source, IEnumerable<TElement> items)
-        => source.AddRange(items?.ToArray());
-
     /// <summary>
     /// Adds the elements to the end
     /// of the provided <see cref="ICollection{T}"/>.
     /// </summary>
-    public static void AddRange<TElement>(this ICollection<TElement> source, params TElement[] items)
+    public static void AddRange<TElement>(this ICollection<TElement> source, IEnumerable<TElement> items)
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = items ?? throw new ArgumentNullException(nameof(items));
@@ -39,8 +34,13 @@ public static class ICollectionExtensions
         _ = item ?? throw new ArgumentNullException(nameof(item));
         _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-        if (source.Any(i => Equals(keySelector(i), keySelector(item))))
-            return false;
+        var itemKey = keySelector(item);
+        foreach (var elelement in source)
+        {
+            var elementKey = keySelector(elelement);
+            if (Equals(elementKey, itemKey))
+                return false;
+        }
 
         source.Add(item);
         return true;

@@ -9,7 +9,7 @@ public static class GuidExtensions
 {
     /// <inheritdoc cref="IsNullOrEmpty(Guid)"/>
     public static bool IsNullOrEmpty(this Guid? id)
-        => (id ?? Guid.Empty).IsNullOrEmpty();
+        => id is null || id.Value.IsNullOrEmpty();
 
     /// <summary>
     /// Indicates whether the specified <see cref="Guid"/> is

@@ -22,7 +22,7 @@ public static class HttpContentHeadersExtensions
 
         if (!httpContentHeaders.TryGetValues(HeaderNames.ContentType, out var contentTypes))
             return null;
-        var contentTypeAsString = contentTypes.FirstOrDefault() ?? string.Empty;
+        var contentTypeAsString = contentTypes.First();
         return new ContentType(contentTypeAsString);
     }
 }

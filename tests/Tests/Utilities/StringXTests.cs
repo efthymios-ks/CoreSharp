@@ -7,14 +7,13 @@ public class StringXTests
     public void FirstNotEmpty_WhenCalled_ReturnFirstNotEmpty()
     {
         // Arrange 
-        var emptyValues = new[] { null, string.Empty, "" };
-        const string expected = "1";
-        var values = emptyValues.Append(expected).Concat(emptyValues);
+        const string expectedValue = "1";
+        var values = new[] { null, string.Empty, "", expectedValue, null, string.Empty, "" };
 
         // Act 
-        var result = StringX.FirstNotEmpty(values);
+        var value = StringX.FirstNotEmpty(values);
 
         // Assert 
-        result.Should().Be(expected);
+        value.Should().Be(expectedValue);
     }
 }

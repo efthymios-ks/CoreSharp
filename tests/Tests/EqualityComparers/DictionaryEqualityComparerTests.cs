@@ -13,30 +13,30 @@ public class DictionaryEqualityComparerTests
     public void Equals_OnlyLeftIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(_dictionaryNull, _dictionaryEmpty);
+        var equals = _equalityComparer.Equals(_dictionaryNull, _dictionaryEmpty);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_OnlyRightIsNull_ReturnFalse()
     {
         // Act
-        var result = _equalityComparer.Equals(_dictionaryEmpty, _dictionaryNull);
+        var equals = _equalityComparer.Equals(_dictionaryEmpty, _dictionaryNull);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
     public void Equals_BothAreNull_ReturnTrue()
     {
         // Act
-        var result = _equalityComparer.Equals(_dictionaryNull, _dictionaryNull);
+        var equals = _equalityComparer.Equals(_dictionaryNull, _dictionaryNull);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -55,10 +55,10 @@ public class DictionaryEqualityComparerTests
         };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeFalse();
+        equals.Should().BeFalse();
     }
 
     [Test]
@@ -77,10 +77,10 @@ public class DictionaryEqualityComparerTests
         };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -99,10 +99,10 @@ public class DictionaryEqualityComparerTests
         };
 
         // Act
-        var result = _equalityComparer.Equals(left, right);
+        var equals = _equalityComparer.Equals(left, right);
 
         // Assert 
-        result.Should().BeTrue();
+        equals.Should().BeTrue();
     }
 
     [Test]
@@ -112,9 +112,9 @@ public class DictionaryEqualityComparerTests
         var expected = default(int).GetHashCode();
 
         // Act
-        var result = _equalityComparer.GetHashCode(_dictionaryNull);
+        var hashCode = _equalityComparer.GetHashCode(_dictionaryNull);
 
         // Assert 
-        result.Should().Be(expected);
+        hashCode.Should().Be(expected);
     }
 }

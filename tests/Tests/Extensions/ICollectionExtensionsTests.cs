@@ -11,7 +11,7 @@ public class ICollectionExtensionsTests
         ICollection<int> source = null;
 
         // Act
-        Action action = () => source.AddRange();
+        Action action = () => source.AddRange(Enumerable.Empty<int>());
 
         // Assert
         action.Should().ThrowExactly<ArgumentNullException>();

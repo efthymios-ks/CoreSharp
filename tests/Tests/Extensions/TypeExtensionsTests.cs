@@ -32,13 +32,13 @@ public class TypeExtensionsTests
     [TestCase(typeof(decimal), true)]
     [TestCase(typeof(decimal?), true)]
     [TestCase(typeof(string), false)]
-    public void IsNumeric_TypeIsNumeric_ReturnTrue(Type type, bool expected)
+    public void IsNumeric_TypeIsNumeric_ReturnTrue(Type type, bool expectedIsNumeric)
     {
         // Act
-        var result = type.IsNumeric();
+        var isNumeric = type.IsNumeric();
 
         // Assert
-        result.Should().Be(expected);
+        isNumeric.Should().Be(expectedIsNumeric);
     }
 
     [Test]
@@ -60,25 +60,25 @@ public class TypeExtensionsTests
     [TestCase(typeof(DateTimeOffset), true)]
     [TestCase(typeof(DateTimeOffset?), true)]
     [TestCase(typeof(string), false)]
-    public void IsDate_TypeIsDate_ReturnTrue(Type type, bool expected)
+    public void IsDate_TypeIsDate_ReturnTrue(Type type, bool expectedIsDate)
     {
         // Act
-        var result = type.IsDate();
+        var isDate = type.IsDate();
 
         // Assert
-        result.Should().Be(expected);
+        isDate.Should().Be(expectedIsDate);
     }
 
     [Test]
     [TestCase(typeof(int?), typeof(int))]
     [TestCase(typeof(int), typeof(int))]
-    public void GetNullableBaseType_WhenCalled_ReturnBaseType(Type inputType, Type expectedType)
+    public void GetNullableBaseType_WhenCalled_ReturnBaseType(Type inputType, Type expectedBaseType)
     {
         // Act
-        var result = inputType.GetNullableBaseType();
+        var baseType = inputType.GetNullableBaseType();
 
         // Assert
-        result.Should().Be(expectedType);
+        baseType.Should().Be(expectedBaseType);
     }
 
     [Test]
@@ -110,13 +110,13 @@ public class TypeExtensionsTests
     [Test]
     [TestCase(typeof(DummyClass), typeof(DummyClass))]
     [TestCase(typeof(DummyClass<int>), typeof(DummyClass<>))]
-    public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type inputType, Type expectedType)
+    public void GetGenericTypeBase_WhenCalled_ReturnGenericBaseType(Type inputType, Type expectedBaseType)
     {
         // Act
-        var result = inputType.GetGenericTypeBase();
+        var baseType = inputType.GetGenericTypeBase();
 
         // Assert
-        result.Should().Be(expectedType);
+        baseType.Should().Be(expectedBaseType);
     }
 
     [Test]
@@ -137,12 +137,12 @@ public class TypeExtensionsTests
     [TestCase(typeof(DummyClass<>), typeof(DummyClass<>), false, true)]
     [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), false, false)]
     [TestCase(typeof(DummyClass<>), typeof(DummyClass<int>), true, true)]
-    public void Implements_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expected)
+    public void Implements_WhenCalled_ReturnGenericBaseType(Type parentType, Type baseType, bool useGenericBaseType, bool expectedImplements)
     {
         // Act
-        var result = parentType.Implements(baseType, useGenericBaseType);
+        var implements = parentType.Implements(baseType, useGenericBaseType);
 
         // Assert
-        result.Should().Be(expected);
+        implements.Should().Be(expectedImplements);
     }
 }

@@ -10,12 +10,12 @@ public class EnumExtensionsTests
     {
         // Arrange 
         const DummyType value = DummyType.Option1;
-        const string expected = "Option 1 Name";
+        const string expectedName = "Option 1 Name";
 
         // Act 
-        var result = value.GetDisplayName();
+        var name = value.GetDisplayAttributeName();
 
-        result.Should().Be(expected);
+        name.Should().Be(expectedName);
     }
 
     [Test]
@@ -23,12 +23,12 @@ public class EnumExtensionsTests
     {
         // Arrange 
         const DummyType value = DummyType.Option1;
-        const string expected = "Option 1 ShortName";
+        const string expectedShortName = "Option 1 ShortName";
 
         // Act 
-        var result = value.GetDisplayShortName();
+        var shortName = value.GetDisplayAttributeShortName();
 
-        result.Should().Be(expected);
+        shortName.Should().Be(expectedShortName);
     }
 
     [Test]
@@ -36,11 +36,11 @@ public class EnumExtensionsTests
     {
         // Arrange 
         const DummyType value = DummyType.Option1;
-        const string expected = "Option 1 Description";
+        const string expectedDescription = "Option 1 Description";
 
         // Act 
-        var result = value.GetDisplayDescription();
+        var description = value.GetDisplayAttributeDescription();
 
-        result.Should().Be(expected);
+        description.Should().Be(expectedDescription);
     }
 }

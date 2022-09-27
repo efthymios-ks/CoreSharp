@@ -25,10 +25,6 @@
 		<ProjectReference Include="..\..\src\CoreSharp\CoreSharp.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
-	</ItemGroup>
-
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<NoWarn>CA1001;CA1707;CA2201;IDE0130;S3459;</NoWarn>
 	</PropertyGroup>
