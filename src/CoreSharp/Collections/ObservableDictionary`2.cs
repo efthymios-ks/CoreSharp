@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using CoreSharp.Collections.Events;
+using CoreSharp.Collections.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace CoreSharp.Collections;
 
-public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyCollectionChanged
+public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IObservableDictionary<TKey, TValue>
 {
     // Properties
     public new TValue this[TKey key]
@@ -23,15 +25,14 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
 
             // Found (and not equal), updated. 
             if (found)
-                OnItemUpdated(key, previousValue, value);
+                OnItemReplaced(key, previousValue, value);
             // Not found. 
             else
                 OnItemAdded(key, value);
         }
     }
-
     // Events 
-    public event NotifyCollectionChangedEventHandler CollectionChanged;
+    public event EventHandler<DictionaryChangedEventArgs<TKey, TValue>> Changed;
 
     // Methods
     public new void Add(TKey key, TValue value)
@@ -64,31 +65,34 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
             return;
 
         base.Clear();
-        OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
+        OnItemsCleared();
     }
 
     private void OnItemAdded(TKey key, TValue value)
-    {
-        var pair = new KeyValuePair<TKey, TValue>(key, value);
-        var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, pair);
-        OnCollectionChanged(args);
-    }
+        => Changed?.Invoke(this, new()
+        {
+            Action = CollectionChangedAction.Add,
+            Index = key,
+            NewItem = value
+        });
 
-    private void OnItemUpdated(TKey key, TValue previousValue, TValue newValue)
-    {
-        var previousPair = new KeyValuePair<TKey, TValue>(key, previousValue);
-        var newPair = new KeyValuePair<TKey, TValue>(key, newValue);
-        var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newPair, previousPair);
-        OnCollectionChanged(args);
-    }
+    private void OnItemReplaced(TKey key, TValue oldValue, TValue newValue)
+        => Changed?.Invoke(this, new()
+        {
+            Action = CollectionChangedAction.Replace,
+            Index = key,
+            OldItem = oldValue,
+            NewItem = newValue
+        });
 
     private void OnItemRemoved(TKey key, TValue value)
-    {
-        var pair = new KeyValuePair<TKey, TValue>(key, value);
-        var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, pair);
-        OnCollectionChanged(args);
-    }
+        => Changed?.Invoke(this, new()
+        {
+            Action = CollectionChangedAction.Remove,
+            Index = key,
+            OldItem = value
+        });
 
-    private void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
-        => CollectionChanged?.Invoke(this, args);
+    private void OnItemsCleared()
+        => Changed?.Invoke(this, new() { Action = CollectionChangedAction.Clear });
 }
