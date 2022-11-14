@@ -7,6 +7,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Xml.Linq;
 using JsonNet = Newtonsoft.Json;
@@ -643,20 +644,6 @@ public static class StringExtensions
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
 
-    /// <summary>
-    /// Replace dictionary entries in string.
-    /// </summary>
-    public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
-    {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
-
-        foreach (var (key, value) in dictionary)
-            input = input.Replace(key, $"{value}");
-
-        return input;
-    }
-
     /// <inheritdoc cref="Format(string, IFormatProvider, object[])"/>
     public static string Format(this string format, params object[] parameters)
        => format.Format(CultureInfo.CurrentCulture, parameters);
@@ -671,9 +658,100 @@ public static class StringExtensions
         return string.Format(formatProvider, format, arguments);
     }
 
+    /// <see cref="Format{TValue}(string, IDictionary{string, TValue}, IFormatProvider)"/>
+    public static string Format<TValue>(this string format, IDictionary<string, TValue> arguments)
+        => format.Format(arguments, null);
+
+    /// <summary>
+    /// Format string using named arguments. May use optional formatting.
+    /// </summary>
+    public static string Format<TValue>(this string format, IDictionary<string, TValue> arguments, IFormatProvider formatProvider)
+    {
+        if (format is null)
+            return null;
+        if (arguments?.Count is not > 0)
+            return format;
+
+        // Helpers 
+        int FindFromTo(char character, int startIndex, int endIndex)
+            => format.IndexOf(character, startIndex, endIndex - startIndex);
+        int FindFrom(char character, int startIndex)
+            => FindFromTo(character, startIndex, format.Length);
+        int FindOpenBracketFrom(int startIndex)
+            => FindFrom('{', startIndex);
+        int FindCloseBracketFrom(int startIndex)
+            => FindFrom('}', startIndex);
+        int FindSemicolon(int openBracketIndex, int endBracketIndex)
+            => FindFromTo(':', openBracketIndex, endBracketIndex);
+
+        string ExtractBetween(int startIndex, int endIndex)
+            => format.Substring(startIndex + 1, endIndex - startIndex - 1);
+        string ExtractName(int openBracketIndex, int closeBracketIndex)
+            => ExtractBetween(openBracketIndex, closeBracketIndex);
+        string ExtractFormat(int semiColonIndex, int closeBracketIndex)
+            => semiColonIndex >= 0 ? ExtractBetween(semiColonIndex, closeBracketIndex) : null;
+
+        string ToString(object value, string format = null)
+            => value is IFormattable formattable ? formattable.ToString(format, formatProvider) : $"{value}";
+        string ReplaceAtPosition(object argumentValue, string argumentFormat, int openBracketIndex, ref int closeBracketIndex)
+        {
+            var argumentValueAsString = ToString(argumentValue, argumentFormat);
+            format = format.Remove(openBracketIndex, closeBracketIndex - openBracketIndex + 1);
+            format = format.Insert(openBracketIndex, argumentValueAsString);
+            closeBracketIndex = openBracketIndex + argumentValueAsString.Length;
+            return format;
+        }
+
+        var openBracketIndex = FindOpenBracketFrom(0);
+        while (openBracketIndex > -1)
+        {
+            var closeBracketIndex = FindCloseBracketFrom(openBracketIndex);
+            if (closeBracketIndex < 0)
+                break;
+
+            // Extract placeholder metadata 
+            var semiColonIndex = FindSemicolon(openBracketIndex, closeBracketIndex);
+            var argumentName = ExtractName(openBracketIndex, semiColonIndex >= 0 ? semiColonIndex : closeBracketIndex);
+            var argumentFormat = ExtractFormat(semiColonIndex, closeBracketIndex);
+
+            // If key exists, replace  
+            if (arguments.TryGetValue(argumentName, out var argumentValue))
+                format = ReplaceAtPosition(argumentValue, argumentFormat, openBracketIndex, ref closeBracketIndex);
+
+            // Find next 
+            openBracketIndex = FindOpenBracketFrom(closeBracketIndex);
+        }
+
+        return format;
+    }
+
     /// <inheritdoc cref="Format(string, IFormatProvider, object[])"/>
     public static string FormatCI(this string format, params object[] parameters)
         => format.Format(CultureInfo.InvariantCulture, parameters);
+
+    /// <see cref="FormatWithNames(string, object, IFormatProvider)"/>
+    public static string FormatWithNames(this string format, object arguments)
+        => format.FormatWithNames(arguments, null);
+
+    /// <see cref="FormatWithNames(string, object, BindingFlags, IFormatProvider)"/>
+    public static string FormatWithNames(this string format, object arguments, BindingFlags bindingFlags)
+        => format.FormatWithNames(arguments, bindingFlags, null);
+
+    /// <see cref="FormatWithNames(string, object, BindingFlags, IFormatProvider)"/>
+    public static string FormatWithNames(this string format, object arguments, IFormatProvider formatProvider)
+        => format.FormatWithNames(arguments, BindingFlags.Instance | BindingFlags.Public, formatProvider);
+
+    /// <see cref="Format{TValue}(string, IDictionary{string, TValue}, IFormatProvider)"/>
+    public static string FormatWithNames(this string format, object arguments, BindingFlags bindingFlags, IFormatProvider formatProvider)
+    {
+        var argumentsAsDictionary = arguments?.GetType()
+                                              .GetProperties(bindingFlags)
+                                              .ToDictionary(
+                                                p => p.Name,
+                                                p => p.GetValue(arguments),
+                                                StringComparer.OrdinalIgnoreCase);
+        return format.Format(argumentsAsDictionary, formatProvider);
+    }
 
 #if !NET6_0_OR_GREATER
     /// <inheritdoc cref="IEnumerableExtensions.Chunk{TItem}(IEnumerable{TItem}, int)"/>

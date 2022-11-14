@@ -1035,52 +1035,6 @@ public class StringExtensionsTests
     }
 
     [Test]
-    public void Replace_InputIsNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var dictionary = new Dictionary<string, string>();
-
-        // Act
-        Action action = () => StringNull.Replace(dictionary);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Replace_DictionaryIsNull_ThrowArgumentNulLException()
-    {
-        // Arrange
-        Dictionary<string, string> dictionary = null;
-
-        // Act
-        Action action = () => StringEmpty.Replace(dictionary);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
-    {
-        // Arrange
-        const string input = "Key1, Key2, Key3";
-        var dictionary = new Dictionary<string, int>
-        {
-            { "Key1", 1 },
-            { "Key2", 2 },
-            { "Key3", 3 }
-        };
-        const string expected = "1, 2, 3";
-
-        // Act
-        var result = input.Replace(dictionary);
-
-        // Assert
-        result.Should().Be(expected);
-    }
-
-    [Test]
     public void Format_InputIsNull_ThrowArgumentNullException()
     {
         // Act
@@ -1140,6 +1094,126 @@ public class StringExtensionsTests
 
         // Assert
         result.Should().Be(expected);
+    }
+
+    [Test]
+    public void Format_1_InputIsNull_ReturnNull()
+    {
+        // Arrange
+        var dictionary = new Dictionary<string, string>();
+
+        // Act
+        var formatted = StringNull.Format(dictionary);
+
+        // Assert
+        formatted.Should().BeNull();
+    }
+
+    [Test]
+    public void Format_1_DictionaryIsNull_ReturnFormatAsIs()
+    {
+        // Arrange
+        const string format = "Format";
+        Dictionary<string, string> dictionary = null;
+
+        // Act
+        var formatted = format.Format(dictionary);
+
+        // Assert
+        formatted.Should().Be(format);
+    }
+
+    [Test]
+    public void Format_1_DictionaryIsEmpty_ReturnFormatAsIs()
+    {
+        // Arrange
+        const string format = "Format";
+        var dictionary = new Dictionary<string, string>();
+
+        // Act
+        var formatted = format.Format(dictionary);
+
+        // Assert
+        formatted.Should().Be(format);
+    }
+
+    [Test]
+    [SetCulture("el-GR")]
+    public void Format_1_FormatProviderNotProvided_UseCurrentCulture()
+    {
+        // Arrange
+        const string format = "Amount={amount}";
+        var dictionary = new Dictionary<string, object>
+        {
+            { "amount", 1_234.567_8 }
+        };
+        const string expectedFormatted = "Amount=1234,5678";
+
+        // Act
+        var formatted = format.Format(dictionary);
+
+        // Assert
+        formatted.Should().Be(expectedFormatted);
+    }
+
+    [Test]
+    [SetCulture("el-GR")]
+    public void Format_1_FormatProviderProvided_UseProvidedFormatProvide()
+    {
+        // Arrange
+        const string format = "Amount={amount}";
+        var dictionary = new Dictionary<string, object>
+        {
+            { "amount", 1_234.567_8 }
+        };
+        var formatProvider = CultureInfo.GetCultureInfo("en-US");
+        const string expectedFormatted = "Amount=1234.5678";
+
+        // Act
+        var formatted = format.Format(dictionary, formatProvider);
+
+        // Assert
+        formatted.Should().Be(expectedFormatted);
+    }
+
+    [Test]
+    [SetCulture("el-GR")]
+    public void Format_1_ArgumentFormatProvided_UseFormat()
+    {
+        // Arrange
+        const string format = "Amount={amount:C2}";
+        var dictionary = new Dictionary<string, object>
+        {
+            { "amount", 1_234.567_8 }
+        };
+        const string expectedFormatted = "Amount=1.234,57 €";
+
+        // Act
+        var formatted = format.Format(dictionary);
+
+        // Assert
+        formatted.Should().Be(expectedFormatted);
+    }
+
+    [Test]
+    [SetCulture("el-GR")]
+    public void Format_1_WhenCalled_ReplaceAllPlaceholders()
+    {
+        // Arrange
+        const string format = "You are {name}. You were born in {dateOfBirth:d} and have {amount:C2} in your bank account.";
+        var dictionary = new Dictionary<string, object>
+        {
+            { "name", "Efthymios" },
+            { "dateOfBirth", new DateTime(2022, 11, 14) },
+            { "amount", 1_234.567_8 }
+        };
+        const string expectedFormatted = "You are Efthymios. You were born in 14/11/2022 and have 1.234,57 € in your bank account.";
+
+        // Act
+        var formatted = format.Format(dictionary);
+
+        // Assert
+        formatted.Should().Be(expectedFormatted);
     }
 
 #if !NET6_0_OR_GREATER
