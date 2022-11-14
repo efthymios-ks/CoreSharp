@@ -46,15 +46,6 @@ public static class StringExtensions
         return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
     }
 
-#if !NET6_0_OR_GREATER
-    /// <inheritdoc cref="IEnumerableExtensions.Chunk{TItem}(IEnumerable{TItem}, int)"/>
-    public static IEnumerable<string> Chunk(this string input, int size)
-    {
-        var chunks = input.Chunk<char>(size);
-        return chunks.Select(c => new string(c.ToArray()));
-    }
-#endif
-
     /// <summary>
     /// Center align text.
     /// </summary>
@@ -158,24 +149,6 @@ public static class StringExtensions
 
         return start + length > input.Length ? input[start..] : input.Substring(start, length);
     }
-
-    /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
-    public static string FormatWith(this string format, params object[] parameters)
-       => format.FormatWith(CultureInfo.CurrentCulture, parameters);
-
-    /// <summary>
-    /// String.Format with custom IFormatProvider setting.
-    /// </summary>
-    public static string FormatWith(this string format, IFormatProvider formatProvider, params object[] arguments)
-    {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-
-        return string.Format(formatProvider, format, arguments);
-    }
-
-    /// <inheritdoc cref="FormatWith(string, IFormatProvider, object[])"/>
-    public static string FormatWithCI(this string format, params object[] parameters)
-        => format.FormatWith(CultureInfo.InvariantCulture, parameters);
 
     /// <inheritdoc cref="EqualsAnyCI(string, string[])"/>
     public static bool EqualsAnyCI(this string input, IEnumerable<string> values)
@@ -376,20 +349,6 @@ public static class StringExtensions
         _ = input ?? throw new ArgumentNullException(nameof(input));
 
         return input.Split(new[] { "\r", "\n", "\r\n", Environment.NewLine }, stringSplitOptions);
-    }
-
-    /// <summary>
-    /// Replace dictionary entries in string.
-    /// </summary>
-    public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
-    {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
-
-        foreach (var (key, value) in dictionary)
-            input = input.Replace(key, $"{value}");
-
-        return input;
     }
 
     /// <inheritdoc cref="ToInt(string, NumberStyles, IFormatProvider)"/>
@@ -683,4 +642,46 @@ public static class StringExtensions
         var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
     }
+
+    /// <summary>
+    /// Replace dictionary entries in string.
+    /// </summary>
+    public static string Replace<TValue>(this string input, IDictionary<string, TValue> dictionary)
+    {
+        _ = input ?? throw new ArgumentNullException(nameof(input));
+        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+
+        foreach (var (key, value) in dictionary)
+            input = input.Replace(key, $"{value}");
+
+        return input;
+    }
+
+    /// <inheritdoc cref="Format(string, IFormatProvider, object[])"/>
+    public static string Format(this string format, params object[] parameters)
+       => format.Format(CultureInfo.CurrentCulture, parameters);
+
+    /// <summary>
+    /// String.Format with custom IFormatProvider setting.
+    /// </summary>
+    public static string Format(this string format, IFormatProvider formatProvider, params object[] arguments)
+    {
+        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
+        return string.Format(formatProvider, format, arguments);
+    }
+
+    /// <inheritdoc cref="Format(string, IFormatProvider, object[])"/>
+    public static string FormatCI(this string format, params object[] parameters)
+        => format.Format(CultureInfo.InvariantCulture, parameters);
+
+#if !NET6_0_OR_GREATER
+    /// <inheritdoc cref="IEnumerableExtensions.Chunk{TItem}(IEnumerable{TItem}, int)"/>
+    public static IEnumerable<string> Chunk(this string input, int size)
+    {
+        var chunks = input.Chunk<char>(size);
+        return chunks.Select(c => new string(c.ToArray()));
+    }
+#endif
+
 }

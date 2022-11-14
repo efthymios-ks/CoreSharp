@@ -242,23 +242,6 @@ public static class IEnumerableExtensions
         return sequence.SelectMany(source => source);
     }
 
-#if !NET6_0_OR_GREATER
-    /// <inheritdoc cref="Append{TElement}(IEnumerable{TElement}, TElement[])"/>
-    public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, IEnumerable<TElement> items)
-        => source.Append(items?.ToArray());
-
-    /// <summary>
-    /// Append items to given source.
-    /// </summary>
-    public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, params TElement[] items)
-    {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = items ?? throw new ArgumentNullException(nameof(items));
-
-        return items.Aggregate(source, Enumerable.Append);
-    }
-#endif
-
     /// <inheritdoc cref="ForEach{TElement}(IEnumerable{TElement}, Action{TElement, int})"/>
     public static void ForEach<TElement>(this IEnumerable<TElement> source, Action<TElement> action)
     {
@@ -509,32 +492,6 @@ public static class IEnumerableExtensions
     public static IEnumerable<TElement> FilterFlexible<TElement>(this IEnumerable<TElement> source, Func<TElement, string> propertySelector, string filter)
         => (source?.AsQueryable()).FilterFlexible(propertySelector, filter);
 
-#if !NET6_0_OR_GREATER
-    /// <summary>
-    /// Split the elements of a sequence into chunks of size at most size.
-    /// </summary>
-    public static IEnumerable<IEnumerable<TElement>> Chunk<TElement>(this IEnumerable<TElement> source, int size)
-    {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        if (size < 1)
-            throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} ({size}) has to be at least 1.");
-
-        return source.ChunkInternal(size);
-    }
-
-    /// <inheritdoc cref="Chunk{TItem}(IEnumerable{TItem}, int)"/>
-    private static IEnumerable<IEnumerable<TElement>> ChunkInternal<TElement>(this IEnumerable<TElement> source, int size)
-    {
-        var index = 0;
-        var enumerated = source.ToArray();
-        while (index < enumerated.Length)
-        {
-            yield return enumerated.Skip(index).Take(size);
-            index += size;
-        }
-    }
-#endif
-
     /// <inheritdoc cref="FirstOr{TItem}(IEnumerable{TItem}, Func{TItem, bool}, TItem)" />
     public static TElement FirstOr<TElement>(this IEnumerable<TElement> source, TElement fallbackValue)
         => source.FirstOr(_ => true, fallbackValue);
@@ -705,4 +662,45 @@ public static class IEnumerableExtensions
                 yield return element;
         }
     }
+
+#if !NET6_0_OR_GREATER
+    /// <inheritdoc cref="Append{TElement}(IEnumerable{TElement}, TElement[])"/>
+    public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, IEnumerable<TElement> items)
+        => source.Append(items?.ToArray());
+
+    /// <summary>
+    /// Append items to given source.
+    /// </summary>
+    public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, params TElement[] items)
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        _ = items ?? throw new ArgumentNullException(nameof(items));
+
+        return items.Aggregate(source, Enumerable.Append);
+    }
+     
+    /// <summary>
+    /// Split the elements of a sequence into chunks of size at most size.
+    /// </summary>
+    public static IEnumerable<IEnumerable<TElement>> Chunk<TElement>(this IEnumerable<TElement> source, int size)
+    {
+        _ = source ?? throw new ArgumentNullException(nameof(source));
+        if (size < 1)
+            throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} ({size}) has to be at least 1.");
+
+        return source.ChunkInternal(size);
+    }
+
+    /// <inheritdoc cref="Chunk{TItem}(IEnumerable{TItem}, int)"/>
+    private static IEnumerable<IEnumerable<TElement>> ChunkInternal<TElement>(this IEnumerable<TElement> source, int size)
+    {
+        var index = 0;
+        var enumerated = source.ToArray();
+        while (index < enumerated.Length)
+        {
+            yield return enumerated.Skip(index).Take(size);
+            index += size;
+        }
+    } 
+#endif
 }

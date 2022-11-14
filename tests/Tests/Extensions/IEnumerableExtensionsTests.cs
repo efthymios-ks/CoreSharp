@@ -209,43 +209,6 @@ public class IEnumerableExtensionsTests
         result.Should().Be(expected);
     }
 
-#if !NET6_0_OR_GREATER
-    [Test]
-    public void ToHashSet_SourceIsNull_ThrowArgumentNullException()
-    {
-        // Act  
-        Action action = () => _sourceNull.ToHashSet();
-
-        // Assert 
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void ToHashSet_ComparerIsNull_ThrowArgumentNullException()
-    {
-        // Act  
-        Action action = () => _sourceEmpty.ToHashSet(null);
-
-        // Assert 
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void ToHashSet_WhenCalled_ReturnHashSetWithUniqueItems()
-    {
-        // Arrange 
-        var source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
-        var expected = new HashSet<int> { 1, 2, 3, 4 };
-
-        // Act 
-        var result = source.ToHashSet();
-
-        // Assert
-        result.Should().BeOfType<HashSet<int>>();
-        result.Should().Equal(expected);
-    }
-#endif
-
     [Test]
     public void ToCollection_SourceIsNull_ThrowArgumentNullException()
     {
@@ -467,33 +430,6 @@ public class IEnumerableExtensionsTests
         // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
     }
-
-#if !NET6_0_OR_GREATER
-    [Test]
-    public void Append_ItemsIsNull_ThrowArgumentNullException()
-    {
-        // Act  
-        Action action = () => _sourceEmpty.Append(null);
-
-        // Assert 
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Append_WhenCalled_ReturnSourceWithAppendedItems()
-    {
-        // Arrange
-        var source = new[] { 1, 2, 3 };
-        var items = new[] { 4, 5, 6 };
-        var expected = new[] { 1, 2, 3, 4, 5, 6 };
-
-        // Act  
-        var result = source.Append(items);
-
-        // Assert 
-        result.Should().Equal(expected);
-    }
-#endif
 
     [Test]
     public void ForEach_SourceIsNull_ThrowArgumentNullException()
@@ -994,50 +930,6 @@ public class IEnumerableExtensionsTests
         result.Should().BeFalse();
     }
 
-#if !NET6_0_OR_GREATER
-    [Test]
-    public void Chunk_SourceIsNull_ThrowArgumentNullException()
-    {
-        // Act 
-        Action action = () => _sourceNull.Chunk(1);
-
-        // Assert 
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Chunk_SizeIsLessThanOne_ThrowArgumentOutOfRangeException()
-    {
-        // Act 
-        Action action = () => _sourceEmpty.Chunk(0);
-
-        // Assert 
-        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
-    }
-
-    [Test]
-    public void Chunk_WhenCalled_SplitSourceIntoChunks()
-    {
-        // Arrange
-        var source = new[] { 1, 1, 2, 2, 3, 3 }.AsEnumerable();
-        const int size = 2;
-        var expected = new[]
-        {
-            new [] { 1, 1 }.AsEnumerable(),
-            new [] { 2, 2 }.AsEnumerable(),
-            new [] { 3, 3 }.AsEnumerable()
-        };
-
-        // Act 
-        var result = source.Chunk(size).ToArray();
-
-        // Assert
-        result.Should().HaveCount(expected.Length);
-        for (var i = 0; i < result.Length; i++)
-            result[i].Should().Equal(expected[i]);
-    }
-#endif
-
     [Test]
     public void FirstOr_SourceIsNull_ThrowArgumentNullException()
     {
@@ -1483,4 +1375,107 @@ public class IEnumerableExtensionsTests
         // Assert 
         result.Should().Equal(expected);
     }
+
+#if !NET6_0_OR_GREATER
+    [Test]
+    public void ToHashSet_SourceIsNull_ThrowArgumentNullException()
+    {
+        // Act  
+        Action action = () => _sourceNull.ToHashSet();
+
+        // Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void ToHashSet_ComparerIsNull_ThrowArgumentNullException()
+    {
+        // Act  
+        Action action = () => _sourceEmpty.ToHashSet(null);
+
+        // Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void ToHashSet_WhenCalled_ReturnHashSetWithUniqueItems()
+    {
+        // Arrange 
+        var source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
+        var expected = new HashSet<int> { 1, 2, 3, 4 };
+
+        // Act 
+        var result = source.ToHashSet();
+
+        // Assert
+        result.Should().BeOfType<HashSet<int>>();
+        result.Should().Equal(expected);
+    }[Test]
+    public void Append_ItemsIsNull_ThrowArgumentNullException()
+    {
+        // Act  
+        Action action = () => _sourceEmpty.Append(null);
+
+        // Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Append_WhenCalled_ReturnSourceWithAppendedItems()
+    {
+        // Arrange
+        var source = new[] { 1, 2, 3 };
+        var items = new[] { 4, 5, 6 };
+        var expected = new[] { 1, 2, 3, 4, 5, 6 };
+
+        // Act  
+        var result = source.Append(items);
+
+        // Assert 
+        result.Should().Equal(expected);
+    }
+
+    [Test]
+    public void Chunk_SourceIsNull_ThrowArgumentNullException()
+    {
+        // Act 
+        Action action = () => _sourceNull.Chunk(1);
+
+        // Assert 
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Chunk_SizeIsLessThanOne_ThrowArgumentOutOfRangeException()
+    {
+        // Act 
+        Action action = () => _sourceEmpty.Chunk(0);
+
+        // Assert 
+        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+    }
+
+    [Test]
+    public void Chunk_WhenCalled_SplitSourceIntoChunks()
+    {
+        // Arrange
+        var source = new[] { 1, 1, 2, 2, 3, 3 }.AsEnumerable();
+        const int size = 2;
+        var expected = new[]
+        {
+            new [] { 1, 1 }.AsEnumerable(),
+            new [] { 2, 2 }.AsEnumerable(),
+            new [] { 3, 3 }.AsEnumerable()
+        };
+
+        // Act 
+        var result = source.Chunk(size).ToArray();
+
+        // Assert
+        result.Should().HaveCount(expected.Length);
+        for (var i = 0; i < result.Length; i++)
+            result[i].Should().Equal(expected[i]);
+    }
+#endif
+
 }

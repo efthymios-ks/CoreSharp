@@ -70,45 +70,6 @@ public class StringExtensionsTests
         formatted.Should().Be(expectedFormatted);
     }
 
-#if !NET6_0_OR_GREATER 
-    [Test]
-    public void Chunk_InputIsNull_ThrowArgumentNullException()
-    {
-        // Act
-        Action action = () => StringNull.Chunk(2);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    [TestCase(0)]
-    [TestCase(-1)]
-    public void Chunk_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
-    {
-        // Act
-        Action action = () => StringEmpty.Chunk(chunkSize);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
-    }
-
-    [Test]
-    public void Chunk_WhenCalled_SplitInputInChunks()
-    {
-        // Arrange 
-        const string input = "12345";
-        const int size = 2;
-        var expectedChunks = new[] { "12", "34", "5" };
-
-        // Act
-        var chunks = input.Chunk(size);
-
-        // Assert
-        chunks.Should().Equal(expectedChunks);
-    }
-#endif
-
     [Test]
     public void PadCenter_InputIsNull_ThrowArgumentNullException()
     {
@@ -358,68 +319,6 @@ public class StringExtensionsTests
 
         // Act
         var result = input.Mid(1, 3);
-
-        // Assert
-        result.Should().Be(expected);
-    }
-
-    [Test]
-    public void FormatWith_InputIsNull_ThrowArgumentNullException()
-    {
-        // Act
-        Action action = () => StringNull.FormatWith(1);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void FormatWith_FormatProviderIsNull_ThrowArgumentNullException()
-    {
-        // Act
-        Action action = () => StringEmpty.FormatWith(formatProvider: null, arguments: 1);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void FormatWith_ParametersIsNull_ThrowArgumentNullException()
-    {
-        // Act
-        Action action = () => StringEmpty.FormatWith(CultureInfo.InvariantCulture, arguments: null);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void FormatWith_WhenCalled_ReturnFormattedString()
-    {
-        // Arrange
-        const string format = "{0}";
-        const int value = 1000;
-        var culture = CultureInfo.CurrentCulture;
-        var expected = string.Format(culture, format, value);
-
-        // Act
-        var result = format.FormatWith(culture, value);
-
-        // Assert
-        result.Should().Be(expected);
-    }
-
-    [Test]
-    public void FormatWithCI_WhenCalled_FormatStringWithCultureInvariant()
-    {
-        // Arrange
-        const string format = "{0}";
-        const int value = 1000;
-        var culture = CultureInfo.InvariantCulture;
-        const string expected = "1000";
-
-        // Act
-        var result = format.FormatWith(culture, value);
 
         // Assert
         result.Should().Be(expected);
@@ -747,52 +646,6 @@ public class StringExtensionsTests
 
         // Assert
         result.Should().Equal(lines);
-    }
-
-    [Test]
-    public void Replace_InputIsNull_ThrowArgumentNullException()
-    {
-        // Arrange
-        var dictionary = new Dictionary<string, string>();
-
-        // Act
-        Action action = () => StringNull.Replace(dictionary);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Replace_DictionaryIsNull_ThrowArgumentNulLException()
-    {
-        // Arrange
-        Dictionary<string, string> dictionary = null;
-
-        // Act
-        Action action = () => StringEmpty.Replace(dictionary);
-
-        // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
-    }
-
-    [Test]
-    public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
-    {
-        // Arrange
-        const string input = "Key1, Key2, Key3";
-        var dictionary = new Dictionary<string, int>
-        {
-            { "Key1", 1 },
-            { "Key2", 2 },
-            { "Key3", 3 }
-        };
-        const string expected = "1, 2, 3";
-
-        // Act
-        var result = input.Replace(dictionary);
-
-        // Assert
-        result.Should().Be(expected);
     }
 
     [Test]
@@ -1180,4 +1033,151 @@ public class StringExtensionsTests
         // Assert
         result.Should().Be(expected);
     }
+
+    [Test]
+    public void Replace_InputIsNull_ThrowArgumentNullException()
+    {
+        // Arrange
+        var dictionary = new Dictionary<string, string>();
+
+        // Act
+        Action action = () => StringNull.Replace(dictionary);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Replace_DictionaryIsNull_ThrowArgumentNulLException()
+    {
+        // Arrange
+        Dictionary<string, string> dictionary = null;
+
+        // Act
+        Action action = () => StringEmpty.Replace(dictionary);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Replace_WhenCalled_ReplaceDictionaryValuesAndReturnString()
+    {
+        // Arrange
+        const string input = "Key1, Key2, Key3";
+        var dictionary = new Dictionary<string, int>
+        {
+            { "Key1", 1 },
+            { "Key2", 2 },
+            { "Key3", 3 }
+        };
+        const string expected = "1, 2, 3";
+
+        // Act
+        var result = input.Replace(dictionary);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Test]
+    public void Format_InputIsNull_ThrowArgumentNullException()
+    {
+        // Act
+        Action action = () => StringNull.Format(1);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Format_FormatProviderIsNull_ThrowArgumentNullException()
+    {
+        // Act
+        Action action = () => StringEmpty.Format(formatProvider: null, arguments: 1);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Format_ParametersIsNull_ThrowArgumentNullException()
+    {
+        // Act
+        Action action = () => StringEmpty.Format(CultureInfo.InvariantCulture, arguments: null);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    public void Format_WhenCalled_ReturnFormattedString()
+    {
+        // Arrange
+        const string format = "{0}";
+        const int value = 1000;
+        var culture = CultureInfo.CurrentCulture;
+        var expected = string.Format(culture, format, value);
+
+        // Act
+        var result = format.Format(culture, value);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Test]
+    public void FormatCI_WhenCalled_FormatStringWithCultureInvariant()
+    {
+        // Arrange
+        const string format = "{0}";
+        const int value = 1000;
+        var culture = CultureInfo.InvariantCulture;
+        const string expected = "1000";
+
+        // Act
+        var result = format.Format(culture, value);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+#if !NET6_0_OR_GREATER
+    [Test]
+    public void Chunk_InputIsNull_ThrowArgumentNullException()
+    {
+        // Act
+        Action action = () => StringNull.Chunk(2);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    public void Chunk_ChunkSizeIsZeroOrLess_ThrowArgumentOutOfRangeException(int chunkSize)
+    {
+        // Act
+        Action action = () => StringEmpty.Chunk(chunkSize);
+
+        // Assert
+        action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+    }
+
+    [Test]
+    public void Chunk_WhenCalled_SplitInputInChunks()
+    {
+        // Arrange 
+        const string input = "12345";
+        const int size = 2;
+        var expectedChunks = new[] { "12", "34", "5" };
+
+        // Act
+        var chunks = input.Chunk(size);
+
+        // Assert
+        chunks.Should().Equal(expectedChunks);
+    }
+#endif
 }
