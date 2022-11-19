@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Tests.Dummies.Enums;
+namespace Tests.Internal.Dummies.Enums;
 
 /// <summary>
 /// Dummy enum.

@@ -2,7 +2,7 @@
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Builders;
 
-namespace Tests.Attributes.Common;
+namespace Tests.Internal.Attributes.Common;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 public abstract class TestCaseBaseAttribute : NUnitAttribute, ITestBuilder

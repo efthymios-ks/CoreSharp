@@ -3,9 +3,9 @@ using NUnit.Framework.Internal;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Tests.Attributes.Common;
+using Tests.Internal.Attributes.Common;
 
-namespace Tests.Attributes;
+namespace Tests.Internal.Attributes;
 
 /// <summary>
 /// Uses json array as test case source. <br/>

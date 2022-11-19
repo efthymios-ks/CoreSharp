@@ -1,4 +1,4 @@
-﻿namespace Tests.Dummies.Services;
+﻿namespace Tests.Internal.Dummies.Services;
 
 public interface IPlainService
 {

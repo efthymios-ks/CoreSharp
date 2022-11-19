@@ -1,4 +1,4 @@
-﻿namespace Tests.Dummies.Entities;
+﻿namespace Tests.Internal.Dummies.Entities;
 
 internal class DummyClass<TValue> : DummyClass
 {

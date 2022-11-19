@@ -10,4 +10,5 @@ global using System.Globalization;
 global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
-global using Tests.Dummies.Entities;
+global using Tests.Internal.Attributes;
+global using Tests.Internal.Dummies.Entities;

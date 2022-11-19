@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Tests.Dummies.Entities;
+namespace Tests.Internal.Dummies.Entities;
 
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 internal class DummyClass

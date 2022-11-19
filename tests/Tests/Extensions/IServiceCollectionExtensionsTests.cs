@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Tests.Dummies.Services;
-using Tests.Dummies.Services.Marked;
-using Tests.Dummies.Services.Unmarked;
+using Tests.Internal.Dummies.Services;
+using Tests.Internal.Dummies.Services.Marked;
+using Tests.Internal.Dummies.Services.Unmarked;
 
 namespace CoreSharp.Extensions.Tests;
 

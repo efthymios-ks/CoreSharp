@@ -1,6 +1,4 @@
-﻿using Tests.Attributes;
-
-namespace CoreSharp.Models.Tests;
+﻿namespace CoreSharp.Models.Tests;
 
 [TestFixture]
 public class NumericParserTests

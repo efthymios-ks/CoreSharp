@@ -1,4 +1,4 @@
-﻿using Tests.Dummies.Enums;
+﻿using Tests.Internal.Dummies.Enums;
 
 namespace CoreSharp.Utilities.Tests;
 

@@ -1,7 +1,7 @@
 ﻿using CoreSharp.DependencyInjection.Attributes;
 using CoreSharp.DependencyInjection.Interfaces;
 
-namespace Tests.Dummies.Services.Marked;
+namespace Tests.Internal.Dummies.Services.Marked;
 
 [IgnoreService]
 public interface IMarkedServiceWithIgnoreServiceAttributeOnContract

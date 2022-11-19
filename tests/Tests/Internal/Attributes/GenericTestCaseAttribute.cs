@@ -2,7 +2,7 @@
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Builders;
 
-namespace Tests.Attributes;
+namespace Tests.Internal.Attributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class GenericTestCaseAttribute : TestCaseAttribute, ITestBuilder
