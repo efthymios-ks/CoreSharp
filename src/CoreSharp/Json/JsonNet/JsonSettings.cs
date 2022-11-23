@@ -37,14 +37,14 @@ public static class JsonSettings
 
     private static JsonSerializerSettings CreatePrimitiveOnly()
     {
-        var settings = Default;
+        var settings = CreateDefault();
         settings.ContractResolver = PrimitiveOnlyResolver.Instance;
         return settings;
     }
 
     private static JsonSerializerSettings CreateStrict()
     {
-        var settings = Default;
+        var settings = CreateDefault();
         settings.MissingMemberHandling = MissingMemberHandling.Error;
         return settings;
     }

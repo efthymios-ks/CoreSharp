@@ -18,7 +18,8 @@
 		<Version>6.2.0</Version>
 		<PackageReleaseNotes>-Collections, ObservableHashSet, Added tests.
 -Collections, ObservableDictionary, Added tests.
--Extensions, String, Added `FormatWithNames()` methods.		</PackageReleaseNotes>
+-Extensions, String, Added `FormatWithNames()` methods.
+-Json, Json.NET, Fixed settings reference issue.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
