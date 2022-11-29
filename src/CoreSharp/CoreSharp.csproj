@@ -19,7 +19,8 @@
 		<PackageReleaseNotes>-Collections, ObservableHashSet, Added tests.
 -Collections, ObservableDictionary, Added tests.
 -Extensions, String, Added `FormatWithNames()` methods.
--Json, Json.NET, Fixed settings reference issue.</PackageReleaseNotes>
+-Json, Json.NET, Fixed settings reference issue.
+-Json, Converters, Added for `CultureInfo`.		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
