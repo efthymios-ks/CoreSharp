@@ -6,18 +6,21 @@ using System.Linq;
 
 namespace CoreSharp.Json.JsonNet.ContractResolvers;
 
-public class WritableOnlyPropertiesResolver : DefaultContractResolver
+public class WritableOnlyContractResolver : DefaultContractResolver
 {
     // Fields
-    private static WritableOnlyPropertiesResolver _instance;
+    private static WritableOnlyContractResolver _instance;
 
     // Properties
-    public static WritableOnlyPropertiesResolver Instance
-        => _instance ??= new WritableOnlyPropertiesResolver();
+    public static WritableOnlyContractResolver Instance
+        => _instance ??= new WritableOnlyContractResolver();
 
     // Methods
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         => base.CreateProperties(type, memberSerialization)
-               .Where(p => p.Writable)
+               .Where(WritablePropertyFilter)
                .ToList();
+
+    private static bool WritablePropertyFilter(JsonProperty jsonProperty)
+        => jsonProperty.Writable;
 }

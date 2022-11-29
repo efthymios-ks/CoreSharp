@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace CoreSharp.Json.JsonNet.JsonConverters;
 
-public class UtcDateTimeJsonConverter : DateTimeConverterBase
+public sealed class UtcDateTimeJsonConverter : DateTimeConverterBase
 {
     // Fields
     private const string DateFormat = "O";

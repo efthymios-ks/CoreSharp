@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace CoreSharp.Json.TextJson.JsonConverters;
 
-public class TimeSpanJsonConverter : JsonConverter<TimeSpan>
+public sealed class TimeSpanJsonConverter : JsonConverter<TimeSpan>
 {
     // Fields 
     private const string Format = "c";

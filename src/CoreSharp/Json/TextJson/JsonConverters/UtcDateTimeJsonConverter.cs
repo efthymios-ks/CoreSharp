@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace CoreSharp.Json.TextJson.JsonConverters;
 
-public class UtcDateTimeJsonConverter : JsonConverter<DateTime>
+public sealed class UtcDateTimeJsonConverter : JsonConverter<DateTime>
 {
     // Fields
     private const string DateFormat = "O";

@@ -7,18 +7,21 @@ using System.Linq;
 
 namespace CoreSharp.Json.JsonNet.ContractResolvers;
 
-public class PrimitiveOnlyResolver : WritableOnlyPropertiesResolver
+public class PrimitiveOnlyContractResolver : WritableOnlyContractResolver
 {
     // Fields
-    private static PrimitiveOnlyResolver _instance;
+    private static PrimitiveOnlyContractResolver _instance;
 
     // Properties
-    public static new PrimitiveOnlyResolver Instance
-        => _instance ??= new PrimitiveOnlyResolver();
+    public static new PrimitiveOnlyContractResolver Instance
+        => _instance ??= new PrimitiveOnlyContractResolver();
 
     // Methods
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         => base.CreateProperties(type, memberSerialization)
-               .Where(j => j.PropertyType.IsPrimitiveExtended())
+               .Where(PrimitivePropertyFilter)
                .ToList();
+
+    private static bool PrimitivePropertyFilter(JsonProperty jsonProperty)
+        => jsonProperty.PropertyType.IsPrimitiveExtended();
 }

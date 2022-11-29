@@ -32,13 +32,13 @@ public static class JsonSettings
             NullValueHandling = NullValueHandling.Include,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             MaxDepth = 8,
-            ContractResolver = WritableOnlyPropertiesResolver.Instance
+            ContractResolver = WritableOnlyContractResolver.Instance
         };
 
     private static JsonSerializerSettings CreatePrimitiveOnly()
     {
         var settings = CreateDefault();
-        settings.ContractResolver = PrimitiveOnlyResolver.Instance;
+        settings.ContractResolver = PrimitiveOnlyContractResolver.Instance;
         return settings;
     }
 
