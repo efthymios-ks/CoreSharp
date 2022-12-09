@@ -2,6 +2,6 @@
 
 namespace Tests.Internal.Dummies.Services.Marked;
 
-internal class TransientServiceWithoutContract : ITransient
+internal sealed class TransientServiceWithoutContract : ITransient
 {
 }

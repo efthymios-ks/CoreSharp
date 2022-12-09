@@ -6,7 +6,7 @@ internal interface ITransientServiceWithContract
 {
 }
 
-internal class TransientServiceWithContract :
+internal sealed class TransientServiceWithContract :
     ITransientServiceWithContract,
     ITransient<ITransientServiceWithContract>
 {

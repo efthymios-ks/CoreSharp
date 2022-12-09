@@ -2,6 +2,6 @@
 
 namespace Tests.Internal.Dummies.Services.Marked;
 
-internal class ScopedServiceWithoutContract : IScoped
+internal sealed class ScopedServiceWithoutContract : IScoped
 {
 }

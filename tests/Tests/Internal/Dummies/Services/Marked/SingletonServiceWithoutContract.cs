@@ -2,6 +2,6 @@
 
 namespace Tests.Internal.Dummies.Services.Marked;
 
-internal class SingletonServiceWithoutContract : ISingleton
+internal sealed class SingletonServiceWithoutContract : ISingleton
 {
 }

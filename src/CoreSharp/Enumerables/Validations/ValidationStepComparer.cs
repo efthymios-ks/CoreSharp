@@ -2,7 +2,7 @@
 
 namespace CoreSharp.Enumerables.Validations;
 
-internal class ValidationStepComparer : Comparer<ValidationStep>
+internal sealed class ValidationStepComparer : Comparer<ValidationStep>
 {
     // Methods 
     public override int Compare(ValidationStep current, ValidationStep previous)

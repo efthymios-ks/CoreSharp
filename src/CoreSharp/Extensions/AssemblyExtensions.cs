@@ -26,6 +26,6 @@ public static class AssemblyExtensions
 
         return assembly.GetReferencedAssemblies()
                        .Where(filter)
-                       .Select(a => Assembly.Load(a));
+                       .Select(Assembly.Load);
     }
 }

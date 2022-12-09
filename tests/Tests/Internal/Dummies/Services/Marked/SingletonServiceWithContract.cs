@@ -6,7 +6,7 @@ internal interface ISingletonServiceWithContract
 {
 }
 
-internal class SingletonServiceWithContract :
+internal sealed class SingletonServiceWithContract :
     ISingletonServiceWithContract,
     ISingleton<ISingletonServiceWithContract>
 {

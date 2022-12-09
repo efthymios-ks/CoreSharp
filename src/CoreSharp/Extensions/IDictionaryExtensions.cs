@@ -110,8 +110,8 @@ public static class IDictionaryExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
-        if (source.ContainsKey(key))
-            source[key] = updateAction(key, source[key]);
+        if (source.TryGetValue(key, out var value))
+            source[key] = updateAction(key, value);
         else
             source.Add(key, addValue);
 

@@ -6,7 +6,7 @@ internal interface IScopedServiceWithContract
 {
 }
 
-internal class ScopedServiceWithContract :
+internal sealed class ScopedServiceWithContract :
     IScopedServiceWithContract,
     IScoped<IScopedServiceWithContract>
 {

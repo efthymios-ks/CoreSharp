@@ -54,7 +54,7 @@ public class TaskExtensionsTests
         Task task = null;
 
         // Act
-        Func<Task> action = () => task.IgnoreError();
+        Func<Task> action = task.IgnoreError;
 
         // Assert 
         await action.Should().ThrowExactlyAsync<ArgumentNullException>();
@@ -67,7 +67,7 @@ public class TaskExtensionsTests
         var task = Task.FromException(new InvalidCastException());
 
         // Act
-        Func<Task> action = () => task.IgnoreError();
+        Func<Task> action = task.IgnoreError;
 
         // Assert 
         await action.Should().NotThrowAsync();
@@ -80,7 +80,7 @@ public class TaskExtensionsTests
         var task = Task.FromException(new InvalidCastException());
 
         // Act
-        Func<Task> action = () => task.IgnoreError<InvalidCastException>();
+        Func<Task> action = task.IgnoreError<InvalidCastException>;
 
         // Assert 
         await action.Should().NotThrowAsync<InvalidCastException>();
@@ -94,7 +94,7 @@ public class TaskExtensionsTests
         var task = Task.FromException(exceptionToThrow);
 
         // Act
-        Func<Task> action = () => task.IgnoreError<InvalidOperationException>();
+        Func<Task> action = task.IgnoreError<InvalidOperationException>;
 
         // Assert 
         var assertion = await action.Should().ThrowExactlyAsync<InvalidCastException>();
@@ -135,7 +135,7 @@ public class TaskExtensionsTests
         var task = Task.FromException<int>(new InvalidCastException());
 
         // Act
-        Func<Task> action = () => task.IgnoreError<InvalidCastException>();
+        Func<Task> action = task.IgnoreError<InvalidCastException>;
 
         // Assert 
         await action.Should().NotThrowAsync<InvalidCastException>();
@@ -149,7 +149,7 @@ public class TaskExtensionsTests
         var task = Task.FromException<int>(exceptionToThrow);
 
         // Act
-        Func<Task> action = () => task.IgnoreError<InvalidOperationException>();
+        Func<Task> action = task.IgnoreError<InvalidOperationException>;
 
         // Assert 
         var assertion = await action.Should().ThrowExactlyAsync<InvalidCastException>();

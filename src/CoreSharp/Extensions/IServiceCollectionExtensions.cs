@@ -39,7 +39,7 @@ public static class IServiceCollectionExtensions
         _ = services ?? throw new ArgumentNullException(nameof(services));
         _ = section ?? throw new ArgumentNullException(nameof(section));
 
-        return services.Configure<TOptions>(options => section.Bind(options));
+        return services.Configure<TOptions>(section.Bind);
     }
 
     #region Unmarked services

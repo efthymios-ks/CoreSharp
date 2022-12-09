@@ -19,17 +19,16 @@ public class RequiredContractResolver : DefaultContractResolver
     protected override JsonObjectContract CreateObjectContract(Type objectType)
     {
         var contract = base.CreateObjectContract(objectType);
-        SetRequiredProperties(contract);
+        HandleRequiredProperties(contract);
         return contract;
     }
 
-    public static void SetRequiredProperties(JsonObjectContract contract)
+    public static void HandleRequiredProperties(JsonObjectContract contract)
     {
         foreach (var jsonProperty in contract.Properties.Where(RequiredPropertyFilter))
             jsonProperty.Required = Required.Always;
     }
 
     private static bool RequiredPropertyFilter(JsonProperty jsonProperty)
-        => jsonProperty.PropertyType.IsValueType
-        && jsonProperty.AttributeProvider.GetAttributes(typeof(RequiredAttribute), inherit: true).Any();
+        => jsonProperty.AttributeProvider.GetAttributes(typeof(RequiredAttribute), inherit: true).Any();
 }
