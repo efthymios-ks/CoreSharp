@@ -1,4 +1,5 @@
-﻿using CoreSharp.Json.TextJson.JsonConverters;
+﻿using CoreSharp.Json.TextJson.JsonConverterFactories;
+using CoreSharp.Json.TextJson.JsonConverters;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
@@ -16,9 +17,11 @@ public static class JsonOptions
     // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private static IEnumerable<JsonConverter> DefaultJsonConverters
-        => new[]
+        => new JsonConverter[]
         {
-            new TimeSpanJsonConverter()
+            new TimeSpanJsonConverter(),
+            new CultureInfoJsonConveter(),
+            new EnumJsonConverterFactory()
         };
 
     public static JsonSerializerOptions Default

@@ -1,5 +1,7 @@
 ﻿using CoreSharp.Json.JsonNet.ContractResolvers;
+using CoreSharp.Json.JsonNet.JsonConverters;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace CoreSharp.Json.JsonNet;
@@ -15,6 +17,14 @@ public static class JsonSettings
     private static JsonSerializerSettings _strict;
 
     // Properties
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private static IEnumerable<JsonConverter> DefaultJsonConverters
+        => new JsonConverter[]
+        {
+            new CultureInfoJsonConveter(),
+            new UtcDateTimeJsonConverter()
+        };
+
     public static JsonSerializerSettings Default
         => _default ??= CreateDefault();
 
@@ -26,7 +36,8 @@ public static class JsonSettings
 
     // Methods
     private static JsonSerializerSettings CreateDefault()
-        => new()
+    {
+        var settings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
             NullValueHandling = NullValueHandling.Include,
@@ -35,6 +46,11 @@ public static class JsonSettings
             ContractResolver = WritableOnlyContractResolver.Instance
         };
 
+        foreach (var jsonConverter in DefaultJsonConverters)
+            settings.Converters.Add(jsonConverter);
+
+        return settings;
+    }
     private static JsonSerializerSettings CreatePrimitiveOnly()
     {
         var settings = CreateDefault();

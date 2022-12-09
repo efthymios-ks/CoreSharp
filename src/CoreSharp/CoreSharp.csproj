@@ -20,7 +20,8 @@
 -Collections, ObservableDictionary, Added tests.
 -Extensions, String, Added `FormatWithNames()` methods.
 -Json, Json.NET, Fixed settings reference issue.
--Json, Converters, Added for `CultureInfo`.		</PackageReleaseNotes>
+-Json, Converters, Added for `CultureInfo`.
+-Json, Converters, Added `EnumJsonConveter`.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
