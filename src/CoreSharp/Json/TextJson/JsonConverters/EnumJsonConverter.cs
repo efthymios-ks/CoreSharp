@@ -14,16 +14,16 @@ internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
     public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var valueToParse = ReadValueAsObject(ref reader);
-        var parseValue = ParseFromObject(typeToConvert, valueToParse, options);
+        var parsedValue = ParseFromObject(typeToConvert, valueToParse, options);
 
-        if (parseValue is null)
+        if (parsedValue is null)
             throw new JsonException($"`{valueToParse}` is not a valid `{typeToConvert}` enum.");
 
-        return (TEnum)parseValue;
+        return (TEnum)parsedValue;
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
-        => writer.WriteNumberValue((int)Convert.ChangeType(value, typeof(int)));
+        => writer.WriteNumberValue(Convert.ToInt32(value));
 
     private static object ReadValueAsObject(ref Utf8JsonReader reader)
         => reader.TokenType switch
