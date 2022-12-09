@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Package">
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<Authors>Efthymios Koktsidis</Authors>
 		<Company>Efthymios Koktsidis</Company>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,28 +16,30 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
 		<Version>6.2.0</Version>
-		<PackageReleaseNotes>-Collections, ObservableHashSet, Added tests.
--Collections, ObservableDictionary, Added tests.
--Extensions, String, Added `FormatWithNames()` methods.
--Json, Json.NET, Fixed settings reference issue.
--Json, Converters, Added for `CultureInfo`.
--Json, Converters, Added `EnumJsonConveter`.</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			-Collections, ObservableHashSet, Added tests.
+			-Collections, ObservableDictionary, Added tests.
+			-Extensions, String, Added `FormatWithNames()` methods.
+			-Json, Json.NET, Fixed settings reference issue.
+			-Json, Converters, Added for `CultureInfo`.
+			-Json, Converters, Added `EnumJsonConveter`.
+		</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup Label="Package references">
 		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.11" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0">
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0">
 			<TreatAsUsed>true</TreatAsUsed>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="System.IO.Ports" Version="6.0.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="System.IO.Ports" Version="7.0.0" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup Label="Assets">
