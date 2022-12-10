@@ -14,6 +14,6 @@ public sealed class EnumJsonConverterFactory : JsonConverterFactory
     public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
     {
         var enumJsonConverterType = typeof(EnumJsonConverter<>).MakeGenericType(typeToConvert);
-        return (JsonConverter)Activator.CreateInstance(enumJsonConverterType, options);
+        return (JsonConverter)Activator.CreateInstance(enumJsonConverterType);
     }
 }

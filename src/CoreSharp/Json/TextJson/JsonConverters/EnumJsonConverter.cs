@@ -7,6 +7,9 @@ namespace CoreSharp.Json.TextJson.JsonConverters;
 internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
     where TEnum : Enum
 {
+    // Fields
+    private static readonly TypeCode EnumTypeCode = Type.GetTypeCode(typeof(TEnum));
+
     // Methods 
     public override bool CanConvert(Type typeToConvert)
         => typeToConvert.IsEnum;
@@ -23,25 +26,57 @@ internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
-        => writer.WriteNumberValue(Convert.ToInt32(value));
+    {
+        switch (EnumTypeCode)
+        {
+            case TypeCode.Byte:
+            case TypeCode.SByte:
+            case TypeCode.Int16:
+            case TypeCode.UInt16:
+            case TypeCode.Int32:
+            case TypeCode.UInt32:
+            case TypeCode.Int64:
+                writer.WriteNumberValue(Convert.ToInt64(value));
+                break;
+            case TypeCode.UInt64:
+                writer.WriteNumberValue(Convert.ToUInt64(value));
+                break;
+            default:
+                throw new JsonException($"`{value}` is not a valid `{typeof(TEnum)}` enum.");
+        }
+    }
 
     private static object ReadValueAsObject(ref Utf8JsonReader reader)
         => reader.TokenType switch
         {
-            JsonTokenType.Number => reader.GetInt32(),
-            JsonTokenType.StartArray => reader.GetString(),
+            JsonTokenType.String => reader.GetString(),
+            JsonTokenType.Number => EnumTypeCode switch
+            {
+                TypeCode.Byte => reader.GetByte(),
+                TypeCode.SByte => reader.GetSByte(),
+                TypeCode.Int16 => reader.GetInt16(),
+                TypeCode.UInt16 => reader.GetUInt16(),
+                TypeCode.Int32 => reader.GetInt32(),
+                TypeCode.UInt32 => reader.GetUInt32(),
+                TypeCode.Int64 => reader.GetInt64(),
+                TypeCode.UInt64 => reader.GetUInt64(),
+                _ => null
+            },
             _ => null
         };
 
     private static object ParseFromObject(Type enumType, object value, JsonSerializerOptions jsonSerializerOptions)
         => value switch
         {
-            int valueAsInt => ParseFromInt(enumType, valueAsInt),
             string valueAsString => ParseFromString(enumType, valueAsString, jsonSerializerOptions.PropertyNameCaseInsensitive),
+            byte or sbyte or
+            short or ushort or
+            int or uint or
+            long or ulong => ParseFromNumber(enumType, value),
             _ => null
         };
 
-    private static object ParseFromInt(Type enumType, int value)
+    private static object ParseFromNumber(Type enumType, object value)
     {
         if (!Enum.IsDefined(enumType, value))
             return null;

@@ -32,18 +32,23 @@ public static class JsonOptions
     {
         var options = new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-            ReadCommentHandling = JsonCommentHandling.Skip,
             AllowTrailingCommas = true,
-            ReferenceHandler = ReferenceHandler.Preserve,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString,
-            IncludeFields = false,
-            WriteIndented = true,
+            //DefaultBufferSize = 16 * 1024,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             IgnoreReadOnlyFields = true,
-            IgnoreReadOnlyProperties = true,
+            IgnoreReadOnlyProperties = false,
+            IncludeFields = false,
             MaxDepth = 8,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            //TypeInfoResolver = null,
+            UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement,
+            WriteIndented = true
         };
 
         foreach (var jsonConverter in DefaultJsonConverters)
