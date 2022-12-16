@@ -1,4 +1,4 @@
-﻿using CoreSharp.Json.JsonNet;
+﻿using CoreSharp.Json.TextJson;
 using CoreSharp.Sources;
 using Newtonsoft.Json.Linq;
 using System;
@@ -279,9 +279,9 @@ public static class StringExtensions
         where TEntity : class
         => json.FromJson(typeof(TEntity)) as TEntity;
 
-    /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
+    /// <inheritdoc cref="FromJson(string, Type, TextJson.JsonSerializerOptions)"/>
     public static object FromJson(this string json, Type entityType)
-        => json.FromJson(entityType, JsonSettings.Default);
+        => json.FromJson(entityType, JsonOptions.Default);
 
     /// <inheritdoc cref="FromJson(string, Type, JsonNet.JsonSerializerSettings)"/>
     public static TEntity FromJson<TEntity>(this string json, JsonNet.JsonSerializerSettings settings)
@@ -291,6 +291,7 @@ public static class StringExtensions
     /// <inheritdoc cref="StreamExtensions.FromJson{TEntity}(Stream, JsonNet.JsonSerializerSettings)"/>
     public static object FromJson(this string json, Type entityType, JsonNet.JsonSerializerSettings settings)
     {
+        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
         _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
         try
@@ -311,6 +312,7 @@ public static class StringExtensions
     /// <inheritdoc cref="StreamExtensions.FromJsonAsync(Stream, TextJson.JsonSerializerOptions)"/>
     public static object FromJson(this string json, Type entityType, TextJson.JsonSerializerOptions options)
     {
+        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
         _ = options ?? throw new ArgumentNullException(nameof(options));
 
         try
@@ -324,7 +326,8 @@ public static class StringExtensions
     }
 
     /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
-    public static TEntity FromXml<TEntity>(this string xml) where TEntity : class
+    public static TEntity FromXml<TEntity>(this string xml)
+        where TEntity : class
         => XDocument.Parse(xml).ToEntity<TEntity>();
 
     /// <summary>

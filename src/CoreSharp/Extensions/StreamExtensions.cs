@@ -1,4 +1,5 @@
 ﻿using CoreSharp.Json.JsonNet;
+using CoreSharp.Json.TextJson;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,7 +20,7 @@ public static class StreamExtensions
 {
     // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private const int DefaultBufferSize = 10240;
+    private const int DefaultBufferSize = 10 * 1024;
 
     /// <inheritdoc cref="FromJson(Stream, Type)"/>
     public static TEntity FromJson<TEntity>(this Stream stream)
@@ -42,6 +43,8 @@ public static class StreamExtensions
     public static object FromJson(this Stream stream, Type entityType, JsonNet.JsonSerializerSettings settings)
     {
         _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
+        _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
         if (!stream.CanRead)
             throw new NotSupportedException($"{nameof(stream)} is not readable.");
@@ -66,6 +69,15 @@ public static class StreamExtensions
         }
     }
 
+    /// <inheritdoc cref="FromJsonAsync(Stream, Type)"/>
+    public static async Task<TEntity> FromJsonAsync<TEntity>(this Stream stream)
+        where TEntity : class
+        => await stream.FromJsonAsync(typeof(TEntity)) as TEntity;
+
+    /// <inheritdoc cref="FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
+    public static async Task<object> FromJsonAsync(this Stream stream, Type entityType)
+        => await stream.FromJsonAsync(entityType, JsonOptions.Default);
+
     /// <inheritdoc cref="FromJsonAsync(Stream, Type, TextJson.JsonSerializerOptions)"/>
     public static async Task<TEntity> FromJsonAsync<TEntity>(this Stream stream, TextJson.JsonSerializerOptions options)
         where TEntity : class
@@ -78,6 +90,7 @@ public static class StreamExtensions
     public static async Task<object> FromJsonAsync(this Stream stream, Type entityType, TextJson.JsonSerializerOptions options)
     {
         _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
         _ = options ?? throw new ArgumentNullException(nameof(options));
 
         if (!stream.CanRead)

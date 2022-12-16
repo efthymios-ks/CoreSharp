@@ -1,5 +1,5 @@
 ﻿using CoreSharp.EqualityComparers;
-using CoreSharp.Json.JsonNet;
+using CoreSharp.Json.TextJson;
 using CoreSharp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -42,10 +42,10 @@ public static class GenericExtensions
         return source.Any(i => equalityComparer.Equals(i, element));
     }
 
-    /// <inheritdoc cref="ToJson{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+    /// <inheritdoc cref="ToJson{TEntity}(TEntity, TextJson.JsonSerializerOptions)"/>
     public static string ToJson<TEntity>(this TEntity entity)
         where TEntity : class
-        => entity.ToJson(JsonSettings.Default);
+        => entity.ToJson(JsonOptions.Default);
 
     /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
     public static string ToJson<TEntity>(this TEntity entity, JsonNet.JsonSerializerSettings settings)
@@ -67,10 +67,10 @@ public static class GenericExtensions
         return TextJson.JsonSerializer.Serialize(entity, options);
     }
 
-    /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, JsonNet.JsonSerializerSettings, CancellationToken)"/>
+    /// <inheritdoc cref="ToJsonStreamAsync{TEntity}(TEntity, TextJson.JsonSerializerOptions, CancellationToken)"/>
     public static async Task<Stream> ToJsonStreamAsync<TEntity>(this TEntity entity)
         where TEntity : class
-        => await entity.ToJsonStreamAsync(JsonSettings.Default);
+        => await entity.ToJsonStreamAsync(JsonOptions.Default);
 
     /// <summary>
     /// Serialize the specified object to JSON using Json.NET.
@@ -115,10 +115,10 @@ public static class GenericExtensions
         return stream;
     }
 
-    /// <inheritdoc cref="JsonClone{TEntity}(TEntity, JsonNet.JsonSerializerSettings)"/>
+    /// <inheritdoc cref="JsonClone{TEntity}(TEntity, TextJson.JsonSerializerOptions)"/>
     public static TEntity JsonClone<TEntity>(this TEntity item)
         where TEntity : class
-        => item.JsonClone(JsonSettings.Default);
+        => item.JsonClone(JsonOptions.Default);
 
     /// <summary>
     /// Perform a deep copy using json serialization and Json.NET.
@@ -146,10 +146,10 @@ public static class GenericExtensions
         return TextJson.JsonSerializer.Deserialize<TEntity>(json, options);
     }
 
-    /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, JsonNet.JsonSerializerSettings)"/>
+    /// <inheritdoc cref="JsonEquals{TEntity}(TEntity, TEntity, TextJson.JsonSerializerOptions)"/>
     public static bool JsonEquals<TEntity>(this TEntity left, TEntity right)
         where TEntity : class
-        => left.JsonEquals(right, JsonSettings.Default);
+        => left.JsonEquals(right, JsonOptions.Default);
 
     /// <summary>
     /// Compares two entities using <see cref="JsonEqualityComparer{TEntity}"/> and Json.Net.
