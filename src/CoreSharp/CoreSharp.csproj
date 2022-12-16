@@ -23,7 +23,8 @@
 -Json, Converters, Added for `CultureInfo`.
 -Json, Converters, Added `EnumJsonConveter`.
 -Migration to .NET7.
--Json, TypeInfoResolvers, Added `RequiredJsonTypeInfoResolver`.</PackageReleaseNotes>
+-Json, TypeInfoResolvers, Added `RequiredJsonTypeInfoResolver`.
+-Extensions, JsonSerializerOptionsExtensions, Added `MapTo()` method.	</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 	</PropertyGroup>
