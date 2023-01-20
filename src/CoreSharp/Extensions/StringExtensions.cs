@@ -593,7 +593,13 @@ public static class StringExtensions
     /// Return the one that is not <see cref="string.IsNullOrEmpty(string?)"/>.
     /// </summary>
     public static string Or(this string left, string right)
-        => !string.IsNullOrEmpty(left) ? left : right;
+        => string.IsNullOrWhiteSpace(left) ? right : left;
+
+    /// <summary>
+    /// Return value or null if <see cref="string.IsNullOrEmpty(string?)"/>.
+    /// </summary>
+    public static string OrNull(this string value)
+        => value.Or(null);
 
     /// <summary>
     /// Returns substring after first match.

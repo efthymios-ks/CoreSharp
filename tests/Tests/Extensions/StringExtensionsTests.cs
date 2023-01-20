@@ -927,6 +927,52 @@ public class StringExtensionsTests
     }
 
     [Test]
+    public void OrNull_ValueIsNull_ReturnNull()
+    {
+        // Act
+        var result = StringNull.OrNull();
+
+        // Assert
+        result.Should().Be(null);
+    }
+
+    [Test]
+    public void OrNull_ValueIsEmpty_ReturnNull()
+    {
+        // Act
+        var result = string.Empty.OrNull();
+
+        // Assert
+        result.Should().Be(null);
+    }
+
+    [Test]
+    public void OrNull_ValueIsWhitespace_ReturnNull()
+    {
+        // Arrange
+        const string whitespaces = " \t \r \n ";
+
+        // Act
+        var result = whitespaces.OrNull();
+
+        // Assert
+        result.Should().Be(null);
+    }
+
+    [Test]
+    public void OrNull_HasValue_ReturnProvidedValue()
+    {
+        // Arrange
+        const string stringValue = "1";
+
+        // Act
+        var result = stringValue.OrNull();
+
+        // Assert
+        result.Should().Be(stringValue);
+    }
+
+    [Test]
     [TestCase(null, " ")]
     [TestCase("", null)]
     [TestCase("", "")]
