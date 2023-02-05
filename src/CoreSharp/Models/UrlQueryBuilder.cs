@@ -14,7 +14,7 @@ public class UrlQueryBuilder : QueryBuilder
     private void AddInternal(string key, object value)
     {
         if (value is not null)
-            base.Add(key, Convert.ToString(value, CultureInfo.InvariantCulture));
+            Add(key, Convert.ToString(value, CultureInfo.InvariantCulture));
     }
 
     private void SwitchAdd<TValue>(string key, TValue value)

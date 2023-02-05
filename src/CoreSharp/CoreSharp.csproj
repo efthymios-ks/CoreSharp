@@ -15,14 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>7.0.0</Version>
-		<PackageReleaseNotes>-Json, Json.NET, Fixed settings reference issue.
--Json, Converters, Added for `CultureInfo`.
--Json, Converters, Added `EnumJsonConveter`.
--Migration to .NET7.
--Json, TypeInfoResolvers, Added `RequiredJsonTypeInfoResolver`.
--Extensions, JsonSerializerOptionsExtensions, Added `MapTo()` method.
--Extensions, Json, Switched default methods to TextJson.</PackageReleaseNotes>
+		<Version>7.0.1</Version>
+		<PackageReleaseNotes>-Utilities, UriX, Build(), Handle query string on base URL.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -48,8 +42,8 @@
 			<PackagePath></PackagePath>
 		</None>
 		<None Include="..\..\README.md">
-		  <Pack>True</Pack>
-		  <PackagePath>\</PackagePath>
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
 

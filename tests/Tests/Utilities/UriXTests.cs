@@ -14,6 +14,7 @@ public class UriXTests
     }
 
     [Test]
+    [TestCase("http://google.com/path1/path2/", "http://google.com", "path1", "path2")]
     [TestCase("http://google.com/path1/path2/", "http://google.com", "//path1//", "/path2/")]
     [TestCase("https://google.com/path1/path2/", "https://google.com", "//path1//", "/path2/")]
     [TestCase("https://google.com/path1/path2/", "https:///google.com//", "///path1///", "//path2//")]
@@ -59,7 +60,7 @@ public class UriXTests
     }
 
     [Test]
-    public void Build_WhenCalled_ReturnQueryString()
+    public void Build_BaseUrlHasNoQuery_MergeAndReturnBaseAndQueryString()
     {
         // Arrange
         const string baseUrl = "https://example.com/";
@@ -69,6 +70,45 @@ public class UriXTests
             { "count", 10 }
         };
         const string expectedUrl = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
+
+        // Act
+        var url = UriX.Build(baseUrl, parameters);
+
+        // Assert
+        url.Should().Be(expectedUrl);
+    }
+
+    [Test]
+    public void Build_BaseUrlHasUniqueQuery_MergeAndReturnBaseUrlAndQueryWithProvidedQueryString()
+    {
+        // Arrange
+        const string baseUrl = "https://example.com?age=28";
+        var parameters = new Dictionary<string, object>
+        {
+            { "name", "Efthymios Koktsidis" },
+            { "count", 10 }
+        };
+        const string expectedUrl = "https://example.com/?age=28&name=Efthymios%20Koktsidis&count=10";
+
+        // Act
+        var url = UriX.Build(baseUrl, parameters);
+
+        // Assert
+        url.Should().Be(expectedUrl);
+    }
+
+    [Test]
+    public void Build_BaseUrlHasCommonQueryWithProvided_OverrideProvidedQueryOntoBaseAndMergeReturn()
+    {
+        // Arrange
+        const string baseUrl = "https://example.com?age=28";
+        var parameters = new Dictionary<string, object>
+        {
+            { "name", "Efthymios Koktsidis" },
+            { "count", 10 },
+            { "age", 30 }
+        };
+        const string expectedUrl = "https://example.com/?age=30&name=Efthymios%20Koktsidis&count=10";
 
         // Act
         var url = UriX.Build(baseUrl, parameters);

@@ -1,6 +1,7 @@
 ﻿using CoreSharp.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -40,10 +41,8 @@ public static class UriX
             if (i == 0 && Uri.IsWellFormedUriString(trimmed, UriKind.Relative))
                 builder.Append('/');
 
-            builder.Append(trimmed);
+            builder.Append(trimmed).Append('/');
         }
-
-        builder.Append('/');
 
         // Build url 
         var url = builder.ToString();
@@ -61,27 +60,52 @@ public static class UriX
         return parameters.AllKeys.ToDictionary(k => k, k => parameters[k]);
     }
 
-    /// <inheritdoc cref="Build{TValue}(string, IDictionary{string, TValue})"/>
+    /// <inheritdoc cref="ParseAndBuild{TEntity}(string, TEntity, IFormatProvider)"/>
     public static string ParseAndBuild<TEntity>(string baseUrl, TEntity entity)
+        where TEntity : class
+        => ParseAndBuild(baseUrl, entity, CultureInfo.InvariantCulture);
+
+    /// <inheritdoc cref="Build{TValue}(string, IDictionary{string, TValue})"/>
+    public static string ParseAndBuild<TEntity>(string baseUrl, TEntity entity, IFormatProvider formatProvider)
         where TEntity : class
     {
         _ = entity ?? throw new ArgumentNullException(nameof(entity));
+        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+
         var properties = entity.GetType()
                                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                .ToDictionary(p => p.Name, p => p.GetValue(entity));
-        return Build(baseUrl, properties);
+        return Build(baseUrl, properties, formatProvider);
     }
+
+    /// <inheritdoc cref="Build{TValue}(string, IDictionary{string, TValue}, IFormatProvider)"/>
+    public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> queryParameters)
+        => Build(baseUrl, queryParameters, CultureInfo.InvariantCulture);
 
     /// <summary>
     /// Build url from base url and query parameters list.
     /// </summary>
-    public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> queryParameters)
+    public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> queryParameters, IFormatProvider formatProvider)
     {
         _ = queryParameters ?? throw new ArgumentNullException(nameof(queryParameters));
+        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
         if (string.IsNullOrWhiteSpace(baseUrl))
             throw new ArgumentNullException(nameof(baseUrl));
 
-        var query = queryParameters.ToUrlQueryString();
+        // Try parse URL 
+        if (!Uri.TryCreate(baseUrl, UriKind.RelativeOrAbsolute, out var baseUri))
+            throw new ArgumentException($"`{nameof(baseUrl)}` is not a valid URL.", nameof(baseUrl));
+
+        // Check if base URL has existing query parameters...
+        var baseQueryParameters = baseUri.GetQueryParameters();
+        if (baseQueryParameters.Any())
+            baseUrl = baseUri.GetLeftPart(UriPartial.Path);
+
+        // ...and merge with provided.
+        foreach (var queryParameter in queryParameters)
+            baseQueryParameters[queryParameter.Key] = Convert.ToString(queryParameter.Value, formatProvider);
+
+        var query = baseQueryParameters.ToUrlQueryString();
 
         var trimChars = new[] { ' ', '?', '&', '/' };
         baseUrl = baseUrl.Trim(trimChars);
