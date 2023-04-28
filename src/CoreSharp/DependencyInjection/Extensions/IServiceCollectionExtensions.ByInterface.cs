@@ -120,8 +120,8 @@ public static partial class IServiceCollectionExtensions
         var actualContract = Array.Find(serviceInterfaces, i => GetGenericTypeBase(i) == GetGenericTypeBase(contractType));
 
         // When doesn't implement the configured service.
-        if (actualContract is null)
-            throw new InvalidOperationException($"Service ({serviceType}) does not inherit its configured contract interface ({contractType}).");
+        _ = actualContract
+            ?? throw new InvalidOperationException($"Service ({serviceType}) does not inherit its configured contract interface ({contractType}).");
 
         // When it's open generic, get type definition.
         // E.g. class Repository<TValue> : IRepository<TValue>, IScoped<IRepository<TValue> {}

@@ -30,9 +30,8 @@ public static class HttpContentExtensions
         _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
 
         // Get content type 
-        var contentType = httpContent.GetContentType();
-        if (contentType is null)
-            throw new KeyNotFoundException($"{HeaderNames.ContentType} header missing from the response.");
+        var contentType = httpContent.GetContentType()
+            ?? throw new KeyNotFoundException($"{HeaderNames.ContentType} header missing from the response.");
 
         // Check content type 
         return contentType.MediaType switch

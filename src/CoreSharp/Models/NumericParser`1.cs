@@ -63,8 +63,8 @@ public sealed class NumericParser<TNumber>
             var tempNumber = ToDecimal(input);
 
             // If failed, throw 
-            if (tempNumber is null)
-                throw new ArgumentNullException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
+            _ = tempNumber
+                ?? throw new ArgumentNullException($"Failed to parse input=`{input}` to {typeof(TNumber).GetNullableBaseType().FullName}.");
 
             // Format to string... 
             input = ToString(tempNumber);

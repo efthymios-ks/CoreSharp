@@ -19,8 +19,8 @@ internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
         var valueToParse = ReadValueAsObject(ref reader);
         var parsedValue = ParseFromObject(typeToConvert, valueToParse, options);
 
-        if (parsedValue is null)
-            throw new JsonException($"`{valueToParse}` is not a valid `{typeToConvert}` enum.");
+        _ = parsedValue
+            ?? throw new JsonException($"`{valueToParse}` is not a valid `{typeToConvert}` enum.");
 
         return (TEnum)parsedValue;
     }
