@@ -27,7 +27,7 @@ public static class UriX
     /// </summary>
     public static string JoinSegments(params string[] segments)
     {
-        _ = segments ?? throw new ArgumentNullException(nameof(segments));
+        ArgumentNullException.ThrowIfNull(segments);
 
         var builder = new StringBuilder();
 
@@ -71,8 +71,8 @@ public static class UriX
     public static string ParseAndBuild<TEntity>(string baseUrl, TEntity entity, IFormatProvider formatProvider)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         var properties = entity.GetType()
                                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -89,12 +89,9 @@ public static class UriX
     /// </summary>
     public static string Build<TValue>(string baseUrl, IDictionary<string, TValue> queryParameters, IFormatProvider formatProvider)
     {
-        _ = queryParameters ?? throw new ArgumentNullException(nameof(queryParameters));
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
-        if (string.IsNullOrWhiteSpace(baseUrl))
-        {
-            throw new ArgumentNullException(nameof(baseUrl));
-        }
+        ArgumentNullException.ThrowIfNull(queryParameters);
+        ArgumentNullException.ThrowIfNull(formatProvider);
+        ArgumentException.ThrowIfNullOrEmpty(baseUrl);
 
         // Try parse URL 
         if (!Uri.TryCreate(baseUrl, UriKind.RelativeOrAbsolute, out var baseUri))

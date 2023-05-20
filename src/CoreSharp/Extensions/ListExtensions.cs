@@ -13,8 +13,8 @@ public static class ListExtensions
     /// </summary>
     public static void Sort<TElement, TKey>(this List<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var comparer = Comparer<TKey>.Default;
         source.Sort((x, y) => comparer.Compare(keySelector(x), keySelector(y)));

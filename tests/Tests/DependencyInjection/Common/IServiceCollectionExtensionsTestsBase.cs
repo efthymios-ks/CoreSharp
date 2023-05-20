@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.DependencyInjection.Extensions.Common;
+namespace Tests.DependencyInjection.Common;
 
 public abstract class IServiceCollectionExtensionsTestsBase
 {

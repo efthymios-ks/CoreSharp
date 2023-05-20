@@ -12,7 +12,7 @@ public static class HashSetX
     /// <inheritdoc cref="HashSet{TElement}.HashSet(IEqualityComparer{TElement}?)" />
     public static HashSet<TElement> Create<TElement, TKey>(Func<TElement, TKey> keySelector)
     {
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return new HashSet<TElement>(comparer);
@@ -21,7 +21,7 @@ public static class HashSetX
     /// <inheritdoc cref="HashSet{TElement}.HashSet(int, IEqualityComparer{TElement}?)" />
     public static HashSet<TElement> Create<TElement, TKey>(int capacity, Func<TElement, TKey> keySelector)
     {
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return new HashSet<TElement>(capacity, comparer);
@@ -30,8 +30,8 @@ public static class HashSetX
     /// <inheritdoc cref="HashSet{TElement}.HashSet(IEnumerable{TElement}, IEqualityComparer{TElement}?)" />
     public static HashSet<TElement> Create<TElement, TKey>(IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(keySelector);
+        ArgumentNullException.ThrowIfNull(source);
 
         var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return new HashSet<TElement>(source, comparer);

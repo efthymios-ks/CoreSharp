@@ -31,10 +31,8 @@ public class SwitchCases<TKey, TResult> : IEnumerable<KeyValuePair<TKey, Func<TR
         {
             return value();
         }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(key));
-        }
+
+        throw new ArgumentOutOfRangeException(nameof(key));
     }
 
     public IEnumerator<KeyValuePair<TKey, Func<TResult>>> GetEnumerator()

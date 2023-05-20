@@ -15,7 +15,7 @@ public static class SocketExtensions
     /// </summary>
     public static async Task<bool> IsConnectedAsync(this Socket socket, int timeoutMillis = 5000)
     {
-        _ = socket ?? throw new ArgumentNullException(nameof(socket));
+        ArgumentNullException.ThrowIfNull(socket);
         return timeoutMillis <= 0
             ? throw new ArgumentOutOfRangeException(nameof(timeoutMillis), $"{nameof(timeoutMillis)} has to be positive and non-zero.")
             : await socket.IsConnectedInternalAsync(timeoutMillis);

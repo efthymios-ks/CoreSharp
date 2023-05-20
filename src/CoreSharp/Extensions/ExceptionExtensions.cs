@@ -15,7 +15,7 @@ public static class ExceptionExtensions
     /// </summary>
     public static string UnwrapMessages(this Exception exception)
     {
-        _ = exception ?? throw new ArgumentNullException(nameof(exception));
+        ArgumentNullException.ThrowIfNull(exception);
 
         var messages = exception.Unwrap()
                                 .Where(ex => !string.IsNullOrWhiteSpace(ex.Message))
@@ -29,7 +29,7 @@ public static class ExceptionExtensions
     /// </summary>
     public static IEnumerable<Exception> Unwrap(this Exception exception)
     {
-        _ = exception ?? throw new ArgumentNullException(nameof(exception));
+        ArgumentNullException.ThrowIfNull(exception);
 
         return exception.UnwrapInternal();
     }
@@ -60,7 +60,7 @@ public static class ExceptionExtensions
     /// </summary>
     public static Exception GetInnermostException(this Exception exception)
     {
-        _ = exception ?? throw new ArgumentNullException(nameof(exception));
+        ArgumentNullException.ThrowIfNull(exception);
 
         if (exception.InnerException is null)
         {

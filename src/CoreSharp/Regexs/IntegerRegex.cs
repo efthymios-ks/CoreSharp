@@ -23,8 +23,11 @@ public sealed class IntegerRegex
 
     public IntegerRegex(string input, CultureInfo culture)
     {
-        Input = input ?? throw new ArgumentNullException(nameof(input));
-        _culture = culture ?? throw new ArgumentNullException(nameof(culture));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(culture);
+
+        Input = input;
+        _culture = culture;
 
         Input = input;
         var regex = new Regex(Pattern);

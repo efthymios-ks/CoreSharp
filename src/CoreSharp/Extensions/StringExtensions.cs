@@ -25,7 +25,7 @@ public static class StringExtensions
     /// </summary>
     public static string Truncate(this string input, int length)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
         if (length < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be a positive and non-zero.");
@@ -40,7 +40,7 @@ public static class StringExtensions
     /// </summary>
     public static string FormatAsciiControls(this string input, char openBracket = '<', char closeBracket = '>')
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
 
         var formattedControls = new Dictionary<string, string>();
         foreach (var (key, value) in AsciiControls.Dictionary)
@@ -56,7 +56,8 @@ public static class StringExtensions
     /// </summary>
     public static string PadCenter(this string input, int totalWidth, char paddingChar = ' ')
     {
-        input = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
+
         if (totalWidth < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(totalWidth), $"{nameof(totalWidth)} has to be zero or greater.");
@@ -73,8 +74,8 @@ public static class StringExtensions
     /// </summary>
     public static string RemoveFirst(this string input, string value)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = value ?? throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(value);
 
         var index = input.IndexOf(value, StringComparison.Ordinal);
         if (index >= 0)
@@ -90,8 +91,8 @@ public static class StringExtensions
     /// </summary>
     public static string RemoveLast(this string input, string value)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = value ?? throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(value);
 
         var index = input.LastIndexOf(value, StringComparison.Ordinal);
         if (index >= 0)
@@ -107,8 +108,8 @@ public static class StringExtensions
     /// </summary>
     public static string RemoveAll(this string input, string value)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = value ?? throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(value);
 
         return input.Replace(value, string.Empty);
     }
@@ -118,7 +119,7 @@ public static class StringExtensions
     /// </summary>
     public static string Left(this string input, int length)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
         if (length < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
@@ -132,7 +133,7 @@ public static class StringExtensions
     /// </summary>
     public static string Right(this string input, int length)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
         if (length < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
@@ -156,7 +157,7 @@ public static class StringExtensions
     /// </summary>
     public static string Mid(this string input, int start, int length)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
         if (start < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} has to be greater than 0.");
@@ -183,8 +184,8 @@ public static class StringExtensions
     /// </summary>
     public static bool EqualsAnyCI(this string input, params string[] values)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = values ?? throw new ArgumentNullException(nameof(values));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(values);
 
         return values.Any(v => input.Equals(v, StringComparison.OrdinalIgnoreCase));
     }
@@ -199,8 +200,8 @@ public static class StringExtensions
     /// </summary>
     public static bool StartsWithAnyCI(this string input, params string[] values)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = values ?? throw new ArgumentNullException(nameof(values));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(values);
 
         return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
     }
@@ -215,8 +216,8 @@ public static class StringExtensions
     /// </summary>
     public static bool EndsWithAnyCI(this string input, params string[] values)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = values ?? throw new ArgumentNullException(nameof(values));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(values);
 
         return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
     }
@@ -231,8 +232,8 @@ public static class StringExtensions
     /// </summary>
     public static bool ContainsAnyCI(this string input, params string[] values)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        _ = values ?? throw new ArgumentNullException(nameof(values));
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(values);
 
         return values.Any(v => input.Contains(v, StringComparison.InvariantCultureIgnoreCase));
     }
@@ -262,7 +263,7 @@ public static class StringExtensions
     /// </summary>
     public static string Reverse(this string input)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
 
         var array = input.ToCharArray();
         Array.Reverse(array);
@@ -278,7 +279,7 @@ public static class StringExtensions
     /// </summary>
     public static string Erase(this string input, string value)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
 
         return input.Replace(value, string.Empty);
     }
@@ -288,7 +289,7 @@ public static class StringExtensions
     /// </summary>
     public static string SafeTrim(this string input, params char[] trimChars)
     {
-        _ = trimChars ?? throw new ArgumentNullException(nameof(trimChars));
+        ArgumentNullException.ThrowIfNull(trimChars);
 
         input ??= string.Empty;
         input = input.Trim();
@@ -313,8 +314,8 @@ public static class StringExtensions
     /// <inheritdoc cref="StreamExtensions.FromJson{TEntity}(Stream, JsonNet.JsonSerializerSettings)"/>
     public static object FromJson(this string json, Type entityType, JsonNet.JsonSerializerSettings settings)
     {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(entityType);
+        ArgumentNullException.ThrowIfNull(settings);
 
         try
         {
@@ -334,8 +335,8 @@ public static class StringExtensions
     /// <inheritdoc cref="StreamExtensions.FromJsonAsync(Stream, TextJson.JsonSerializerOptions)"/>
     public static object FromJson(this string json, Type entityType, TextJson.JsonSerializerOptions options)
     {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(entityType);
+        ArgumentNullException.ThrowIfNull(options);
 
         try
         {
@@ -372,7 +373,7 @@ public static class StringExtensions
     /// </summary>
     public static IEnumerable<string> GetLines(this string input, StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
 
         return input.Split(new[] { "\r", "\n", "\r\n", Environment.NewLine }, stringSplitOptions);
     }
@@ -394,7 +395,7 @@ public static class StringExtensions
     /// </summary>
     public static int? ToInt(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return int.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -418,7 +419,7 @@ public static class StringExtensions
     /// <inheritdoc cref="ToLong(string, NumberStyles, IFormatProvider)"/>
     public static long? ToLong(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return long.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -444,7 +445,7 @@ public static class StringExtensions
     /// </summary>
     public static short? ToShort(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return short.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -470,7 +471,7 @@ public static class StringExtensions
     /// </summary>
     public static float? ToFloat(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return float.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -496,7 +497,7 @@ public static class StringExtensions
     /// </summary>
     public static double? ToDouble(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return double.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -522,7 +523,7 @@ public static class StringExtensions
     /// </summary>
     public static decimal? ToDecimal(this string input, NumberStyles numberStyles, IFormatProvider formatProvider)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return decimal.TryParse(input, numberStyles, formatProvider, out var result) ? result : null;
     }
@@ -587,8 +588,8 @@ public static class StringExtensions
     /// </summary>
     public static DateTime? ToDateTime(this string input, string dateTimeFormat, DateTimeStyles dateTimeStyles, IFormatProvider formatProvider)
     {
-        _ = dateTimeFormat ?? throw new ArgumentNullException(nameof(dateTimeFormat));
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(dateTimeFormat);
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return DateTime.TryParseExact(input, dateTimeFormat, formatProvider, dateTimeStyles, out var result) ? result : null;
     }
@@ -610,7 +611,7 @@ public static class StringExtensions
     /// </summary>
     public static Guid? ToGuid(this string input, string format)
     {
-        _ = format ?? throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(format);
 
         return Guid.TryParseExact(input, format, out var result) ? result : null;
     }
@@ -632,11 +633,8 @@ public static class StringExtensions
     /// </summary>
     public static string SubstringAfter(this string input, string match)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        if (string.IsNullOrEmpty(match))
-        {
-            throw new ArgumentNullException(nameof(match));
-        }
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentException.ThrowIfNullOrEmpty(match);
 
         var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
@@ -647,11 +645,8 @@ public static class StringExtensions
     /// </summary>
     public static string SubstringAfterLast(this string input, string match)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        if (string.IsNullOrEmpty(match))
-        {
-            throw new ArgumentNullException(nameof(match));
-        }
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentException.ThrowIfNullOrEmpty(match);
 
         var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
@@ -662,11 +657,8 @@ public static class StringExtensions
     /// </summary>
     public static string SubstringBefore(this string input, string match)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        if (string.IsNullOrEmpty(match))
-        {
-            throw new ArgumentNullException(nameof(match));
-        }
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentException.ThrowIfNullOrEmpty(match);
 
         var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
@@ -677,11 +669,8 @@ public static class StringExtensions
     /// </summary>
     public static string SubstringBeforeLast(this string input, string match)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
-        if (string.IsNullOrEmpty(match))
-        {
-            throw new ArgumentNullException(nameof(match));
-        }
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentException.ThrowIfNullOrEmpty(match);
 
         var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
@@ -696,7 +685,7 @@ public static class StringExtensions
     /// </summary>
     public static string Format(this string format, IFormatProvider formatProvider, params object[] arguments)
     {
-        _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+        ArgumentNullException.ThrowIfNull(formatProvider);
 
         return string.Format(formatProvider, format, arguments);
     }

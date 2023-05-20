@@ -11,7 +11,7 @@ public static class PropertyInfoExtensions
     /// <inheritdoc cref="PropertyInfo.GetValue(object?)" />
     public static TElement GetValue<TElement>(this PropertyInfo property, object element)
     {
-        _ = property ?? throw new ArgumentNullException(nameof(property));
+        ArgumentNullException.ThrowIfNull(property);
 
         return (TElement)property.GetValue(element);
     }

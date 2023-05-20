@@ -17,8 +17,8 @@ public static class IServiceCollectionExtensions
     public static IServiceCollection ConfigureBind<TOptions>(this IServiceCollection services, IConfigurationSection section)
         where TOptions : class
     {
-        _ = services ?? throw new ArgumentNullException(nameof(services));
-        _ = section ?? throw new ArgumentNullException(nameof(section));
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(section);
 
         return services.Configure<TOptions>(section.Bind);
     }

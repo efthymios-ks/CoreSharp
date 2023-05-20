@@ -20,12 +20,11 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
 
     public ShiftingStack(int maxCapacity, IEnumerable<TElement> source)
     {
+        ArgumentNullException.ThrowIfNull(source);
         if (maxCapacity < 1)
         {
             throw new ArgumentOutOfRangeException(nameof(maxCapacity));
         }
-
-        _ = source ?? throw new ArgumentNullException(nameof(source));
 
         MaxCapacity = maxCapacity;
         foreach (var item in source)

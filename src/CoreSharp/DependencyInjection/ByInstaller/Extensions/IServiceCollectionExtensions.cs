@@ -1,34 +1,34 @@
-﻿using CoreSharp.DependencyInjection.ServiceModules;
+﻿using CoreSharp.DependencyInjection.ByInstaller.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace CoreSharp.DependencyInjection.Extensions;
+namespace CoreSharp.DependencyInjection.ByInstaller.Extensions;
 
 /// <summary>
 /// <see cref="IServiceCollection"/> extensions.
 /// </summary>
-public static partial class IServiceCollectionExtensions
+public static class IServiceCollectionExtensions
 {
-    /// <inheritdoc cref="AddServiceModules(IServiceCollection, IConfiguration, Assembly[])"/>
-    public static IServiceCollection AddServiceModules(
+    /// <inheritdoc cref="AddInstallers(IServiceCollection, IConfiguration, Assembly[])"/>
+    public static IServiceCollection AddInstallers(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
-            => serviceCollection.AddServiceModules(configuration, Assembly.GetEntryAssembly());
+            => serviceCollection.AddInstallers(configuration, Assembly.GetEntryAssembly());
 
     /// <summary>
-    /// Registers all <see cref="IServiceModule"/>.
+    /// Registers all <see cref="IServiceCollectionInstaller"/>.
     /// </summary>
-    public static IServiceCollection AddServiceModules(
+    public static IServiceCollection AddInstallers(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
         params Assembly[] assemblies)
     {
-        _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
-        _ = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
+        ArgumentNullException.ThrowIfNull(serviceCollection);
+        ArgumentNullException.ThrowIfNull(configuration);
+        ArgumentNullException.ThrowIfNull(assemblies);
 
         var serviceInstallers = assemblies
             .SelectMany(assembly => assembly.DefinedTypes)
@@ -46,8 +46,8 @@ public static partial class IServiceCollectionExtensions
                     return false;
                 }
 
-                // Doesn't implement IServiceModule, ignore 
-                else if (!typeInfo.GetInterfaces().Contains(typeof(IServiceModule)))
+                // Doesn't implement IServiceCollectionInstaller, ignore 
+                else if (!typeInfo.GetInterfaces().Contains(typeof(IServiceCollectionInstaller)))
                 {
                     return false;
                 }
@@ -58,7 +58,7 @@ public static partial class IServiceCollectionExtensions
                     return true;
                 }
             }).Select(Activator.CreateInstance)
-              .Cast<IServiceModule>();
+              .Cast<IServiceCollectionInstaller>();
 
         foreach (var serviceInstaller in serviceInstallers)
         {

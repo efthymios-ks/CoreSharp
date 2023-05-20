@@ -18,7 +18,7 @@ public static class HttpContentHeadersExtensions
     /// </summary>
     public static ContentType GetContentType(this HttpContentHeaders httpContentHeaders)
     {
-        _ = httpContentHeaders ?? throw new ArgumentNullException(nameof(httpContentHeaders));
+        ArgumentNullException.ThrowIfNull(httpContentHeaders);
 
         if (!httpContentHeaders.TryGetValues(HeaderNames.ContentType, out var contentTypes))
         {

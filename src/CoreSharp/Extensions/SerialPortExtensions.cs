@@ -14,7 +14,7 @@ public static class SerialPortExtensions
     /// </summary>
     public static SerialPortSettings GetSettings(this SerialPort port)
     {
-        _ = port ?? throw new ArgumentNullException(nameof(port));
+        ArgumentNullException.ThrowIfNull(port);
 
         return new()
         {

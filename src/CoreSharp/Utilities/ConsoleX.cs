@@ -33,7 +33,7 @@ public static class ConsoleX
     /// </summary>
     public static void ClearLines(params int[] lines)
     {
-        _ = lines ?? throw new ArgumentNullException(nameof(lines));
+        ArgumentNullException.ThrowIfNull(lines);
 
         foreach (var line in lines)
         {

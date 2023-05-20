@@ -982,7 +982,7 @@ public class StringExtensionsTests
         Action action = () => input.SubstringAfter(match);
 
         // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Test]
@@ -1009,7 +1009,7 @@ public class StringExtensionsTests
         Action action = () => input.SubstringAfterLast(match);
 
         // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Test]
@@ -1036,7 +1036,7 @@ public class StringExtensionsTests
         Action action = () => input.SubstringBefore(match);
 
         // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Test]
@@ -1063,7 +1063,7 @@ public class StringExtensionsTests
         Action action = () => input.SubstringBeforeLast(match);
 
         // Assert
-        action.Should().ThrowExactly<ArgumentNullException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Test]

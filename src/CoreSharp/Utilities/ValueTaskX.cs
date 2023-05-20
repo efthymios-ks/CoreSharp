@@ -17,7 +17,7 @@ public static class ValueTaskX
     /// <inheritdoc cref="Task.WhenAll(Task[])"/>
     public static async Task WhenAll(params ValueTask[] valueTasks)
     {
-        _ = valueTasks ?? throw new ArgumentNullException(nameof(valueTasks));
+        ArgumentNullException.ThrowIfNull(valueTasks);
 
         var tasks = valueTasks.Select(vt => vt.AsTask());
         await Task.WhenAll(tasks);

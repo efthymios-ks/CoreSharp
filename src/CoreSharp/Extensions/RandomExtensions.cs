@@ -14,7 +14,7 @@ public static class RandomExtensions
     /// </summary>
     public static bool NextBool(this Random random)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
 
         return random.Next(2) == 0;
     }
@@ -28,8 +28,8 @@ public static class RandomExtensions
     /// </summary>
     public static TElement OneOf<TElement>(this Random random, params TElement[] source)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(random);
+        ArgumentNullException.ThrowIfNull(source);
         if (source.Length == 0)
         {
             throw new ArgumentException($"{nameof(source)} cannot be empty.", nameof(source));
@@ -49,7 +49,7 @@ public static class RandomExtensions
     /// </summary>
     public static double NextDouble(this Random random, double minimum, double maximum)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         if (minimum > maximum)
         {
             throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).", nameof(minimum));
@@ -62,7 +62,7 @@ public static class RandomExtensions
     /// <inheritdoc cref="NextString(Random, int)"/>
     public static string NextString(this Random random)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         var randomSize = random.Next(0, byte.MaxValue);
         return random.NextString(randomSize);
     }
@@ -72,7 +72,7 @@ public static class RandomExtensions
     /// </summary>
     public static string NextString(this Random random, int size)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         if (size < 1)
         {
             throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} has to be at least 1.");
@@ -95,7 +95,7 @@ public static class RandomExtensions
     /// </summary>
     public static bool ChanceGreaterThan(this Random random, double percentage, bool includeEnd = true)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         if (percentage is < 0 or > 100)
         {
             throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
@@ -116,7 +116,7 @@ public static class RandomExtensions
     /// </summary>
     public static bool ChanceLowerThan(this Random random, double percentage, bool includeEnd = true)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         if (percentage is < 0 or > 100)
         {
             throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
@@ -137,7 +137,7 @@ public static class RandomExtensions
     /// </summary>
     public static bool ChanceBetween(this Random random, double percentageLeft, double percentageRight, bool includeEnds = true)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
+        ArgumentNullException.ThrowIfNull(random);
         if (percentageLeft < 0)
         {
             throw new ArgumentOutOfRangeException($"{nameof(percentageLeft)} ({percentageLeft}%) has to be between 0 and 100.");
@@ -167,8 +167,8 @@ public static class RandomExtensions
     /// </summary>
     public static void Shuffle<TElement>(this Random random, IList<TElement> source)
     {
-        _ = random ?? throw new ArgumentNullException(nameof(random));
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(random);
+        ArgumentNullException.ThrowIfNull(source);
 
         for (var currentIndex = 0; currentIndex < source.Count - 1; currentIndex++)
         {

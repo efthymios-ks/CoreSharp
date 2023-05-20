@@ -29,8 +29,8 @@ public static class JsonSerializerOptionsExtensions
     /// </summary>
     public static void MapTo(this JsonSerializerOptions from, JsonSerializerOptions to)
     {
-        _ = from ?? throw new ArgumentNullException(nameof(from));
-        _ = to ?? throw new ArgumentNullException(nameof(to));
+        ArgumentNullException.ThrowIfNull(from);
+        ArgumentNullException.ThrowIfNull(to);
 
         to.AllowTrailingCommas = from.AllowTrailingCommas;
         to.DefaultBufferSize = from.DefaultBufferSize;

@@ -18,7 +18,7 @@ public static class RegexX
     /// </summary>
     public static string ReduceMany(string input, char occurence)
     {
-        _ = input ?? throw new ArgumentNullException(nameof(input));
+        ArgumentNullException.ThrowIfNull(input);
 
         var escapedOccurence = Regex.Escape($"{occurence}");
         var pattern = $"{escapedOccurence}{{2,}}";

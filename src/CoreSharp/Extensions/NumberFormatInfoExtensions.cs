@@ -14,7 +14,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static NumberFormatInfo SetCurrencyPositivePattern(this NumberFormatInfo info, CurrencyPositivePattern pattern)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         info.CurrencyPositivePattern = (int)pattern;
 
@@ -26,7 +26,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static NumberFormatInfo SetCurrencyNegativePattern(this NumberFormatInfo info, CurrencyNegativePattern pattern)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         info.CurrencyNegativePattern = (int)pattern;
 
@@ -38,7 +38,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static NumberFormatInfo SetNumberNegativePattern(this NumberFormatInfo info, NumberNegativePattern pattern)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         info.NumberNegativePattern = (int)pattern;
 
@@ -50,7 +50,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static CurrencyPositivePattern GetCurrencyPositivePattern(this NumberFormatInfo info)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         return (CurrencyPositivePattern)info.CurrencyPositivePattern;
     }
@@ -60,7 +60,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static CurrencyNegativePattern GetCurrencyNegativePattern(this NumberFormatInfo info)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         return (CurrencyNegativePattern)info.CurrencyNegativePattern;
     }
@@ -70,7 +70,7 @@ public static class NumberFormatInfoExtensions
     /// </summary>
     public static NumberNegativePattern GetNumberNegativePattern(this NumberFormatInfo info)
     {
-        _ = info ?? throw new ArgumentNullException(nameof(info));
+        ArgumentNullException.ThrowIfNull(info);
 
         return (NumberNegativePattern)info.NumberNegativePattern;
     }

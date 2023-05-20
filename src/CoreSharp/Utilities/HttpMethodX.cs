@@ -20,7 +20,7 @@ public static class HttpMethodX
     /// </summary>
     public static RestMethod GetRestMethod(string methodName)
     {
-        _ = methodName ?? throw new ArgumentNullException(nameof(methodName));
+        ArgumentNullException.ThrowIfNull(methodName);
 
         var lookupTable = new Dictionary<string, RestMethod>()
         {

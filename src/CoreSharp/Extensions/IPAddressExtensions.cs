@@ -13,7 +13,7 @@ public static class IPAddressExtensions
     /// <inheritdoc cref="Ping.SendPingAsync(string, int)"/>
     public static async Task<bool> PingAsync(this IPAddress address, int timeoutMillis = 5000)
     {
-        _ = address ?? throw new ArgumentNullException(nameof(address));
+        ArgumentNullException.ThrowIfNull(address);
         return timeoutMillis <= 0
             ? throw new ArgumentOutOfRangeException(nameof(timeoutMillis))
             : await address.PingInternalAsync(timeoutMillis);

@@ -14,7 +14,7 @@ public static class ExpandoObjectExtensions
     /// </summary>
     public static IDictionary<string, object> ToDictionary(this ExpandoObject source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source;
     }
@@ -24,7 +24,7 @@ public static class ExpandoObjectExtensions
     /// </summary>
     public static TElement GetValue<TElement>(this ExpandoObject source, string key)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var dictionary = source.ToDictionary();
         return (TElement)dictionary[key];

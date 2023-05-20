@@ -11,7 +11,7 @@ public static class AssemblyNameExtensions
     /// <inheritdoc cref="Assembly.Load(AssemblyName)"/>
     public static Assembly Load(this AssemblyName assemblyName)
     {
-        _ = assemblyName ?? throw new ArgumentNullException(nameof(assemblyName));
+        ArgumentNullException.ThrowIfNull(assemblyName);
 
         return Assembly.Load(assemblyName);
     }

@@ -36,8 +36,10 @@ public class StateObserver<TEntity> : IStateObserver<TEntity>
 
     public StateObserver(TEntity initialValue, IEqualityComparer<TEntity> equalityComparer)
     {
+        ArgumentNullException.ThrowIfNull(equalityComparer);
+
         _value = initialValue;
-        _equalityComparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
+        _equalityComparer = equalityComparer;
     }
 
     // Properties

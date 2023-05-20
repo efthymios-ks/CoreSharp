@@ -46,7 +46,7 @@ public static class HttpStatusCodeX
     /// </summary>
     private static HttpStatusCode? ExtractHttpStatusCode(Exception exception)
     {
-        _ = exception ?? throw new ArgumentNullException(nameof(exception));
+        ArgumentNullException.ThrowIfNull(exception);
 
         var properties = exception.GetType()
                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance);

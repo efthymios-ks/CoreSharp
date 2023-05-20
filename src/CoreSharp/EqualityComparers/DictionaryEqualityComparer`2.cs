@@ -20,8 +20,11 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
 
     public DictionaryEqualityComparer(IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer)
     {
-        _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
-        _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
+        ArgumentNullException.ThrowIfNull(keyComparer);
+        ArgumentNullException.ThrowIfNull(valueComparer);
+
+        _keyComparer = keyComparer;
+        _valueComparer = valueComparer;
     }
 
     // Methods

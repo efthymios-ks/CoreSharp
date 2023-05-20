@@ -14,7 +14,7 @@ public static class IListExtensions
     /// </summary>
     public static void Fill<TElement>(this IList<TElement> source, TElement item)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         for (var i = 0; i < source.Count; i++)
         {
@@ -27,8 +27,8 @@ public static class IListExtensions
     /// </summary>
     public static int Remove<TElement>(this IList<TElement> source, Func<TElement, bool> removeExpression)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = removeExpression ?? throw new ArgumentNullException(nameof(removeExpression));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(removeExpression);
 
         var count = 0;
         while (source.Any(removeExpression))
@@ -50,8 +50,8 @@ public static class IListExtensions
     /// </summary>
     public static void InsertRange<TElement>(this IList<TElement> source, int index, params TElement[] values)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = values ?? throw new ArgumentNullException(nameof(values));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(values);
         if (index < 0 || index >= source.Count)
         {
             throw new ArgumentOutOfRangeException(nameof(index), $"{nameof(index)} should be between 0 and {source.Count - 1}.");

@@ -17,8 +17,8 @@ public static class HashCodeExtensions
     /// </summary>
     public static void AddRange<TElement>(this HashCode hashCode, IEnumerable<TElement> source, IEqualityComparer<TElement> equalityComparer)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(equalityComparer);
 
         foreach (var element in source)
         {

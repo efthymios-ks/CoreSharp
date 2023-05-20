@@ -15,7 +15,7 @@ public static class IQueryableExtensions
     /// </summary>
     public static IQueryable<TElement> GetPage<TElement>(this IQueryable<TElement> query, int pageNumber, int pageSize)
     {
-        _ = query ?? throw new ArgumentNullException(nameof(query));
+        ArgumentNullException.ThrowIfNull(query);
         if (pageNumber < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
@@ -47,8 +47,8 @@ public static class IQueryableExtensions
     public static IQueryable<TElement> FilterFlexible<TElement>(this IQueryable<TElement> query, Func<TElement, string> propertySelector, string filter)
     {
         // Argument validation 
-        _ = query ?? throw new ArgumentNullException(nameof(query));
-        _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(propertySelector);
         filter ??= string.Empty;
 
         // Remove whitespace

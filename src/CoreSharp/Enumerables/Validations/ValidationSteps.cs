@@ -12,7 +12,7 @@ public class ValidationSteps : ValidationStepCollectionBase
     public ValidationSteps(IEnumerable<ValidationStep> steps, bool sequentialValidation = true)
         : this(sequentialValidation)
     {
-        _ = steps ?? throw new ArgumentNullException(nameof(steps));
+        ArgumentNullException.ThrowIfNull(steps);
 
         foreach (var step in steps)
         {
@@ -34,7 +34,8 @@ public class ValidationSteps : ValidationStepCollectionBase
     public bool SequentialValidation { get; set; }
 
     // Methods 
-    public override string ToString() => $"{Count} steps";
+    public override string ToString()
+        => $"{Count} steps";
 
     public void Add(int number, Func<bool> validationFunction)
         => Add(number, validationFunction, () => string.Empty);
@@ -55,10 +56,8 @@ public class ValidationSteps : ValidationStepCollectionBase
             // If there is no previous step, run current step validation 
             return previousStep is null ? currentStep.IsValid : IsStepValid(previousStep.Number) && currentStep.IsValid;
         }
-        else
-        {
-            return currentStep.IsValid;
-        }
+
+        return currentStep.IsValid;
     }
 
     public string GetStepValidationMessage(int number, bool bypassValidation = false)
@@ -80,9 +79,8 @@ public class ValidationSteps : ValidationStepCollectionBase
         ValidationStep.ValidateNumber(number);
 
         var step = this.FirstOrDefault(s => s.Number == number);
-        return step is null
-            ? throw new ArgumentException($"{nameof(ValidationStep)} with {nameof(ValidationStep.Number)}=`{number}` not found.", nameof(number))
-            : step;
+        return step ??
+            throw new ArgumentException($"{nameof(ValidationStep)} with {nameof(ValidationStep.Number)}=`{number}` not found.", nameof(number));
     }
 
     private ValidationStep GetPreviousStep(int number)

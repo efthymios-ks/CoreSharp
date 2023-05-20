@@ -19,7 +19,11 @@ public class EnumerableEqualityComparer<TEntity> : IEqualityComparer<IEnumerable
     }
 
     public EnumerableEqualityComparer(IEqualityComparer<TEntity> entityComparer)
-        => _entityComparer = entityComparer ?? throw new ArgumentNullException(nameof(entityComparer));
+    {
+        ArgumentNullException.ThrowIfNull(entityComparer);
+
+        _entityComparer = entityComparer;
+    }
 
     // Methods
     public bool Equals(IEnumerable<TEntity> x, IEnumerable<TEntity> y)

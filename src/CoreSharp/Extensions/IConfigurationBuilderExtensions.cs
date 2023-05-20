@@ -20,8 +20,8 @@ public static class IConfigurationBuilderExtensions
     /// </summary>
     public static IConfigurationBuilder AddEmbeddedFileConfiguration(this IConfigurationBuilder builder, Action<EmbeddedFileConfigurationOptions> configure)
     {
-        _ = builder ?? throw new ArgumentNullException(nameof(builder));
-        _ = configure ?? throw new ArgumentNullException(nameof(configure));
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(configure);
 
         var options = new EmbeddedFileConfigurationOptions();
         configure(options);

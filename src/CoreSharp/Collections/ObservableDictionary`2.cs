@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace CoreSharp.Collections;
 
-public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IObservableDictionary<TKey, TValue>
+public sealed class ObservableDictionary<TKey, TValue>
+    : Dictionary<TKey, TValue>, IObservableDictionary<TKey, TValue>
 {
     // Properties
     public new TValue this[TKey key]

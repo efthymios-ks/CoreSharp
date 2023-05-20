@@ -24,7 +24,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static bool IsEmpty<TElement>(this IEnumerable<TElement> source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return !source.Any();
     }
@@ -46,7 +46,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> ConvertAll<TElement>(this IEnumerable source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source.ConvertAllInternal<TElement>();
     }
@@ -57,8 +57,8 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.Distinct{TElement}(IEnumerable{TElement})"/>
     public static IEnumerable<TElement> Distinct<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var keyEqualityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return source.Distinct(keyEqualityComparer);
@@ -90,7 +90,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static string StringJoin<T>(this IEnumerable<T> source, string separator, string stringFormat, IFormatProvider formatProvider)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         separator ??= " ";
         stringFormat ??= "{0}";
         formatProvider ??= CultureInfo.CurrentCulture;
@@ -125,8 +125,8 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="ToHashSet{TElement, TKey}(IEnumerable{TElement}, Func{TElement, TKey})"/>
     public static HashSet<TElement> ToHashSet<TElement>(this IEnumerable<TElement> source, IEqualityComparer<TElement> comparer)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = comparer ?? throw new ArgumentNullException(nameof(comparer));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(comparer);
 
         return new HashSet<TElement>(source, comparer);
     }
@@ -135,7 +135,7 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.ToHashSet{TSource}(IEnumerable{TSource})"/>
     public static HashSet<TElement> ToHashSet<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var comparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return source.ToHashSet(comparer);
@@ -146,7 +146,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static Collection<TElement> ToCollection<TElement>(this IEnumerable<TElement> source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source is IList<TElement> list
                 ? new Collection<TElement>(list)
@@ -158,7 +158,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static ObservableCollection<TElement> ToObservableCollection<TElement>(this IEnumerable<TElement> source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return new ObservableCollection<TElement>(source);
     }
@@ -174,8 +174,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> TakeSkip<TElement>(this IEnumerable<TElement> source, params int[] sequence)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(sequence);
 
         var result = new List<TElement>();
         var enumeratedItems = 0;
@@ -204,8 +204,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> Except<TElement>(this IEnumerable<TElement> source, Predicate<TElement> filter)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = filter ?? throw new ArgumentNullException(nameof(filter));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(filter);
 
         return source.Where(i => !filter(i));
     }
@@ -213,9 +213,9 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.Except{TSource}(IEnumerable{TSource}, IEnumerable{TSource}, IEqualityComparer{TSource}?)"/>
     public static IEnumerable<TElement> Except<TElement, TKey>(this IEnumerable<TElement> left, IEnumerable<TElement> right, Func<TElement, TKey> keySelector)
     {
-        _ = left ?? throw new ArgumentNullException(nameof(left));
-        _ = right ?? throw new ArgumentNullException(nameof(right));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var equalityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return left.Except(right, equalityComparer);
@@ -224,9 +224,9 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.Intersect{TSource}(IEnumerable{TSource}, IEnumerable{TSource}, IEqualityComparer{TSource}?)"/>
     public static IEnumerable<TElement> Intersect<TElement, TKey>(this IEnumerable<TElement> left, IEnumerable<TElement> right, Func<TElement, TKey> keySelector)
     {
-        _ = left ?? throw new ArgumentNullException(nameof(left));
-        _ = right ?? throw new ArgumentNullException(nameof(right));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var equalityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return left.Intersect(right, equalityComparer);
@@ -237,7 +237,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> Flatten<TElement>(this IEnumerable<IEnumerable<TElement>> sequence)
     {
-        _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(sequence);
 
         return sequence.SelectMany(source => source);
     }
@@ -245,7 +245,7 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="ForEach{TElement}(IEnumerable{TElement}, Action{TElement, int})"/>
     public static void ForEach<TElement>(this IEnumerable<TElement> source, Action<TElement> action)
     {
-        _ = action ?? throw new ArgumentNullException(nameof(action));
+        ArgumentNullException.ThrowIfNull(action);
 
         void IndexedAction(TElement item, int _) => action(item);
         source.ForEach(IndexedAction);
@@ -256,8 +256,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static void ForEach<TElement>(this IEnumerable<TElement> source, Action<TElement, int> action)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = action ?? throw new ArgumentNullException(nameof(action));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(action);
 
         var index = 0;
         foreach (var item in source)
@@ -272,7 +272,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> Mutate<TElement>(this IEnumerable<TElement> source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source.ToArray();
     }
@@ -280,9 +280,9 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource, IEqualityComparer{TSource}?)"/>
     public static bool Contains<TElement, TKey>(this IEnumerable<TElement> source, TElement item, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = item ?? throw new ArgumentNullException(nameof(item));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var equalityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return source.Contains(item, equalityComparer);
@@ -297,7 +297,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<IGrouping<int, TElement>> GetPages<TElement>(this IEnumerable<TElement> source, int pageSize)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         if (pageSize <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
@@ -323,8 +323,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static bool ContainsAll<TElement>(this IEnumerable<TElement> source, params TElement[] items)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = items ?? throw new ArgumentNullException(nameof(items));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(items);
 
         return items.All(source.Contains);
     }
@@ -339,7 +339,7 @@ public static class IEnumerableExtensions
         Encoding encoding = null,
         CancellationToken cancellationToken = default)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         encoding ??= Encoding.UTF8;
 
         var stream = new MemoryStream();
@@ -385,8 +385,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IDictionary<TKey, int> GetDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         // Skip(1).Any() has better performance than Count(), which accesses the whole collection. 
         var duplicates = source.GroupBy(keySelector)
@@ -405,8 +405,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static bool HasDuplicates<TElement, TKey>(this IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var keyEqualityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         var hashset = new HashSet<TElement>(keyEqualityComparer);
@@ -433,7 +433,7 @@ public static class IEnumerableExtensions
     public static DataTable ToDataTable<TElement>(this IEnumerable<TElement> source, string tableName)
         where TElement : class
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var table = new DataTable(tableName);
 
@@ -471,8 +471,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static bool StartsWith<TElement>(this IEnumerable<TElement> source, params TElement[] sequence)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(sequence);
 
         var head = source.Take(sequence.Length);
         return head.SequenceEqual(sequence);
@@ -487,8 +487,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static bool EndsWith<TElement>(this IEnumerable<TElement> source, params TElement[] sequence)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = sequence ?? throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(sequence);
 
         var tail = source.TakeLast(sequence.Length);
         return tail.SequenceEqual(sequence);
@@ -509,7 +509,7 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
     public static TElement FirstOr<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, TElement fallbackValue)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var result = source.FirstOrDefault(predicate);
         return Equals(result, default(TElement)) ? fallbackValue : result;
@@ -522,7 +522,7 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.LastOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
     public static TElement LastOr<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, TElement fallbackValue)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var result = source.LastOrDefault(predicate);
         return Equals(result, default(TElement)) ? fallbackValue : result;
@@ -535,7 +535,7 @@ public static class IEnumerableExtensions
     /// <inheritdoc cref="Enumerable.SingleOrDefault{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>>
     public static TElement SingleOr<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, TElement fallbackValue)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var result = source.SingleOrDefault(predicate);
         return Equals(result, default(TElement)) ? fallbackValue : result;
@@ -545,7 +545,7 @@ public static class IEnumerableExtensions
     public static IEnumerable<TElement> Map<TElement>(this IEnumerable<TElement> source, Action<TElement> mapFunction)
         where TElement : class
     {
-        _ = mapFunction ?? throw new ArgumentNullException(nameof(mapFunction));
+        ArgumentNullException.ThrowIfNull(mapFunction);
 
         return source.Map((item, _) => mapFunction(item));
     }
@@ -556,8 +556,8 @@ public static class IEnumerableExtensions
     public static IEnumerable<TElement> Map<TElement>(this IEnumerable<TElement> source, Action<TElement, int> indexedMapFunction)
         where TElement : class
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = indexedMapFunction ?? throw new ArgumentNullException(nameof(indexedMapFunction));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(indexedMapFunction);
 
         var index = 0;
         return source.Select(item =>
@@ -573,9 +573,9 @@ public static class IEnumerableExtensions
     public static TElement Min<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
         where TProperty : IComparable
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
-        _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(propertySelector);
+        ArgumentNullException.ThrowIfNull(propertyComparer);
 
         if (!source.Any())
         {
@@ -603,9 +603,9 @@ public static class IEnumerableExtensions
     public static TElement Max<TElement, TProperty>(this IEnumerable<TElement> source, Func<TElement, TProperty> propertySelector, IComparer<TProperty> propertyComparer)
         where TProperty : IComparable
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
-        _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(propertySelector);
+        ArgumentNullException.ThrowIfNull(propertyComparer);
 
         if (!source.Any())
         {
@@ -633,8 +633,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> TakeWhile<TElement>(this IEnumerable<TElement> source, Func<TElement, bool> predicate, bool inclusive)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(predicate);
 
         return source.TakeWhileInternal(predicate, inclusive);
     }
@@ -664,7 +664,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> Repeat<TElement>(this IEnumerable<TElement> source, int count)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         return count < 0
             ? throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} has to be positive or zero.")
             : source.RepeatInternal(count);
@@ -691,8 +691,8 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<TElement> Append<TElement>(this IEnumerable<TElement> source, params TElement[] items)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = items ?? throw new ArgumentNullException(nameof(items));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(items);
 
         return items.Aggregate(source, Enumerable.Append);
     }
@@ -702,7 +702,7 @@ public static class IEnumerableExtensions
     /// </summary>
     public static IEnumerable<IEnumerable<TElement>> Chunk<TElement>(this IEnumerable<TElement> source, int size)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         if (size < 1)
             throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} ({size}) has to be at least 1.");
 

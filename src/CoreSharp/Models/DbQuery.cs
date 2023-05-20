@@ -21,12 +21,20 @@ public class DbQuery : IAsyncDisposable
 
     // Constructors 
     public DbQuery(DbConnection connection)
-        => _connection = connection ?? throw new ArgumentNullException(nameof(connection));
+    {
+        ArgumentNullException.ThrowIfNull(connection);
+
+        _connection = connection;
+    }
 
     public DbQuery(DbTransaction transaction)
     {
-        _transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
-        _connection = transaction?.Connection ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
+        ArgumentNullException.ThrowIfNull(transaction);
+        _ = transaction?.Connection
+            ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
+
+        _transaction = transaction;
+        _connection = transaction?.Connection;
     }
 
     // Properties 
@@ -118,7 +126,7 @@ public class DbQuery : IAsyncDisposable
     /// <inheritdoc cref="DataTable.Load(IDataReader)"/>
     public async Task<int> FillAsync(string query, DataTable table, CancellationToken cancellationToken = default)
     {
-        _ = table ?? throw new ArgumentNullException(nameof(table));
+        ArgumentNullException.ThrowIfNull(table);
 
         await using var command = await BuildDbCommandAsync(query, cancellationToken);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -140,8 +148,8 @@ public class DbQuery : IAsyncDisposable
     /// <inheritdoc cref="DbDataAdapter.Fill(DataSet)"/>
     public async Task<int> FillAsync(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
     {
-        _ = set ?? throw new ArgumentNullException(nameof(set));
-        _ = tableMappings ?? throw new ArgumentNullException(nameof(tableMappings));
+        ArgumentNullException.ThrowIfNull(set);
+        ArgumentNullException.ThrowIfNull(tableMappings);
 
         await using var command = await BuildDbCommandAsync(query, cancellationToken);
         var adapter = _connection.CreateDataAdapter();

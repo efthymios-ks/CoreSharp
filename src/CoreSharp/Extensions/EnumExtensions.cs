@@ -14,7 +14,7 @@ public static class EnumExtensions
     public static TAttribute GetAttribute<TAttribute>(this Enum value)
         where TAttribute : Attribute
     {
-        _ = value ?? throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
         var enumField = value.GetType().GetField($"{value}");
         return enumField.GetAttribute<TAttribute>();

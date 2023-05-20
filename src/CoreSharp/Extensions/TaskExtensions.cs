@@ -15,7 +15,7 @@ public static class TaskExtensions
     /// </summary>
     public static TResult AwaitResult<TResult>(this Task<TResult> task)
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         return task.GetAwaiter().GetResult();
     }
@@ -26,7 +26,7 @@ public static class TaskExtensions
     /// </summary>
     public static async Task WithAggregateException(this Task task)
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         static Task ContinuationFunction(Task t)
         {
@@ -56,7 +56,7 @@ public static class TaskExtensions
     /// <inheritdoc cref="TimeoutAfter{TResult}(Task{TResult}, TimeSpan)" />
     public static async Task TimeoutAfter(this Task task, TimeSpan timeout)
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         var genericTask = Task.Run(async () =>
         {
@@ -72,7 +72,7 @@ public static class TaskExtensions
     /// <exception cref="TimeoutException">When then given task is not completed within the specified time frame.</exception>
     public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         var timeoutTask = Task.Delay(timeout);
         var completedTask = await Task.WhenAny(task, timeoutTask);
@@ -126,7 +126,7 @@ public static class TaskExtensions
     public static async Task IgnoreError<TException>(this Task task)
         where TException : Exception
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         try
         {
@@ -158,7 +158,7 @@ public static class TaskExtensions
     public static async Task<TResult> IgnoreError<TResult, TException>(this Task<TResult> task)
         where TException : Exception
     {
-        _ = task ?? throw new ArgumentNullException(nameof(task));
+        ArgumentNullException.ThrowIfNull(task);
 
         try
         {

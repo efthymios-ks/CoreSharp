@@ -34,12 +34,13 @@ public sealed class NumericParser<TNumber>
 
     public NumericParser(string format, CultureInfo cultureInfo)
     {
+        ArgumentNullException.ThrowIfNull(cultureInfo);
         if (!typeof(TNumber).IsNumeric())
         {
             throw new ArgumentException($"{nameof(TNumber)} ({typeof(TNumber).FullName}) is not a numeric type.");
         }
 
-        _cultureInfo = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
+        _cultureInfo = cultureInfo;
         _format = format ?? string.Empty;
         _isFormatPercentage = Regex.IsMatch(_format, @"^[pP]\d+$");
     }

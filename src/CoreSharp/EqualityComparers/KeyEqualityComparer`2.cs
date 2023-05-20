@@ -16,8 +16,11 @@ public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
 
     public KeyEqualityComparer(Func<TEntity, TKey> keySelector, IEqualityComparer<TKey> keyComparer)
     {
-        KeySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
-        _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
+        ArgumentNullException.ThrowIfNull(keySelector);
+        ArgumentNullException.ThrowIfNull(keyComparer);
+
+        KeySelector = keySelector;
+        _keyComparer = keyComparer;
     }
 
     // Properties

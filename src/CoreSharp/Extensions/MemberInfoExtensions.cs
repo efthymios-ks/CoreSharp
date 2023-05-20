@@ -14,7 +14,7 @@ public static class MemberInfoExtensions
     public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this MemberInfo field)
         where TAttribute : Attribute
     {
-        _ = field ?? throw new ArgumentNullException(nameof(field));
+        ArgumentNullException.ThrowIfNull(field);
 
         return field.GetCustomAttributes(typeof(TAttribute), true)?.Cast<TAttribute>();
     }

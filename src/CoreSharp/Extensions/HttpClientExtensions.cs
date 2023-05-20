@@ -45,8 +45,8 @@ public static class HttpClientExtensions
         TimeSpan timeout,
         CancellationToken cancellationToken)
     {
-        _ = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        _ = httpRequestMessage ?? throw new ArgumentNullException(nameof(httpRequestMessage));
+        ArgumentNullException.ThrowIfNull(httpClient);
+        ArgumentNullException.ThrowIfNull(httpRequestMessage);
 
         using var cancellationTokenSource = cancellationToken.ToTimeoutCancellationTokenSource(timeout);
         try

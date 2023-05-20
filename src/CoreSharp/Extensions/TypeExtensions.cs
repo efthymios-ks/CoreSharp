@@ -14,7 +14,7 @@ public static class TypeExtensions
     /// </summary>
     public static bool IsNumeric(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         switch (Type.GetTypeCode(type))
         {
@@ -43,7 +43,7 @@ public static class TypeExtensions
     /// </summary>
     public static bool IsDate(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         switch (Type.GetTypeCode(type))
         {
@@ -73,7 +73,7 @@ public static class TypeExtensions
     /// </summary>
     public static bool IsPrimitiveExtended(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         // Nullable extraction
         var baseType = Nullable.GetUnderlyingType(type) ?? type;
@@ -117,7 +117,7 @@ public static class TypeExtensions
     /// </summary>
     public static Type GetGenericTypeBase(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
     }
@@ -127,7 +127,7 @@ public static class TypeExtensions
     /// </summary>
     public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this Type type) where TAttribute : Attribute
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         return type.GetCustomAttributes(typeof(TAttribute), true)?.Cast<TAttribute>();
     }
@@ -143,7 +143,7 @@ public static class TypeExtensions
     /// </summary>
     public static IEnumerable<Type> GetDirectInterfaces(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         var topLevelInterfaces = new HashSet<Type>();
         var nestedInterfaces = new HashSet<Type>();
@@ -170,7 +170,7 @@ public static class TypeExtensions
     /// </summary>
     public static object GetDefault(this Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         return type.IsValueType ? Activator.CreateInstance(type) : null;
     }
@@ -181,8 +181,8 @@ public static class TypeExtensions
     /// </summary>
     public static bool Implements(this Type type, Type baseType, bool useGenericBaseType = true)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
-        _ = baseType ?? throw new ArgumentNullException(nameof(baseType));
+        ArgumentNullException.ThrowIfNull(type);
+        ArgumentNullException.ThrowIfNull(baseType);
 
         if (useGenericBaseType)
         {

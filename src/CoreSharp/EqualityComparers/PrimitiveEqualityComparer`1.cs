@@ -21,6 +21,7 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
         {
             return true;
         }
+
         // Null 
         else if (x is null || y is null)
         {
@@ -48,7 +49,7 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     /// <inheritdoc cref="Type.IsPrimitive"/>
     protected virtual bool IsTypePrimitive(Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        ArgumentNullException.ThrowIfNull(type);
 
         return type.IsPrimitiveExtended();
     }
@@ -59,7 +60,7 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     /// </summary>
     private IDictionary<string, object> GetPrimitiveProperties(TEntity item)
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
 
         return item.GetType()
                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)

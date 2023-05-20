@@ -13,7 +13,7 @@ public static class FileInfoExtensions
     /// </summary>
     public static FileInfo ChangeExtension(this FileInfo file, string extension)
     {
-        _ = file ?? throw new ArgumentNullException(nameof(file));
+        ArgumentNullException.ThrowIfNull(file);
 
         var newFileName = Path.ChangeExtension(file.FullName, extension);
         return new FileInfo(newFileName);
@@ -27,11 +27,8 @@ public static class FileInfoExtensions
     /// <param name="overwrite"></param>
     public static FileInfo Rename(this FileInfo file, string name, bool overwrite = false)
     {
-        _ = file ?? throw new ArgumentNullException(nameof(file));
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
+        ArgumentNullException.ThrowIfNull(file);
+        ArgumentException.ThrowIfNullOrEmpty(name);
 
         var oldParent = file.DirectoryName;
         var oldExtension = file.Extension.Trim('.');

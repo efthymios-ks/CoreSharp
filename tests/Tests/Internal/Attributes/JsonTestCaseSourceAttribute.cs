@@ -51,10 +51,7 @@ public sealed class JsonTestCaseSourceAttribute : TestCaseBaseAttribute
     // Constructors 
     public JsonTestCaseSourceAttribute(string fileName)
     {
-        if (string.IsNullOrWhiteSpace(fileName))
-        {
-            throw new ArgumentNullException(nameof(fileName));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(fileName);
 
         _fileName = fileName;
     }

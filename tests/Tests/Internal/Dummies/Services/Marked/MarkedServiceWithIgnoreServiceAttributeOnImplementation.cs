@@ -1,5 +1,5 @@
 ﻿using CoreSharp.DependencyInjection.Attributes;
-using CoreSharp.DependencyInjection.Interfaces;
+using CoreSharp.DependencyInjection.ByInterface.Interfaces;
 
 namespace Tests.Internal.Dummies.Services.Marked;
 

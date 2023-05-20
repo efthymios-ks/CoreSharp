@@ -19,9 +19,6 @@ public static class DateTimeExtensions
     /// </summary>
     public static TimeSpan GetElapsedTime(this DateTime endDate, DateTime startDate)
     {
-        static void ThrowDateTimeKindException(string paramName)
-            => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
-
         if (endDate.Kind == DateTimeKind.Unspecified)
         {
             ThrowDateTimeKindException(nameof(endDate));
@@ -46,9 +43,6 @@ public static class DateTimeExtensions
     /// </summary>
     public static bool HasExpired(this DateTime endDate, DateTime startDate, TimeSpan duration)
     {
-        static void ThrowDateTimeKindException(string paramName)
-            => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
-
         if (endDate.Kind == DateTimeKind.Unspecified)
         {
             ThrowDateTimeKindException(nameof(endDate));
@@ -150,4 +144,7 @@ public static class DateTimeExtensions
     /// <inheritdoc cref="DateTime.ToLongTimeString"/>
     public static string ToLongTimeString(this DateTime date, CultureInfo culture)
         => date.ToString(culture.DateTimeFormat.LongTimePattern, culture);
+
+    private static void ThrowDateTimeKindException(string paramName)
+        => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
 }

@@ -11,7 +11,7 @@ public static class DbProviderFactoryExtensions
     /// <inheritdoc cref="DbProviderFactory.CreateParameter"/>
     public static DbParameter CreateParameter(this DbProviderFactory factory, string parameterName, object parameterValue)
     {
-        _ = factory ?? throw new ArgumentNullException(nameof(factory));
+        ArgumentNullException.ThrowIfNull(factory);
 
         var parameter = factory.CreateParameter();
         parameter.ParameterName = parameterName;

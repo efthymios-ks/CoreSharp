@@ -16,7 +16,7 @@ public static class DataTableExtensions
     /// </summary>
     public static IEnumerable<string> GetColumnNames(this DataTable table)
     {
-        _ = table ?? throw new ArgumentNullException(nameof(table));
+        ArgumentNullException.ThrowIfNull(table);
 
         var columns = table.Columns.Cast<DataColumn>();
         return columns.Select(c => c.ColumnName);
@@ -28,7 +28,7 @@ public static class DataTableExtensions
     public static IEnumerable<TEntity> ToEntities<TEntity>(this DataTable table)
         where TEntity : class, new()
     {
-        _ = table ?? throw new ArgumentNullException(nameof(table));
+        ArgumentNullException.ThrowIfNull(table);
 
         return table.ToEntitiesInternal<TEntity>();
     }

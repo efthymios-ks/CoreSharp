@@ -15,8 +15,8 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>7.1.0</Version>
-		<PackageReleaseNotes>-Utilities, FormattableStrings, Added `ShowNulls` method.</PackageReleaseNotes>
+		<Version>7.2.0</Version>
+		<PackageReleaseNotes>-Code clean-up and refactor.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

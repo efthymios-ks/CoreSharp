@@ -14,7 +14,7 @@ public static class ExpressionX
     /// </summary>
     public static MemberInfo GetMemberInfo<TElement, TMember>(Expression<Func<TElement, TMember>> memberSelector)
     {
-        _ = memberSelector ?? throw new ArgumentNullException(nameof(memberSelector));
+        ArgumentNullException.ThrowIfNull(memberSelector);
 
         if (memberSelector.Body is MemberExpression memberExpression)
         {

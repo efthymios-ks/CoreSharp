@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Tests.DependencyInjection.Extensions.Common;
+using Tests.DependencyInjection.Common;
 using Tests.Internal.Dummies.Services.Marked;
 
-namespace CoreSharp.DependencyInjection.Extensions.Tests;
+namespace CoreSharp.DependencyInjection.ByInterface.Extensions.Tests;
 
 [TestFixture]
-public class IServiceCollectionExtensionsByInterfaceTests : IServiceCollectionExtensionsTestsBase
+public class IServiceCollectionExtensionsTests : IServiceCollectionExtensionsTestsBase
 {
     [OneTimeSetUp]
     public void OneTimeSetUp()

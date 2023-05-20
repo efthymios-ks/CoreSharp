@@ -11,7 +11,7 @@ public static class DbCommandExtensions
     /// <inheritdoc cref="DbCommand.CreateParameter"/>
     public static DbParameter CreateParameter(this DbCommand command, string name, object value)
     {
-        _ = command ?? throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
 
         var parameter = command.CreateParameter();
         parameter.ParameterName = name;
@@ -22,7 +22,7 @@ public static class DbCommandExtensions
     /// <inheritdoc cref="DbParameterCollection.Add(object)"/>
     public static DbParameter AddParameterWithValue(this DbCommand command, string name, object value)
     {
-        _ = command ?? throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
 
         var parameter = command.CreateParameter(name, value);
         command.Parameters.Add(parameter);

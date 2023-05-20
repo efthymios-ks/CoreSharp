@@ -14,7 +14,7 @@ public static class ArrayExtensions
     /// </summary>
     public static IEnumerable<TElement> GetRow<TElement>(this TElement[,] source, int row)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         var rowSize = source.GetLength(0);
         if (row < 0 || row >= rowSize)
         {
@@ -30,7 +30,7 @@ public static class ArrayExtensions
     /// </summary>
     public static IEnumerable<TElement> GetColumn<TElement>(this TElement[,] source, int column)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
         var columnSize = source.GetLength(1);
         if (column < 0 || column >= columnSize)
         {

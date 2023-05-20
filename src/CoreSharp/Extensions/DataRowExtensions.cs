@@ -16,7 +16,7 @@ public static class DataRowExtensions
     /// </summary>
     public static IEnumerable<string> GetColumnNames(this DataRow row)
     {
-        _ = row ?? throw new ArgumentNullException(nameof(row));
+        ArgumentNullException.ThrowIfNull(row);
 
         return row.Table.GetColumnNames();
     }
@@ -26,7 +26,7 @@ public static class DataRowExtensions
     /// </summary>
     public static object[] GetColumnValues(this DataRow row)
     {
-        _ = row ?? throw new ArgumentNullException(nameof(row));
+        ArgumentNullException.ThrowIfNull(row);
 
         return row.ItemArray;
     }
@@ -37,7 +37,7 @@ public static class DataRowExtensions
     public static TEntity ToEntity<TEntity>(this DataRow row)
         where TEntity : class, new()
     {
-        _ = row ?? throw new ArgumentNullException(nameof(row));
+        ArgumentNullException.ThrowIfNull(row);
 
         var columnNames = row.Table.Columns.Cast<DataColumn>().Select(c => c.ColumnName);
         var properties = columnNames.ToDictionary(columnName => columnName, column => row[column]);

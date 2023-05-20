@@ -42,9 +42,9 @@ public static class StreamExtensions
     /// </summary>
     public static object FromJson(this Stream stream, Type entityType, JsonNet.JsonSerializerSettings settings)
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(stream);
+        ArgumentNullException.ThrowIfNull(entityType);
+        ArgumentNullException.ThrowIfNull(settings);
 
         if (!stream.CanRead)
         {
@@ -96,9 +96,9 @@ public static class StreamExtensions
     /// </summary>
     public static async Task<object> FromJsonAsync(this Stream stream, Type entityType, TextJson.JsonSerializerOptions options)
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(stream);
+        ArgumentNullException.ThrowIfNull(entityType);
+        ArgumentNullException.ThrowIfNull(options);
 
         if (!stream.CanRead)
         {
@@ -134,7 +134,7 @@ public static class StreamExtensions
     public static async Task<TEntity> FromXmlAsync<TEntity>(this Stream stream, CancellationToken cancellationToken = default)
         where TEntity : class
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        ArgumentNullException.ThrowIfNull(stream);
 
         if (!stream.CanRead)
         {
@@ -169,7 +169,7 @@ public static class StreamExtensions
     /// </summary>
     public static Task ToFileAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        ArgumentNullException.ThrowIfNull(stream);
 
         return string.IsNullOrWhiteSpace(filePath)
                 ? throw new ArgumentNullException(nameof(filePath))
@@ -192,7 +192,7 @@ public static class StreamExtensions
     /// </summary>
     public static async Task<string> ToStringAsync(this Stream stream, Encoding encoding = null)
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        ArgumentNullException.ThrowIfNull(stream);
         encoding ??= Encoding.UTF8;
 
         if (stream.CanSeek)
@@ -213,8 +213,8 @@ public static class StreamExtensions
     /// </summary>
     public static async Task<bool> EqualsAsync(this Stream left, Stream right, int bufferSize, CancellationToken cancellationToken = default)
     {
-        _ = left ?? throw new ArgumentNullException(nameof(left));
-        _ = right ?? throw new ArgumentNullException(nameof(right));
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
 
         try
         {
@@ -278,7 +278,7 @@ public static class StreamExtensions
     /// </summary>
     public static async Task<byte[]> ToArrayAsync(this Stream stream, int bufferSize, CancellationToken cancellationToken = default)
     {
-        _ = stream ?? throw new ArgumentNullException(nameof(stream));
+        ArgumentNullException.ThrowIfNull(stream);
 
         stream.Position = 0;
 

@@ -34,9 +34,9 @@ public static class GenericExtensions
     /// </summary>
     public static bool EqualsAny<TElement, TKey>(this TElement element, IEnumerable<TElement> source, Func<TElement, TKey> keySelector)
     {
-        _ = element ?? throw new ArgumentNullException(nameof(element));
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(element);
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var equalityComparer = new KeyEqualityComparer<TElement, TKey>(keySelector);
         return source.Any(i => equalityComparer.Equals(i, element));
@@ -51,8 +51,8 @@ public static class GenericExtensions
     public static string ToJson<TEntity>(this TEntity entity, JsonNet.JsonSerializerSettings settings)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(settings);
 
         return JsonNet.JsonConvert.SerializeObject(entity, settings);
     }
@@ -61,8 +61,8 @@ public static class GenericExtensions
     public static string ToJson<TEntity>(this TEntity entity, TextJson.JsonSerializerOptions options)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(options);
 
         return TextJson.JsonSerializer.Serialize(entity, options);
     }
@@ -81,8 +81,8 @@ public static class GenericExtensions
         CancellationToken cancellationToken = default)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(settings);
 
         var stream = new MemoryStream();
         var serializer = JsonNet.JsonSerializer.Create(settings);
@@ -106,8 +106,8 @@ public static class GenericExtensions
         CancellationToken cancellationToken = default)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(options);
 
         var stream = new MemoryStream();
         await TextJson.JsonSerializer.SerializeAsync(stream, entity, options, cancellationToken);
@@ -126,8 +126,8 @@ public static class GenericExtensions
     public static TEntity JsonClone<TEntity>(this TEntity item, JsonNet.JsonSerializerSettings settings)
         where TEntity : class
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(settings);
 
         var json = JsonNet.JsonConvert.SerializeObject(item, settings);
         return JsonNet.JsonConvert.DeserializeObject<TEntity>(json, settings);
@@ -139,8 +139,8 @@ public static class GenericExtensions
     public static TEntity JsonClone<TEntity>(this TEntity item, TextJson.JsonSerializerOptions options)
         where TEntity : class
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(options);
 
         var json = TextJson.JsonSerializer.Serialize(item, options);
         return TextJson.JsonSerializer.Deserialize<TEntity>(json, options);
@@ -157,7 +157,7 @@ public static class GenericExtensions
     public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, JsonNet.JsonSerializerSettings settings)
         where TEntity : class
     {
-        _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        ArgumentNullException.ThrowIfNull(settings);
 
         var equalityComparer = new JsonEqualityComparer<TEntity>(settings);
         return equalityComparer.Equals(left, right);
@@ -169,7 +169,7 @@ public static class GenericExtensions
     public static bool JsonEquals<TEntity>(this TEntity left, TEntity right, TextJson.JsonSerializerOptions options)
         where TEntity : class
     {
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(options);
 
         var equalityComparer = new JsonEqualityComparer<TEntity>(options);
         return equalityComparer.Equals(left, right);
@@ -183,11 +183,11 @@ public static class GenericExtensions
     public static TEntity PrimitiveClone<TEntity>(this TEntity item)
         where TEntity : class, new()
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
 
         static bool PrimititeTypePredicate(PropertyInfo properyInfo)
         {
-            _ = properyInfo ?? throw new ArgumentNullException(nameof(properyInfo));
+            ArgumentNullException.ThrowIfNull(properyInfo);
 
             if (!properyInfo.CanWrite)
             {
@@ -251,7 +251,7 @@ public static class GenericExtensions
     public static XDocument ToXDocument<TEntity>(this TEntity entity)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
+        ArgumentNullException.ThrowIfNull(entity);
 
         var serializer = new XmlSerializer(entity.GetType());
         var document = new XDocument();
@@ -277,7 +277,7 @@ public static class GenericExtensions
     public static IDictionary<string, object> GetPropertiesDictionary<TEntity>(this TEntity entity, BindingFlags flags)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
+        ArgumentNullException.ThrowIfNull(entity);
 
         return entity
                 .GetType()
@@ -313,8 +313,8 @@ public static class GenericExtensions
     public static TEntity GetInnermostField<TEntity>(this TEntity entity, Func<TEntity, TEntity> fieldSelector)
         where TEntity : class
     {
-        _ = entity ?? throw new ArgumentNullException(nameof(entity));
-        _ = fieldSelector ?? throw new ArgumentNullException(nameof(fieldSelector));
+        ArgumentNullException.ThrowIfNull(entity);
+        ArgumentNullException.ThrowIfNull(fieldSelector);
 
         var innerEnttity = fieldSelector(entity);
         return innerEnttity is null ? entity : innerEnttity.GetInnermostField(fieldSelector);

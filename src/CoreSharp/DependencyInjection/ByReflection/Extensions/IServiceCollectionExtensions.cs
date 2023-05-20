@@ -1,5 +1,5 @@
 ﻿using CoreSharp.DependencyInjection.Attributes;
-using CoreSharp.DependencyInjection.Interfaces;
+using CoreSharp.DependencyInjection.ByInterface.Interfaces;
 using CoreSharp.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -10,75 +10,78 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace CoreSharp.DependencyInjection.Extensions;
+namespace CoreSharp.DependencyInjection.ByReflection.Extensions;
 
 /// <summary>
 /// <see cref="IServiceCollection"/> extensions.
 /// </summary>
-public static partial class IServiceCollectionExtensions
+public static class IServiceCollectionExtensions
 {
     // Fields
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private const string InterfacePrefix = "I";
+    private const string ContractPrefix = "I";
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private const string InterfaceGroupRegexExp = "(?<Name>.+)";
+    private const string ContractRegexExpressionNameGroup = "(?<Name>.+)";
 
     // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private static string InterfaceContractRegexExp
-        => $"^{InterfacePrefix}{InterfaceGroupRegexExp}$";
+    private static string ContractRegexExpression
+        => $"^{ContractPrefix}{ContractRegexExpressionNameGroup}$";
 
     // Methods 
     /// <inheritdoc cref="AddServices(IServiceCollection, Assembly[])"/>
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         => serviceCollection.AddServices(Assembly.GetEntryAssembly());
 
-    /// <inheritdoc cref="AddServices(IServiceCollection, Type, Assembly[])"/>
+    /// <inheritdoc cref="AddServicesInner(IServiceCollection, Func{Type, bool}, Assembly[])"/>
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection, params Assembly[] assemblies)
     {
-        _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
-        _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
+        var contractNameRegex = new Regex(ContractRegexExpressionNameGroup, RegexOptions.Compiled);
 
-        var interfaceNameRegex = new Regex(InterfaceGroupRegexExp);
-        var contractsWithImplementations = GetUnmarkedContractImplementationsPairs(assemblies,
-            contract => interfaceNameRegex.IsMatch(contract.Name));
+        return serviceCollection.AddServicesInner(MatchesContractName, assemblies);
 
-        foreach (var (key, value) in contractsWithImplementations)
-        {
-            serviceCollection.TryAddScoped(key, value);
-        }
-
-        return serviceCollection;
+        bool MatchesContractName(Type contract)
+            => contractNameRegex.IsMatch(contract.Name);
     }
 
     /// <inheritdoc cref="AddServices(IServiceCollection, Type, Assembly[])"/>
-    public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type interfaceBaseType)
-        => serviceCollection.AddServices(interfaceBaseType, Assembly.GetEntryAssembly());
+    public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type contractType)
+        => serviceCollection.AddServices(contractType, Assembly.GetEntryAssembly());
+
+    /// <inheritdoc cref="AddServicesInner(IServiceCollection, Func{Type, bool}, Assembly[])"/>
+    public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type contractType, params Assembly[] assemblies)
+    {
+        ArgumentNullException.ThrowIfNull(contractType);
+
+        contractType = contractType.GetGenericTypeBase();
+        // Y class Repository : IRepository 
+        // X class Repository : RepositoryBase 
+        if (!contractType.IsInterface)
+        {
+            throw new ArgumentException($"{nameof(contractType)} ({contractType.FullName}) must be an interface.", nameof(contractType));
+        }
+
+        return serviceCollection.AddServicesInner(InheritsTargetContractDirectly, assemblies);
+
+        bool InheritsTargetContractDirectly(Type contract)
+            => contract.GetDirectInterfaces()
+                       .Any(contractInterface => contractInterface.GetGenericTypeBase() == contractType);
+    }
 
     /// <summary>
     /// <para>Register all `interface contract` + `concrete implementation` combos found in given assemblies.</para>
     /// <para>-If single implementation is found, then it is registered regardless.</para>
-    /// <para>-If multiple implementations are found, only the one with the `I{InterfaceName}` and `{InterfaceName}` convention is registered.</para>
+    /// <para>-If multiple implementations are found, only the one with the `I{ServiceName}` and `{ServiceName}` convention is registered.</para>
     /// <para>-If multiple implementations are found and none has a proper name, none is registered.</para>
     /// <para>-Use <see cref="IgnoreServiceAttribute"/> on either contract or implementation to ignore.</para>
     /// </summary>
-    public static IServiceCollection AddServices(this IServiceCollection serviceCollection, Type interfaceBaseType, params Assembly[] assemblies)
+    private static IServiceCollection AddServicesInner(this IServiceCollection serviceCollection, Func<Type, bool> contractPredicate, params Assembly[] assemblies)
     {
-        _ = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
-        _ = interfaceBaseType ?? throw new ArgumentNullException(nameof(interfaceBaseType));
-        _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
+        ArgumentNullException.ThrowIfNull(serviceCollection);
+        ArgumentNullException.ThrowIfNull(contractPredicate);
+        ArgumentNullException.ThrowIfNull(assemblies);
 
-        interfaceBaseType = interfaceBaseType.GetGenericTypeBase();
-        if (!interfaceBaseType.IsInterface)
-        {
-            throw new ArgumentException($"{nameof(interfaceBaseType)} ({interfaceBaseType.FullName}) must be an interface.", nameof(interfaceBaseType));
-        }
-
-        bool ImplementsBaseInterfaceDirectly(Type type)
-            => type.GetDirectInterfaces()
-                   .Select(t => t.GetGenericTypeBase())
-                   .Any(t => t == interfaceBaseType);
-        var contractsWithImplementations = GetUnmarkedContractImplementationsPairs(assemblies, ImplementsBaseInterfaceDirectly);
+        var contractsWithImplementations = GetContractImplementationsPairs(assemblies, contractPredicate);
 
         foreach (var (key, value) in contractsWithImplementations)
         {
@@ -92,9 +95,21 @@ public static partial class IServiceCollectionExtensions
     /// Returns a <see cref="IDictionary{TKey, TValue}"/>
     /// with all contracts and their implementation.
     /// </summary>
-    private static IDictionary<Type, Type> GetUnmarkedContractImplementationsPairs(Assembly[] assemblies, Func<Type, bool> additionalInterfacePredicate = null)
+    private static IDictionary<Type, Type> GetContractImplementationsPairs(Assembly[] assemblies, Func<Type, bool> contractPredicate)
     {
-        additionalInterfacePredicate ??= _ => true;
+        var pairs = new Dictionary<Type, Type>();
+        var contracts = assemblies.SelectMany(assembly => assembly.DefinedTypes)
+                                  .Where(ContractFilter);
+        foreach (var contract in contracts)
+        {
+            var implementation = GetServiceImplementation(contract, assemblies);
+            if (implementation is not null)
+            {
+                pairs.Add(contract, implementation);
+            }
+        }
+
+        return pairs;
 
         bool ContractFilter(TypeInfo typeInfo)
         {
@@ -111,7 +126,7 @@ public static partial class IServiceCollectionExtensions
             }
 
             // Additional checks do not apply, ignore 
-            else if (!additionalInterfacePredicate(typeInfo))
+            else if (!contractPredicate(typeInfo))
             {
                 return false;
             }
@@ -119,31 +134,14 @@ public static partial class IServiceCollectionExtensions
             // Take 
             return true;
         }
-
-        var pairs = new Dictionary<Type, Type>();
-        var contracts = assemblies.SelectMany(assembly => assembly.DefinedTypes)
-                                  .Where(ContractFilter);
-        foreach (var contract in contracts)
-        {
-            var implementation = GetUnmarkedContractImplementation(contract, assemblies);
-            if (implementation is not null)
-            {
-                pairs.Add(contract, implementation);
-            }
-        }
-
-        return pairs;
     }
 
     /// <summary>
     /// Find implementation <see cref="Type"/>
     /// for given contract <see cref="Type"/>.
     /// </summary>
-    private static Type GetUnmarkedContractImplementation(Type contractType, Assembly[] assemblies)
+    private static Type GetServiceImplementation(Type contract, Assembly[] assemblies)
     {
-        _ = contractType ?? throw new ArgumentNullException(nameof(contractType));
-        _ = assemblies ?? throw new ArgumentNullException(nameof(assemblies));
-
         // Get all implementations for given contract 
         var implementations = assemblies
             .SelectMany(assembly => assembly.DefinedTypes)
@@ -177,7 +175,7 @@ public static partial class IServiceCollectionExtensions
                 }
 
                 // Doesn't implement given interface, ignore 
-                else if (!interfaces.Contains(contractType))
+                else if (!interfaces.Contains(contract))
                 {
                     return false;
                 }
@@ -195,6 +193,18 @@ public static partial class IServiceCollectionExtensions
         // If multiple implementations
         else if (implementations.Length > 1)
         {
+            // Get contract name 
+            var trimmedContractName = Regex.Match(contract.Name, ContractRegexExpression)
+                                           .Groups["Name"]
+                                           .Value;
+            trimmedContractName = TrimGenericTypeBaseName(trimmedContractName);
+
+            // First one with the correct name convention
+            return Array.Find(implementations, i => GetGenericTypeBaseName(i) == trimmedContractName);
+
+            static string GetGenericTypeBaseName(Type type)
+                => TrimGenericTypeBaseName(type.Name);
+
             static string TrimGenericTypeBaseName(string name)
             {
                 var backtickIndex = name.IndexOf('`');
@@ -205,18 +215,6 @@ public static partial class IServiceCollectionExtensions
 
                 return name;
             }
-
-            static string GetGenericTypeBaseName(Type type)
-                => TrimGenericTypeBaseName(type.Name);
-
-            // Get contract name 
-            var trimmedContractName = Regex.Match(contractType.Name, InterfaceContractRegexExp)
-                                           .Groups["Name"]
-                                           .Value;
-            trimmedContractName = TrimGenericTypeBaseName(trimmedContractName);
-
-            // First one with the correct name convention
-            return Array.Find(implementations, i => GetGenericTypeBaseName(i) == trimmedContractName);
         }
 
         // None found

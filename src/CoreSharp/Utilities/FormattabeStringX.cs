@@ -16,7 +16,7 @@ public static class FormattabeStringX
     /// </summary>
     public static string ShowNulls(FormattableString formattableString)
     {
-        _ = formattableString ?? throw new ArgumentNullException(nameof(formattableString));
+        ArgumentNullException.ThrowIfNull(formattableString);
 
         return formattableString.ToString(ShowNullsFormatProvider.Default);
     }

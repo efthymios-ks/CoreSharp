@@ -21,8 +21,8 @@ public static class AssemblyExtensions
     /// </summary>
     public static IEnumerable<Assembly> LoadReferencedAssemblies(this Assembly assembly, Func<AssemblyName, bool> filter)
     {
-        _ = assembly ?? throw new ArgumentNullException(nameof(assembly));
-        _ = filter ?? throw new ArgumentNullException(nameof(filter));
+        ArgumentNullException.ThrowIfNull(assembly);
+        ArgumentNullException.ThrowIfNull(filter);
 
         return assembly.GetReferencedAssemblies()
                        .Where(filter)

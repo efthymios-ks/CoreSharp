@@ -11,7 +11,11 @@ public sealed class LazyTask<TValue>
 
     // Constructors
     public LazyTask(Func<Task<TValue>> valueFactory)
-        => _valueFactory = valueFactory ?? throw new ArgumentNullException(nameof(valueFactory));
+    {
+        ArgumentNullException.ThrowIfNull(valueFactory);
+
+        _valueFactory = valueFactory;
+    }
 
     // Properties
     public bool IsValueInitialized { get; private set; }

@@ -14,7 +14,7 @@ public static class UriExtensions
     /// </summary>
     public static IDictionary<string, string> GetQueryParameters(this Uri uri)
     {
-        _ = uri ?? throw new ArgumentNullException(nameof(uri));
+        ArgumentNullException.ThrowIfNull(uri);
 
         return UriX.GetParameters(uri.Query);
     }
@@ -24,7 +24,7 @@ public static class UriExtensions
     /// </summary>
     public static IDictionary<string, string> GetFragmentParameters(this Uri uri)
     {
-        _ = uri ?? throw new ArgumentNullException(nameof(uri));
+        ArgumentNullException.ThrowIfNull(uri);
 
         return UriX.GetParameters(uri.Fragment.TrimStart('#'));
     }

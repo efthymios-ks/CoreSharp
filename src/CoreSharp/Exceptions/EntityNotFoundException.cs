@@ -29,7 +29,7 @@ public class EntityNotFoundException : KeyNotFoundException
     // Methods 
     public static EntityNotFoundException Create<TEntity, TKey>(Expression<Func<TEntity, TKey>> propertySelector, TKey targetValue)
     {
-        _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+        ArgumentNullException.ThrowIfNull(propertySelector);
 
         var entityType = typeof(TEntity);
         var propertyName = propertySelector.GetMemberName();

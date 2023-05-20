@@ -18,7 +18,7 @@ public static class StringBuilderExtensions
     /// </summary>
     public static StringBuilder AppendFormatLine(this StringBuilder builder, IFormatProvider formatProvider, string format, params object[] arguments)
     {
-        _ = builder ?? throw new ArgumentNullException(nameof(builder));
+        ArgumentNullException.ThrowIfNull(builder);
 
         return builder.AppendFormat(formatProvider, format, arguments)
                       .AppendLine();

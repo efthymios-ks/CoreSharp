@@ -14,7 +14,7 @@ public static class DbConnectionExtensions
     /// <inheritdoc cref="DbProviderFactory.CreateDataAdapter"/>
     public static DbDataAdapter CreateDataAdapter(this DbConnection connection)
     {
-        _ = connection ?? throw new ArgumentNullException(nameof(connection));
+        ArgumentNullException.ThrowIfNull(connection);
 
         var factory = DbProviderFactories.GetFactory(connection);
         return factory?.CreateDataAdapter();
@@ -23,7 +23,7 @@ public static class DbConnectionExtensions
     /// <inheritdoc cref="DbProviderFactoryExtensions.CreateParameter(DbProviderFactory, string, object)" />
     public static DbParameter CreateParameter(this DbConnection connection, string parameterName, object parameterValue)
     {
-        _ = connection ?? throw new ArgumentNullException(nameof(connection));
+        ArgumentNullException.ThrowIfNull(connection);
 
         var factory = DbProviderFactories.GetFactory(connection);
         return factory.CreateParameter(parameterName, parameterValue);
@@ -38,7 +38,7 @@ public static class DbConnectionExtensions
     /// </summary>
     public static async Task<DbTransaction> OpenTransactionAsync(this DbConnection connection, IsolationLevel isolationLevel)
     {
-        _ = connection ?? throw new ArgumentNullException(nameof(connection));
+        ArgumentNullException.ThrowIfNull(connection);
 
         if (!connection.IsOpen())
         {
@@ -53,7 +53,7 @@ public static class DbConnectionExtensions
     /// </summary>
     public static bool IsOpen(this DbConnection connection)
     {
-        _ = connection ?? throw new ArgumentNullException(nameof(connection));
+        ArgumentNullException.ThrowIfNull(connection);
 
         return connection.State.HasFlag(ConnectionState.Open);
     }
@@ -63,7 +63,7 @@ public static class DbConnectionExtensions
     /// </summary>
     public static async Task<bool> IsAvailableAsync(this DbConnection connection, CancellationToken cancellationToken = default)
     {
-        _ = connection ?? throw new ArgumentNullException(nameof(connection));
+        ArgumentNullException.ThrowIfNull(connection);
 
         try
         {

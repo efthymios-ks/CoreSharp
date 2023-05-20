@@ -14,8 +14,8 @@ public static class ICollectionExtensions
     /// </summary>
     public static void AddRange<TElement>(this ICollection<TElement> source, IEnumerable<TElement> items)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = items ?? throw new ArgumentNullException(nameof(items));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(items);
 
         foreach (var item in items)
         {
@@ -32,9 +32,9 @@ public static class ICollectionExtensions
     /// </summary>
     public static bool TryAdd<TElement, TKey>(this ICollection<TElement> source, TElement item, Func<TElement, TKey> keySelector)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = item ?? throw new ArgumentNullException(nameof(item));
-        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(keySelector);
 
         var itemKey = keySelector(item);
         foreach (var elelement in source)

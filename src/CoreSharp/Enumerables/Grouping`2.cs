@@ -17,8 +17,10 @@ public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
     // Constructors 
     public Grouping(TKey key, IEnumerable<TElement> source)
     {
+        ArgumentNullException.ThrowIfNull(source);
+
         Key = key;
-        _source = source ?? throw new ArgumentNullException(nameof(source));
+        _source = source;
 
         // Mutate once 
         _source = _source.ToArray();

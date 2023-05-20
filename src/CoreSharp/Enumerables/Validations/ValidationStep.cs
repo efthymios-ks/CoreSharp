@@ -18,19 +18,27 @@ public class ValidationStep
 
     public ValidationStep(int stepNumber, Func<bool> validationFunction, Func<string> validationMessageFunction)
     {
+        ArgumentNullException.ThrowIfNull(validationFunction);
+        ArgumentNullException.ThrowIfNull(validationMessageFunction);
         ValidateNumber(stepNumber);
 
         Number = stepNumber;
-        _validationFunction = validationFunction ?? throw new ArgumentNullException(nameof(validationFunction));
-        _validationMessageFunction = validationMessageFunction ?? throw new ArgumentNullException(nameof(validationMessageFunction));
+        _validationFunction = validationFunction;
+        _validationMessageFunction = validationMessageFunction;
     }
 
     // Properties
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay => ToString();
+    private string DebuggerDisplay
+        => ToString();
+
     public int Number { get; }
-    internal bool IsValid => _validationFunction();
-    internal string ValidationMessage => _validationMessageFunction();
+
+    internal bool IsValid
+        => _validationFunction();
+
+    internal string ValidationMessage
+        => _validationMessageFunction();
 
     // Methods
     public override string ToString() => $"Step={Number}";

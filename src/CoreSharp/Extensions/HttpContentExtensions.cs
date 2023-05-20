@@ -27,7 +27,7 @@ public static class HttpContentExtensions
     /// </summary>
     public static async Task<TResponse> DeserializeAsync<TResponse>(this HttpContent httpContent, CancellationToken cancellationToken = default) where TResponse : class
     {
-        _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
+        ArgumentNullException.ThrowIfNull(httpContent);
 
         // Get content type 
         var contentType = httpContent.GetContentType()
@@ -49,7 +49,7 @@ public static class HttpContentExtensions
     /// <inheritdoc cref="StreamExtensions.FromJson{TEntity}(Stream, JsonSerializerSettings)"/>
     public static async Task<TResponse> FromJsonAsync<TResponse>(this HttpContent httpContent, CancellationToken cancellationToken = default) where TResponse : class
     {
-        _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
+        ArgumentNullException.ThrowIfNull(httpContent);
 
         using var stream = await httpContent.ReadAsStreamAsync(cancellationToken);
         return stream.FromJson<TResponse>();
@@ -58,7 +58,7 @@ public static class HttpContentExtensions
     /// <inheritdoc cref="StreamExtensions.FromXmlAsync{TEntity}(Stream, CancellationToken)"/>
     public static async Task<TResponse> FromXmlAsync<TResponse>(this HttpContent httpContent, CancellationToken cancellationToken = default) where TResponse : class
     {
-        _ = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
+        ArgumentNullException.ThrowIfNull(httpContent);
 
         using var stream = await httpContent.ReadAsStreamAsync(cancellationToken);
         return await stream.FromXmlAsync<TResponse>(cancellationToken);

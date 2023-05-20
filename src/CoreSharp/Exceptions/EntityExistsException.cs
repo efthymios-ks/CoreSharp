@@ -28,7 +28,7 @@ public class EntityExistsException : Exception
     // Methods 
     public static EntityExistsException Create<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> propertySelector, TProperty propertyValue)
     {
-        _ = propertySelector ?? throw new ArgumentNullException(nameof(propertySelector));
+        ArgumentNullException.ThrowIfNull(propertySelector);
 
         var entityType = typeof(TEntity);
         var propertyName = propertySelector.GetMemberName();

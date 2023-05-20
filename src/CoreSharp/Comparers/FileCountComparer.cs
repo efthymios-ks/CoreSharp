@@ -11,11 +11,11 @@ public class FileCountComparer : Comparer<DirectoryInfo>
 {
     public override int Compare(DirectoryInfo x, DirectoryInfo y)
     {
-        _ = x ?? throw new ArgumentNullException(nameof(x));
-        _ = y ?? throw new ArgumentNullException(nameof(y));
+        ArgumentNullException.ThrowIfNull(x);
+        ArgumentNullException.ThrowIfNull(y);
 
-        var currentLength = x.GetFiles().LongLength;
-        var previousLength = y.GetFiles().LongLength;
+        var currentLength = GetFileCount(x);
+        var previousLength = GetFileCount(y);
 
         if (currentLength > previousLength)
         {
@@ -25,9 +25,10 @@ public class FileCountComparer : Comparer<DirectoryInfo>
         {
             return -1;
         }
-        else
-        {
-            return 0;
-        }
+
+        return 0;
     }
+
+    private static long GetFileCount(DirectoryInfo directoryInfo)
+        => directoryInfo.GetFiles().LongLength;
 }

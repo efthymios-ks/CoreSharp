@@ -13,7 +13,7 @@ public static class LambdaExpressionExtensions
     /// </summary>
     public static string GetMemberName(this LambdaExpression memberExpression)
     {
-        _ = memberExpression ?? throw new ArgumentNullException(nameof(memberExpression));
+        ArgumentNullException.ThrowIfNull(memberExpression);
 
         static string NameSelector(Expression expression)
         {

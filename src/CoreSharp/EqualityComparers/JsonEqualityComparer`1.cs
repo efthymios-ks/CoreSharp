@@ -26,14 +26,18 @@ public class JsonEqualityComparer<TEntity> : IEqualityComparer<TEntity>
 
     public JsonEqualityComparer(JsonNet.JsonSerializerSettings settings)
         : this(entity => JsonNet.JsonConvert.SerializeObject(entity, settings))
-        => _ = settings ?? throw new ArgumentNullException(nameof(settings));
+        => ArgumentNullException.ThrowIfNull(settings);
 
     public JsonEqualityComparer(TextJson.JsonSerializerOptions options)
         : this(entity => TextJson.JsonSerializer.Serialize(entity, options))
-        => _ = options ?? throw new ArgumentNullException(nameof(options));
+        => ArgumentNullException.ThrowIfNull(options);
 
     public JsonEqualityComparer(Func<TEntity, string> serializeFunction)
-        => _serializeFunction = serializeFunction ?? throw new ArgumentNullException(nameof(serializeFunction));
+    {
+        ArgumentNullException.ThrowIfNull(serializeFunction);
+
+        _serializeFunction = serializeFunction;
+    }
 
     // Methods
     public bool Equals(TEntity x, TEntity y)

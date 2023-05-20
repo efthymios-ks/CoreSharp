@@ -6,7 +6,7 @@ using System.IO;
 
 namespace CoreSharp.ConfigurationProviders;
 
-public class EmbeddedFileConfigurationProvider : ConfigurationProvider
+public sealed class EmbeddedFileConfigurationProvider : ConfigurationProvider
 {
     // Fields 
     private readonly IConfigurationBuilder _builder;
@@ -16,8 +16,8 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
     // Constructors
     public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
     {
-        _builder = builder ?? throw new ArgumentNullException(nameof(builder));
-        _options = options ?? throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(options);
         _ = _options.ScanAssembly ?? throw new ArgumentException(nameof(options.ScanAssembly));
 
         _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
@@ -54,13 +54,10 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
 
     private void AddFile(string appSettingsPath)
     {
-        if (string.IsNullOrWhiteSpace(appSettingsPath))
-        {
-            throw new ArgumentNullException(nameof(appSettingsPath));
-        }
+        ArgumentException.ThrowIfNullOrEmpty(appSettingsPath);
 
-        var file = _fileProvider.GetFileInfo(appSettingsPath);
-        if (!file.Exists)
+        var fileInfo = _fileProvider.GetFileInfo(appSettingsPath);
+        if (!fileInfo.Exists)
         {
             return;
         }

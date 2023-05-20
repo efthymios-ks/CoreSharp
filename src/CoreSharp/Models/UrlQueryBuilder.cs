@@ -71,7 +71,7 @@ public class UrlQueryBuilder : QueryBuilder
     public void Parse<TEntity>(TEntity item)
         where TEntity : class
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
 
         var properties = item.GetType()
                              .GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -84,7 +84,7 @@ public class UrlQueryBuilder : QueryBuilder
     /// </summary>
     public void Add<TValue>(IDictionary<string, TValue> dictionary)
     {
-        _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+        ArgumentNullException.ThrowIfNull(dictionary);
 
         foreach (var pair in dictionary)
         {
@@ -119,7 +119,7 @@ public class UrlQueryBuilder : QueryBuilder
     /// </summary>
     public void AddMany(string key, IEnumerable items)
     {
-        _ = items ?? throw new ArgumentNullException(nameof(items));
+        ArgumentNullException.ThrowIfNull(items);
 
         foreach (var item in items)
         {

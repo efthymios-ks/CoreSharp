@@ -14,7 +14,7 @@ public static class IDictionaryExtensions
     /// <inheritdoc cref="IDictionary{TKey, TValue}.TryGetValue(TKey, out TValue)" />
     public static bool TryGet<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source.TryGetValue(key, out value);
     }
@@ -24,7 +24,7 @@ public static class IDictionaryExtensions
     /// </summary>
     public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue value)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         if (source.ContainsKey(key))
         {
@@ -44,7 +44,7 @@ public static class IDictionaryExtensions
     /// </summary>
     public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, out TValue value)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         value = default;
         if (!source.ContainsKey(key))
@@ -64,7 +64,7 @@ public static class IDictionaryExtensions
     /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
     public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue, TValue> updateAction)
     {
-        _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+        ArgumentNullException.ThrowIfNull(updateAction);
 
         return source.TryUpdate(key, (_, v) => updateAction(v));
     }
@@ -77,8 +77,8 @@ public static class IDictionaryExtensions
     /// </summary>
     public static bool TryUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TKey, TValue, TValue> updateAction)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(updateAction);
 
         if (!source.ContainsKey(key))
         {
@@ -100,7 +100,7 @@ public static class IDictionaryExtensions
     /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
     public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TValue, TValue> updateAction)
     {
-        _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+        ArgumentNullException.ThrowIfNull(updateAction);
 
         return source.AddOrUpdate(key, addValue, (_, v) => updateAction(v));
     }
@@ -113,8 +113,8 @@ public static class IDictionaryExtensions
     /// </summary>
     public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue, Func<TKey, TValue, TValue> updateAction)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(updateAction);
 
         if (source.TryGetValue(key, out var value))
         {
@@ -137,8 +137,8 @@ public static class IDictionaryExtensions
     /// </summary>
     public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue addValue)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
-        _ = addValue ?? throw new ArgumentNullException(nameof(addValue));
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(addValue);
 
         if (!source.ContainsKey(key))
         {
@@ -154,7 +154,7 @@ public static class IDictionaryExtensions
     /// </summary>
     public static IEnumerable<KeyValuePair<TKey, TValue>> ToEnumerable<TKey, TValue>(this IDictionary<TKey, TValue> source)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source;
     }
@@ -164,7 +164,7 @@ public static class IDictionaryExtensions
     /// </summary>
     public static bool ContainsValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TValue value)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         return source.Values.Any(v => v.Equals(value));
     }
@@ -175,7 +175,7 @@ public static class IDictionaryExtensions
     /// </summary>
     public static string ToUrlQueryString<TValue>(this IDictionary<string, TValue> parameters)
     {
-        _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
+        ArgumentNullException.ThrowIfNull(parameters);
 
         var builder = new UrlQueryBuilder
         {
@@ -191,7 +191,7 @@ public static class IDictionaryExtensions
     public static TEntity ToEntity<TEntity>(this IDictionary<string, object> properties)
         where TEntity : class, new()
     {
-        _ = properties ?? throw new ArgumentNullException(nameof(properties));
+        ArgumentNullException.ThrowIfNull(properties);
 
         var entityTypeProperties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                                   .Where(p => p.CanWrite);

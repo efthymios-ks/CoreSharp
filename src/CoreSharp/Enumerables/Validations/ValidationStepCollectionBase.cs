@@ -18,7 +18,7 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
     // Methods
     public void Add(ValidationStep item)
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
         ValidationStep.ValidateNumber(item.Number);
 
         if (!Contains(item))
@@ -29,7 +29,7 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
 
     public bool Remove(ValidationStep item)
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
         ValidationStep.ValidateNumber(item.Number);
 
         if (!Contains(item))
@@ -45,7 +45,7 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
 
     public bool Contains(ValidationStep item)
     {
-        _ = item ?? throw new ArgumentNullException(nameof(item));
+        ArgumentNullException.ThrowIfNull(item);
         ValidationStep.ValidateNumber(item.Number);
 
         return _source.ContainsKey(item.Number);
@@ -53,11 +53,11 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
 
     public void CopyTo(ValidationStep[] array, int arrayIndex)
     {
-        _ = array ?? throw new ArgumentNullException(nameof(array));
-        _source
-            .Select(s => s.Value)
-            .ToArray()
-            .CopyTo(array, arrayIndex);
+        ArgumentNullException.ThrowIfNull(array);
+
+        _source.Select(s => s.Value)
+               .ToArray()
+               .CopyTo(array, arrayIndex);
     }
 
     public IEnumerator<ValidationStep> GetEnumerator()

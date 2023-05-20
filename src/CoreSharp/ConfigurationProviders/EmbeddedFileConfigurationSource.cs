@@ -3,14 +3,18 @@ using System;
 
 namespace CoreSharp.ConfigurationProviders;
 
-public class EmbeddedFileConfigurationSource : IConfigurationSource
+public sealed class EmbeddedFileConfigurationSource : IConfigurationSource
 {
     // Fields
     private readonly EmbeddedFileConfigurationOptions _options;
 
     // Constructors
     public EmbeddedFileConfigurationSource(EmbeddedFileConfigurationOptions options)
-        => _options = options ?? throw new ArgumentNullException(nameof(options));
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        _options = options;
+    }
 
     // Methods
     public IConfigurationProvider Build(IConfigurationBuilder builder)
