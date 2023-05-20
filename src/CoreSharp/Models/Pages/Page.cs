@@ -11,13 +11,21 @@ public class Page
     public Page(int pageNumber, int pageSize, int totalItems, int totalPages, IEnumerable items)
     {
         if (pageNumber < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
+        }
         else if (pageSize < 1)
+        {
             throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
+        }
         else if (totalItems < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(totalItems), $"{nameof(totalItems)} has to be positive and non-zero.");
+        }
         else if (totalPages < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(totalPages), $"{nameof(totalPages)} has to be positive and non-zero.");
+        }
 
         PageNumber = pageNumber;
         PageSize = pageSize;

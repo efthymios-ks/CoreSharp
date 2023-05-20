@@ -41,7 +41,9 @@ public static class DbConnectionExtensions
         _ = connection ?? throw new ArgumentNullException(nameof(connection));
 
         if (!connection.IsOpen())
+        {
             await connection.OpenAsync();
+        }
 
         return await connection.BeginTransactionAsync(isolationLevel);
     }

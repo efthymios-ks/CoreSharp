@@ -64,7 +64,9 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
 
         // Act 
         var added = _dictionary.TryAdd("1", 1);
@@ -80,7 +82,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected.Add("4", 4);
 
         // Act 
@@ -107,7 +112,9 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
 
         // Act 
         var result = _dictionary.TryRemove("-1", out _);
@@ -123,7 +130,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, i) in _dictionary)
+        {
             expected.Add(key, i);
+        }
+
         expected.Remove("3");
 
         // Act 
@@ -164,7 +174,9 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
 
         // Act 
         var result = _dictionary.TryUpdate("-1", 100);
@@ -180,7 +192,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected["1"] = 100;
 
         // Act 
@@ -197,7 +212,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         static int UpdateAction(string _, int __) => 2;
 
         expected["1"] = 2;
@@ -239,7 +257,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected.Add("4", 4);
 
         // Act 
@@ -256,7 +277,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected["3"] = 300;
 
         // Act 
@@ -273,7 +297,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected["3"] = 300;
 
         // Act 
@@ -300,7 +327,9 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
 
         // Act 
         var result = _dictionary.GetOrAdd("1", 100);
@@ -316,7 +345,10 @@ public class IDictionaryExtensionsTests
         // Arrange
         var expected = new Dictionary<string, int>();
         foreach (var (key, value) in _dictionary)
+        {
             expected.Add(key, value);
+        }
+
         expected.Add("4", 4);
 
         // Act 

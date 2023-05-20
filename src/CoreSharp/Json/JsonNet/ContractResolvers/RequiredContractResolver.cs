@@ -26,7 +26,9 @@ public class RequiredContractResolver : DefaultContractResolver
     public static void HandleRequiredProperties(JsonObjectContract contract)
     {
         foreach (var jsonProperty in contract.Properties.Where(RequiredPropertyFilter))
+        {
             jsonProperty.Required = Required.Always;
+        }
     }
 
     private static bool RequiredPropertyFilter(JsonProperty jsonProperty)

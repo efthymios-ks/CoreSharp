@@ -18,17 +18,23 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
 
             // If found and equal, just return. 
             if (found && equals)
+            {
                 return;
+            }
 
             // Based on documentation this adds or updates. 
             base[key] = value;
 
             // Found (and not equal), updated. 
             if (found)
+            {
                 OnItemReplaced(key, previousValue, value);
+            }
             // Not found. 
             else
+            {
                 OnItemAdded(key, value);
+            }
         }
     }
     // Events 
@@ -41,7 +47,9 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
     public new bool TryAdd(TKey key, TValue value)
     {
         if (!base.TryAdd(key, value))
+        {
             return false;
+        }
 
         OnItemAdded(key, value);
         return true;
@@ -53,7 +61,9 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
     public new bool Remove(TKey key, out TValue removedValue)
     {
         if (!base.Remove(key, out removedValue))
+        {
             return false;
+        }
 
         OnItemRemoved(key, removedValue);
         return true;
@@ -62,7 +72,9 @@ public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue
     public new void Clear()
     {
         if (Count == 0)
+        {
             return;
+        }
 
         base.Clear();
         OnItemsCleared();

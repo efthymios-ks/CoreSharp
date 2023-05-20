@@ -34,10 +34,14 @@ public static class TaskExtensions
             //    => exception?.InnerException is AggregateException || exception.InnerExceptions.Count > 1;
 
             if (!t.IsFaulted)
+            {
                 return t;
+            }
 
             if (t.Exception is not AggregateException aggregateException)
+            {
                 return t;
+            }
 
             return Task.FromException(aggregateException.Flatten());
         }

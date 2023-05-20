@@ -14,13 +14,17 @@ public class UrlQueryBuilder : QueryBuilder
     private void AddInternal(string key, object value)
     {
         if (value is not null)
+        {
             Add(key, Convert.ToString(value, CultureInfo.InvariantCulture));
+        }
     }
 
     private void SwitchAdd<TValue>(string key, TValue value)
     {
         if (value is null)
+        {
             return;
+        }
 
         var type = typeof(TValue);
         switch (value)
@@ -83,7 +87,9 @@ public class UrlQueryBuilder : QueryBuilder
         _ = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
 
         foreach (var pair in dictionary)
+        {
             SwitchAdd(pair.Key, pair.Value);
+        }
     }
 
     /// <summary>
@@ -116,6 +122,8 @@ public class UrlQueryBuilder : QueryBuilder
         _ = items ?? throw new ArgumentNullException(nameof(items));
 
         foreach (var item in items)
+        {
             AddInternal(key, item);
+        }
     }
 }

@@ -40,7 +40,10 @@ public class DbQuery : IAsyncDisposable
         set
         {
             if (value < 0)
+            {
                 throw new ArgumentOutOfRangeException(nameof(TimeoutSeconds), $"{nameof(TimeoutSeconds)} ({value}) cannot have negative value.");
+            }
+
             _timeoutSeconds = value;
         }
     }
@@ -62,7 +65,9 @@ public class DbQuery : IAsyncDisposable
         GC.SuppressFinalize(this);
 
         if (_connection is not null)
+        {
             await _connection.DisposeAsync();
+        }
     }
 
     /// <inheritdoc cref="DbParameterCollection.Add(object)"/>
@@ -76,7 +81,9 @@ public class DbQuery : IAsyncDisposable
     {
         // Open connection
         if (!_connection.IsOpen())
+        {
             await _connection.OpenAsync(cancellationToken);
+        }
 
         // Prepare and execute DbCommand 
         var command = _connection.CreateCommand();
@@ -87,7 +94,9 @@ public class DbQuery : IAsyncDisposable
         command.CommandText = query;
 
         if (Parameters.Count > 0)
+        {
             command.Parameters.AddRange(Parameters.ToArray());
+        }
 
         return command;
     }
@@ -140,16 +149,23 @@ public class DbQuery : IAsyncDisposable
         {
             adapter.SelectCommand = command;
             if (tableMappings.Any())
+            {
                 adapter.TableMappings.AddRange(tableMappings.ToArray());
+            }
 
             return await Task.Run(() => adapter.Fill(set), cancellationToken);
         }
         finally
         {
             if (adapter is IAsyncDisposable asyncDisposable)
+            {
                 await asyncDisposable.DisposeAsync();
+            }
+
             if (adapter is IDisposable disposable)
+            {
                 disposable.Dispose();
+            }
         }
     }
 }

@@ -16,6 +16,8 @@ public static class DirectoryInfoExtensions
         Array.ForEach(directory.GetFiles(), i => i.Delete());
 
         if (recursive)
+        {
             Array.ForEach(directory.GetDirectories(), i => i.Delete(true));
+        }
     }
 }

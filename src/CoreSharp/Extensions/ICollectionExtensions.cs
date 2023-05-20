@@ -18,7 +18,9 @@ public static class ICollectionExtensions
         _ = items ?? throw new ArgumentNullException(nameof(items));
 
         foreach (var item in items)
+        {
             source.Add(item);
+        }
     }
 
     /// <inheritdoc cref="TryAdd{TElement, TKey}(ICollection{TElement}, TElement, Func{TElement, TKey})"/>
@@ -39,7 +41,9 @@ public static class ICollectionExtensions
         {
             var elementKey = keySelector(elelement);
             if (Equals(elementKey, itemKey))
+            {
                 return false;
+            }
         }
 
         source.Add(item);

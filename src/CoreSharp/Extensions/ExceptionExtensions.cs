@@ -41,12 +41,16 @@ public static class ExceptionExtensions
         if (exception is AggregateException aggregateException)
         {
             foreach (var innerException in aggregateException.InnerExceptions.SelectMany(ex => ex.Unwrap()))
+            {
                 yield return innerException;
+            }
         }
         else if (exception.InnerException is not null)
         {
             foreach (var innerException in exception.InnerException.Unwrap())
+            {
                 yield return innerException;
+            }
         }
     }
 
@@ -59,8 +63,12 @@ public static class ExceptionExtensions
         _ = exception ?? throw new ArgumentNullException(nameof(exception));
 
         if (exception.InnerException is null)
+        {
             return exception;
+        }
         else
+        {
             return GetInnermostException(exception.InnerException);
+        }
     }
 }

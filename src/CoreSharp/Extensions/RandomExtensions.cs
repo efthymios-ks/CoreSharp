@@ -31,7 +31,9 @@ public static class RandomExtensions
         _ = random ?? throw new ArgumentNullException(nameof(random));
         _ = source ?? throw new ArgumentNullException(nameof(source));
         if (source.Length == 0)
+        {
             throw new ArgumentException($"{nameof(source)} cannot be empty.", nameof(source));
+        }
 
         var topExclusive = source.Length;
         var index = random.Next(topExclusive);
@@ -49,7 +51,9 @@ public static class RandomExtensions
     {
         _ = random ?? throw new ArgumentNullException(nameof(random));
         if (minimum > maximum)
+        {
             throw new ArgumentException($"{nameof(minimum)} ({minimum}) cannot be greater than {nameof(maximum)} ({maximum}).", nameof(minimum));
+        }
 
         var randomValue = random.NextDouble();
         return randomValue * (maximum - minimum) + minimum;
@@ -70,7 +74,9 @@ public static class RandomExtensions
     {
         _ = random ?? throw new ArgumentNullException(nameof(random));
         if (size < 1)
+        {
             throw new ArgumentOutOfRangeException(nameof(size), $"{nameof(size)} has to be at least 1.");
+        }
 
         const string seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var result = new char[size];
@@ -91,12 +97,17 @@ public static class RandomExtensions
     {
         _ = random ?? throw new ArgumentNullException(nameof(random));
         if (percentage is < 0 or > 100)
+        {
             throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
+        }
 
         var chance = random.NextDouble(0, 100);
 
         if (includeEnd)
+        {
             return chance >= percentage;
+        }
+
         return chance > percentage;
     }
 
@@ -107,12 +118,17 @@ public static class RandomExtensions
     {
         _ = random ?? throw new ArgumentNullException(nameof(random));
         if (percentage is < 0 or > 100)
+        {
             throw new ArgumentOutOfRangeException($"{nameof(percentage)} ({percentage}%) has to be between 0 and 100.");
+        }
 
         var chance = random.NextDouble(0, 100);
 
         if (includeEnd)
+        {
             return chance <= percentage;
+        }
+
         return chance < percentage;
     }
 
@@ -123,17 +139,27 @@ public static class RandomExtensions
     {
         _ = random ?? throw new ArgumentNullException(nameof(random));
         if (percentageLeft < 0)
+        {
             throw new ArgumentOutOfRangeException($"{nameof(percentageLeft)} ({percentageLeft}%) has to be between 0 and 100.");
+        }
         else if (percentageRight > 100)
+        {
             throw new ArgumentOutOfRangeException($"{nameof(percentageRight)} ({percentageRight}%) has to be between 0 and 100.");
+        }
         else if (percentageLeft > percentageRight)
+        {
             throw new ArgumentException($"{nameof(percentageLeft)} ({percentageLeft}%) cannot be greater than {nameof(percentageRight)} ({percentageRight}%).");
+        }
 
         var chance = random.NextDouble(0, 100);
         if (includeEnds)
+        {
             return chance >= percentageLeft && chance <= percentageRight;
+        }
         else
+        {
             return chance > percentageLeft && chance < percentageRight;
+        }
     }
 
     /// <summary>

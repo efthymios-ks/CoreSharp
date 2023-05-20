@@ -17,7 +17,9 @@ public static class IListExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
 
         for (var i = 0; i < source.Count; i++)
+        {
             source[i] = item;
+        }
     }
 
     /// <summary>
@@ -51,9 +53,13 @@ public static class IListExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = values ?? throw new ArgumentNullException(nameof(values));
         if (index < 0 || index >= source.Count)
+        {
             throw new ArgumentOutOfRangeException(nameof(index), $"{nameof(index)} should be between 0 and {source.Count - 1}.");
+        }
 
         foreach (var value in values)
+        {
             source.Insert(index++, value);
+        }
     }
 }

@@ -25,7 +25,10 @@ public class DataRowExtensionsTests
         var table = new DataTable();
         table.Rows.Add();
         foreach (var name in columnNames)
+        {
             table.Columns.Add(name);
+        }
+
         var row = table.Rows[0];
 
         // Act 

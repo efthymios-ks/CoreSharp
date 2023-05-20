@@ -27,7 +27,9 @@ public static class ObjectExtensions
     public static TResult ChangeType<TResult>(this object value, CultureInfo cultureInfo)
     {
         if (value is null)
+        {
             return default;
+        }
 
         var baseType = typeof(TResult);
         baseType = Nullable.GetUnderlyingType(baseType) ?? baseType;

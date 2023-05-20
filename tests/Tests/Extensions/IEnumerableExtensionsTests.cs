@@ -1141,7 +1141,9 @@ public class IEnumerableExtensionsTests
         // Assert 
         result.Should().HaveCount(2);
         foreach (var item in result)
+        {
             $"{item.Id}".Should().Be(item.Name);
+        }
     }
 
     [Test]

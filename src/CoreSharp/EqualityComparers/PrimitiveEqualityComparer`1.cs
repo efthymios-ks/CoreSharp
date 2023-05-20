@@ -18,10 +18,14 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     {
         // Same reference 
         if (x == y)
+        {
             return true;
+        }
         // Null 
         else if (x is null || y is null)
+        {
             return false;
+        }
 
         var leftProperties = GetPrimitiveProperties(x);
         var rightProperties = GetPrimitiveProperties(y);
@@ -32,7 +36,9 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     public int GetHashCode(TEntity obj)
     {
         if (obj is null)
+        {
             return default(TEntity).GetHashCode();
+        }
 
         var primitiveValues = GetPrimitiveProperties(obj).Select(p => p.Value);
         var enumerableComparer = new EnumerableEqualityComparer<object>();

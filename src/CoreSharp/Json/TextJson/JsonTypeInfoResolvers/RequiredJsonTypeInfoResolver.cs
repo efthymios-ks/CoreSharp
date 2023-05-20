@@ -14,10 +14,14 @@ public sealed class RequiredJsonTypeInfoResolver : DefaultJsonTypeInfoResolver
     private static void HandleRequiredProperties(JsonTypeInfo jsonTypeInfo)
     {
         if (jsonTypeInfo.Kind != JsonTypeInfoKind.Object)
+        {
             return;
+        }
 
         foreach (var jsonPropertyInfo in jsonTypeInfo.Properties.Where(IsPropertyRequired))
+        {
             jsonPropertyInfo.IsRequired = true;
+        }
     }
 
     private static bool IsPropertyRequired(JsonPropertyInfo jsonPropertyInfo)

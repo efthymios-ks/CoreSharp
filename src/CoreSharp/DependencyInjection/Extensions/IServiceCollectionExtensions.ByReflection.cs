@@ -44,7 +44,9 @@ public static partial class IServiceCollectionExtensions
             contract => interfaceNameRegex.IsMatch(contract.Name));
 
         foreach (var (key, value) in contractsWithImplementations)
+        {
             serviceCollection.TryAddScoped(key, value);
+        }
 
         return serviceCollection;
     }
@@ -68,7 +70,9 @@ public static partial class IServiceCollectionExtensions
 
         interfaceBaseType = interfaceBaseType.GetGenericTypeBase();
         if (!interfaceBaseType.IsInterface)
+        {
             throw new ArgumentException($"{nameof(interfaceBaseType)} ({interfaceBaseType.FullName}) must be an interface.", nameof(interfaceBaseType));
+        }
 
         bool ImplementsBaseInterfaceDirectly(Type type)
             => type.GetDirectInterfaces()
@@ -77,7 +81,9 @@ public static partial class IServiceCollectionExtensions
         var contractsWithImplementations = GetUnmarkedContractImplementationsPairs(assemblies, ImplementsBaseInterfaceDirectly);
 
         foreach (var (key, value) in contractsWithImplementations)
+        {
             serviceCollection.TryAddScoped(key, value);
+        }
 
         return serviceCollection;
     }
@@ -94,15 +100,21 @@ public static partial class IServiceCollectionExtensions
         {
             // Not an interface, ignore 
             if (!typeInfo.IsInterface)
+            {
                 return false;
+            }
 
             // Manual ignore, ignore 
             else if (typeInfo.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
+            {
                 return false;
+            }
 
             // Additional checks do not apply, ignore 
             else if (!additionalInterfacePredicate(typeInfo))
+            {
                 return false;
+            }
 
             // Take 
             return true;
@@ -115,7 +127,9 @@ public static partial class IServiceCollectionExtensions
         {
             var implementation = GetUnmarkedContractImplementation(contract, assemblies);
             if (implementation is not null)
+            {
                 pairs.Add(contract, implementation);
+            }
         }
 
         return pairs;
@@ -137,26 +151,36 @@ public static partial class IServiceCollectionExtensions
             {
                 // Not a class, ignore 
                 if (!typeInfo.IsClass)
+                {
                     return false;
+                }
 
                 // Not a concrete class, ignore 
                 else if (typeInfo.IsAbstract)
+                {
                     return false;
+                }
 
                 // Manual ignore, ignore 
                 else if (typeInfo.GetCustomAttribute<IgnoreServiceAttribute>() is not null)
+                {
                     return false;
+                }
 
                 // Type.GetInterface(string) doesn't work with nested classes 
                 var interfaces = typeInfo.GetInterfaces();
 
                 // It's marked, ignore 
                 if (interfaces.Contains(typeof(IService)))
+                {
                     return false;
+                }
 
                 // Doesn't implement given interface, ignore 
                 else if (!interfaces.Contains(contractType))
+                {
                     return false;
+                }
 
                 // Take 
                 return true;
@@ -175,7 +199,10 @@ public static partial class IServiceCollectionExtensions
             {
                 var backtickIndex = name.IndexOf('`');
                 if (backtickIndex > 0)
+                {
                     name = name[..backtickIndex];
+                }
+
                 return name;
             }
 

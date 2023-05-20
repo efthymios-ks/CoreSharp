@@ -52,7 +52,9 @@ public sealed class JsonTestCaseSourceAttribute : TestCaseBaseAttribute
     public JsonTestCaseSourceAttribute(string fileName)
     {
         if (string.IsNullOrWhiteSpace(fileName))
+        {
             throw new ArgumentNullException(nameof(fileName));
+        }
 
         _fileName = fileName;
     }
@@ -80,15 +82,21 @@ public sealed class JsonTestCaseSourceAttribute : TestCaseBaseAttribute
         var entityType = GetEntityType(method);
         var items = GetItemsFromJson(fileName, entityType);
         foreach (var item in items)
+        {
             yield return BuildRunMethod(method, suite, item);
+        }
     }
 
     private string GetJsonFileName()
     {
         if (_fileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
             return _fileName;
+        }
         else
+        {
             return $"{_fileName}.json";
+        }
     }
 
     private static Type GetEntityType(IMethodInfo method)

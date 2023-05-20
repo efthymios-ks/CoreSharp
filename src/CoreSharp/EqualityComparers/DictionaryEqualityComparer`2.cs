@@ -29,22 +29,30 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
     {
         // Same reference 
         if (x == y)
+        {
             return true;
+        }
         // Null 
         else if (x is null || y is null)
+        {
             return false;
+        }
 
         // Keys don't match
         var keysComparer = new EnumerableEqualityComparer<TKey>(_keyComparer);
         if (!keysComparer.Equals(x.Keys, y.Keys))
+        {
             return false;
+        }
 
         // Values don't match 
         foreach (var (key, value) in x)
         {
             var rightValue = y[key];
             if (!_valueComparer.Equals(value, rightValue))
+            {
                 return false;
+            }
         }
 
         return true;
@@ -53,11 +61,16 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
     public int GetHashCode(IDictionary<TKey, TValue> obj)
     {
         if (obj is null)
+        {
             return _valueComparer.GetHashCode(default);
+        }
 
         var hash = new HashCode();
         foreach (var (_, value) in obj)
+        {
             hash.Add(value, _valueComparer);
+        }
+
         return hash.ToHashCode();
     }
 }

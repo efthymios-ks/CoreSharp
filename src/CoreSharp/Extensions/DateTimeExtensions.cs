@@ -23,9 +23,13 @@ public static class DateTimeExtensions
             => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
 
         if (endDate.Kind == DateTimeKind.Unspecified)
+        {
             ThrowDateTimeKindException(nameof(endDate));
+        }
         else if (startDate.Kind == DateTimeKind.Unspecified)
+        {
             ThrowDateTimeKindException(nameof(endDate));
+        }
 
         var universalStart = startDate.ToUniversalTime();
         var universalEnd = endDate.ToUniversalTime();
@@ -46,9 +50,13 @@ public static class DateTimeExtensions
             => throw new ArgumentException($"{nameof(DateTime)}.{nameof(DateTime.Kind)} cannot be {DateTimeKind.Unspecified}.", paramName);
 
         if (endDate.Kind == DateTimeKind.Unspecified)
+        {
             ThrowDateTimeKindException(nameof(endDate));
+        }
         else if (startDate.Kind == DateTimeKind.Unspecified)
+        {
             ThrowDateTimeKindException(nameof(endDate));
+        }
 
         var universalStart = startDate.ToUniversalTime();
         var universalEnd = endDate.ToUniversalTime();
@@ -78,25 +86,39 @@ public static class DateTimeExtensions
     public static DateTime Trim(this DateTime date, DateTimeParts parts)
     {
         if (parts.HasFlag(DateTimeParts.Milliseconds))
+        {
             date = date.AddMilliseconds(-date.Millisecond);
+        }
 
         if (parts.HasFlag(DateTimeParts.Seconds))
+        {
             date = date.AddSeconds(-date.Second);
+        }
 
         if (parts.HasFlag(DateTimeParts.Minutes))
+        {
             date = date.AddMinutes(-date.Minute);
+        }
 
         if (parts.HasFlag(DateTimeParts.Hours))
+        {
             date = date.AddHours(-date.Hour);
+        }
 
         if (parts.HasFlag(DateTimeParts.Days))
+        {
             date = date.AddDays(-date.Day + 1);
+        }
 
         if (parts.HasFlag(DateTimeParts.Months))
+        {
             date = date.AddMonths(-date.Month + 1);
+        }
 
         if (parts.HasFlag(DateTimeParts.Years))
+        {
             date = date.AddYears(-date.Year + 1);
+        }
 
         return date;
     }

@@ -16,7 +16,7 @@ public static partial class IServiceCollectionExtensions
     public static IServiceCollection AddServiceModules(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
-        => serviceCollection.AddServiceModules(configuration, Assembly.GetEntryAssembly());
+            => serviceCollection.AddServiceModules(configuration, Assembly.GetEntryAssembly());
 
     /// <summary>
     /// Registers all <see cref="IServiceModule"/>.
@@ -36,24 +36,34 @@ public static partial class IServiceCollectionExtensions
             {
                 // Not a class, ignore 
                 if (!typeInfo.IsClass)
+                {
                     return false;
+                }
 
                 // Not a concrete class, ignore 
                 else if (typeInfo.IsAbstract)
+                {
                     return false;
+                }
 
                 // Doesn't implement IServiceModule, ignore 
                 else if (!typeInfo.GetInterfaces().Contains(typeof(IServiceModule)))
+                {
                     return false;
+                }
 
                 // Else take
                 else
+                {
                     return true;
+                }
             }).Select(Activator.CreateInstance)
               .Cast<IServiceModule>();
 
         foreach (var serviceInstaller in serviceInstallers)
+        {
             serviceInstaller.Install(serviceCollection, configuration);
+        }
 
         return serviceCollection;
     }

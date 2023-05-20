@@ -47,7 +47,9 @@ public static class JsonSettings
         };
 
         foreach (var jsonConverter in DefaultJsonConverters)
+        {
             settings.Converters.Add(jsonConverter);
+        }
 
         return settings;
     }

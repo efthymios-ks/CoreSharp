@@ -47,9 +47,14 @@ public static class StreamExtensions
         _ = settings ?? throw new ArgumentNullException(nameof(settings));
 
         if (!stream.CanRead)
+        {
             throw new NotSupportedException($"{nameof(stream)} is not readable.");
+        }
+
         if (stream.CanSeek)
+        {
             stream.Position = 0;
+        }
 
         try
         {
@@ -65,7 +70,9 @@ public static class StreamExtensions
         finally
         {
             if (stream.CanSeek)
+            {
                 stream.Position = 0;
+            }
         }
     }
 
@@ -94,9 +101,14 @@ public static class StreamExtensions
         _ = options ?? throw new ArgumentNullException(nameof(options));
 
         if (!stream.CanRead)
+        {
             throw new NotSupportedException($"{nameof(stream)} is not readable.");
+        }
+
         if (stream.CanSeek)
+        {
             stream.Position = 0;
+        }
 
         try
         {
@@ -109,7 +121,9 @@ public static class StreamExtensions
         finally
         {
             if (stream.CanSeek)
+            {
                 stream.Position = 0;
+            }
         }
     }
 
@@ -123,9 +137,14 @@ public static class StreamExtensions
         _ = stream ?? throw new ArgumentNullException(nameof(stream));
 
         if (!stream.CanRead)
+        {
             throw new NotSupportedException($"{nameof(stream)} is not readable.");
+        }
+
         if (stream.CanSeek)
+        {
             stream.Position = 0;
+        }
 
         try
         {
@@ -139,7 +158,9 @@ public static class StreamExtensions
         finally
         {
             if (stream.CanSeek)
+            {
                 stream.Position = 0;
+            }
         }
     }
 
@@ -158,7 +179,9 @@ public static class StreamExtensions
     private static async Task ToFileInternalAsync(this Stream stream, string filePath, int bufferSize = DefaultBufferSize, CancellationToken cancellationToken = default)
     {
         if (stream.CanSeek)
+        {
             stream.Position = 0;
+        }
 
         await using var fileStream = File.OpenWrite(filePath);
         await stream.CopyToAsync(fileStream, bufferSize, cancellationToken);
@@ -173,7 +196,9 @@ public static class StreamExtensions
         encoding ??= Encoding.UTF8;
 
         if (stream.CanSeek)
+        {
             stream.Position = 0;
+        }
 
         using var reader = new StreamReader(stream, encoding: encoding, leaveOpen: true);
         return await reader.ReadToEndAsync();
@@ -195,19 +220,27 @@ public static class StreamExtensions
         {
             // Reference equals 
             if (left == right)
+            {
                 return true;
+            }
 
             // Different length
             if (left.Length != right.Length)
+            {
                 return false;
+            }
 
             // Check readability 
             static void ThrowNotReadableException(string paramName)
                 => throw new NotSupportedException($"{paramName} is not readable.");
             if (!left.CanRead)
+            {
                 ThrowNotReadableException(nameof(left));
+            }
             else if (!right.CanRead)
+            {
                 ThrowNotReadableException(nameof(right));
+            }
 
             // Compare chunks
             left.Position = 0;
@@ -221,7 +254,9 @@ public static class StreamExtensions
                 await right.ReadAsync(rightChunk.AsMemory(), cancellationToken);
 
                 if (!leftChunk.SequenceEqual(rightChunk))
+                {
                     return false;
+                }
             }
 
             return true;
@@ -248,7 +283,9 @@ public static class StreamExtensions
         stream.Position = 0;
 
         if (stream is MemoryStream internalMemoryStream)
+        {
             return internalMemoryStream.ToArray();
+        }
 
         await using var memoryStream = new MemoryStream();
         await stream.CopyToAsync(memoryStream, bufferSize, cancellationToken);

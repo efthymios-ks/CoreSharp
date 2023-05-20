@@ -21,12 +21,17 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     public ShiftingStack(int maxCapacity, IEnumerable<TElement> source)
     {
         if (maxCapacity < 1)
+        {
             throw new ArgumentOutOfRangeException(nameof(maxCapacity));
+        }
+
         _ = source ?? throw new ArgumentNullException(nameof(source));
 
         MaxCapacity = maxCapacity;
         foreach (var item in source)
+        {
             Push(item);
+        }
     }
 
     // Properties
@@ -69,7 +74,9 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     public void Push(TElement item)
     {
         if (HasMetMaxCapacity)
+        {
             _source.RemoveAt(0);
+        }
 
         _source.Add(item);
     }
@@ -81,7 +88,9 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     public TElement Pop()
     {
         if (!HasItems)
+        {
             throw new InvalidOperationException("Cannot pop on empty collection.");
+        }
 
         var element = _source.Last();
         _source.Remove(element);
@@ -95,7 +104,9 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
     public TElement Peek()
     {
         if (!HasItems)
+        {
             throw new InvalidOperationException("Cannot peek on empty collection.");
+        }
 
         return _source.Last();
     }

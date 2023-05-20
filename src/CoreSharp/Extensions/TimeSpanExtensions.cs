@@ -18,7 +18,9 @@ public static class TimeSpanExtensions
     public static string ToStringReadable(this TimeSpan timeSpan)
     {
         if (timeSpan == TimeSpan.Zero)
+        {
             return "0ms";
+        }
 
         var fields = new List<string>();
 
@@ -33,7 +35,9 @@ public static class TimeSpanExtensions
         void Add(int value, string unit)
         {
             if (value != 0)
+            {
                 fields.Add($"{value}{unit}");
+            }
         }
 
         Add(timeSpan.Days, "d");

@@ -29,7 +29,9 @@ public class ExpandoObjectExtensionsTests
         };
         IDictionary<string, object> expando = new ExpandoObject();
         foreach (var item in source)
+        {
             expando.Add(item);
+        }
 
         // Act 
         var dictionary = ((ExpandoObject)expando).ToDictionary();

@@ -38,6 +38,8 @@ public class ValidationStep
     internal static void ValidateNumber(int number)
     {
         if (number < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(number), $"{nameof(ValidationStep)}.{nameof(Number)} ({number}) cannot be at least 0.");
+        }
     }
 }

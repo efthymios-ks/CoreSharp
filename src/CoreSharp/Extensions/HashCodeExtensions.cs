@@ -21,6 +21,8 @@ public static class HashCodeExtensions
         _ = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
 
         foreach (var element in source)
+        {
             hashCode.Add(element, equalityComparer);
+        }
     }
 }

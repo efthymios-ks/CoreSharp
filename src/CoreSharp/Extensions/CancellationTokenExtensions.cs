@@ -41,7 +41,10 @@ public static class CancellationTokenExtensions
     {
         var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         if (timeout.TotalMilliseconds > 0 && timeout != Timeout.InfiniteTimeSpan)
+        {
             cancellationTokenSource.CancelAfter(timeout);
+        }
+
         return cancellationTokenSource;
     }
 }

@@ -17,7 +17,9 @@ public static class AsyncDelegateExtensions
     {
         var delegates = handler?.GetInvocationList();
         if (delegates?.Length is not > 0)
+        {
             return;
+        }
 
         var tasks = delegates.Cast<AsyncDelegate>()
                              .Select(e => e.Invoke(cancellationToken));

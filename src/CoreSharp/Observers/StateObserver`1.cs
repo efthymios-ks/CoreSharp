@@ -47,7 +47,9 @@ public class StateObserver<TEntity> : IStateObserver<TEntity>
         set
         {
             if (_equalityComparer.Equals(value, _value))
+            {
                 return;
+            }
 
             _value = value;
             OnValueChanged(_value);

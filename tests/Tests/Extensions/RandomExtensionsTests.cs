@@ -67,7 +67,9 @@ public class RandomExtensionsTests
 
         // Act 
         for (var i = 0; i < samples.Length; i++)
+        {
             samples[i] = _rng.NextDouble(minimum, maximum);
+        }
 
         // Assert
         samples.Should().OnlyContain(s => s >= minimum && s <= maximum);
@@ -183,7 +185,9 @@ public class RandomExtensionsTests
 
         // Act 
         for (var i = 0; i < sampleCount; i++)
+        {
             _rng.Shuffle(shuffled);
+        }
 
         // Assert  
         shuffled.Should().NotEqual(original);

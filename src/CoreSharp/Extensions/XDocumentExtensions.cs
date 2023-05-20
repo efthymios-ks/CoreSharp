@@ -51,7 +51,9 @@ public static class XDocumentExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = attributeValueSelector ?? throw new ArgumentNullException(nameof(attributeValueSelector));
         if (string.IsNullOrWhiteSpace(attributeName))
+        {
             throw new ArgumentNullException(nameof(attributeName));
+        }
 
         return source
                  .Where(i => attributeValueSelector(i.Attribute(attributeName)?.Value))
@@ -70,7 +72,9 @@ public static class XDocumentExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         _ = childValueSelector ?? throw new ArgumentNullException(nameof(childValueSelector));
         if (string.IsNullOrWhiteSpace(childName))
+        {
             throw new ArgumentNullException(nameof(childName));
+        }
 
         return source
                 .Where(i => childValueSelector(i.Element(childName)?.Value))

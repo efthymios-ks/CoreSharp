@@ -29,7 +29,9 @@ public static class FileInfoExtensions
     {
         _ = file ?? throw new ArgumentNullException(nameof(file));
         if (string.IsNullOrWhiteSpace(name))
+        {
             throw new ArgumentNullException(nameof(name));
+        }
 
         var oldParent = file.DirectoryName;
         var oldExtension = file.Extension.Trim('.');

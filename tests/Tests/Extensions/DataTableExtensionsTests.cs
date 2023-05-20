@@ -24,7 +24,9 @@ public class DataTableExtensionsTests
         var table = new DataTable();
         var columnNames = new[] { "Column 1", "Column 2", "Column3" };
         foreach (var name in columnNames)
+        {
             table.Columns.Add(name);
+        }
 
         // Act 
         var result = table.GetColumnNames();

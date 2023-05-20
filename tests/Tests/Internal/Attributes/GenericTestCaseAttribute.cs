@@ -20,7 +20,9 @@ public class GenericTestCaseAttribute : TestCaseAttribute, ITestBuilder
     IEnumerable<TestMethod> ITestBuilder.BuildFrom(IMethodInfo method, Test suite)
     {
         if (!method.IsGenericMethodDefinition)
+        {
             return BuildFrom(method, suite);
+        }
 
         // If not all generic types are defined
         var genericArgumentsCount = method.GetGenericArguments().Length;

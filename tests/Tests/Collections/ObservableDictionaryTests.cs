@@ -17,7 +17,10 @@ public class ObservableDictionaryTests
         };
         var dictionary = new ObservableDictionary<string, int>();
         foreach (var item in originalItems)
+        {
             dictionary.Add(item.Key, item.Value);
+        }
+
         dictionary.Changed += (_, args)
             => capturedArgs = args;
 
@@ -126,7 +129,10 @@ public class ObservableDictionaryTests
         };
         var dictionary = new ObservableDictionary<string, int>();
         foreach (var item in originalItems)
+        {
             dictionary.Add(item.Key, item.Value);
+        }
+
         dictionary.Changed += (_, args)
             => capturedArgs = args;
 

@@ -79,7 +79,9 @@ internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
     private static object ParseFromNumber(Type enumType, object value)
     {
         if (!Enum.IsDefined(enumType, value))
+        {
             return null;
+        }
 
         return Enum.ToObject(enumType, value);
     }
@@ -87,7 +89,9 @@ internal sealed class EnumJsonConverter<TEnum> : JsonConverter<TEnum>
     private static object ParseFromString(Type enumType, string value, bool ignoreCase)
     {
         if (!Enum.TryParse(enumType, value, ignoreCase, out var enumValue))
+        {
             return null;
+        }
 
         return enumValue;
     }

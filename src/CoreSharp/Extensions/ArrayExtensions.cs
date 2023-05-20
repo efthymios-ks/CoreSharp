@@ -17,7 +17,9 @@ public static class ArrayExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         var rowSize = source.GetLength(0);
         if (row < 0 || row >= rowSize)
+        {
             throw new ArgumentOutOfRangeException(nameof(row), $"{nameof(row)} has to be between 0 and {rowSize - 1}.");
+        }
 
         var columnSize = source.GetLength(1);
         return Enumerable.Range(0, columnSize).Select(c => source[row, c]);
@@ -31,7 +33,9 @@ public static class ArrayExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
         var columnSize = source.GetLength(1);
         if (column < 0 || column >= columnSize)
+        {
             throw new ArgumentOutOfRangeException(nameof(column), $"{nameof(column)} has to be between 0 and {columnSize - 1}.");
+        }
 
         var rowSize = source.GetLength(0);
         return Enumerable.Range(0, rowSize)

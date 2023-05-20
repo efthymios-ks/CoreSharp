@@ -24,7 +24,9 @@ public sealed class LazyTask<TValue>
     public async ValueTask<TValue> GetValueAsync()
     {
         if (IsValueInitialized)
+        {
             return _value;
+        }
 
         _value = await _valueFactory();
         IsValueInitialized = true;

@@ -299,7 +299,9 @@ public static class IEnumerableExtensions
     {
         _ = source ?? throw new ArgumentNullException(nameof(source));
         if (pageSize <= 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
+        }
 
         // ToArray() so we can get item index 
         var sourceArray = source.ToArray();
@@ -343,7 +345,9 @@ public static class IEnumerableExtensions
         var stream = new MemoryStream();
 
         if (!source.Any())
+        {
             return stream;
+        }
 
         var properties = source.First()
                                .GetType()
@@ -410,7 +414,9 @@ public static class IEnumerableExtensions
         foreach (var element in source)
         {
             if (!hashset.Add(element))
+            {
                 return true;
+            }
         }
 
         return false;
@@ -432,7 +438,9 @@ public static class IEnumerableExtensions
         var table = new DataTable(tableName);
 
         if (!source.Any())
+        {
             return table;
+        }
 
         var properties = source.First()
                                .GetType()
@@ -440,7 +448,9 @@ public static class IEnumerableExtensions
 
         // Create columns 
         foreach (var property in properties)
+        {
             table.Columns.Add(property.Name, property.PropertyType.GetNullableBaseType());
+        }
 
         // Create rows 
         foreach (var item in source)
@@ -568,7 +578,9 @@ public static class IEnumerableExtensions
         _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
 
         if (!source.Any())
+        {
             return default;
+        }
 
         var min = source.First();
         var minValue = propertySelector(min);
@@ -596,7 +608,9 @@ public static class IEnumerableExtensions
         _ = propertyComparer ?? throw new ArgumentNullException(nameof(propertyComparer));
 
         if (!source.Any())
+        {
             return default;
+        }
 
         var max = source.First();
         var maxValue = propertySelector(max);
@@ -636,7 +650,9 @@ public static class IEnumerableExtensions
             else
             {
                 if (inclusive)
+                {
                     yield return element;
+                }
 
                 yield break;
             }
@@ -659,7 +675,9 @@ public static class IEnumerableExtensions
         for (var i = 0; i < count; i++)
         {
             foreach (var element in source)
+            {
                 yield return element;
+            }
         }
     }
 

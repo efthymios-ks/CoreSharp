@@ -15,7 +15,9 @@ public class ValidationSteps : ValidationStepCollectionBase
         _ = steps ?? throw new ArgumentNullException(nameof(steps));
 
         foreach (var step in steps)
+        {
             Add(step);
+        }
     }
 
     public ValidationSteps(bool sequentialValidation = true)
@@ -64,9 +66,13 @@ public class ValidationSteps : ValidationStepCollectionBase
         var step = GetStep(number);
 
         if (bypassValidation)
+        {
             return step.ValidationMessage;
+        }
         else
+        {
             return !step.IsValid ? step.ValidationMessage : string.Empty;
+        }
     }
 
     public ValidationStep GetStep(int number)

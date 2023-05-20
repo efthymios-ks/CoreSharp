@@ -35,7 +35,9 @@ public sealed class NumericParser<TNumber>
     public NumericParser(string format, CultureInfo cultureInfo)
     {
         if (!typeof(TNumber).IsNumeric())
+        {
             throw new ArgumentException($"{nameof(TNumber)} ({typeof(TNumber).FullName}) is not a numeric type.");
+        }
 
         _cultureInfo = cultureInfo ?? throw new ArgumentNullException(nameof(cultureInfo));
         _format = format ?? string.Empty;
@@ -95,10 +97,14 @@ public sealed class NumericParser<TNumber>
 
         // Remove percentage symbol 
         if (isValuePercentage)
+        {
             input = input.Replace(_cultureInfo.NumberFormat.PercentSymbol, string.Empty);
+        }
 
         if (!decimal.TryParse(input, NumberStyles.Any, _cultureInfo, out var result))
+        {
             return default;
+        }
 
         // Divide by 100, since `ToString("P")` format specifier multiplies by 100 
         return _isFormatPercentage || isValuePercentage ? result / 100 : result;

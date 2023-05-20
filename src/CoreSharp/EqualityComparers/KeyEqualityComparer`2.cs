@@ -28,10 +28,14 @@ public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
     {
         // Same reference 
         if (ReferenceEquals(x, y))
+        {
             return true;
+        }
         // Null 
         else if (x is null || y is null)
+        {
             return false;
+        }
 
         var leftKey = KeySelector(x);
         var rightKey = KeySelector(y);
@@ -41,7 +45,9 @@ public class KeyEqualityComparer<TEntity, TKey> : IEqualityComparer<TEntity>
     public int GetHashCode(TEntity obj)
     {
         if (obj is null)
+        {
             return _keyComparer.GetHashCode(default);
+        }
 
         var key = KeySelector(obj);
         return _keyComparer.GetHashCode(key);

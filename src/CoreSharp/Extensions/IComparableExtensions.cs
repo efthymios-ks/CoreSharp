@@ -19,8 +19,12 @@ public static class IComparableExtensions
         var comparisonTo = comparer.Compare(value, to);
 
         if (includeEnds)
+        {
             return comparisonFrom >= 0 && comparisonTo <= 0;
+        }
         else
+        {
             return comparisonFrom > 0 && comparisonTo < 0;
+        }
     }
 }

@@ -27,7 +27,9 @@ public static class IDictionaryExtensions
         _ = source ?? throw new ArgumentNullException(nameof(source));
 
         if (source.ContainsKey(key))
+        {
             return false;
+        }
 
         source.Add(key, value);
         return true;
@@ -46,7 +48,9 @@ public static class IDictionaryExtensions
 
         value = default;
         if (!source.ContainsKey(key))
+        {
             return false;
+        }
 
         value = source[key];
         source.Remove(key);
@@ -77,7 +81,9 @@ public static class IDictionaryExtensions
         _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
         if (!source.ContainsKey(key))
+        {
             return false;
+        }
 
         source[key] = updateAction(key, source[key]);
         return true;
@@ -111,9 +117,13 @@ public static class IDictionaryExtensions
         _ = updateAction ?? throw new ArgumentNullException(nameof(updateAction));
 
         if (source.TryGetValue(key, out var value))
+        {
             source[key] = updateAction(key, value);
+        }
         else
+        {
             source.Add(key, addValue);
+        }
 
         return source[key];
     }
@@ -131,7 +141,10 @@ public static class IDictionaryExtensions
         _ = addValue ?? throw new ArgumentNullException(nameof(addValue));
 
         if (!source.ContainsKey(key))
+        {
             source.Add(key, addValue);
+        }
+
         return source[key];
     }
 
@@ -189,7 +202,9 @@ public static class IDictionaryExtensions
         {
             var property = entityTypeProperties.SingleOrDefault(p => p.Name == key && p.PropertyType.IsInstanceOfType(value));
             if (property is null)
+            {
                 continue;
+            }
 
             property.SetValue(entity, value);
         }

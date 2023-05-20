@@ -21,9 +21,13 @@ public sealed class TimeSpanJsonConverter : JsonConverter<TimeSpan>
         var timeSpanAsString = reader.GetString();
 
         if (TimeSpan.TryParseExact(timeSpanAsString, Format, CultureInfo, out var timeSpan))
+        {
             return timeSpan;
+        }
         else
+        {
             throw new FormatException($"{Format} ({FormatTemplate}) is required.");
+        }
     }
 
     public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)

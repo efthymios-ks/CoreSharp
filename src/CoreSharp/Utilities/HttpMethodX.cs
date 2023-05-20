@@ -37,9 +37,13 @@ public static class HttpMethodX
         methodName = methodName.ToLowerInvariant();
         var found = lookupTable.SingleOrDefault(m => m.Key.Contains(methodName));
         if (found.Key is not null)
+        {
             return found.Value;
+        }
         else
+        {
             throw new ArgumentOutOfRangeException(nameof(methodName));
+        }
     }
 
     /// <inheritdoc cref="GetHttpMethod(string)"/>

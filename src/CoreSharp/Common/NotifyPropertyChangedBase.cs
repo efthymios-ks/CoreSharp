@@ -16,7 +16,9 @@ public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     protected virtual bool SetValue<TValue>(ref TValue field, TValue value, [CallerMemberName] string propertyName = null)
     {
         if (Equals(field, value))
+        {
             return false;
+        }
 
         field = value;
         OnPropertyChanged(propertyName);

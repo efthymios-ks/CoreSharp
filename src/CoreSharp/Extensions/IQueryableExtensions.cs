@@ -17,9 +17,14 @@ public static class IQueryableExtensions
     {
         _ = query ?? throw new ArgumentNullException(nameof(query));
         if (pageNumber < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(pageNumber), $"{nameof(pageNumber)} has to be positive.");
+        }
+
         if (pageSize <= 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} has to be positive and non-zero.");
+        }
 
         return query.Skip(pageNumber * pageSize).Take(pageSize);
     }
@@ -51,7 +56,9 @@ public static class IQueryableExtensions
 
         // If empty, return empty 
         if (string.IsNullOrWhiteSpace(filter))
+        {
             return Enumerable.Empty<TElement>().AsQueryable();
+        }
 
         // Get all characters 
         var characters = filter.ToCharArray();
@@ -66,7 +73,9 @@ public static class IQueryableExtensions
             builder.Append(escapedChar);
 
             if (i < characters.Length - 1)
+            {
                 builder.Append(".*");
+            }
         }
 
         var pattern = $"{builder}";

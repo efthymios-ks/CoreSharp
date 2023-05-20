@@ -190,11 +190,17 @@ public static class GenericExtensions
             _ = properyInfo ?? throw new ArgumentNullException(nameof(properyInfo));
 
             if (!properyInfo.CanWrite)
+            {
                 return false;
+            }
             else if (!properyInfo.CanRead)
+            {
                 return false;
+            }
             else
+            {
                 return properyInfo.PropertyType.IsPrimitiveExtended();
+            }
         }
 
         var properties = item.GetType()
@@ -295,7 +301,9 @@ public static class GenericExtensions
     public static IEnumerable<TElement> Yield<TElement>(this TElement element)
     {
         if (element is not null)
+        {
             yield return element;
+        }
     }
 
     /// <summary>

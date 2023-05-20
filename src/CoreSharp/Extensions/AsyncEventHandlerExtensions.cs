@@ -15,7 +15,9 @@ public static class AsyncEventHandlerExtensions
     {
         var delegates = handler?.GetInvocationList();
         if (delegates?.Length is not > 0)
+        {
             return;
+        }
 
         var tasks = delegates.Cast<AsyncEventHandler<TEventArgs>>()
                              .Select(e => e.Invoke(sender, args, cancellationToken));

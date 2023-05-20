@@ -35,7 +35,9 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
         };
 
         foreach (var location in locations)
+        {
             AddFile(location);
+        }
     }
 
     private static string GetAppsettingsPath(string location, string environmentName)
@@ -53,11 +55,15 @@ public class EmbeddedFileConfigurationProvider : ConfigurationProvider
     private void AddFile(string appSettingsPath)
     {
         if (string.IsNullOrWhiteSpace(appSettingsPath))
+        {
             throw new ArgumentNullException(nameof(appSettingsPath));
+        }
 
         var file = _fileProvider.GetFileInfo(appSettingsPath);
         if (!file.Exists)
+        {
             return;
+        }
 
         _builder.AddJsonFile(_fileProvider, appSettingsPath, optional: false, reloadOnChange: true);
     }

@@ -22,7 +22,9 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
         ValidationStep.ValidateNumber(item.Number);
 
         if (!Contains(item))
+        {
             _source.Add(item.Number, item);
+        }
     }
 
     public bool Remove(ValidationStep item)
@@ -31,7 +33,10 @@ public abstract class ValidationStepCollectionBase : ICollection<ValidationStep>
         ValidationStep.ValidateNumber(item.Number);
 
         if (!Contains(item))
+        {
             return false;
+        }
+
         return _source.Remove(item.Number);
     }
 

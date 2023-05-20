@@ -52,7 +52,9 @@ public static class JsonOptions
         };
 
         foreach (var jsonConverter in DefaultJsonConverters)
+        {
             options.Converters.Add(jsonConverter);
+        }
 
         return options;
     }

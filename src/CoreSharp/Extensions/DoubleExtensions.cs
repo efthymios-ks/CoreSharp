@@ -42,7 +42,10 @@ public static class DoubleExtensions
 
         var degree = 0;
         if (value != 0)
+        {
             degree = (int)Math.Floor(Math.Log10(Math.Abs(value)) / 3);
+        }
+
         var scaledValue = value * Math.Pow(1000, -degree);
 
         // Get prefix 

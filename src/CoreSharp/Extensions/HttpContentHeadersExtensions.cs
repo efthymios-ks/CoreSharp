@@ -21,7 +21,10 @@ public static class HttpContentHeadersExtensions
         _ = httpContentHeaders ?? throw new ArgumentNullException(nameof(httpContentHeaders));
 
         if (!httpContentHeaders.TryGetValues(HeaderNames.ContentType, out var contentTypes))
+        {
             return null;
+        }
+
         var contentTypeAsString = contentTypes.First();
         return new ContentType(contentTypeAsString);
     }

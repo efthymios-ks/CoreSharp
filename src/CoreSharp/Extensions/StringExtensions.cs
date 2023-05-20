@@ -27,7 +27,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (length < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be a positive and non-zero.");
+        }
 
         var maxLength = Math.Min(input.Length, length);
         return input[..maxLength];
@@ -42,7 +44,9 @@ public static class StringExtensions
 
         var formattedControls = new Dictionary<string, string>();
         foreach (var (key, value) in AsciiControls.Dictionary)
+        {
             formattedControls.Add($"{value}", $"{openBracket}{key}{closeBracket}");
+        }
 
         return formattedControls.Aggregate(input, (current, control) => current.Replace(control.Key, control.Value));
     }
@@ -54,7 +58,9 @@ public static class StringExtensions
     {
         input = input ?? throw new ArgumentNullException(nameof(input));
         if (totalWidth < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(totalWidth), $"{nameof(totalWidth)} has to be zero or greater.");
+        }
 
         var padding = totalWidth - input.Length;
         var padLeft = padding / 2 + input.Length;
@@ -72,7 +78,9 @@ public static class StringExtensions
 
         var index = input.IndexOf(value, StringComparison.Ordinal);
         if (index >= 0)
+        {
             input = input.Remove(index, value.Length);
+        }
 
         return input;
     }
@@ -87,7 +95,9 @@ public static class StringExtensions
 
         var index = input.LastIndexOf(value, StringComparison.Ordinal);
         if (index >= 0)
+        {
             input = input.Remove(index, value.Length);
+        }
 
         return input;
     }
@@ -110,7 +120,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (length < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
+        }
 
         return length <= input.Length ? input[..length] : input;
     }
@@ -122,10 +134,14 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (length < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
+        }
 
         if (length > input.Length)
+        {
             return input;
+        }
 
         var start = input.Length - length;
         return input.Substring(start, length);
@@ -142,11 +158,17 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (start < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} has to be greater than 0.");
+        }
         else if (start > input.Length)
+        {
             throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} cannot be greater than {nameof(input)}.{input.Length} ({input.Length}).");
+        }
         else if (length < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(length), $"{nameof(length)} has to be greater than 0.");
+        }
 
         return start + length > input.Length ? input[start..] : input.Substring(start, length);
     }
@@ -520,7 +542,9 @@ public static class StringExtensions
 
         // Valid boolean 
         if (bool.TryParse(input, out var result))
+        {
             return result;
+        }
 
         // String interpretation
         bool? resultFromString = input switch
@@ -531,7 +555,9 @@ public static class StringExtensions
         };
 
         if (resultFromString is not null)
+        {
             return resultFromString;
+        }
 
         // Int interpretation 
         return !int.TryParse(input, out var inputAsInt)
@@ -608,7 +634,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (string.IsNullOrEmpty(match))
+        {
             throw new ArgumentNullException(nameof(match));
+        }
 
         var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
@@ -621,7 +649,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (string.IsNullOrEmpty(match))
+        {
             throw new ArgumentNullException(nameof(match));
+        }
 
         var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[(matchStartIndex + match.Length)..];
@@ -634,7 +664,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (string.IsNullOrEmpty(match))
+        {
             throw new ArgumentNullException(nameof(match));
+        }
 
         var matchStartIndex = input.IndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
@@ -647,7 +679,9 @@ public static class StringExtensions
     {
         _ = input ?? throw new ArgumentNullException(nameof(input));
         if (string.IsNullOrEmpty(match))
+        {
             throw new ArgumentNullException(nameof(match));
+        }
 
         var matchStartIndex = input.LastIndexOf(match, StringComparison.OrdinalIgnoreCase);
         return matchStartIndex < 0 ? null : input[..matchStartIndex];
@@ -677,9 +711,14 @@ public static class StringExtensions
     public static string Format<TValue>(this string format, IDictionary<string, TValue> arguments, IFormatProvider formatProvider)
     {
         if (format is null)
+        {
             return null;
+        }
+
         if (arguments?.Count is not > 0)
+        {
             return format;
+        }
 
         // Helpers 
         int FindFromTo(char character, int startIndex, int endIndex)
@@ -716,7 +755,9 @@ public static class StringExtensions
         {
             var closeBracketIndex = FindCloseBracketFrom(openBracketIndex);
             if (closeBracketIndex < 0)
+            {
                 break;
+            }
 
             // Extract placeholder metadata 
             var semiColonIndex = FindSemicolon(openBracketIndex, closeBracketIndex);
@@ -725,7 +766,9 @@ public static class StringExtensions
 
             // If key exists, replace  
             if (arguments.TryGetValue(argumentName, out var argumentValue))
+            {
                 format = ReplaceAtPosition(argumentValue, argumentFormat, openBracketIndex, ref closeBracketIndex);
+            }
 
             // Find next 
             openBracketIndex = FindOpenBracketFrom(closeBracketIndex);

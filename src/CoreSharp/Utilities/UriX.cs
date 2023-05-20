@@ -39,7 +39,9 @@ public static class UriX
 
             // If first segment is absolute (e.g. https://www.page.gr), do not insert '/' separator
             if (i == 0 && Uri.IsWellFormedUriString(trimmed, UriKind.Relative))
+            {
                 builder.Append('/');
+            }
 
             builder.Append(trimmed).Append('/');
         }
@@ -90,20 +92,28 @@ public static class UriX
         _ = queryParameters ?? throw new ArgumentNullException(nameof(queryParameters));
         _ = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
         if (string.IsNullOrWhiteSpace(baseUrl))
+        {
             throw new ArgumentNullException(nameof(baseUrl));
+        }
 
         // Try parse URL 
         if (!Uri.TryCreate(baseUrl, UriKind.RelativeOrAbsolute, out var baseUri))
+        {
             throw new ArgumentException($"`{nameof(baseUrl)}` is not a valid URL.", nameof(baseUrl));
+        }
 
         // Check if base URL has existing query parameters...
         var baseQueryParameters = baseUri.GetQueryParameters();
         if (baseQueryParameters.Any())
+        {
             baseUrl = baseUri.GetLeftPart(UriPartial.Path);
+        }
 
         // ...and merge with provided.
         foreach (var queryParameter in queryParameters)
+        {
             baseQueryParameters[queryParameter.Key] = Convert.ToString(queryParameter.Value, formatProvider);
+        }
 
         var query = baseQueryParameters.ToUrlQueryString();
 

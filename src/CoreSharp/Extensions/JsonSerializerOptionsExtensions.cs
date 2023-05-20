@@ -52,6 +52,8 @@ public static class JsonSerializerOptionsExtensions
 
         to.Converters.Clear();
         foreach (var converter in from.Converters)
+        {
             to.Converters.Add(converter);
+        }
     }
 }

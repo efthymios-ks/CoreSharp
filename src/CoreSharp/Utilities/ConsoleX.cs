@@ -36,7 +36,9 @@ public static class ConsoleX
         _ = lines ?? throw new ArgumentNullException(nameof(lines));
 
         foreach (var line in lines)
+        {
             ClearLine(line);
+        }
     }
 
     /// <summary>

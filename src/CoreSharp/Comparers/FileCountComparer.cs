@@ -18,10 +18,16 @@ public class FileCountComparer : Comparer<DirectoryInfo>
         var previousLength = y.GetFiles().LongLength;
 
         if (currentLength > previousLength)
+        {
             return 1;
+        }
         else if (currentLength < previousLength)
+        {
             return -1;
+        }
         else
+        {
             return 0;
+        }
     }
 }

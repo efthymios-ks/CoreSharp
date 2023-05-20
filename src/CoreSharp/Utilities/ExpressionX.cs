@@ -17,8 +17,12 @@ public static class ExpressionX
         _ = memberSelector ?? throw new ArgumentNullException(nameof(memberSelector));
 
         if (memberSelector.Body is MemberExpression memberExpression)
+        {
             return memberExpression.Member;
+        }
         else
+        {
             throw new ArgumentException($"{memberSelector} does not point to a valid member.", nameof(memberSelector));
+        }
     }
 }

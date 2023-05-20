@@ -80,11 +80,15 @@ public static class TypeExtensions
 
         // Enum extraction 
         if (baseType.IsEnum)
+        {
             baseType = Enum.GetUnderlyingType(baseType);
+        }
 
         // Base type check 
         if (baseType.IsPrimitive)
+        {
             return true;
+        }
 
         // Additional type check 
         var additionalTypes = new[]
@@ -149,7 +153,9 @@ public static class TypeExtensions
             topLevelInterfaces.Add(topLevelInterface);
 
             foreach (var nestedInterface in topLevelInterface.GetDirectInterfaces())
+            {
                 nestedInterfaces.Add(nestedInterface);
+            }
         }
 
         return topLevelInterfaces.Except(nestedInterfaces);
@@ -181,22 +187,33 @@ public static class TypeExtensions
         if (useGenericBaseType)
         {
             if (type.IsGenericType)
+            {
                 type = type.GetGenericTypeDefinition();
+            }
+
             if (baseType.IsGenericType)
+            {
                 baseType = baseType.GetGenericTypeDefinition();
+            }
         }
 
         // Same type 
         if (type == baseType)
+        {
             return true;
+        }
 
         // Implement class 
         else if (type.IsSubclassOf(baseType))
+        {
             return true;
+        }
 
         // Implement interface 
         else if (baseType.IsInterface && type.GetInterface(baseType.FullName) is not null)
+        {
             return true;
+        }
 
         // No relation 
         return false;

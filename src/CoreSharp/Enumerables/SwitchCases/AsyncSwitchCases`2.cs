@@ -29,9 +29,13 @@ public class AsyncSwitchCases<TKey, TResult> : IEnumerable<KeyValuePair<TKey, Ta
     public async Task<TResult> SwitchAsync(TKey key)
     {
         if (_cases.TryGetValue(key, out var task))
+        {
             return await task;
+        }
         else
+        {
             throw new ArgumentOutOfRangeException(nameof(key));
+        }
     }
 
     public IEnumerator<KeyValuePair<TKey, Task<TResult>>> GetEnumerator()

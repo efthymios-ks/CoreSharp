@@ -18,7 +18,9 @@ public sealed class UtcDateTimeJsonConverter : DateTimeConverterBase
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
         if (value is not DateTime dateTime)
+        {
             throw new JsonSerializationException($"Expected `{typeof(DateTime).FullName}`, but got `{value.GetType().FullName}`.");
+        }
 
         var jsonValue = dateTime.ToUniversalTime().ToString(DateFormat, CultureInfo);
         writer.WriteValue(jsonValue);
@@ -36,9 +38,13 @@ public sealed class UtcDateTimeJsonConverter : DateTimeConverterBase
     private static object ReadNull(Type objectType)
     {
         if (objectType == typeof(DateTime?))
+        {
             return null;
+        }
         else
+        {
             throw new JsonSerializationException($"Cannot convert null to `{objectType.FullName}`.");
+        }
     }
 
     private static object ReadDate(JsonReader reader)
@@ -48,9 +54,13 @@ public sealed class UtcDateTimeJsonConverter : DateTimeConverterBase
     {
         var dateAsText = $"{reader.Value}";
         if (DateTime.TryParseExact(dateAsText, DateFormat, CultureInfo, DateTimeStyles.None, out var result))
+        {
             return result;
+        }
         else
+        {
             return null;
+        }
     }
 
     private static object NotReadable(JsonReader reader)

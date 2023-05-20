@@ -32,7 +32,9 @@ public sealed class ObservableList<TItem> : IObservableList<TItem>
         {
             var oldItem = GetItemOrDefault(index);
             if (Equals(oldItem, value))
+            {
                 return;
+            }
 
             _source[index] = value;
             OnItemReplaced(index, oldItem, value);
@@ -67,7 +69,9 @@ public sealed class ObservableList<TItem> : IObservableList<TItem>
     {
         var index = IndexOf(item);
         if (index < 0)
+        {
             return false;
+        }
 
         RemoveAt(index);
         return true;
@@ -83,7 +87,9 @@ public sealed class ObservableList<TItem> : IObservableList<TItem>
     public void Clear()
     {
         if (Count == 0)
+        {
             return;
+        }
 
         _source.Clear();
         OnItemsCleared();
@@ -107,7 +113,9 @@ public sealed class ObservableList<TItem> : IObservableList<TItem>
     private TItem GetItemOrDefault(int index)
     {
         if (index < 0 || index >= Count)
+        {
             return default;
+        }
 
         return this[index];
     }

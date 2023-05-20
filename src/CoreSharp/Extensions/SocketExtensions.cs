@@ -24,11 +24,15 @@ public static class SocketExtensions
     private static async Task<bool> IsConnectedInternalAsync(this Socket socket, int timeoutMillis = 5000)
     {
         if (!socket.Connected)
+        {
             return false;
+        }
 
         // Poll 
         if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
+        {
             return false;
+        }
 
         // Ping 
         return socket.RemoteEndPoint is not IPEndPoint endPoint || await endPoint.PingAsync(timeoutMillis);

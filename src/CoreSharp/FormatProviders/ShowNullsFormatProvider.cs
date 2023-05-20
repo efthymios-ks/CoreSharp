@@ -17,7 +17,9 @@ internal sealed class ShowNullsFormatProvider : IFormatProvider
     public object GetFormat(Type formatType)
     {
         if (formatType == typeof(ICustomFormatter))
+        {
             return _showNullsCustomFormatter;
+        }
 
         return null;
     }
