@@ -30,29 +30,24 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
     // Methods
     public bool Equals(IDictionary<TKey, TValue> x, IDictionary<TKey, TValue> y)
     {
-        // Same reference 
-        if (x == y)
+        if (ReferenceEquals(x, y))
         {
             return true;
         }
-        // Null 
-        else if (x is null || y is null)
+
+        if (x == null || y == null)
         {
             return false;
         }
 
-        // Keys don't match
-        var keysComparer = new EnumerableEqualityComparer<TKey>(_keyComparer);
-        if (!keysComparer.Equals(x.Keys, y.Keys))
+        if (x.Count != y.Count)
         {
             return false;
         }
 
-        // Values don't match 
-        foreach (var (key, value) in x)
+        foreach (var kvp in x)
         {
-            var rightValue = y[key];
-            if (!_valueComparer.Equals(value, rightValue))
+            if (!y.TryGetValue(kvp.Key, out var value) || !_valueComparer.Equals(kvp.Value, value))
             {
                 return false;
             }
@@ -68,12 +63,22 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
             return _valueComparer.GetHashCode(default);
         }
 
-        var hash = new HashCode();
-        foreach (var (_, value) in obj)
+        var hashCode = 0;
+        foreach (var (key, value) in obj)
         {
-            hash.Add(value, _valueComparer);
+            var keyHashCode = GetKeyHashCode(key);
+            var valueHashCode = GetValueHashCode(value);
+
+            hashCode ^= keyHashCode;
+            hashCode ^= valueHashCode;
         }
 
-        return hash.ToHashCode();
+        return hashCode;
+
+        int GetKeyHashCode(TKey key)
+            => key == null ? 0 : key.GetHashCode();
+
+        int GetValueHashCode(TValue value)
+            => value == null ? 0 : _valueComparer.GetHashCode(value);
     }
 }

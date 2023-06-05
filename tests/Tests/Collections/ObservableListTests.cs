@@ -1,4 +1,5 @@
 ﻿using CoreSharp.Collections.Events;
+using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CoreSharp.Collections.Tests;
@@ -24,9 +25,9 @@ public class ObservableListTests
     public void Add_DoesNotContainItem_NotifyItemAdded()
     {
         // Arrange 
-        ListChangedEventArgs<int> capturedArgs = null;
+        NotifyListChangedEventArgs<int> capturedArgs = null;
         var list = new ObservableList<int> { 1 };
-        list.Changed += (_, args)
+        list.ListChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -34,19 +35,19 @@ public class ObservableListTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Add);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Add);
         capturedArgs.Index.Should().Be(1);
-        capturedArgs.NewItem.Should().Be(2);
-        capturedArgs.OldItem.Should().Be(default);
+        capturedArgs.NewValue.Should().Be(2);
+        capturedArgs.OldValue.Should().Be(default);
     }
 
     [Test]
     public void Remove_DoesNotContainItem_DoNothing()
     {
         // Arrange 
-        ListChangedEventArgs<int> capturedArgs = null;
+        NotifyListChangedEventArgs<int> capturedArgs = null;
         var list = new ObservableList<int> { 1 };
-        list.Changed += (_, args)
+        list.ListChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -100,9 +101,9 @@ public class ObservableListTests
     public void Remove_ContainsItem_NotifyItemRemoved()
     {
         // Arrange 
-        ListChangedEventArgs<int> capturedArgs = null;
+        NotifyListChangedEventArgs<int> capturedArgs = null;
         var list = new ObservableList<int> { 1, 2 };
-        list.Changed += (_, args)
+        list.ListChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -110,19 +111,19 @@ public class ObservableListTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Remove);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Remove);
         capturedArgs.Index.Should().Be(1);
-        capturedArgs.OldItem.Should().Be(2);
-        capturedArgs.NewItem.Should().Be(default);
+        capturedArgs.NewValue.Should().Be(default);
+        capturedArgs.OldValue.Should().Be(2);
     }
 
     [Test]
     public void Clear_DoesNotContainItems_DoNothing()
     {
         // Arrange 
-        ListChangedEventArgs<int> capturedArgs = null;
+        NotifyListChangedEventArgs<int> capturedArgs = null;
         var list = new ObservableList<int>();
-        list.Changed += (_, args)
+        list.ListChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -150,9 +151,9 @@ public class ObservableListTests
     public void Clear_ContainsItems_NotifyItemsCleared()
     {
         // Arrange 
-        ListChangedEventArgs<int> capturedArgs = null;
+        NotifyListChangedEventArgs<int> capturedArgs = null;
         var list = new ObservableList<int> { 1 };
-        list.Changed += (_, args)
+        list.ListChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -160,8 +161,8 @@ public class ObservableListTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Clear);
-        capturedArgs.OldItem.Should().Be(default);
-        capturedArgs.NewItem.Should().Be(default);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Reset);
+        capturedArgs.NewValue.Should().Be(default);
+        capturedArgs.OldValue.Should().Be(default);
     }
 }

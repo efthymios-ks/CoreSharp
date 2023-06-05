@@ -1,4 +1,5 @@
 ﻿using CoreSharp.Collections.Events;
+using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CoreSharp.Collections.Tests;
@@ -10,7 +11,7 @@ public class ObservableDictionaryTests
     public void IndexerGet_ContainsItem_ReturnValue()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var originalItems = new KeyValuePair<string, int>[]
         {
             new ("1", 1)
@@ -21,7 +22,7 @@ public class ObservableDictionaryTests
             dictionary.Add(item.Key, item.Value);
         }
 
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -63,9 +64,9 @@ public class ObservableDictionaryTests
     public void IndexerSet_DoesNotContainItem_NotifyItemAdded()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>();
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -73,9 +74,9 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Add);
-        capturedArgs.Index.Should().Be("1");
-        capturedArgs.NewItem.Should().Be(1);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Add);
+        capturedArgs.Key.Should().Be("1");
+        capturedArgs.NewValue.Should().Be(1);
     }
 
     [Test]
@@ -99,12 +100,12 @@ public class ObservableDictionaryTests
     public void IndexerSet_ContainsItem_NotifyItemReplaced()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>
         {
             { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -112,36 +113,9 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Replace);
-        capturedArgs.Index.Should().Be("1");
-        capturedArgs.NewItem.Should().Be(11);
-    }
-
-    [Test]
-    public void Add_ContainsItem_DoNothing()
-    {
-        // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
-        var originalItems = new KeyValuePair<string, int>[]
-        {
-            new ("1", 1),
-            new ("2", 2)
-        };
-        var dictionary = new ObservableDictionary<string, int>();
-        foreach (var item in originalItems)
-        {
-            dictionary.Add(item.Key, item.Value);
-        }
-
-        dictionary.Changed += (_, args)
-            => capturedArgs = args;
-
-        // Act
-        dictionary.Add("1", 1);
-
-        // Assert 
-        capturedArgs.Should().BeNull();
-        dictionary.Should().Equal(originalItems);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Replace);
+        capturedArgs.Key.Should().Be("1");
+        capturedArgs.NewValue.Should().Be(11);
     }
 
     [Test]
@@ -170,9 +144,9 @@ public class ObservableDictionaryTests
     public void Add_DoesNotContainItem_NotifyItemAdded()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>();
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -180,22 +154,22 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Add);
-        capturedArgs.Index.Should().Be("1");
-        capturedArgs.NewItem.Should().Be(1);
-        capturedArgs.OldItem.Should().Be(default);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Add);
+        capturedArgs.Key.Should().Be("1");
+        capturedArgs.NewValue.Should().Be(1);
+        capturedArgs.OldValue.Should().Be(default);
     }
 
     [Test]
     public void TryAdd_ContainsItem_DoNothing()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>
         {
            { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -263,12 +237,12 @@ public class ObservableDictionaryTests
     public void TryAdd_DoesNotContainItem_NotifyItemAdded()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>
         {
             { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -276,22 +250,22 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Add);
-        capturedArgs.Index.Should().Be("2");
-        capturedArgs.NewItem.Should().Be(2);
-        capturedArgs.OldItem.Should().Be(default);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Add);
+        capturedArgs.Key.Should().Be("2");
+        capturedArgs.NewValue.Should().Be(2);
+        capturedArgs.OldValue.Should().Be(default);
     }
 
     [Test]
     public void Remove_DoesNotContainItem_DoNothing()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>
         {
             { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -355,12 +329,12 @@ public class ObservableDictionaryTests
     public void Remove_ContainsItem_NotifyItemRemoved()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>
         {
             { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -368,19 +342,19 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Remove);
-        capturedArgs.Index.Should().Be("1");
-        capturedArgs.OldItem.Should().Be(1);
-        capturedArgs.NewItem.Should().Be(default);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Remove);
+        capturedArgs.Key.Should().Be("1");
+        capturedArgs.NewValue.Should().Be(default);
+        capturedArgs.OldValue.Should().Be(1);
     }
 
     [Test]
     public void Clear_DoesNotContainItems_DoNothing()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>();
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act
@@ -411,12 +385,12 @@ public class ObservableDictionaryTests
     public void Clear_ContainsItems_NotifyItemsCleared()
     {
         // Arrange 
-        DictionaryChangedEventArgs<string, int> capturedArgs = null;
+        NotifyDictionaryChangedEventArgs<string, int> capturedArgs = null;
         var dictionary = new ObservableDictionary<string, int>()
         {
             { "1", 1 }
         };
-        dictionary.Changed += (_, args)
+        dictionary.DictionaryChanged += (_, args)
             => capturedArgs = args;
 
         // Act 
@@ -424,8 +398,8 @@ public class ObservableDictionaryTests
 
         // Assert 
         capturedArgs.Should().NotBeNull();
-        capturedArgs.Action.Should().Be(CollectionChangedAction.Clear);
-        capturedArgs.OldItem.Should().Be(default);
-        capturedArgs.NewItem.Should().Be(default);
+        capturedArgs.Action.Should().Be(NotifyCollectionChangedAction.Reset);
+        capturedArgs.NewValue.Should().Be(default);
+        capturedArgs.OldValue.Should().Be(default);
     }
 }

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace CoreSharp.Collections.Interfaces;
 
-public interface IObservableCollection<TItem> : ICollection<TItem>
+public interface INotifyListChanged<TValue> : IList<TValue>
 {
     // Events
-    event EventHandler<CollectionChangedEventArgs<TItem>> Changed;
+    event EventHandler<NotifyListChangedEventArgs<TValue>> ListChanged;
 }

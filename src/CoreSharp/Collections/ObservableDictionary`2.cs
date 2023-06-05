@@ -1,21 +1,63 @@
 ﻿using CoreSharp.Collections.Events;
 using CoreSharp.Collections.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CoreSharp.Collections;
 
-public sealed class ObservableDictionary<TKey, TValue>
-    : Dictionary<TKey, TValue>, IObservableDictionary<TKey, TValue>
+public sealed class ObservableDictionary<TKey, TValue> : INotifyDictionaryChanged<TKey, TValue>
 {
+    // Fields 
+    private readonly IDictionary<TKey, TValue> _source;
+
+    // Constructors 
+    public ObservableDictionary()
+        => _source = new Dictionary<TKey, TValue>();
+
+    public ObservableDictionary(int capacity)
+        => _source = new Dictionary<TKey, TValue>(capacity);
+
+    public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+        => _source = new Dictionary<TKey, TValue>(collection);
+
+    public ObservableDictionary(IDictionary<TKey, TValue> dictionary)
+        => _source = new Dictionary<TKey, TValue>(dictionary);
+
+    public ObservableDictionary(IEqualityComparer<TKey> equalityComparer)
+        => _source = new Dictionary<TKey, TValue>(equalityComparer);
+
+    public ObservableDictionary(int capacity, IEqualityComparer<TKey> equalityComparer)
+        => _source = new Dictionary<TKey, TValue>(capacity, equalityComparer);
+
+    public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> equalityComparer)
+        => _source = new Dictionary<TKey, TValue>(collection, equalityComparer);
+
+    public ObservableDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> equalityComparer)
+        => _source = new Dictionary<TKey, TValue>(dictionary, equalityComparer);
+
     // Properties
-    public new TValue this[TKey key]
+    public ICollection<TKey> Keys
+        => _source.Keys;
+
+    public ICollection<TValue> Values
+        => _source.Values;
+
+    public int Count
+        => _source.Count;
+
+    public bool IsReadOnly
+        => _source.IsReadOnly;
+
+    public TValue this[TKey key]
     {
-        get => base[key];
+        get => _source[key];
         set
         {
-            var found = TryGetValue(key, out var previousValue);
-            var equals = Equals(previousValue, value);
+            var found = TryGetValue(key, out var oldValue);
+            var equals = Equals(oldValue, value);
 
             // If found and equal, just return. 
             if (found && equals)
@@ -23,89 +65,97 @@ public sealed class ObservableDictionary<TKey, TValue>
                 return;
             }
 
-            // Based on documentation this adds or updates. 
-            base[key] = value;
+            // Add or update. 
+            _source[key] = value;
 
             // Found (and not equal), updated. 
             if (found)
             {
-                OnItemReplaced(key, previousValue, value);
+                OnDictionaryChanged(NotifyCollectionChangedAction.Replace, key, value, oldValue);
             }
+
             // Not found. 
             else
             {
-                OnItemAdded(key, value);
+                OnDictionaryChanged(NotifyCollectionChangedAction.Add, key, value);
             }
         }
     }
-    // Events 
-    public event EventHandler<DictionaryChangedEventArgs<TKey, TValue>> Changed;
 
-    // Methods
-    public new void Add(TKey key, TValue value)
-        => TryAdd(key, value);
+    // Events  
+    public event EventHandler<NotifyDictionaryChangedEventArgs<TKey, TValue>> DictionaryChanged;
 
-    public new bool TryAdd(TKey key, TValue value)
+    // Methods 
+    public void Add(TKey key, TValue value)
     {
-        if (!base.TryAdd(key, value))
+        _source.Add(key, value);
+        OnDictionaryChanged(NotifyCollectionChangedAction.Add, key, value);
+    }
+
+    public void Add(KeyValuePair<TKey, TValue> item)
+        => Add(item.Key, item.Value);
+
+    public bool Remove(TKey key)
+    {
+        if (!_source.Remove(key, out var value))
         {
             return false;
         }
 
-        OnItemAdded(key, value);
+        OnDictionaryChanged(NotifyCollectionChangedAction.Remove, key, oldValue: value);
         return true;
     }
 
-    public new bool Remove(TKey key)
-        => Remove(key, out var _);
-
-    public new bool Remove(TKey key, out TValue removedValue)
+    public bool Remove(KeyValuePair<TKey, TValue> item)
     {
-        if (!base.Remove(key, out removedValue))
+        if (!_source.Remove(item))
         {
             return false;
         }
 
-        OnItemRemoved(key, removedValue);
+        OnDictionaryChanged(NotifyCollectionChangedAction.Remove, item.Key, oldValue: item.Value);
         return true;
     }
 
-    public new void Clear()
+    public void Clear()
     {
         if (Count == 0)
         {
             return;
         }
 
-        base.Clear();
-        OnItemsCleared();
+        _source.Clear();
+        OnDictionaryChanged(NotifyCollectionChangedAction.Reset);
     }
 
-    private void OnItemAdded(TKey key, TValue value)
-        => Changed?.Invoke(this, new()
-        {
-            Action = CollectionChangedAction.Add,
-            Index = key,
-            NewItem = value
-        });
+    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
+        => _source.TryGetValue(key, out value);
 
-    private void OnItemReplaced(TKey key, TValue oldValue, TValue newValue)
-        => Changed?.Invoke(this, new()
-        {
-            Action = CollectionChangedAction.Replace,
-            Index = key,
-            OldItem = oldValue,
-            NewItem = newValue
-        });
+    public bool ContainsKey(TKey key)
+        => _source.ContainsKey(key);
 
-    private void OnItemRemoved(TKey key, TValue value)
-        => Changed?.Invoke(this, new()
-        {
-            Action = CollectionChangedAction.Remove,
-            Index = key,
-            OldItem = value
-        });
+    public bool Contains(KeyValuePair<TKey, TValue> item)
+        => _source.Contains(item);
 
-    private void OnItemsCleared()
-        => Changed?.Invoke(this, new() { Action = CollectionChangedAction.Clear });
+    public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        => _source.CopyTo(array, arrayIndex);
+
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        => _source.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => GetEnumerator();
+
+    private void OnDictionaryChanged(
+        NotifyCollectionChangedAction action,
+        TKey key = default,
+        TValue newValue = default,
+        TValue oldValue = default)
+            => DictionaryChanged?.Invoke(this, new()
+            {
+                Action = action,
+                Key = key,
+                NewValue = newValue,
+                OldValue = oldValue
+            });
 }
