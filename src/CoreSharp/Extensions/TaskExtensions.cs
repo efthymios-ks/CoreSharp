@@ -58,12 +58,7 @@ public static class TaskExtensions
     {
         ArgumentNullException.ThrowIfNull(task);
 
-        var genericTask = Task.Run(async () =>
-        {
-            await task;
-            return true;
-        });
-        await genericTask.TimeoutAfter(timeout);
+        await task.MakeGeneric<bool>().TimeoutAfter(timeout);
     }
 
     /// <summary>
@@ -123,19 +118,12 @@ public static class TaskExtensions
     ///                  .IgnoreError&lt;InvalidCastException&gt;();
     /// </code>
     /// </summary>
-    public static async Task IgnoreError<TException>(this Task task)
+    public static Task IgnoreError<TException>(this Task task)
         where TException : Exception
     {
         ArgumentNullException.ThrowIfNull(task);
 
-        try
-        {
-            await task;
-        }
-        catch (Exception exception) when (exception is TException)
-        {
-            // This is the point of the method. Ignore error.
-        }
+        return task.MakeGeneric<bool>().IgnoreError();
     }
 
     /// <inheritdoc cref="IgnoreError{TResult, TException}(Task{TResult})"/>
@@ -168,5 +156,30 @@ public static class TaskExtensions
         {
             return default;
         }
+    }
+
+    internal static Task<TResult> MakeGeneric<TResult>(this Task task)
+    {
+        ArgumentNullException.ThrowIfNull(task);
+
+        var tcs = new TaskCompletionSource<TResult>();
+
+        task.ContinueWith(t =>
+        {
+            if (t.IsFaulted)
+            {
+                tcs.SetException(t.Exception);
+            }
+            else if (t.IsCanceled)
+            {
+                tcs.SetCanceled();
+            }
+            else
+            {
+                tcs.SetResult(default);
+            }
+        });
+
+        return tcs.Task;
     }
 }

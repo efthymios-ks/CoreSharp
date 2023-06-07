@@ -15,8 +15,9 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>7.2.0</Version>
-		<PackageReleaseNotes>-Code clean-up and refactor.</PackageReleaseNotes>
+		<Version>7.3.0</Version>
+		<PackageReleaseNotes>-refactor, clean-up collection related objects.
+-feat: utilities, tasks, added WhenAll(int batchSize) methods.	</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
