@@ -1,7 +1,6 @@
 ﻿using CoreSharp.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 
 namespace CoreSharp.Utilities;
@@ -22,7 +21,7 @@ public static class HttpMethodX
     {
         ArgumentNullException.ThrowIfNull(methodName);
 
-        var lookupTable = new Dictionary<string, RestMethod>()
+        var lookupTable = new Dictionary<string, RestMethod>(StringComparer.OrdinalIgnoreCase)
         {
             { HttpMethod.Get.Method, RestMethod.Get },
             { HttpMethod.Post.Method, RestMethod.Get },
@@ -34,16 +33,12 @@ public static class HttpMethodX
             { HttpMethod.Trace.Method, RestMethod.Trace },
         };
 
-        methodName = methodName.ToLowerInvariant();
-        var found = lookupTable.SingleOrDefault(m => m.Key.Contains(methodName));
-        if (found.Key is not null)
+        if (lookupTable.TryGetValue(methodName, out var restMethod))
         {
-            return found.Value;
+            return restMethod;
         }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(methodName));
-        }
+
+        throw new ArgumentOutOfRangeException(nameof(methodName));
     }
 
     /// <inheritdoc cref="GetHttpMethod(string)"/>

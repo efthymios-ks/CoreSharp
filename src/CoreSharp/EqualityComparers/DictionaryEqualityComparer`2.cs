@@ -76,7 +76,7 @@ public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDicti
         return hashCode;
 
         int GetKeyHashCode(TKey key)
-            => key == null ? 0 : key.GetHashCode();
+            => key == null ? 0 : _keyComparer.GetHashCode(key);
 
         int GetValueHashCode(TValue value)
             => value == null ? 0 : _valueComparer.GetHashCode(value);
