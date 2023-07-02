@@ -12,7 +12,7 @@ namespace CoreSharp.Models;
 /// <summary>
 /// An extension to <see cref="DbConnection"/> to run quick actions on it.
 /// </summary>
-public class DbQuery : IAsyncDisposable
+public sealed class DbQuery
 {
     // Fields 
     private readonly DbConnection _connection;
@@ -25,16 +25,15 @@ public class DbQuery : IAsyncDisposable
         ArgumentNullException.ThrowIfNull(connection);
 
         _connection = connection;
+        _timeoutSeconds = _connection.ConnectionTimeout;
     }
 
     public DbQuery(DbTransaction transaction)
+        : this(transaction?.Connection)
     {
         ArgumentNullException.ThrowIfNull(transaction);
-        _ = transaction?.Connection
-            ?? throw new ArgumentException($"{nameof(transaction)}.{nameof(transaction.Connection)} cannot be null.", nameof(transaction));
 
         _transaction = transaction;
-        _connection = transaction?.Connection;
     }
 
     // Properties 
@@ -68,21 +67,90 @@ public class DbQuery : IAsyncDisposable
     public ICollection<DbParameter> Parameters { get; } = new HashSet<DbParameter>();
 
     // Methods 
-    public async ValueTask DisposeAsync()
+    /// <summary>
+    /// Adds the specified <see cref="DbParameter"/> object to the <see cref="DbParameterCollection"/>.
+    /// </summary>
+    public void AddParameter(string parameterName, object parameterValue)
     {
-        GC.SuppressFinalize(this);
-
-        if (_connection is not null)
-        {
-            await _connection.DisposeAsync();
-        }
+        var parameter = _connection.CreateParameter(parameterName, parameterValue);
+        Parameters.Add(parameter);
     }
 
-    /// <inheritdoc cref="DbParameterCollection.Add(object)"/>
-    public void AddParameter(string name, object value)
+    /// <summary>
+    /// Executes the command against its connection object, 
+    /// returning the number of rows affected.
+    /// </summary>
+    public async Task<int> ExecuteAsync(string query, CancellationToken cancellationToken = default)
     {
-        var parameter = _connection.CreateParameter(name, value);
-        Parameters.Add(parameter);
+        await using var command = await BuildDbCommandAsync(query, cancellationToken);
+        return await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Executes the command and returns the first column of the first row in the first returned result set.
+    /// All other columns, rows and result sets are ignored.
+    /// </summary>
+    public async Task<TResult> ExecuteAsync<TResult>(string query, CancellationToken cancellationToken = default)
+    {
+        await using var command = await BuildDbCommandAsync(query, cancellationToken);
+        return (TResult)await command.ExecuteScalarAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Fills a <see cref="DataTable"/> with values from a data source using the <see cref="DbDataReader"/>.
+    /// If the <see cref="DataTable"/> already contains rows, the incoming data from the data source is merged with the existing rows.
+    /// </summary>
+    public async Task<int> FillAsync(string query, DataTable dataTable, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(dataTable);
+
+        await using var command = await BuildDbCommandAsync(query, cancellationToken);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        dataTable.Load(reader);
+        return dataTable.Rows.Count;
+    }
+
+    /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
+    public async Task<int> FillAsync(string query, DataSet dataSet, CancellationToken cancellationToken = default)
+    {
+        var mappings = Enumerable.Empty<DataTableMapping>();
+        return await FillAsync(query, dataSet, mappings, cancellationToken);
+    }
+
+    /// <summary>
+    /// Adds or refreshes rows in the DataSet.
+    /// </summary>
+    public async Task<int> FillAsync(string query, DataSet dataSet, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(dataSet);
+        ArgumentNullException.ThrowIfNull(tableMappings);
+
+        await using var command = await BuildDbCommandAsync(query, cancellationToken);
+        var adapter = _connection.CreateDataAdapter();
+
+        try
+        {
+            adapter.SelectCommand = command;
+
+            if (tableMappings.Any())
+            {
+                adapter.TableMappings.AddRange(tableMappings.ToArray());
+            }
+
+            return adapter.Fill(dataSet);
+        }
+        finally
+        {
+            if (adapter is IAsyncDisposable adapterAsAsyncDisposable)
+            {
+                await adapterAsAsyncDisposable.DisposeAsync();
+            }
+
+            if (adapter is IDisposable adapterAsDisposable)
+            {
+                adapterAsDisposable.Dispose();
+            }
+        }
     }
 
     private async Task<DbCommand> BuildDbCommandAsync(string query, CancellationToken cancellationToken = default)
@@ -93,7 +161,7 @@ public class DbQuery : IAsyncDisposable
             await _connection.OpenAsync(cancellationToken);
         }
 
-        // Prepare and execute DbCommand 
+        // Prepare DbCommand 
         var command = _connection.CreateCommand();
         command.Connection = _connection;
         command.Transaction = _transaction;
@@ -107,73 +175,5 @@ public class DbQuery : IAsyncDisposable
         }
 
         return command;
-    }
-
-    /// <inheritdoc cref="DbCommand.ExecuteNonQueryAsync(CancellationToken)"/>
-    public async Task<int> ExecuteNonQueryAsync(string query, CancellationToken cancellationToken = default)
-    {
-        await using var command = await BuildDbCommandAsync(query, cancellationToken);
-        return await command.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    /// <inheritdoc cref="DbCommand.ExecuteScalarAsync(CancellationToken)"/>
-    public async Task<TResult> ExecuteScalarAsync<TResult>(string query, CancellationToken cancellationToken = default)
-    {
-        await using var command = await BuildDbCommandAsync(query, cancellationToken);
-        return (TResult)await command.ExecuteScalarAsync(cancellationToken);
-    }
-
-    /// <inheritdoc cref="DataTable.Load(IDataReader)"/>
-    public async Task<int> FillAsync(string query, DataTable table, CancellationToken cancellationToken = default)
-    {
-        ArgumentNullException.ThrowIfNull(table);
-
-        await using var command = await BuildDbCommandAsync(query, cancellationToken);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        table.Load(reader);
-        return table.Rows.Count;
-    }
-
-    /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
-    public async Task<int> FillAsync(string query, DataSet set)
-    {
-        var mappings = Enumerable.Empty<DataTableMapping>();
-        return await FillAsync(query, set, mappings);
-    }
-
-    /// <inheritdoc cref="FillAsync(string, DataSet, IEnumerable{DataTableMapping}, CancellationToken)"/>
-    public async Task<int> FillAsync(string query, DataSet set, params DataTableMapping[] tableMappings)
-        => await FillAsync(query, set, tableMappings, CancellationToken.None);
-
-    /// <inheritdoc cref="DbDataAdapter.Fill(DataSet)"/>
-    public async Task<int> FillAsync(string query, DataSet set, IEnumerable<DataTableMapping> tableMappings, CancellationToken cancellationToken = default)
-    {
-        ArgumentNullException.ThrowIfNull(set);
-        ArgumentNullException.ThrowIfNull(tableMappings);
-
-        await using var command = await BuildDbCommandAsync(query, cancellationToken);
-        var adapter = _connection.CreateDataAdapter();
-        try
-        {
-            adapter.SelectCommand = command;
-            if (tableMappings.Any())
-            {
-                adapter.TableMappings.AddRange(tableMappings.ToArray());
-            }
-
-            return await Task.Run(() => adapter.Fill(set), cancellationToken);
-        }
-        finally
-        {
-            if (adapter is IAsyncDisposable asyncDisposable)
-            {
-                await asyncDisposable.DisposeAsync();
-            }
-
-            if (adapter is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
-        }
     }
 }
