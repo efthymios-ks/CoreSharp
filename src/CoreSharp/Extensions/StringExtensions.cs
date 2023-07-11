@@ -709,36 +709,6 @@ public static class StringExtensions
             return format;
         }
 
-        // Helpers 
-        int FindFromTo(char character, int startIndex, int endIndex)
-            => format.IndexOf(character, startIndex, endIndex - startIndex);
-        int FindFrom(char character, int startIndex)
-            => FindFromTo(character, startIndex, format.Length);
-        int FindOpenBracketFrom(int startIndex)
-            => FindFrom('{', startIndex);
-        int FindCloseBracketFrom(int startIndex)
-            => FindFrom('}', startIndex);
-        int FindSemicolon(int openBracketIndex, int endBracketIndex)
-            => FindFromTo(':', openBracketIndex, endBracketIndex);
-
-        string ExtractBetween(int startIndex, int endIndex)
-            => format.Substring(startIndex + 1, endIndex - startIndex - 1);
-        string ExtractName(int openBracketIndex, int closeBracketIndex)
-            => ExtractBetween(openBracketIndex, closeBracketIndex);
-        string ExtractFormat(int semiColonIndex, int closeBracketIndex)
-            => semiColonIndex >= 0 ? ExtractBetween(semiColonIndex, closeBracketIndex) : null;
-
-        string ToString(object value, string format = null)
-            => value is IFormattable formattable ? formattable.ToString(format, formatProvider) : $"{value}";
-        string ReplaceAtPosition(object argumentValue, string argumentFormat, int openBracketIndex, ref int closeBracketIndex)
-        {
-            var argumentValueAsString = ToString(argumentValue, argumentFormat);
-            format = format.Remove(openBracketIndex, closeBracketIndex - openBracketIndex + 1);
-            format = format.Insert(openBracketIndex, argumentValueAsString);
-            closeBracketIndex = openBracketIndex + argumentValueAsString.Length;
-            return format;
-        }
-
         var openBracketIndex = FindOpenBracketFrom(0);
         while (openBracketIndex > -1)
         {
@@ -764,6 +734,37 @@ public static class StringExtensions
         }
 
         return format;
+
+        // Helpers 
+        int FindFromTo(char character, int startIndex, int endIndex)
+            => format.IndexOf(character, startIndex, endIndex - startIndex);
+        int FindFrom(char character, int startIndex)
+            => FindFromTo(character, startIndex, format.Length);
+        int FindOpenBracketFrom(int startIndex)
+            => FindFrom('{', startIndex);
+        int FindCloseBracketFrom(int startIndex)
+            => FindFrom('}', startIndex);
+        int FindSemicolon(int openBracketIndex, int endBracketIndex)
+            => FindFromTo(':', openBracketIndex, endBracketIndex);
+
+        string ExtractBetween(int startIndex, int endIndex)
+            => format.Substring(startIndex + 1, endIndex - startIndex - 1);
+        string ExtractName(int openBracketIndex, int closeBracketIndex)
+            => ExtractBetween(openBracketIndex, closeBracketIndex);
+        string ExtractFormat(int semiColonIndex, int closeBracketIndex)
+            => semiColonIndex >= 0 ? ExtractBetween(semiColonIndex, closeBracketIndex) : null;
+
+        string ToString(object value, string format = null)
+            => value is IFormattable formattable ? formattable.ToString(format, formatProvider) : $"{value}";
+
+        string ReplaceAtPosition(object argumentValue, string argumentFormat, int openBracketIndex, ref int closeBracketIndex)
+        {
+            var argumentValueAsString = ToString(argumentValue, argumentFormat);
+            format = format.Remove(openBracketIndex, closeBracketIndex - openBracketIndex + 1);
+            format = format.Insert(openBracketIndex, argumentValueAsString);
+            closeBracketIndex = openBracketIndex + argumentValueAsString.Length;
+            return format;
+        }
     }
 
     /// <inheritdoc cref="Format(string, IFormatProvider, object[])"/>
@@ -799,8 +800,7 @@ public static class StringExtensions
     public static IEnumerable<string> Chunk(this string input, int size)
     {
         var chunks = input.Chunk<char>(size);
-        return chunks.Select(c => new string(c.ToArray()));
+        return chunks.Select(chunk => new string(chunk.ToArray()));
     }
-#endif
-
+#endif 
 }
