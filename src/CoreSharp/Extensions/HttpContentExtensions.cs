@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class HttpContentExtensions
 {
-    /// <inheritdoc cref="HttpContentHeadersExtensions.GetContentType(System.Net.Http.Headers.HttpContentHeaders)" />
+    /// <inheritdoc cref="HttpContentHeadersExtensions.GetContentType(HttpContentHeaders)" />
     public static ContentType GetContentType(this HttpContent httpContent)
         => httpContent?.Headers.GetContentType();
 
@@ -36,10 +37,10 @@ public static class HttpContentExtensions
         // Check content type 
         return contentType.MediaType switch
         {
-            MediaTypeNames.Application.Json => await httpContent.FromJsonAsync<TResponse>(cancellationToken),
+            MediaTypeNames.Application.Json or
             MediaTypeNamesX.Application.ProblemJson => await httpContent.FromJsonAsync<TResponse>(cancellationToken),
 
-            MediaTypeNames.Application.Xml => await httpContent.FromXmlAsync<TResponse>(cancellationToken),
+            MediaTypeNames.Application.Xml or
             MediaTypeNamesX.Application.ProblemXml => await httpContent.FromXmlAsync<TResponse>(cancellationToken),
 
             _ => throw new NotSupportedException($"`{contentType.MediaType}` is not supported for automatic deserialization. Please use a more specific method."),
