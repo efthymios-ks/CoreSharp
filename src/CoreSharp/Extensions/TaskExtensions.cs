@@ -118,12 +118,19 @@ public static class TaskExtensions
     ///                  .IgnoreError&lt;InvalidCastException&gt;();
     /// </code>
     /// </summary>
-    public static Task IgnoreError<TException>(this Task task)
+    public static async Task IgnoreError<TException>(this Task task)
         where TException : Exception
     {
         ArgumentNullException.ThrowIfNull(task);
 
-        return task.MakeGeneric<bool>().IgnoreError();
+        try
+        {
+            await task;
+        }
+        catch (Exception exception) when (exception is TException)
+        {
+            // This is the point of the method. Ignore error.
+        }
     }
 
     /// <inheritdoc cref="IgnoreError{TResult, TException}(Task{TResult})"/>
