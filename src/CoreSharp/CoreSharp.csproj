@@ -15,8 +15,9 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>CoreSharp</Title>
-		<Version>7.4.0</Version>
-		<PackageReleaseNotes>-chore(observers): restructure folders.</PackageReleaseNotes>
+		<Version>7.4.1</Version>
+		<PackageReleaseNotes>-chore(observers): restructure folders.
+-feat(Extensions): Add `ToStringTable()` extension to IEnumerable.</PackageReleaseNotes>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<FileVersion>1.0.0.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

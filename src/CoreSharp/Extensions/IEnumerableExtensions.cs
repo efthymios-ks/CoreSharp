@@ -349,9 +349,10 @@ public static class IEnumerableExtensions
             return stream;
         }
 
-        var properties = source.First()
-                               .GetType()
-                               .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var properties = source
+            .First()
+            .GetType()
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance);
         using var streamWriter = new StreamWriter(stream, encoding: encoding, leaveOpen: true);
 
         // Add headers 
@@ -442,9 +443,10 @@ public static class IEnumerableExtensions
             return table;
         }
 
-        var properties = source.First()
-                               .GetType()
-                               .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var properties = source
+            .First()
+            .GetType()
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         // Create columns 
         foreach (var property in properties)
@@ -679,6 +681,65 @@ public static class IEnumerableExtensions
                 yield return element;
             }
         }
+    }
+
+    public static string ToStringTable<TElement>(this IEnumerable<TElement> source)
+        where TElement : class
+    {
+        if (source == null || !source.Any())
+        {
+            return string.Empty;
+        }
+
+        var columnSizes = new Dictionary<string, int>();
+        var properties = source
+            .First()
+            .GetType()
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        // Calculate max column lengths
+        foreach (var property in properties)
+        {
+            var maxColumnValueLength = source
+                .Select(element => ToString(property.GetValue(element)).Length)
+                .Max();
+
+            columnSizes[property.Name] = maxColumnValueLength > property.Name.Length
+                ? maxColumnValueLength
+                : property.Name.Length;
+        }
+
+        const char SpacingCharacter = ' ';
+        var stringBuilder = new StringBuilder();
+
+        // Add headers
+        foreach (var propertyName in properties.Select(property => property.Name))
+        {
+            stringBuilder
+                .Append(propertyName.PadRight(columnSizes[propertyName]))
+                .Append(SpacingCharacter);
+        }
+
+        stringBuilder.AppendLine();
+
+        // Add values
+        foreach (var element in source)
+        {
+            foreach (var property in properties)
+            {
+                var value = ToString(property.GetValue(element));
+                stringBuilder
+                    .Append(value.PadRight(columnSizes[property.Name]))
+                    .Append(SpacingCharacter);
+            }
+
+            stringBuilder.AppendLine();
+        }
+
+        return stringBuilder.ToString();
+
+        static string ToString(object value)
+            => Convert.ToString(value, CultureInfo.InvariantCulture);
     }
 
 #if !NET6_0_OR_GREATER

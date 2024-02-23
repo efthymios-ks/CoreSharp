@@ -1378,6 +1378,80 @@ public class IEnumerableExtensionsTests
         result.Should().Equal(expected);
     }
 
+    [Test]
+    public void ToStringTable_WhenSourceIsNull_ShouldReturnEmptyString()
+    {
+        // Arrange 
+        IEnumerable<object> source = null;
+
+        // Act 
+        var result = source.ToStringTable();
+
+        // Assert 
+        result.Should().BeEmpty();
+    }
+
+    [Test]
+    public void ToStringTable_WhenSourceIsEmpty_ShouldReturnEmptyString()
+    {
+        // Arrange 
+        var source = Array.Empty<object>();
+
+        // Act 
+        var result = source.ToStringTable();
+
+        // Assert 
+        result.Should().BeEmpty();
+    }
+
+    [Test]
+    public void ToStringTable_WhenSourceHasData_ShouldReturnFormattedTable()
+    {
+        // Arrange 
+        var source = new object[]
+        {
+            new { Id = 1, Name = "Product 1", Price = 10.99 },
+            new { Id = 2, Name = "Product 2", Price = 20.49 },
+            new { Id = 3, Name = "Product 3", Price = 30.79 }
+        };
+
+        const string expectedResult =
+            "Id Name      Price \r\n" +
+            "1  Product 1 10.99 \r\n" +
+            "2  Product 2 20.49 \r\n" +
+            "3  Product 3 30.79 \r\n";
+
+        // Act 
+        var result = source.ToStringTable();
+
+        // Assert 
+        result.Should().Be(expectedResult);
+    }
+
+    [Test]
+    public void ToStringTable_WhenSourceHasNullValues_ShouldHandleNullValues()
+    {
+        // Arrange
+        var source = new object[]
+        {
+            new { Id = (int?)null, Name = "Product 1", Price = (decimal?)11.11 },
+            new { Id = (int?)2, Name =  (string)null, Price = (decimal?)22.22 },
+            new { Id = (int?)3, Name = "Product 3", Price = (decimal?)null }
+        };
+
+        const string expectedResult =
+            "Id Name      Price \r\n" +
+            "   Product 1 11.11 \r\n" +
+            "2            22.22 \r\n" +
+            "3  Product 3       \r\n";
+
+        // Act 
+        var result = source.ToStringTable();
+
+        // Assert 
+        result.Should().Be(expectedResult);
+    }
+
 #if !NET6_0_OR_GREATER
     [Test]
     public void ToHashSet_SourceIsNull_ThrowArgumentNullException()
