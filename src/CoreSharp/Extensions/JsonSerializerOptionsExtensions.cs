@@ -8,7 +8,7 @@ namespace CoreSharp.Extensions;
 /// </summary>
 public static class JsonSerializerOptionsExtensions
 {
-    // TODO: Add unit tests.
+    // Methods
     /// <summary>
     /// Override settings from one <see cref="JsonSerializerOptions"/> to another.<br/>
     /// Useful when you cannot assign new reference to the options. E.g. ASP.NET Core DI.
