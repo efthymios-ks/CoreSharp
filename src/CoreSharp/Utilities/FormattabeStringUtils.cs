@@ -3,7 +3,7 @@ using System;
 
 namespace CoreSharp.Utilities;
 
-public static class FormattabeStringX
+public static class FormattabeStringUtils
 {
     /// <summary>
     /// Print {null} for nulls and {empty} for empty or whitespace strings.

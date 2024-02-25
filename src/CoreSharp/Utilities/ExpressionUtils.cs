@@ -7,7 +7,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Expression"/> utilities.
 /// </summary>
-public static class ExpressionX
+public static class ExpressionUtils
 {
     /// <summary>
     /// Get <see cref="MemberInfo"/> from given <see cref="Expression{TDelegate}"/> selector.
@@ -20,9 +20,8 @@ public static class ExpressionX
         {
             return memberExpression.Member;
         }
-        else
-        {
-            throw new ArgumentException($"{memberSelector} does not point to a valid member.", nameof(memberSelector));
-        }
+
+        throw new ArgumentException($"{memberSelector} does not point to a valid member.", nameof(memberSelector));
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace CoreSharp.Utilities;
@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// Json utilities.
 /// </summary>
-public static class JsonX
+public static class JsonUtils
 {
     /// <summary>
     /// Check if string is an empty json.
@@ -21,6 +21,6 @@ public static class JsonX
         // Empty formats
         var emptyFormats = new[] { "", "{}", "[]", "[{}]" };
 
-        return emptyFormats.Any(f => f == json);
+        return Array.Exists(emptyFormats, format => format == json);
     }
 }

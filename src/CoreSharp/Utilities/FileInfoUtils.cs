@@ -6,11 +6,11 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="FileInfo"/> utilities.
 /// </summary>
-public static class FileInfoX
+public static class FileInfoUtils
 {
     /// <summary>
     /// Get entry's assembly output folder files.
     /// </summary>
     public static IEnumerable<FileInfo> GetOutputDlls()
-        => DirectoryInfoX.GetOutputFolder().GetFiles("*.dll");
+        => DirectoryInfoUtils.GetOutputFolder().GetFiles("*.dll");
 }

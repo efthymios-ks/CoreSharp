@@ -7,7 +7,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Enum"/> utilities.
 /// </summary>
-public static class EnumX
+public static class EnumUtils
 {
     /// <summary>
     /// Get enum values.

@@ -10,7 +10,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Task"/> utilities.
 /// </summary>
-public static class TaskX
+public static class TaskUtils
 {
     /// <inheritdoc cref="WhenAll(int, Task[])"/>
     public static async Task WhenAll(int batchSize, IEnumerable<Task> tasks)

@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Console"/> utilities.
 /// </summary>
-public static class ConsoleX
+public static class ConsoleUtils
 {
     /// <summary>
     /// Clear current line.

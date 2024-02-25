@@ -288,7 +288,7 @@ public static class GenericExtensions
     /// <inheritdoc cref="TypeExtensions.GetAttributes{TAttribute}(Type)"/>
     public static IEnumerable<TAttribute> GetAttributes<TElement, TMember, TAttribute>(this TElement _, Expression<Func<TElement, TMember>> memberSelector)
         where TAttribute : Attribute
-        => ExpressionX.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
+        => ExpressionUtils.GetMemberInfo(memberSelector).GetAttributes<TAttribute>();
 
     /// <inheritdoc cref="TypeExtensions.GetAttribute{TAttribute}(Type)"/>
     public static TAttribute GetAttribute<TElement, TMember, TAttribute>(this TElement element, Expression<Func<TElement, TMember>> memberSelector)

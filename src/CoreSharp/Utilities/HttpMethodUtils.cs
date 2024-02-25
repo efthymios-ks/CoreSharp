@@ -8,7 +8,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="HttpMethod"/> related utilities.
 /// </summary>
-public static class HttpMethodX
+public static class HttpMethodUtils
 {
     /// <inheritdoc cref="GetRestMethod(string)"/>
     public static RestMethod GetRestMethod(HttpMethod method)

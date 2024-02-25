@@ -7,7 +7,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="string"/> utilities.
 /// </summary>
-public static class StringX
+public static class StringUtils
 {
     /// <inheritdoc cref="FirstNotEmpty(string[])"/>
     public static string FirstNotEmpty(IEnumerable<string> values)

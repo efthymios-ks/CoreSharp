@@ -3,7 +3,7 @@
 namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
-public class EnumXTests
+public class EnumUtilsTests
 {
     [Test]
     public void GetValues_WhenCalled_ReturnEnumValues()
@@ -12,7 +12,7 @@ public class EnumXTests
         var expectedValues = new[] { DummyType.Option1, DummyType.Option2, DummyType.Option3 };
 
         // Act 
-        var values = EnumX.GetValues<DummyType>();
+        var values = EnumUtils.GetValues<DummyType>();
 
         // Assert
         values.Should().Equal(expectedValues);
@@ -30,7 +30,7 @@ public class EnumXTests
         };
 
         // Act 
-        var dictionary = EnumX.GetDictionary<DummyType>();
+        var dictionary = EnumUtils.GetDictionary<DummyType>();
 
         // Assert
         dictionary.Should().Equal(expectedDictionary);

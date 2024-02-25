@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="IPAddress"/> utilities.
 /// </summary>
-public static class IPAddressX
+public static class IpAddressUtils
 {
     /// <summary>
     /// Get current machines ip collection.

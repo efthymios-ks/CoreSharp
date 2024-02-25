@@ -13,7 +13,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Uri"/> utilities.
 /// </summary>
-public static class UriX
+public static class Uritils
 {
     /// <summary>
     /// Combines url segments.

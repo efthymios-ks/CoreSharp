@@ -8,7 +8,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="ValueTask"/> utilities.
 /// </summary>
-public static class ValueTaskX
+public static class ValueTaskUtils
 {
     /// <inheritdoc cref="WhenAll(ValueTask[])"/>
     public static async Task WhenAll(IEnumerable<ValueTask> valueTasks)

@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Regex"/> utilities.
 /// </summary>
-public static class RegexX
+public static class RegexUtils
 {
     // Methods
     /// <summary>

@@ -7,7 +7,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="HashSet{TElement}"/> utilities.
 /// </summary>
-public static class HashSetX
+public static class HashSetUtils
 {
     /// <inheritdoc cref="HashSet{TElement}.HashSet(IEqualityComparer{TElement}?)" />
     public static HashSet<TElement> Create<TElement, TKey>(Func<TElement, TKey> keySelector)

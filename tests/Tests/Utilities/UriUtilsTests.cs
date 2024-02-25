@@ -1,13 +1,13 @@
 ﻿namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
-public class UriXTests
+public class UriUtilsTests
 {
     [Test]
     public void JoinSegments_SegmentsIsNull_ThrowArgumentNullException()
     {
         // Act
-        Action action = () => UriX.JoinSegments(segments: null);
+        Action action = () => Uritils.JoinSegments(segments: null);
 
         // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -21,7 +21,7 @@ public class UriXTests
     public void JoinSegments_WhenCalled_ReturnUnifiedUrlWithTrimmedSlashes(string expectedUrl, params string[] segments)
     {
         // Act
-        var url = UriX.JoinSegments(segments);
+        var url = Uritils.JoinSegments(segments);
 
         // Assert 
         url.Should().Be(expectedUrl);
@@ -39,7 +39,7 @@ public class UriXTests
         };
 
         // Act
-        Action action = () => UriX.Build(baseUrl, parameters);
+        Action action = () => Uritils.Build(baseUrl, parameters);
 
         // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -53,7 +53,7 @@ public class UriXTests
         IDictionary<string, string> parameters = null;
 
         // Act
-        Action action = () => UriX.Build(baseUrl, parameters);
+        Action action = () => Uritils.Build(baseUrl, parameters);
 
         // Assert 
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -72,7 +72,7 @@ public class UriXTests
         const string expectedUrl = "https://example.com/?name=Efthymios%20Koktsidis&count=10";
 
         // Act
-        var url = UriX.Build(baseUrl, parameters);
+        var url = Uritils.Build(baseUrl, parameters);
 
         // Assert
         url.Should().Be(expectedUrl);
@@ -91,7 +91,7 @@ public class UriXTests
         const string expectedUrl = "https://example.com/?age=28&name=Efthymios%20Koktsidis&count=10";
 
         // Act
-        var url = UriX.Build(baseUrl, parameters);
+        var url = Uritils.Build(baseUrl, parameters);
 
         // Assert
         url.Should().Be(expectedUrl);
@@ -111,7 +111,7 @@ public class UriXTests
         const string expectedUrl = "https://example.com/?age=30&name=Efthymios%20Koktsidis&count=10";
 
         // Act
-        var url = UriX.Build(baseUrl, parameters);
+        var url = Uritils.Build(baseUrl, parameters);
 
         // Assert
         url.Should().Be(expectedUrl);

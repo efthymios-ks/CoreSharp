@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Directory"/> utilities.
 /// </summary>
-public static class DirectoryX
+public static class DirectoryUtils
 {
     /// <summary>
     /// Open directory with explorer.exe.

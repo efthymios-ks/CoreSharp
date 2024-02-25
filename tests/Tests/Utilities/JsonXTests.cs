@@ -13,7 +13,7 @@ public class JsonXTests
     public void IsEmptyJsonTest(string input, bool expectedIsEmpty)
     {
         // Assert
-        var isEmpty = JsonX.IsEmpty(input);
+        var isEmpty = JsonUtils.IsEmpty(input);
 
         // Assert
         isEmpty.Should().Be(expectedIsEmpty);

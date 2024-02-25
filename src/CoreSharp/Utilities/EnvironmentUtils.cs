@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="Environment"/> utilities.
 /// </summary>
-public static class EnvironmentX
+public static class EnvironmentUtils
 {
     // Methods
     /// <summary>

@@ -6,7 +6,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="DirectoryInfo"/> utilities.
 /// </summary>
-public static class DirectoryInfoX
+public static class DirectoryInfoUtils
 {
     /// <summary>
     /// Get entry's assembly output folder.

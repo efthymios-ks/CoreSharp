@@ -9,7 +9,7 @@ namespace CoreSharp.Utilities;
 /// <summary>
 /// <see cref="HttpStatusCode"/> utilities.
 /// </summary>
-public static class HttpStatusCodeX
+public static class HttpStatusCodeUtils
 {
     /// <summary>
     /// Convert <see cref="HttpStatusCode"/> to reference url.

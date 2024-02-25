@@ -1,9 +1,9 @@
-﻿using static CoreSharp.Utilities.FormattabeStringX;
+﻿using static CoreSharp.Utilities.FormattabeStringUtils;
 
 namespace CoreSharp.Utilities.Tests;
 
 [TestFixture]
-public class FormattableStringsXTests
+public class FormattableStringsUtilsTests
 {
     [Test]
     public void ShowNulls_FormatIsNull_ThrowArgumentNullExcepion()

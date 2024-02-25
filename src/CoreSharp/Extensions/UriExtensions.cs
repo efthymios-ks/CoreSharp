@@ -16,7 +16,7 @@ public static class UriExtensions
     {
         ArgumentNullException.ThrowIfNull(uri);
 
-        return UriX.GetParameters(uri.Query);
+        return Uritils.GetParameters(uri.Query);
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ public static class UriExtensions
     {
         ArgumentNullException.ThrowIfNull(uri);
 
-        return UriX.GetParameters(uri.Fragment.TrimStart('#'));
+        return Uritils.GetParameters(uri.Fragment.TrimStart('#'));
     }
 }
