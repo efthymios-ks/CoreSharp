@@ -10,8 +10,8 @@ public sealed class EmbeddedFileConfigurationProvider : ConfigurationProvider
 {
     // Fields 
     private readonly IConfigurationBuilder _builder;
-    private readonly IFileProvider _fileProvider;
     private readonly EmbeddedFileConfigurationOptions _options;
+    private readonly IFileProvider _fileProvider;
 
     // Constructors
     public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
@@ -20,6 +20,8 @@ public sealed class EmbeddedFileConfigurationProvider : ConfigurationProvider
         ArgumentNullException.ThrowIfNull(options);
         _ = _options.ScanAssembly ?? throw new ArgumentException(nameof(options.ScanAssembly));
 
+        _builder = builder;
+        _options = options;
         _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
     }
 

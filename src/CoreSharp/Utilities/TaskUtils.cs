@@ -13,13 +13,13 @@ namespace CoreSharp.Utilities;
 public static class TaskUtils
 {
     /// <inheritdoc cref="WhenAll(int, Task[])"/>
-    public static async Task WhenAll(int batchSize, IEnumerable<Task> tasks)
-        => await WhenAll(batchSize, tasks?.ToArray());
+    public static Task WhenAll(int batchSize, IEnumerable<Task> tasks)
+        => WhenAll(batchSize, tasks?.ToArray());
 
     /// <inheritdoc cref="Task.WhenAll(Task[])"/>
-    public static async Task WhenAll<TResult>(int batchSize, params Task[] tasks)
-      => await WhenAll(batchSize, tasks?.Select(task => task.MakeGeneric<bool>())
-                                        .ToArray());
+    public static Task WhenAll(int batchSize, params Task[] tasks)
+      => WhenAll(batchSize, tasks?.Select(task => task.MakeGeneric<bool>())
+            .ToArray());
 
     /// <inheritdoc cref="WhenAll{TResult}(int, Task{TResult}[])"/>
     public static async Task WhenAll<TResult>(int batchSize, IEnumerable<Task<TResult>> tasks)

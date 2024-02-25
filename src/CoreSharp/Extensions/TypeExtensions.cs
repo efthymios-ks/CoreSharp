@@ -100,7 +100,8 @@ public static class TypeExtensions
             typeof(DateTime),
             typeof(DateTimeOffset)
         };
-        return additionalTypes.Any(t => t == baseType);
+
+        return Array.Exists(additionalTypes, type => type == baseType);
     }
 
     /// <summary>

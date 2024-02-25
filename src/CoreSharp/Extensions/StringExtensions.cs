@@ -187,7 +187,9 @@ public static class StringExtensions
         ArgumentNullException.ThrowIfNull(input);
         ArgumentNullException.ThrowIfNull(values);
 
-        return values.Any(v => input.Equals(v, StringComparison.OrdinalIgnoreCase));
+#pragma warning disable CA1309 // Use ordinal string comparison
+        return Array.Exists(values, value => input.Equals(value, StringComparison.InvariantCultureIgnoreCase));
+#pragma warning restore CA1309 // Use ordinal string comparison
     }
 
     /// <inheritdoc cref="StartsWithAnyCI(string, string[])"/>
@@ -203,7 +205,7 @@ public static class StringExtensions
         ArgumentNullException.ThrowIfNull(input);
         ArgumentNullException.ThrowIfNull(values);
 
-        return values.Any(v => input.StartsWith(v, StringComparison.InvariantCultureIgnoreCase));
+        return Array.Exists(values, value => input.StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     /// <inheritdoc cref="EndsWithAnyCI(string, string[])"/>
@@ -219,7 +221,7 @@ public static class StringExtensions
         ArgumentNullException.ThrowIfNull(input);
         ArgumentNullException.ThrowIfNull(values);
 
-        return values.Any(v => input.EndsWith(v, StringComparison.InvariantCultureIgnoreCase));
+        return Array.Exists(values, value => input.EndsWith(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     /// <inheritdoc cref="ContainsAnyCI(string, string[])"/>
@@ -235,7 +237,7 @@ public static class StringExtensions
         ArgumentNullException.ThrowIfNull(input);
         ArgumentNullException.ThrowIfNull(values);
 
-        return values.Any(v => input.Contains(v, StringComparison.InvariantCultureIgnoreCase));
+        return Array.Exists(values, value => input.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     /// <inheritdoc cref="string.IsNullOrEmpty(string?)"/>
@@ -704,7 +706,7 @@ public static class StringExtensions
             return null;
         }
 
-        if (arguments?.Count is not > 0)
+        if (arguments is null || arguments.Count == 0)
         {
             return format;
         }

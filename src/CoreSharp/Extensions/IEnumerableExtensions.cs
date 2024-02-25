@@ -326,7 +326,7 @@ public static class IEnumerableExtensions
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(items);
 
-        return items.All(source.Contains);
+        return Array.TrueForAll(items, item => source.Contains(item));
     }
 
     /// <summary>

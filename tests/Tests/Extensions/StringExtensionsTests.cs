@@ -837,7 +837,7 @@ public class StringExtensionsTests
     public void ToDateTime_InputValid_ReturnDateTime()
     {
         // Arrange 
-        var expected = new DateTime(2021, 5, 4, 11, 17, 45);
+        var expected = new DateTime(2021, 5, 4, 11, 17, 45, DateTimeKind.Local);
         const string dateTimeFormat = "u";
         var formatProvider = CultureInfo.InvariantCulture;
         var input = expected.ToString(dateTimeFormat, formatProvider);
@@ -1250,7 +1250,7 @@ public class StringExtensionsTests
         var dictionary = new Dictionary<string, object>
         {
             { "name", "Efthymios" },
-            { "dateOfBirth", new DateTime(2022, 11, 14) },
+            { "dateOfBirth", new DateTime(2022, 11, 14, 0,0,0,DateTimeKind.Local) },
             { "amount", 1_234.567_8 }
         };
         const string expectedFormatted = "You are Efthymios. You were born in 14/11/2022 and have 1.234,57 € in your bank account.";

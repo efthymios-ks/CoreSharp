@@ -18,7 +18,7 @@ public class ObservableListTests
         list.Add(2);
 
         // Assert 
-        list.Should().Equal(new[] { 1, 2 });
+        list.Should().Equal(1, 2);
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class ObservableListTests
 
         // Assert 
         capturedArgs.Should().BeNull();
-        list.Should().Equal(new[] { 1 });
+        list.Should().Equal(1);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class ObservableListTests
         list.Remove(2);
 
         // Assert 
-        list.Should().Equal(new[] { 1 });
+        list.Should().Equal(1);
     }
 
     [Test]

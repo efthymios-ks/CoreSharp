@@ -38,7 +38,7 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     {
         if (obj is null)
         {
-            return default(TEntity).GetHashCode();
+            return 0;
         }
 
         var primitiveValues = GetPrimitiveProperties(obj).Select(p => p.Value);
@@ -62,9 +62,10 @@ public class PrimitiveEqualityComparer<TEntity> : IEqualityComparer<TEntity>
     {
         ArgumentNullException.ThrowIfNull(item);
 
-        return item.GetType()
-                   .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                   .Where(p => p.CanRead && IsTypePrimitive(p.PropertyType))
-                   .ToDictionary(p => p.Name, p => p.GetValue(item));
+        return item
+            .GetType()
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.CanRead && IsTypePrimitive(p.PropertyType))
+            .ToDictionary(p => p.Name, p => p.GetValue(item));
     }
 }

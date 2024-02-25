@@ -46,15 +46,13 @@ public static class IDictionaryExtensions
     {
         ArgumentNullException.ThrowIfNull(source);
 
-        value = default;
-        if (!source.ContainsKey(key))
+        if (source.TryGetValue(key, out value))
         {
-            return false;
+            source.Remove(key);
+            return true;
         }
 
-        value = source[key];
-        source.Remove(key);
-        return true;
+        return false;
     }
 
     /// <inheritdoc cref="TryUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TKey, TValue, TValue})"/>
@@ -80,13 +78,13 @@ public static class IDictionaryExtensions
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(updateAction);
 
-        if (!source.ContainsKey(key))
+        if (source.TryGetValue(key, out var value))
         {
-            return false;
+            source[key] = updateAction(key, value);
+            return true;
         }
 
-        source[key] = updateAction(key, source[key]);
-        return true;
+        return false;
     }
 
     /// <inheritdoc cref="AddOrUpdate{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue, Func{TKey, TValue, TValue})"/>
@@ -140,12 +138,13 @@ public static class IDictionaryExtensions
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(addValue);
 
-        if (!source.ContainsKey(key))
+        if (source.TryGetValue(key, out var value))
         {
-            source.Add(key, addValue);
+            return value;
         }
 
-        return source[key];
+        source.Add(key, addValue);
+        return addValue;
     }
 
     /// <summary>

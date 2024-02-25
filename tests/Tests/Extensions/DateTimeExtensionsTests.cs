@@ -28,7 +28,7 @@ public class DateTimeExtensionsTests
     public void IsWeekend_DateIsWeekend_ReturnTrue(int year, int month, int day, bool expected)
     {
         // Arrange
-        var date = new DateTime(year, month, day);
+        var date = new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Local);
 
         // Act
         var result = date.IsWeekend();
@@ -45,7 +45,7 @@ public class DateTimeExtensionsTests
     public void IsInLeapYear_DateIsLeapYear_ReturnTrue(int year, int month, int day, bool expected)
     {
         // Arrange
-        var date = new DateTime(year, month, day);
+        var date = new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Local);
 
         // Act
         var result = date.IsInLeapYear();
@@ -58,9 +58,9 @@ public class DateTimeExtensionsTests
     public void Trim_WhenCalled_TrimToGivenPrecisionAndReturn()
     {
         // Arrange 
-        var date = new DateTime(2021, 5, 2, 21, 34, 55, 500);
+        var date = new DateTime(2021, 5, 2, 21, 34, 55, 500, DateTimeKind.Local);
         const DateTimeParts precision = DateTimeParts.Date | DateTimeParts.Milliseconds;
-        var expected = new DateTime(1, 1, 1, 21, 34, 55, 0);
+        var expected = new DateTime(1, 1, 1, 21, 34, 55, 0, DateTimeKind.Local);
 
         // Act
         var result = date.Trim(precision);

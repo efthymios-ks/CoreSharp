@@ -91,7 +91,7 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
             throw new InvalidOperationException("Cannot pop on empty collection.");
         }
 
-        var element = _source.Last();
+        var element = _source[_source.Count - 1];
         _source.Remove(element);
         return element;
     }
@@ -107,7 +107,7 @@ public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
             throw new InvalidOperationException("Cannot peek on empty collection.");
         }
 
-        return _source.Last();
+        return _source[_source.Count - 1];
     }
 
     /// <summary>
