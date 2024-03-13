@@ -40,11 +40,12 @@ public static class CancellationTokenExtensions
     public static CancellationTokenSource ToTimeoutCancellationTokenSource(this CancellationToken cancellationToken, TimeSpan timeout)
     {
         var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        if (timeout.TotalMilliseconds > 0 && timeout != Timeout.InfiniteTimeSpan)
+        if (timeout.TotalMilliseconds <= 0 || timeout == Timeout.InfiniteTimeSpan)
         {
-            cancellationTokenSource.CancelAfter(timeout);
+            return cancellationTokenSource;
         }
 
+        cancellationTokenSource.CancelAfter(timeout);
         return cancellationTokenSource;
     }
 }

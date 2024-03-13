@@ -8,13 +8,23 @@ public class EntityExistsException : Exception
 {
     // Constructors
     public EntityExistsException(Type entityType, string propertyName, object propertyValue)
-        : this(entityType.Name, propertyName, propertyValue)
+        : this(entityType?.Name, propertyName, propertyValue)
     {
     }
 
     public EntityExistsException(string entityName, string propertyName, object propertyValue)
         : base($"{entityName} with {propertyName}=`{propertyValue}` already exists.")
     {
+        if (string.IsNullOrWhiteSpace(entityName))
+        {
+            throw new ArgumentException("Can't be empty.", nameof(entityName));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyName))
+        {
+            throw new ArgumentException("Can't be empty.", nameof(propertyName));
+        }
+
         EntityName = entityName;
         PropertyName = propertyName;
         PropertyValue = propertyValue;

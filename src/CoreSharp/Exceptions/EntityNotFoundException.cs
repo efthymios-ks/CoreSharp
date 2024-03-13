@@ -9,13 +9,23 @@ public class EntityNotFoundException : KeyNotFoundException
 {
     // Constructors 
     public EntityNotFoundException(Type entityType, string propertyName, object propertyValue)
-        : this(entityType.Name, propertyName, propertyValue)
+        : this(entityType?.Name, propertyName, propertyValue)
     {
     }
 
     public EntityNotFoundException(string entityName, string propertyName, object propertyValue)
         : base($"{entityName} with {propertyName}=`{propertyValue}` not found.")
     {
+        if (string.IsNullOrWhiteSpace(entityName))
+        {
+            throw new ArgumentException("Can't be empty.", nameof(entityName));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyName))
+        {
+            throw new ArgumentException("Can't be empty.", nameof(propertyName));
+        }
+
         EntityName = entityName;
         PropertyName = propertyName;
         PropertyValue = propertyValue;

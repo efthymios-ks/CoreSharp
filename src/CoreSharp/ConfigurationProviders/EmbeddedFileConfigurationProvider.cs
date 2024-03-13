@@ -15,14 +15,20 @@ public sealed class EmbeddedFileConfigurationProvider : ConfigurationProvider
 
     // Constructors
     public EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options)
+        : this(builder, options, new EmbeddedFileProvider(options?.ScanAssembly))
+    {
+    }
+
+    internal EmbeddedFileConfigurationProvider(IConfigurationBuilder builder, EmbeddedFileConfigurationOptions options, IFileProvider fileProvider)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(options);
-        _ = _options.ScanAssembly ?? throw new ArgumentException(nameof(options.ScanAssembly));
+        ArgumentNullException.ThrowIfNull(fileProvider);
+        _ = options.ScanAssembly ?? throw new ArgumentException(nameof(options.ScanAssembly));
 
         _builder = builder;
         _options = options;
-        _fileProvider = new EmbeddedFileProvider(_options.ScanAssembly);
+        _fileProvider = fileProvider;
     }
 
     // Methods

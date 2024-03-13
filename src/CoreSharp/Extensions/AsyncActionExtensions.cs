@@ -19,8 +19,9 @@ public static class AsyncActionExtensions
             return;
         }
 
-        var tasks = delegates.Cast<AsyncAction<TEventArgs>>()
-                             .Select(e => e.Invoke(args, cancellationToken));
+        var tasks = delegates
+            .Cast<AsyncAction<TEventArgs>>()
+            .Select(e => e.Invoke(args, cancellationToken));
         await Task.WhenAll(tasks);
     }
 }

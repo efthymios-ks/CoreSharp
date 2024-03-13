@@ -24,8 +24,9 @@ public static class AssemblyExtensions
         ArgumentNullException.ThrowIfNull(assembly);
         ArgumentNullException.ThrowIfNull(filter);
 
-        return assembly.GetReferencedAssemblies()
-                       .Where(filter)
-                       .Select(Assembly.Load);
+        return assembly
+            .GetReferencedAssemblies()
+            .Where(filter)
+            .Select(Assembly.Load);
     }
 }

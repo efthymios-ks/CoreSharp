@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CoreSharp.Enumerables;
 
-public class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
+public sealed class ShiftingStack<TElement> : IReadOnlyCollection<TElement>
 {
     // Fields 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
